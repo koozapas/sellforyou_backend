@@ -1,0 +1,791 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["orderByRelation", "orderByAggregateGroup", "selectRelationCount"]
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+  output   = "."
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int            @id @default(autoincrement())
+  email        String         @unique @db.VarChar(50)
+  password     String         @db.VarChar(60)
+  state        UserState
+  naverId      String?        @unique @map("naver_id") @db.VarChar(10)
+  kakaoId      String?        @unique @map("kakao_id") @db.VarChar(12)
+  createdAt    DateTime       @default(now()) @map("created_at") @db.DateTime(0)
+  token        String?        @unique @db.VarChar(700)
+  createdToken DateTime?      @map("created_token") @db.DateTime(0)
+  master       Int            @default(1) @db.TinyInt
+  masterUserId Int?
+  refCode      String?        @db.VarChar(50)
+  refAvailable Boolean        @default(true)
+  credit       Int            @default(0)
+  order        order[]        @relation("orderTouser")
+  product      Product[]      @relation("productTouser")
+  productStore ProductStore[] @relation("product_storeTouser")
+  purchaseLog  PurchaseLog[]  @relation("purchase_logTouser")
+  userInfo     UserInfo?      @relation("userTouser_info")
+  userLog      UserLog[]      @relation("userTouser_log")
+  userQuestion UserQuestion[] @relation("userTouser_question")
+  wordTable    WordTable[]    @relation("userToword_table")
+
+  @@map("user")
+}
+
+model Setting {
+  name  String @id @db.VarChar(100)
+  value String @db.Text
+
+  @@map("setting")
+}
+
+model PhoneVerification {
+  id                 Int      @id @default(autoincrement())
+  tel                String   @db.VarChar(15)
+  verificationNumber String   @map("verification_number") @db.Char(6)
+  createdAt          DateTime @default(now()) @map("created_at") @db.DateTime(0)
+  used               Int?     @default(1)
+
+  @@map("phone_verification")
+}
+
+model UserInfo {
+  userId                         Int     @unique @map("user_id")
+  phone                          String? @db.VarChar(15)
+  marginRate                     Float   @default(25) @map("margin_rate") @db.Float
+  defaultShippingFee             Int     @default(6000) @map("default_shipping_fee")
+  fixImageTop                    String? @map("fix_image_top") @db.TinyText
+  fixImageSubTop                 String? @map("fix_image_sub_top") @db.TinyText
+  fixImageBottom                 String? @map("fix_image_bottom") @db.TinyText
+  fixImageSubBottom              String? @map("fix_image_sub_bottom") @db.TinyText
+  cnyRate                        Float   @default(185) @map("cny_rate") @db.Float
+  productCollectCount            Int     @default(0) @map("product_collect_count")
+  maxProductLimit                Int?    @map("max_product_limit")
+  additionalShippingFeeJeju      Int     @default(0) @map("additional_shipping_fee_jeju")
+  asTel                          String? @map("as_tel") @db.VarChar(20)
+  asInformation                  String? @map("as_information") @db.VarChar(1000)
+  refundShippingFee              Int     @default(0) @map("refund_shipping_fee")
+  exchangeShippingFee            Int     @default(0) @map("exchange_shipping_fee")
+  naverOriginCode                String  @default("수입산") @map("naver_origin_code") @db.VarChar(100)
+  naverOrigin                    String  @default("0200037") @map("naver_origin") @db.VarChar(100)
+  naverStoreUrl                  String  @map("naver_store_url") @db.VarChar(200)
+  naverStoreOnly                 String  @default("N") @map("naver_store_only") @db.VarChar(10)
+  naverFee                       Float   @default(0) @map("naver_fee") @db.Float
+  coupangOutboundShippingTimeDay Int     @default(12) @map("coupang_outbound_shipping_time_day") @db.TinyInt
+  coupangUnionDeliveryType       String  @default("N") @map("coupang_union_delivery_type") @db.VarChar(10)
+  coupangMaximumBuyForPerson     Int     @default(0) @map("coupang_maximum_buy_for_person")
+  coupangLoginId                 String  @map("coupang_login_id") @db.VarChar(200)
+  coupangVendorId                String  @map("coupang_vendor_id") @db.VarChar(30)
+  coupangAccessKey               String  @map("coupang_access_key") @db.VarChar(200)
+  coupangSecretKey               String  @map("coupang_secret_key") @db.VarChar(200)
+  coupangImageOpt                String  @map("coupang_image_opt") @db.VarChar(10)
+  coupangFee                     Float   @default(0) @map("coupang_fee") @db.Float
+  coupangDefaultOutbound         String  @map("coupang_default_outbound") @db.VarChar(30)
+  coupangDefaultInbound          String  @map("coupang_default_inbound") @db.VarChar(30)
+  streetApiKey                   String  @map("street_api_key") @db.VarChar(200)
+  streetFee                      Float   @default(0) @map("street_fee") @db.Float
+  streetDefaultOutbound          String  @map("street_default_outbound") @db.VarChar(30)
+  streetDefaultInbound           String  @map("street_default_inbound") @db.VarChar(30)
+  streetNormalApiKey             String  @map("street_normal_api_key") @db.VarChar(200)
+  streetNormalOutbound           String? @map("street_normal_outbound") @db.VarChar(30)
+  streetNormalInbound            String? @map("street_normal_inbound") @db.VarChar(30)
+  streetNormalFee                Float   @map("street_normal_fee") @db.Float
+  interparkCertKey               String  @map("interpark_cert_key") @db.VarChar(200)
+  interparkSecretKey             String  @map("interpark_secret_key") @db.VarChar(200)
+  interparkFee                   Float   @default(0) @map("interpark_fee") @db.Float
+  esmplusMasterId                String  @map("esmplus_master_id") @db.VarChar(30)
+  esmplusAuctionId               String  @map("esmplus_auction_id") @db.VarChar(30)
+  esmplusGmarketId               String  @map("esmplus_gmarket_id") @db.VarChar(30)
+  gmarketFee                     Float   @default(0) @map("gmarket_fee") @db.Float
+  auctionFee                     Float   @default(0) @map("auction_fee") @db.Float
+  lotteonVendorId                String  @map("lotteon_vendor_id") @db.VarChar(200)
+  lotteonApiKey                  String  @map("lotteon_api_key") @db.VarChar(200)
+  lotteonFee                     Float   @map("lotteon_fee") @db.Float
+  lotteonNormalFee               Float   @map("lotteon_normal_fee") @db.Float
+  wemakepriceId                  String  @map("wemakeprice_id") @db.VarChar(30)
+  wemakepriceFee                 Float   @map("wemakeprice_fee") @db.Float
+  tmonId                         String? @map("tmon_id") @db.VarChar(30)
+  tmonFee                        Float   @map("tmon_fee") @db.Float
+  optionAlignTop                 String  @map("option_align_top") @db.VarChar(10)
+  optionTwoWays                  String  @default("Y") @map("option_twoways") @db.VarChar(10)
+  optionIndexType                Int     @default(1) @map("option_index_type") @db.TinyInt
+  discountAmount                 Int?    @default(0) @map("discount_amount")
+  discountUnitType               String? @default("WON") @map("discount_unit_type") @db.VarChar(10)
+  collectTimeout                 Int     @default(10) @map("collect_timeout")
+  collectStock                   Int     @default(0) @map("collect_stock")
+  marginUnitType                 String? @default("PERCENT") @map("margin_unit_type") @db.VarChar(10)
+  extraShippingFee               Int     @default(0) @map("extra_shipping_fee")
+  streetUseType                  String  @default("Y") @map("street_use_type") @db.VarChar(10)
+  descriptionShowTitle           String  @default("Y") @map("description_show_title") @db.VarChar(10)
+  lotteonUseType                 String? @map("lotteon_use_type") @db.VarChar(10)
+  naverAutoSearchTag             String  @default("Y") @map("naver_auto_search_tag") @db.VarChar(10)
+  naverUseType                   String  @default("Y") @map("naver_use_type") @db.VarChar(10)
+  coupangUseType                 String  @default("Y") @map("coupang_use_type") @db.VarChar(10)
+  streetNormalUseType            String  @default("Y") @map("street_normal_use_type") @db.VarChar(10)
+  gmarketUseType                 String  @default("Y") @map("gmarket_use_type") @db.VarChar(10)
+  auctionUseType                 String  @default("Y") @map("auction_use_type") @db.VarChar(10)
+  interparkUseType               String  @default("Y") @map("interpark_use_type") @db.VarChar(10)
+  wemakepriceUseType             String  @default("Y") @map("wemakeprice_use_type") @db.VarChar(10)
+  lotteonNormalUseType           String  @default("Y") @map("lotteon_normal_use_type") @db.VarChar(10)
+  tmonUseType                    String  @default("Y") @map("tmon_use_type") @db.VarChar(10)
+  lotteonSellerType              String  @default("G") @map("lotteon_seller_type") @db.VarChar(10)
+  interparkEditCertKey           String  @map("interpark_edit_cert_key") @db.VarChar(200)
+  interparkEditSecretKey         String  @map("interpark_edit_secret_key") @db.VarChar(200)
+  autoPrice                      String  @default("Y") @db.VarChar(10)
+  defaultPrice                   String  @default("L") @db.VarChar(10)
+  streetApiKey2                  String  @db.VarChar(200)
+  streetApiKey3                  String  @db.VarChar(200)
+  streetApiKey4                  String  @db.VarChar(200)
+  streetNormalApiKey2            String  @db.VarChar(200)
+  streetNormalApiKey3            String  @db.VarChar(200)
+  streetNormalApiKey4            String  @db.VarChar(200)
+  streetNormalUseKeyType         String  @default("1") @db.VarChar(10)
+  streetUseKeyType               String  @default("1") @db.VarChar(10)
+  streetApiMemo                  String  @db.VarChar(45)
+  streetApiMemo2                 String  @db.VarChar(45)
+  streetApiMemo3                 String  @db.VarChar(45)
+  streetApiMemo4                 String  @db.VarChar(45)
+  streetNormalApiMemo            String  @db.VarChar(45)
+  streetNormalApiMemo2           String  @db.VarChar(45)
+  streetNormalApiMemo3           String  @db.VarChar(45)
+  streetNormalApiMemo4           String  @db.VarChar(45)
+  calculateWonType               String  @default("100") @db.VarChar(45)
+  user                           User    @relation("userTouser_info", fields: [userId], references: [id])
+
+  @@map("user_info")
+}
+
+model Product {
+  id                 Int                 @id @default(autoincrement())
+  userId             Int?                @map("user_id")
+  adminId            Int?                @map("admin_id")
+  taobaoProductId    Int                 @map("taobao_product_id")
+  productCode        String              @map("product_code") @db.VarChar(50)
+  state              Int                 @default(6)
+  name               String              @db.VarChar(500)
+  price              Int
+  localShippingFee   Int                 @map("local_shipping_fee")
+  localShippingCode  Int?                @default(0) @map("local_shipping_code") @db.TinyInt
+  description        String              @db.MediumText
+  createdAt          DateTime            @default(now()) @map("created_at") @db.DateTime(0)
+  modifiedAt         DateTime            @default(now()) @map("modified_at") @db.DateTime(0)
+  stockUpdatedAt     DateTime            @default(now()) @map("stock_updated_at") @db.DateTime(0)
+  siilData           String?             @map("siil_data") @db.Text
+  siilCode           String?             @map("siil_code") @db.VarChar(3)
+  imageThumbnailData String              @map("image_thumbnail_data") @db.Text
+  marginRate         Float               @default(0) @map("margin_rate") @db.Float
+  cnyRate            Float               @default(170) @map("cny_rate") @db.Float
+  shippingFee        Int                 @default(0) @map("shipping_fee")
+  searchTags         String?             @map("search_tags") @db.VarChar(500)
+  categoryA077       String?             @map("category_a077") @db.VarChar(40)
+  categoryB378       String?             @map("category_b378") @db.VarChar(40)
+  categoryA112       String?             @map("category_a112") @db.VarChar(40)
+  categoryA027       String?             @map("category_a027") @db.VarChar(40)
+  categoryA001       String?             @map("category_a001") @db.VarChar(40)
+  categoryA006       String?             @map("category_a006") @db.VarChar(40)
+  categoryA113       String?             @map("category_a113") @db.VarChar(40)
+  categoryB719       String?             @map("category_b719") @db.VarChar(40)
+  categoryA524       String?             @map("category_a524") @db.VarChar(40)
+  categoryA525       String?             @map("category_a525") @db.VarChar(40)
+  categoryB956       String?             @map("category_b956") @db.VarChar(40)
+  categoryEsm        String?             @map("category_esm") @db.VarChar(40)
+  marginUnitType     String?             @default("PERCENT") @map("margin_unit_type") @db.VarChar(10)
+  immSearchTags      String?             @map("imm_search_tags") @db.VarChar(500)
+  naverFee           Float?              @map("naver_fee") @db.Float
+  coupangFee         Float?              @map("coupang_fee") @db.Float
+  streetFee          Float?              @map("street_fee") @db.Float
+  streetNormalFee    Float?              @map("street_normal_fee") @db.Float
+  gmarketFee         Float?              @map("gmarket_fee") @db.Float
+  auctionFee         Float?              @map("auction_fee") @db.Float
+  interparkFee       Float?              @map("interpark_fee") @db.Float
+  wemakepriceFee     Float?              @map("wemake_price_fee") @db.Float
+  lotteonFee         Float?              @map("lotteon_fee") @db.Float
+  lotteonNormalFee   Float?              @map("lotteon_normal_fee") @db.Float
+  tmonFee            Float?              @map("tmon_fee") @db.Float
+  isImageTranslated  Boolean             @default(false) @map("is_image_translated")
+  brandName          String              @default("상품상세참고") @db.VarChar(200)
+  manuFacturer       String              @default("상품상세참고") @db.VarChar(200)
+  modelName          String              @default("상품상세참고") @db.VarChar(200)
+  attribute          String              @db.Text
+  admin              Admin?              @relation("adminToproduct", fields: [adminId], references: [id])
+  categoryInfoA001   CategoryInfoA001?   @relation("category_info_a001Toproduct", fields: [categoryA001], references: [code])
+  categoryInfoA006   CategoryInfoA006?   @relation("category_info_a006Toproduct", fields: [categoryA006], references: [code])
+  categoryInfoA027   CategoryInfoA027?   @relation("category_info_a027Toproduct", fields: [categoryA027], references: [code])
+  categoryInfoA077   CategoryInfoA077?   @relation("category_info_a077Toproduct", fields: [categoryA077], references: [code])
+  categoryInfoA112   CategoryInfoA112?   @relation("category_info_a112Toproduct", fields: [categoryA112], references: [code])
+  categoryInfoA113   CategoryInfoA113?   @relation("category_info_a113Toproduct", fields: [categoryA113], references: [code])
+  categoryInfoA524   CategoryInfoA524?   @relation("category_info_a524Toproduct", fields: [categoryA524], references: [code])
+  categoryInfoA525   CategoryInfoA525?   @relation("category_info_a525Toproduct", fields: [categoryA525], references: [code])
+  categoryInfoB378   CategoryInfoB378?   @relation("category_info_b378Toproduct", fields: [categoryB378], references: [code])
+  categoryInfoB719   CategoryInfoB719?   @relation("category_info_b719Toproduct", fields: [categoryB719], references: [code])
+  categoryInfoB956   CategoryInfoB956?   @relation("category_info_b956Toproduct", fields: [categoryB956], references: [code])
+  productStateEnum   productStateEnum    @relation("productToproduct_state_enum", fields: [state], references: [id])
+  taobaoProduct      TaobaoProduct       @relation("taobaoProduct", fields: [taobaoProductId], references: [id])
+  user               User?               @relation("productTouser", fields: [userId], references: [id])
+  productOption      ProductOption[]
+  productOptionName  ProductOptionName[] @relation("productToproduct_option_name")
+  productStore       ProductStore[]      @relation("productToproduct_store")
+
+  @@unique([userId, taobaoProductId], name: "UQ_user_id_taobao_product_id")
+  @@index([adminId], name: "FK_product_admin_id_admin_id")
+  @@index([categoryA001], name: "FK_product_category_info_a001")
+  @@index([categoryA006], name: "FK_product_category_info_a006")
+  @@index([categoryA027], name: "FK_product_category_info_a027")
+  @@index([categoryA077], name: "FK_product_category_info_a077")
+  @@index([categoryA112], name: "FK_product_category_info_a112")
+  @@index([categoryA113], name: "FK_product_category_info_a113")
+  @@index([categoryA524], name: "FK_product_category_info_a524")
+  @@index([categoryA525], name: "FK_product_category_info_a525")
+  @@index([categoryB378], name: "FK_product_category_info_b378")
+  @@index([categoryB719], name: "FK_product_category_info_b719")
+  @@index([categoryB956], name: "FK_product_category_info_b956")
+  @@index([state], name: "FK_product_state_id")
+  @@index([taobaoProductId], name: "FK_product_taobao_product_id_taobao_product_id")
+  @@map("product")
+}
+
+model ProductOption {
+  id                 Int                 @id @default(autoincrement())
+  productId          Int                 @map("product_id")
+  optionValue1Id     Int                 @map("option_value1_id")
+  optionValue2Id     Int?                @map("option_value2_id")
+  optionValue3Id     Int?                @map("option_value3_id")
+  optionValue4Id     Int?                @map("option_value4_id")
+  optionValue5Id     Int?                @map("option_value5_id")
+  isActive           Boolean             @default(true) @map("is_active")
+  taobaoSkuId        String              @map("taobao_sku_id") @db.VarChar(30)
+  priceCny           Float               @map("price_cny") @db.Float
+  price              Int
+  stock              Int?
+  optionString       String              @map("option_string") @db.VarChar(100)
+  defaultShippingFee Int?                @map("default_shipping_fee")
+  productOption1     ProductOptionValue  @relation("product_option_option_value1_idToproduct_option_value", fields: [optionValue1Id], references: [id])
+  productOption2     ProductOptionValue? @relation("product_option_option_value2_idToproduct_option_value", fields: [optionValue2Id], references: [id])
+  productOption3     ProductOptionValue? @relation("product_option_option_value3_idToproduct_option_value", fields: [optionValue3Id], references: [id])
+  productOption4     ProductOptionValue? @relation("product_option_option_value4_idToproduct_option_value", fields: [optionValue4Id], references: [id])
+  productOption5     ProductOptionValue? @relation("product_option_option_value5_idToproduct_option_value", fields: [optionValue5Id], references: [id])
+  product            Product             @relation(fields: [productId], references: [id])
+
+  @@unique([productId, taobaoSkuId], name: "UQ_product_id_sku_id")
+  @@unique([optionValue1Id, optionValue2Id, optionValue3Id, optionValue4Id, optionValue5Id], name: "UQ_product_option")
+  @@index([optionValue2Id], name: "FK_product_option_option_value2_id_product_option_value_id")
+  @@index([optionValue3Id], name: "FK_product_option_option_value3_id_product_option_value_id")
+  @@index([optionValue4Id], name: "FK_product_option_option_value4_id_product_option_value_id")
+  @@index([optionValue5Id], name: "FK_product_option_option_value5_id_product_option_value_id")
+  @@map("product_option")
+}
+
+model ProductOptionName {
+  id                 Int                  @id @default(autoincrement())
+  productId          Int                  @map("product_id")
+  order              Int                  @db.TinyInt
+  name               String               @db.VarChar(200)
+  taobaoPid          String               @map("taobao_pid") @db.VarChar(20)
+  isNameTranslated   Boolean              @default(false) @map("is_name_translated")
+  hasImage           Boolean              @map("has_image")
+  isActive           Boolean?             @default(true) @map("is_active")
+  product            Product              @relation("productToproduct_option_name", fields: [productId], references: [id])
+  productOptionValue ProductOptionValue[]
+
+  @@index([productId], name: "FK_product_option_name_product_id_product_id")
+  @@map("product_option_name")
+}
+
+model ProductOptionValue {
+  id                  Int               @id @default(autoincrement())
+  productOptionNameId Int               @map("product_option_name_id")
+  optionNameOrder     Int               @map("option_name_order") @db.TinyInt
+  name                String            @db.VarChar(200)
+  taobaoVid           String            @map("taobao_vid") @db.VarChar(20)
+  image               String?           @db.VarChar(500)
+  number              Int               @db.SmallInt
+  isNameTranslated    Boolean           @default(false) @map("is_name_translated")
+  isActive            Boolean           @default(true) @map("is_active")
+  originalName        String?           @db.VarChar(200)
+  productOptionName   ProductOptionName @relation(fields: [productOptionNameId], references: [id])
+  optionValue1        ProductOption[]   @relation("product_option_option_value1_idToproduct_option_value")
+  optionValue2        ProductOption[]   @relation("product_option_option_value2_idToproduct_option_value")
+  optionValue3        ProductOption[]   @relation("product_option_option_value3_idToproduct_option_value")
+  optionValue4        ProductOption[]   @relation("product_option_option_value4_idToproduct_option_value")
+  optionValue5        ProductOption[]   @relation("product_option_option_value5_idToproduct_option_value")
+
+  @@index([productOptionNameId], name: "FK_product_option_value_pon_id_product_option_name_id")
+  @@map("product_option_value")
+}
+
+model ProductStore {
+  id                Int               @id @default(autoincrement())
+  userId            Int               @map("user_id")
+  productId         Int               @map("product_id")
+  state             Int               @db.TinyInt
+  storeProductId    String?           @map("store_product_id") @db.VarChar(100)
+  etcVendorItemId   String?           @map("etc_vendor_item_id") @db.VarChar(20)
+  siteCode          String            @map("site_code") @db.VarChar(10)
+  storeUrl          String?           @map("store_url") @db.VarChar(200)
+  connectedAt       DateTime          @default(now()) @map("connected_at") @db.DateTime(0)
+  product           Product           @relation("productToproduct_store", fields: [productId], references: [id])
+  productStoreState ProductStoreState @relation("product_storeToproduct_store_state", fields: [state], references: [id])
+  user              User              @relation("product_storeTouser", fields: [userId], references: [id])
+  productStoreLog   ProductStoreLog[] @relation("product_storeToproduct_store_log")
+
+  @@index([productId], name: "FK_product_store_product_id_product_id")
+  @@index([state], name: "FK_product_store_state_product_store_state_id")
+  @@index([userId], name: "FK_product_store_user_id_user_id")
+  @@map("product_store")
+}
+
+model ProductStoreState {
+  id              Int               @id @db.TinyInt
+  name            String            @unique @db.VarChar(20)
+  description     String            @unique @db.VarChar(20)
+  productStore    ProductStore[]    @relation("product_storeToproduct_store_state")
+  productStoreLog ProductStoreLog[] @relation("product_store_logToproduct_store_state")
+
+  @@map("product_store_state")
+}
+
+model ProductStoreLog {
+  id                  Int                 @id @default(autoincrement())
+  productStoreId      Int                 @map("product_store_id")
+  jobId               String              @map("job_id") @db.VarChar(12)
+  destState           Int                 @map("dest_state") @db.TinyInt
+  uploadState         Int                 @default(1) @map("upload_state")
+  errorMessage        String              @default("") @map("error_message") @db.Text
+  createdAt           DateTime            @default(now()) @map("created_at") @db.DateTime(0)
+  modifiedAt          DateTime            @default(now()) @map("modified_at") @db.DateTime(0)
+  productStoreState   ProductStoreState   @relation("product_store_logToproduct_store_state", fields: [destState], references: [id])
+  productstore        ProductStore        @relation("product_storeToproduct_store_log", fields: [productStoreId], references: [id])
+  productStoreLogEnum productStoreLogEnum @relation("product_store_logToproduct_store_log_enum", fields: [uploadState], references: [id])
+
+  @@index([destState], name: "FK_product_store_log_dest_state_product_store_state_id")
+  @@index([productStoreId], name: "FK_product_store_log_product_store_id_product_store_id")
+  @@index([uploadState], name: "FK_product_store_log_product_store_log_enum")
+  @@map("product_store_log")
+}
+
+model UserLog {
+  id          Int      @id @default(autoincrement())
+  userId      Int      @map("user_id")
+  title       String   @default("") @db.Text
+  payloadData String   @map("payload_data") @db.Text
+  isRead      Boolean  @default(false) @map("is_read")
+  createdAt   DateTime @default(now()) @map("created_at") @db.DateTime(0)
+  user        User     @relation("userTouser_log", fields: [userId], references: [id])
+
+  @@index([userId], name: "FK_user_log_user_id_user_id")
+  @@map("user_log")
+}
+
+model PlanInfo {
+  id                        Int     @id @default(autoincrement())
+  planLevel                 Int?    @map("plan_level") @db.TinyInt
+  name                      String  @db.VarChar(50)
+  description               String  @db.Text
+  month                     Int     @db.TinyInt
+  price                     Int
+  externalFeatureVariableId String? @map("external_feature_variable_id") @db.VarChar(50)
+  isActive                  Boolean @default(true) @map("is_active")
+
+  @@map("plan_info")
+}
+
+model PurchaseLog {
+  id          Int              @id @default(autoincrement())
+  userId      Int              @map("user_id")
+  payAmount   Int              @map("pay_amount")
+  payId       String?          @unique @map("pay_id") @db.VarChar(100)
+  state       PurchaseLogState
+  planInfo    String           @map("plan_info") @db.LongText
+  type        PurchaseLogType
+  purchasedAt DateTime         @default(now()) @map("purchased_at") @db.DateTime(0)
+  expiredAt   DateTime         @map("expired_at") @db.DateTime(0)
+  user        User             @relation("purchase_logTouser", fields: [userId], references: [id])
+
+  @@index([userId], name: "FK_purchase_log_user_id_user_id")
+  @@map("purchase_log")
+}
+
+model Admin {
+  id           Int        @id @default(autoincrement())
+  loginId      String     @unique @map("login_id") @db.VarChar(50)
+  password     String     @db.VarChar(60)
+  state        AdminState
+  createdAt    DateTime   @default(now()) @map("created_at") @db.DateTime(0)
+  token        String?    @unique @db.VarChar(700)
+  createdToken DateTime?  @map("created_token") @db.DateTime(0)
+  product      Product[]  @relation("adminToproduct")
+
+  @@map("admin")
+}
+
+model withdraw {
+  id         Int      @id @default(autoincrement())
+  email      String   @db.VarChar(50)
+  naverId    String?  @map("naver_id") @db.VarChar(10)
+  kakaoId    String?  @map("kakao_id") @db.VarChar(12)
+  withdrawAt DateTime @default(now()) @map("withdraw_at") @db.DateTime(0)
+}
+
+model Notice {
+  id             Int      @id @default(autoincrement())
+  title          String   @db.VarChar(200)
+  content        String   @db.LongText
+  attachmentFile String?  @map("attachment_file") @db.Text
+  isVisible      Boolean  @default(true) @map("is_visible")
+  viewCount      Int      @default(0) @map("view_count")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  @@map("notice")
+}
+
+model WordTable {
+  id          Int     @id @default(autoincrement())
+  userId      Int     @map("user_id")
+  findWord    String  @map("find_word") @db.VarChar(50)
+  replaceWord String? @map("replace_word") @db.VarChar(50)
+  user        User    @relation("userToword_table", fields: [userId], references: [id])
+
+  @@unique([userId, findWord], name: "UQ_word_table_word")
+  @@map("word_table")
+}
+
+model UserQuestion {
+  id             Int       @id @default(autoincrement())
+  userId         Int       @map("user_id")
+  title          String    @db.VarChar(50)
+  content        String    @db.LongText
+  attachmentFile String?   @map("attachment_file") @db.Text
+  answer         String?   @db.LongText
+  isActive       Boolean   @default(true) @map("is_active")
+  answeredAt     DateTime? @map("answered_at") @db.DateTime(0)
+  createdAt      DateTime  @default(now()) @map("created_at") @db.DateTime(0)
+  user           User      @relation("userTouser_question", fields: [userId], references: [id])
+
+  @@index([userId], name: "FK_user_question_user_id_user_id")
+  @@map("user_question")
+}
+
+model TaobaoProduct {
+  id               Int       @id @default(autoincrement())
+  taobaoNumIid     String    @map("taobao_num_iid") @db.VarChar(30)
+  name             String    @db.VarChar(200)
+  imageThumbnail   String    @map("image_thumbnail") @db.Text
+  price            Float     @db.Float
+  brand            String    @db.Text
+  taobaoBrandId    String?   @map("taobao_brand_id") @db.VarChar(15)
+  taobaoCategoryId String    @map("taobao_category_id") @db.VarChar(12)
+  originalData     String    @map("original_data") @db.LongText
+  videoUrl         String?   @map("video_url") @db.Text
+  translateData    String?   @map("translate_data") @db.LongText
+  createdAt        DateTime  @default(now()) @map("created_at") @db.DateTime(0)
+  modifiedAt       DateTime  @default(now()) @map("modified_at") @db.DateTime(0)
+  shopName         String?   @map("shop_name") @db.VarChar(20)
+  url              String?   @db.VarChar(200)
+  product          Product[] @relation("taobaoProduct")
+
+  @@map("taobao_product")
+}
+
+model CategoryInfoA001 {
+  id                 Int                @id @default(autoincrement())
+  code               String             @unique @db.VarChar(40)
+  depth1             String             @db.Text
+  depth2             String             @db.Text
+  depth3             String             @db.Text
+  depth4             String             @db.Text
+  depth5             String             @db.Text
+  depth6             String             @db.Text
+  name               String             @db.Text
+  category_info_a077 CategoryInfoA077[] @relation("category_info_a001Tocategory_info_a077")
+  product            Product[]          @relation("category_info_a001Toproduct")
+
+  @@map("category_info_a001")
+}
+
+model CategoryInfoA006 {
+  id                 Int                @id @default(autoincrement())
+  code               String             @unique @db.VarChar(40)
+  depth1             String             @db.Text
+  depth2             String             @db.Text
+  depth3             String             @db.Text
+  depth4             String             @db.Text
+  depth5             String             @db.Text
+  depth6             String             @db.Text
+  name               String             @db.Text
+  category_info_a077 CategoryInfoA077[] @relation("category_info_a006Tocategory_info_a077")
+  product            Product[]          @relation("category_info_a006Toproduct")
+
+  @@map("category_info_a006")
+}
+
+model CategoryInfoA027 {
+  id                 Int                @id @default(autoincrement())
+  code               String             @unique @db.VarChar(40)
+  depth1             String             @db.Text
+  depth2             String             @db.Text
+  depth3             String             @db.Text
+  depth4             String             @db.Text
+  depth5             String             @db.Text
+  depth6             String             @db.Text
+  name               String             @db.Text
+  category_info_a077 CategoryInfoA077[] @relation("category_info_a027Tocategory_info_a077")
+  product            Product[]          @relation("category_info_a027Toproduct")
+
+  @@map("category_info_a027")
+}
+
+model CategoryInfoA077 {
+  id               Int              @id @default(autoincrement())
+  code             String           @unique @db.VarChar(40)
+  depth1           String           @db.Text
+  depth2           String           @db.Text
+  depth3           String           @db.Text
+  depth4           String           @db.Text
+  depth5           String           @db.Text
+  depth6           String           @db.Text
+  name             String           @db.Text
+  codeB378         String           @map("code_b378") @db.VarChar(40)
+  codeA112         String           @map("code_a112") @db.VarChar(40)
+  codeA113         String           @map("code_a113") @db.VarChar(40)
+  codeA027         String           @map("code_a027") @db.VarChar(40)
+  codeA006         String           @map("code_a006") @db.VarChar(40)
+  codeA001         String           @map("code_a001") @db.VarChar(40)
+  codeB719         String           @map("code_b719") @db.VarChar(40)
+  codeB956         String           @map("code_b956") @db.VarChar(40)
+  codeA524         String           @map("code_a524") @db.VarChar(40)
+  codeA525         String           @map("code_a525") @db.VarChar(40)
+  categoryInfoA001 CategoryInfoA001 @relation("category_info_a001Tocategory_info_a077", fields: [codeA001], references: [code])
+  categoryInfoA006 CategoryInfoA006 @relation("category_info_a006Tocategory_info_a077", fields: [codeA006], references: [code])
+  categoryInfoA027 CategoryInfoA027 @relation("category_info_a027Tocategory_info_a077", fields: [codeA027], references: [code])
+  categoryInfoA112 CategoryInfoA112 @relation("category_info_a077Tocategory_info_a112", fields: [codeA112], references: [code])
+  categoryInfoA113 CategoryInfoA113 @relation("category_info_a077Tocategory_info_a113", fields: [codeA113], references: [code])
+  categoryInfoA524 CategoryInfoA524 @relation("category_info_a077Tocategory_info_a524", fields: [codeA524], references: [code])
+  categoryInfoA525 CategoryInfoA525 @relation("category_info_a077Tocategory_info_a525", fields: [codeA525], references: [code])
+  categoryInfoB378 CategoryInfoB378 @relation("category_info_a077Tocategory_info_b378", fields: [codeB378], references: [code])
+  categoryInfoB719 CategoryInfoB719 @relation("category_info_a077Tocategory_info_b719", fields: [codeB719], references: [code])
+  categoryInfoB956 CategoryInfoB956 @relation("category_info_a077Tocategory_info_b956", fields: [codeB956], references: [code])
+  product          Product[]        @relation("category_info_a077Toproduct")
+
+  @@index([codeA001], name: "FK_category_info_a077_category_info_a001")
+  @@index([codeA006], name: "FK_category_info_a077_category_info_a006")
+  @@index([codeA027], name: "FK_category_info_a077_category_info_a027")
+  @@index([codeA112], name: "FK_category_info_a077_category_info_a112")
+  @@index([codeA113], name: "FK_category_info_a077_category_info_a113")
+  @@index([codeA524], name: "FK_category_info_a077_category_info_a524")
+  @@index([codeA525], name: "FK_category_info_a077_category_info_a525")
+  @@index([codeB378], name: "FK_category_info_a077_category_info_b378")
+  @@index([codeB719], name: "FK_category_info_a077_category_info_b719")
+  @@index([codeB956], name: "FK_category_info_a077_category_info_b956")
+  @@map("category_info_a077")
+}
+
+model CategoryInfoA112 {
+  id                 Int                @id @default(autoincrement())
+  code               String             @unique @db.VarChar(40)
+  depth1             String             @db.Text
+  depth2             String             @db.Text
+  depth3             String             @db.Text
+  depth4             String             @db.Text
+  depth5             String             @db.Text
+  depth6             String             @db.Text
+  name               String             @db.Text
+  category_info_a077 CategoryInfoA077[] @relation("category_info_a077Tocategory_info_a112")
+  product            Product[]          @relation("category_info_a112Toproduct")
+
+  @@map("category_info_a112")
+}
+
+model CategoryInfoA113 {
+  id                 Int                @id @default(autoincrement())
+  code               String             @unique @db.VarChar(40)
+  depth1             String             @db.Text
+  depth2             String             @db.Text
+  depth3             String             @db.Text
+  depth4             String             @db.Text
+  depth5             String             @db.Text
+  depth6             String             @db.Text
+  name               String             @db.Text
+  category_info_a077 CategoryInfoA077[] @relation("category_info_a077Tocategory_info_a113")
+  product            Product[]          @relation("category_info_a113Toproduct")
+
+  @@map("category_info_a113")
+}
+
+model CategoryInfoA524 {
+  id                 Int                @id @default(autoincrement())
+  code               String             @unique @db.VarChar(40)
+  depth1             String             @db.Text
+  depth2             String             @db.Text
+  depth3             String             @db.Text
+  depth4             String             @db.Text
+  depth5             String             @db.Text
+  depth6             String             @db.Text
+  name               String             @db.Text
+  category_info_a077 CategoryInfoA077[] @relation("category_info_a077Tocategory_info_a524")
+  product            Product[]          @relation("category_info_a524Toproduct")
+
+  @@map("category_info_a524")
+}
+
+model CategoryInfoA525 {
+  id                 Int                @id @default(autoincrement())
+  code               String             @unique @db.VarChar(40)
+  depth1             String             @db.Text
+  depth2             String             @db.Text
+  depth3             String             @db.Text
+  depth4             String             @db.Text
+  depth5             String             @db.Text
+  depth6             String             @db.Text
+  name               String             @db.Text
+  category_info_a077 CategoryInfoA077[] @relation("category_info_a077Tocategory_info_a525")
+  product            Product[]          @relation("category_info_a525Toproduct")
+
+  @@map("category_info_a525")
+}
+
+model CategoryInfoB378 {
+  id                 Int                @id @default(autoincrement())
+  code               String             @unique @db.VarChar(40)
+  depth1             String             @db.Text
+  depth2             String             @db.Text
+  depth3             String             @db.Text
+  depth4             String             @db.Text
+  depth5             String             @db.Text
+  depth6             String             @db.Text
+  name               String             @db.Text
+  codeA077           String             @map("code_a077") @db.Text
+  category_info_a077 CategoryInfoA077[] @relation("category_info_a077Tocategory_info_b378")
+  product            Product[]          @relation("category_info_b378Toproduct")
+
+  @@map("category_info_b378")
+}
+
+model CategoryInfoB719 {
+  id                 Int                @id @default(autoincrement())
+  code               String             @unique @db.VarChar(40)
+  depth1             String             @db.Text
+  depth2             String             @db.Text
+  depth3             String             @db.Text
+  depth4             String             @db.Text
+  depth5             String             @db.Text
+  depth6             String             @db.Text
+  name               String             @db.Text
+  category_info_a077 CategoryInfoA077[] @relation("category_info_a077Tocategory_info_b719")
+  product            Product[]          @relation("category_info_b719Toproduct")
+
+  @@map("category_info_b719")
+}
+
+model CategoryInfoB956 {
+  id                 Int                @id @default(autoincrement())
+  code               String             @unique @db.VarChar(40)
+  depth1             String             @db.Text
+  depth2             String             @db.Text
+  depth3             String             @db.Text
+  depth4             String             @db.Text
+  depth5             String             @db.Text
+  depth6             String             @db.Text
+  name               String             @db.Text
+  category_info_a077 CategoryInfoA077[] @relation("category_info_a077Tocategory_info_b956")
+  product            Product[]          @relation("category_info_b956Toproduct")
+
+  @@map("category_info_b956")
+}
+
+model productStateEnum {
+  id      Int       @id
+  state   String?   @db.VarChar(45)
+  product Product[] @relation("productToproduct_state_enum")
+
+  @@map("product_state_enum")
+}
+
+model productStoreLogEnum {
+  id              Int               @id
+  state           String?           @db.VarChar(45)
+  productStoreLog ProductStoreLog[] @relation("product_store_logToproduct_store_log_enum")
+
+  @@map("product_store_log_enum")
+}
+
+model temp_table {
+  id        Int     @id
+  shop_name String? @db.VarChar(45)
+}
+
+model order {
+  id                          Int            @id @default(autoincrement())
+  userId                      Int
+  productId                   Int?
+  marketCode                  String         @db.VarChar(10)
+  orderNo                     String         @db.VarChar(30)
+  taobaoOrderNo               String?        @db.VarChar(30)
+  productName                 String         @db.VarChar(100)
+  orderQuantity               Int
+  productOptionContents       String?        @db.VarChar(100)
+  sellerProductManagementCode String?        @db.VarChar(50)
+  orderMemberName             String         @db.VarChar(50)
+  orderMemberTelNo            String         @db.VarChar(20)
+  productPayAmt               Int
+  deliveryFeeAmt              Int
+  individualCustomUniqueCode  String?        @db.VarChar(20)
+  receiverName                String         @db.VarChar(10)
+  receiverTelNo1              String         @db.VarChar(20)
+  receiverIntegratedAddress   String         @db.VarChar(100)
+  receiverZipCode             String         @db.VarChar(10)
+  productOrderMemo            String?        @db.VarChar(200)
+  state                       Int            @default(1)
+  orderStateEnum              orderStateEnum @relation(fields: [state], references: [id])
+  user                        User           @relation("orderTouser", fields: [userId], references: [id])
+
+  @@unique([marketCode, orderNo], name: "marketCode_UNIQUE")
+  @@index([state], name: "FK_order_orderStateEnum")
+  @@index([userId], name: "FK_order_user")
+}
+
+model orderStateEnum {
+  id          Int     @id
+  name        String  @db.VarChar(45)
+  description String? @db.VarChar(100)
+  order       order[]
+}
+
+enum UserState {
+  ACTIVE
+  DELETED
+
+   @@map("user_state")
+}
+
+enum PurchaseLogType {
+  PLAN
+  IMAGE_TRANSLATE
+  STOCK
+
+   @@map("purchase_log_type")
+}
+
+enum PurchaseLogState {
+  WAIT_PAYMENT
+  WAIT_DEPOSIT
+  ACTIVE
+  ENDED
+  REFUNDED
+
+   @@map("purchase_log_state")
+}
+
+enum AdminState {
+  ACTIVE
+  DELETED
+
+   @@map("admin_state")
+}
