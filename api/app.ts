@@ -78,7 +78,7 @@ apollo.applyMiddleware({ app })
 apollo.installSubscriptionHandlers(http)
 
 http.listen(PORT, () => {
-    console.log(`🚀 GraphQL service ready at http://localhost:${PORT}/graphql`)
+    console.log(`GraphQL service ready at http://localhost:${PORT}/graphql`)
 })
 
 runScheduler();
