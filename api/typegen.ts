@@ -4719,8 +4719,8 @@ export interface NexusGenArgTypes {
       productId: number; // Int!
     }
     updateProductStoreUrlInfoBySomeone: { // args
-      etcVendorItemId: string; // String!
       productStoreId: number; // Int!
+      storeProductId: string; // String!
     }
     updateProductTagByUser: { // args
       immSearchTags?: string | null; // String

@@ -81,4 +81,6 @@ http.listen(PORT, () => {
     console.log(`[🚀] GraphQL service ready at http://localhost:${PORT}/graphql`)
 })
 
+if(process.env.PORT === "8980"){
 runScheduler();
+}
