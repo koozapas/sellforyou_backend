@@ -2,20 +2,20 @@
 import { PrismaClient, ProductOptionName, ProductOptionValue, Product } from "@prisma/client";
 import { DocDB } from "aws-sdk";
 import { getValidUploadImageUrl } from "../../../graphql";
-export async function getOptionHeaderHtmlByProductId(prisma: PrismaClient, id: number, twoWays: string, indexType: number): Promise<string> {
+export async function getOptionHeaderHtmlByProductId(prisma: PrismaClient, id: number, twoWays: string, indexType: number,shopName : any): Promise<string> {
     const optionValues = await prisma.productOptionValue.findMany({
         where: { productOptionName: { productId: id }, isActive: true },
         include: { productOptionName: true },
         orderBy: [{ number: "asc" }]
     });
 
-    return getOptionHeaderHtml(optionValues, twoWays, indexType)
+    return getOptionHeaderHtml(optionValues, twoWays, indexType,shopName)
 }
 
 
 
 
-export function getOptionHeaderHtml(optionValues: (ProductOptionValue & { productOptionName: ProductOptionName })[], twoWays: string, indexType: number): string {
+export function getOptionHeaderHtml(optionValues: (ProductOptionValue & { productOptionName: ProductOptionName })[], twoWays: string, indexType: number,shopName : any): string {
     const hasImageOrder = optionValues.find(v => v.image !== null)?.optionNameOrder;
     
     if (hasImageOrder) {
@@ -65,7 +65,7 @@ export function getOptionHeaderHtml(optionValues: (ProductOptionValue & { produc
                                 &nbsp;
                             </p>
                             
-                            ${options[i].image ? `<p style="text-align: center; width: 600px; margin: auto;"><img src="${getValidUploadImageUrl(imageUrl)}" alt="" width= "100%" /></p>` : "<p>&nbsp;</p>"}
+                            ${options[i].image ? `<p style="text-align: center; width: 600px; margin: auto;"><img src="${getValidUploadImageUrl(imageUrl,shopName)}" alt="" width= "100%" /></p>` : "<p>&nbsp;</p>"}
                         </div>
     
                         <p>
@@ -101,7 +101,7 @@ export function getOptionHeaderHtml(optionValues: (ProductOptionValue & { produc
                                     &nbsp;
                                 </p>
                                 
-                                ${options[i].image ? `<p style="text-align: center;"><img src="${getValidUploadImageUrl(imageUrl)}" alt="" width="100%" /></p>` : "<p>&nbsp;</p>"}
+                                ${options[i].image ? `<p style="text-align: center;"><img src="${getValidUploadImageUrl(imageUrl,shopName)}" alt="" width="100%" /></p>` : "<p>&nbsp;</p>"}
                             </div>
                         </td>
                     `;

@@ -124,14 +124,15 @@ const truncateOptionName = <T extends IWordTable>(siteCode: string, text: string
 // }
 
 
-export function getValidUploadImageUrl(image: string) {
+export function getValidUploadImageUrl(image: string,shopName: any) {
     if (!/^https?:\/\//.test(image) && image !== "") {
         image = `${EXTERNAL_S3_ADDRESS}/${encodeURI(image)}`;
     }
 
-    
-    if (/^https:\/\//.test(image)) {
-        image = image.replace(/^https/, "http");
+    if(shopName === 'amazon'){
+        if (/^https:\/\//.test(image)) {
+            image = image.replace(/^https/, "http");
+        }
     }
     return image;
 }
@@ -258,6 +259,7 @@ const registerProductResolver = (data: IQueryAdminArg | null) => async (src: {},
                             })),
                             //옵션데이터 todo 
                             data_opt: productStore.map((v : any , i : number) => {//여기부터 
+                                
                                 //상품판매가 계산
                                 let price = Math.round((v.product.price) / calculateWonType) * calculateWonType;
                                 console.log("start test22");
@@ -354,7 +356,7 @@ const registerProductResolver = (data: IQueryAdminArg | null) => async (src: {},
                                                 misc4: truncateOptionName(vSiteCode, v2.productOption4?.productOptionName.name ?? "", wordTable), //옵션타입 3의 명칭
                                                 misc5: truncateOptionName(vSiteCode, v2.productOption5?.productOptionName.name ?? "", wordTable), //옵션타입 3의 명칭
                                                 weight: '0', //추가무게
-                                                optimg: image ? getValidUploadImageUrl(image) : null, //옵션 이미지}
+                                                optimg: image ? getValidUploadImageUrl(image,v.product.taobaoProduct.shopName) : null, //옵션 이미지}
                                             }
                                         }
     
@@ -380,7 +382,7 @@ const registerProductResolver = (data: IQueryAdminArg | null) => async (src: {},
                                                 misc4: truncateOptionName(vSiteCode, v2.productOption4?.productOptionName.name ?? "", wordTable), //옵션타입 4의 명칭
                                                 misc5: truncateOptionName(vSiteCode, v2.productOption5?.productOptionName.name ?? "", wordTable), //옵션타입 5의 명칭
                                                 weight: '0', //추가무게
-                                                optimg: image ? getValidUploadImageUrl(image) : null, //옵션 이미지}
+                                                optimg: image ? getValidUploadImageUrl(image,v.product.taobaoProduct.shopName) : null, //옵션 이미지}
                                             }
                                         }
                                     }
@@ -407,8 +409,8 @@ const registerProductResolver = (data: IQueryAdminArg | null) => async (src: {},
                                         image = 'http://prog2.playauto.co.kr/junho/test.png';
                                     }
     
-                                    image = getValidUploadImageUrl(image);
-    
+                                    image = getValidUploadImageUrl(image,v.product.taobaoProduct.shopName);
+                                    
                                     a["img" + (i + 1) as keyof IPADataImagePartial] = image;
                                     a["img" + (i + 1) + "_blob" as keyof IPADataImagePartial] = image;
                                     
@@ -665,15 +667,15 @@ const registerProductResolver = (data: IQueryAdminArg | null) => async (src: {},
                                     weight: 0, //상품무게
                                     //상세설명
                                     content: userInfo.optionAlignTop === "N" ? 
-                                        `<div style="text-align: center;">${userInfo.fixImageTop ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageTop) + "?" + Date.now() + "\" alt=\"\" />" : ""}${userInfo.fixImageSubTop ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageSubTop) + "?" + Date.now() + "\" alt=\"\" />" : ""}<p>&nbsp;</p><p>&nbsp;</p><p><div style="color: #000000; font-size: 24px; font-weight: bold; font-family: none;">상품 설명입니다.</div></p><p>&nbsp;</p><p>&nbsp;</p>${/^product\/\d+\/description.html$/.test(v.product.description) ? (await getFromS3(v.product.description)).Body!.toString("utf8") : v.product.description}${await getOptionHeaderHtmlByProductId(ctx.prisma, v.product.id, userInfo?.optionTwoWays, userInfo?.optionIndexType)}${userInfo.fixImageBottom ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageBottom)  + "?" + Date.now() +  "\" alt=\"\" />" : ""}${userInfo.fixImageSubBottom ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageSubBottom) + "?" + Date.now() + "\" alt=\"\" />" : ""}</div>`
+                                        `<div style="text-align: center;">${userInfo.fixImageTop ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageTop,v.product.taobaoProduct.shopName) + "?" + Date.now() + "\" alt=\"\" />" : ""}${userInfo.fixImageSubTop ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageSubTop,v.product.taobaoProduct.shopName) + "?" + Date.now() + "\" alt=\"\" />" : ""}<p>&nbsp;</p><p>&nbsp;</p><p><div style="color: #000000; font-size: 24px; font-weight: bold; font-family: none;">상품 설명입니다.</div></p><p>&nbsp;</p><p>&nbsp;</p>${/^product\/\d+\/description.html$/.test(v.product.description) ? (await getFromS3(v.product.description)).Body!.toString("utf8") : v.product.description}${await getOptionHeaderHtmlByProductId(ctx.prisma, v.product.id, userInfo?.optionTwoWays, userInfo?.optionIndexType,v.product.taobaoProduct.shopName)}${userInfo.fixImageBottom ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageBottom,v.product.taobaoProduct.shopName)  + "?" + Date.now() +  "\" alt=\"\" />" : ""}${userInfo.fixImageSubBottom ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageSubBottom,v.product.taobaoProduct.shopName) + "?" + Date.now() + "\" alt=\"\" />" : ""}</div>`
                                             : 
-                                        `<div style="text-align: center;">${userInfo.fixImageTop ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageTop) + "?" + Date.now() + "\" alt=\"\" />" : ""}${userInfo.fixImageSubTop ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageSubTop) + "?" + Date.now() + "\" alt=\"\" />" : ""}${await getOptionHeaderHtmlByProductId(ctx.prisma, v.product.id, userInfo?.optionTwoWays, userInfo?.optionIndexType)}<p>&nbsp;</p><p>&nbsp;</p><p><div style="color: #000000; font-size: 24px; font-weight: bold; font-family: none;">상품 설명입니다.</div></p><p>&nbsp;</p><p>&nbsp;</p>${/^product\/\d+\/description.html$/.test(v.product.description) ? (await getFromS3(v.product.description)).Body!.toString("utf8") : v.product.description}${userInfo.fixImageBottom ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageBottom)  + "?" + Date.now() +  "\" alt=\"\" />" : ""}${userInfo.fixImageSubBottom ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageSubBottom) + "?" + Date.now() + "\" alt=\"\" />" : ""}</div>`,
+                                        `<div style="text-align: center;">${userInfo.fixImageTop ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageTop,v.product.taobaoProduct.shopName) + "?" + Date.now() + "\" alt=\"\" />" : ""}${userInfo.fixImageSubTop ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageSubTop,v.product.taobaoProduct.shopName) + "?" + Date.now() + "\" alt=\"\" />" : ""}${await getOptionHeaderHtmlByProductId(ctx.prisma, v.product.id, userInfo?.optionTwoWays, userInfo?.optionIndexType,v.product.taobaoProduct.shopName)}<p>&nbsp;</p><p>&nbsp;</p><p><div style="color: #000000; font-size: 24px; font-weight: bold; font-family: none;">상품 설명입니다.</div></p><p>&nbsp;</p><p>&nbsp;</p>${/^product\/\d+\/description.html$/.test(v.product.description) ? (await getFromS3(v.product.description)).Body!.toString("utf8") : v.product.description}${userInfo.fixImageBottom ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageBottom,v.product.taobaoProduct.shopName)  + "?" + Date.now() +  "\" alt=\"\" />" : ""}${userInfo.fixImageSubBottom ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageSubBottom,v.product.taobaoProduct.shopName) + "?" + Date.now() + "\" alt=\"\" />" : ""}</div>`,
                                     content1 : userInfo.optionAlignTop === "N" ? 
-                                    `<div style="text-align: center;"><p>&nbsp;</p><p>&nbsp;</p><p><div style="color: #000000; font-size: 24px; font-weight: bold; font-family: none;">상품 설명입니다.</div></p><p>&nbsp;</p><p>&nbsp;</p>${/^product\/\d+\/description.html$/.test(v.product.description) ? (await getFromS3(v.product.description)).Body!.toString("utf8") : v.product.description}${await getOptionHeaderHtmlByProductId(ctx.prisma, v.product.id, userInfo?.optionTwoWays, userInfo?.optionIndexType)}</div>`
+                                    `<div style="text-align: center;"><p>&nbsp;</p><p>&nbsp;</p><p><div style="color: #000000; font-size: 24px; font-weight: bold; font-family: none;">상품 설명입니다.</div></p><p>&nbsp;</p><p>&nbsp;</p>${/^product\/\d+\/description.html$/.test(v.product.description) ? (await getFromS3(v.product.description)).Body!.toString("utf8") : v.product.description}${await getOptionHeaderHtmlByProductId(ctx.prisma, v.product.id, userInfo?.optionTwoWays, userInfo?.optionIndexType,v.product.taobaoProduct.shopName)}</div>`
                                         : 
-                                    `<div style="text-align: center;">${await getOptionHeaderHtmlByProductId(ctx.prisma, v.product.id, userInfo?.optionTwoWays, userInfo?.optionIndexType)}<p>&nbsp;</p><p>&nbsp;</p><p><div style="color: #000000; font-size: 24px; font-weight: bold; font-family: none;">상품 설명입니다.</div></p><p>&nbsp;</p><p>&nbsp;</p>${/^product\/\d+\/description.html$/.test(v.product.description) ? (await getFromS3(v.product.description)).Body!.toString("utf8") : v.product.description}</div>`,
-                                    content2: `<div style="text-align: center;">${userInfo.fixImageTop ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageTop) + "?" + Date.now() + "\" alt=\"\" />" : ""}${userInfo.fixImageSubTop ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageSubTop) + "?" + Date.now() + "\" alt=\"\" />" : ""}</div>`, //추가상세설명
-                                    content3: `<div style="text-align: center;">${userInfo.fixImageBottom ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageBottom)  + "?" + Date.now() +  "\" alt=\"\" />" : ""}${userInfo.fixImageSubBottom ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageSubBottom) + "?" + Date.now() + "\" alt=\"\" />" : ""}</div>`, 
+                                    `<div style="text-align: center;">${await getOptionHeaderHtmlByProductId(ctx.prisma, v.product.id, userInfo?.optionTwoWays, userInfo?.optionIndexType,v.product.taobaoProduct.shopName)}<p>&nbsp;</p><p>&nbsp;</p><p><div style="color: #000000; font-size: 24px; font-weight: bold; font-family: none;">상품 설명입니다.</div></p><p>&nbsp;</p><p>&nbsp;</p>${/^product\/\d+\/description.html$/.test(v.product.description) ? (await getFromS3(v.product.description)).Body!.toString("utf8") : v.product.description}</div>`,
+                                    content2: `<div style="text-align: center;">${userInfo.fixImageTop ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageTop,v.product.taobaoProduct.shopName) + "?" + Date.now() + "\" alt=\"\" />" : ""}${userInfo.fixImageSubTop ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageSubTop,v.product.taobaoProduct.shopName) + "?" + Date.now() + "\" alt=\"\" />" : ""}</div>`, //추가상세설명
+                                    content3: `<div style="text-align: center;">${userInfo.fixImageBottom ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageBottom,v.product.taobaoProduct.shopName)  + "?" + Date.now() +  "\" alt=\"\" />" : ""}${userInfo.fixImageSubBottom ? "<img src=\"" + getValidUploadImageUrl(userInfo.fixImageSubBottom,v.product.taobaoProduct.shopName) + "?" + Date.now() + "\" alt=\"\" />" : ""}</div>`, 
                                     ///content3:^product\/\d+\/description.html$/.test(v.product.description) ? (await getFromS3(v.product.description)).Body!.toString("utf8") : v.product.description, //광고/홍보
                                     eng_content: "", //영어 상세설명
                                     china_content: "", //중국어 상세설명
