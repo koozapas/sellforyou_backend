@@ -130,9 +130,9 @@ export function getValidUploadImageUrl(image: string) {
     }
 
     
-    // if (/^https:\/\//.test(image)) {
-    //     image = image.replace(/^https/, "http");
-    // }
+    if (/^https:\/\//.test(image)) {
+        image = image.replace(/^https/, "http");
+    }
     return image;
 }
 
