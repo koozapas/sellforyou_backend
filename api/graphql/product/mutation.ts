@@ -753,6 +753,11 @@ const updateProductPriceResolver = async (src: {}, args: ArgsValue<"Mutation", "
                     localShippingFee = v.localShippingFee;
                     localShippingCode = v.localShippingCode;
                 }
+                if (taobao.shop_id === "amazon" && !args.localShippingCode) {
+                    cnyRate = v.cnyRate;
+                    localShippingFee = v.localShippingFee;
+                    localShippingCode = v.localShippingCode;
+                }
     
                 let test = [];
                 let productMinprice =0;
@@ -788,71 +793,6 @@ const updateProductPriceResolver = async (src: {}, args: ArgsValue<"Mutation", "
                 return 0;
             }))
     
-        return products.length;
-    } catch (e) {
-        return throwError(e, ctx);
-    }
-}
-
-
-const TestupdateProductPriceResolver = async (src: {}, args: ArgsValue<"Mutation", "updateProductPriceByUser">, ctx: Context, info: GraphQLResolveInfo) => {
-    try {
-        const data = await ctx.prisma.userInfo.findUnique({
-            where :{
-                userId : ctx.token!.userId!
-            }
-        })
-        if(!data) return throwError(errors.etc("no token"),ctx);
-        const calculateWonType = parseInt(data.calculateWonType);
-
-        const boundCalculatePrice = (cnyPrice: number, cnyRate: number, localShippingFee: number,calculateWonType :number) => calculatePrice.bind(null, cnyPrice, args.marginRate, args.marginUnitType, cnyRate, localShippingFee,calculateWonType)();
-
-        const products = await ctx.prisma.product.findMany({
-            where: { ...(ctx.token?.userId ? { userId: ctx.token.userId } : {}), id: { in: args.productIds } },
-            select: { id: true, cnyRate: true, localShippingFee: true, localShippingCode: true, productOption: { select: { id: true, priceCny: true } }, taobaoProduct: { select: { price: true, originalData: true } } }
-        });
-
-        await Promise.all(products.map(async v => {
-            let taobao = JSON.parse(v.taobaoProduct.originalData);
-            
-            let cnyRate = args.cnyRate;
-            let localShippingFee = args.localShippingFee;
-            let localShippingCode = args.localShippingCode;
-            
-            if (taobao.shop_id === "express" && !args.localShippingCode) {
-                cnyRate = v.cnyRate;
-                localShippingFee = v.localShippingFee;
-                localShippingCode = v.localShippingCode;
-            }
-
-            await ctx.prisma.product.update({
-                where: { id: v.id },
-                data: {
-                    price: boundCalculatePrice(v.taobaoProduct.price, cnyRate, localShippingFee,calculateWonType),
-                    cnyRate: cnyRate,
-                    marginRate: args.marginRate,
-                    marginUnitType: args.marginUnitType,
-                    shippingFee: args.shippingFee,
-                    localShippingFee: localShippingFee,
-                    localShippingCode: localShippingCode
-                }
-            });
-
-            await Promise.all(v.productOption.map(async v => {
-                await ctx.prisma.productOption.update({ 
-                    where: { 
-                        id: v.id 
-                    }, 
-                    
-                    data: { 
-                        price: boundCalculatePrice(v.priceCny, cnyRate, localShippingFee,calculateWonType),
-                        defaultShippingFee: localShippingFee
-                    }
-                });
-            }))
-            return 0;
-        }))
-
         return products.length;
     } catch (e) {
         return throwError(e, ctx);
