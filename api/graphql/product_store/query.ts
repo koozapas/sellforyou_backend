@@ -129,7 +129,7 @@ export function getValidUploadImageUrl(image: string,shopName: any) {
         image = `${EXTERNAL_S3_ADDRESS}/${encodeURI(image)}`;
     }
 
-    if(shopName === 'amazon'){
+    if(shopName !== 'amazon'){
         if (/^https:\/\//.test(image)) {
             image = image.replace(/^https/, "http");
         }
