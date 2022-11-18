@@ -1,7 +1,7 @@
 import { FileUpload } from "./types"
 
-import type { Context } from "./types"
-import type { core } from "nexus"
+import { Context } from "./types"
+import { core } from "nexus"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
     /**
@@ -1279,6 +1279,9 @@ export interface NexusGenInputs {
     autoPrice?: NexusGenEnums['SortOrder'] | null; // SortOrder
     calculateWonType?: NexusGenEnums['SortOrder'] | null; // SortOrder
     cnyRate?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    cnyRateDollar?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    cnyRateEuro?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    cnyRateYen?: NexusGenEnums['SortOrder'] | null; // SortOrder
     collectStock?: NexusGenEnums['SortOrder'] | null; // SortOrder
     collectTimeout?: NexusGenEnums['SortOrder'] | null; // SortOrder
     coupangAccessKey?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1385,6 +1388,9 @@ export interface NexusGenInputs {
     autoPrice?: NexusGenInputs['StringFilter'] | null; // StringFilter
     calculateWonType?: NexusGenInputs['StringFilter'] | null; // StringFilter
     cnyRate?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+    cnyRateDollar?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+    cnyRateEuro?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+    cnyRateYen?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
     collectStock?: NexusGenInputs['IntFilter'] | null; // IntFilter
     collectTimeout?: NexusGenInputs['IntFilter'] | null; // IntFilter
     coupangAccessKey?: NexusGenInputs['StringFilter'] | null; // StringFilter
@@ -2264,6 +2270,9 @@ export interface NexusGenObjects {
     autoPrice: string; // String!
     calculateWonType: string; // String!
     cnyRate: number; // Float!
+    cnyRateDollar: number; // Float!
+    cnyRateEuro: number; // Float!
+    cnyRateYen: number; // Float!
     collectStock: number; // Int!
     collectTimeout: number; // Int!
     coupangAccessKey: string; // String!
@@ -3108,6 +3117,9 @@ export interface NexusGenFieldTypes {
     autoPrice: string; // String!
     calculateWonType: string; // String!
     cnyRate: number; // Float!
+    cnyRateDollar: number; // Float!
+    cnyRateEuro: number; // Float!
+    cnyRateYen: number; // Float!
     collectStock: number; // Int!
     collectTimeout: number; // Int!
     coupangAccessKey: string; // String!
@@ -3948,6 +3960,9 @@ export interface NexusGenFieldTypeNames {
     autoPrice: 'String'
     calculateWonType: 'String'
     cnyRate: 'Float'
+    cnyRateDollar: 'Float'
+    cnyRateEuro: 'Float'
+    cnyRateYen: 'Float'
     collectStock: 'Int'
     collectTimeout: 'Int'
     coupangAccessKey: 'String'
@@ -4473,6 +4488,9 @@ export interface NexusGenArgTypes {
       autoPrice?: string | null; // String
       calculateWonType?: string | null; // String
       cnyRate?: number | null; // Float
+      cnyRateDollar?: number | null; // Float
+      cnyRateEuro?: number | null; // Float
+      cnyRateYen?: number | null; // Float
       collectStock?: number | null; // Int
       collectTimeout?: number | null; // Int
       coupangAccessKey?: string | null; // String
@@ -5070,8 +5088,6 @@ export interface NexusGenTypes {
 
 declare global {
   interface NexusGenPluginTypeConfig<TypeName extends string> {
-  }
-  interface NexusGenPluginInputTypeConfig<TypeName extends string> {
   }
   interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
   }

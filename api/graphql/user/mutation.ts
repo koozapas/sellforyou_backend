@@ -720,7 +720,9 @@ export const mutation_user = extendType({
                 streetNormalApiMemo3 : stringArg(),
                 streetNormalApiMemo4 : stringArg(),
                 calculateWonType :stringArg(),
-
+                cnyRateDollar :floatArg(),
+                cnyRateYen :floatArg(),
+                cnyRateEuro:floatArg(),
             },
             resolve: async (src, args, ctx, info) => {
                 try {
@@ -730,7 +732,7 @@ export const mutation_user = extendType({
                     args.marginRate = args.marginRate ?? undefined;
                     args.defaultShippingFee = args.defaultShippingFee ?? undefined;
                     args.cnyRate = args.cnyRate ?? undefined;
-
+                    
                     let fixImageTop: string | null | undefined = args.fixImageTop ? "" : args.fixImageTop;
                     let fixImageBottom: string | null | undefined = args.fixImageBottom ? "" : args.fixImageBottom;
                     let fixImageSubTop: string | null | undefined = args.fixImageSubTop ? "" : args.fixImageSubTop;
@@ -768,6 +770,9 @@ export const mutation_user = extendType({
                             fixImageSubTop,
                             fixImageSubBottom ,
                             cnyRate :  args.cnyRate,
+                            cnyRateDollar : args.cnyRateDollar  ?? undefined,
+                            cnyRateYen :args.cnyRateYen  ?? undefined,
+                            cnyRateEuro:args.cnyRateEuro  ?? undefined,
                             additionalShippingFeeJeju: args.additionalShippingFeeJeju ?? undefined,
                             asTel : asTel,
                             asInformation,

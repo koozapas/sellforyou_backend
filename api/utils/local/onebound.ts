@@ -190,7 +190,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(prisma: PrismaCli
             let cnyRate = 0;
             let defaultShippingFee = 0;
             //todoconsole.log("taobaoData.shop_id = ",taobaoData.shop_id);
-            if (taobaoData.shop_id === "express" ||taobaoData.shop_id === "amazon" ) {
+            if (taobaoData.shop_id === "express"  ) {
                 for (var i in taobaoData.props) {
                     if (taobaoData.props[i].default) {
                         code = parseInt(i);
@@ -733,7 +733,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(prisma: PrismaCli
                             defaultShippingFee : defaultShippingFee,
                             taobaoSkuId: sku.sku_id,
                             priceCny: parseFloat(sku.price),
-                            price: taobaoData.shop_id === "express" || taobaoData.shop_id === "amazon"  ? boundCalculatePrice(parseFloat(sku.price), 1, taobaoData.props[code].value,calculateWonType) : boundCalculatePrice(parseFloat(sku.price), cnyRate, defaultShippingFee,calculateWonType),
+                            price: taobaoData.shop_id === "express"  ? boundCalculatePrice(parseFloat(sku.price), 1, taobaoData.props[code].value,calculateWonType) : boundCalculatePrice(parseFloat(sku.price), cnyRate, defaultShippingFee,calculateWonType),
                             stock: parseInt(sku.quantity ?? "0"),
                             optionString : optionString 
                         }

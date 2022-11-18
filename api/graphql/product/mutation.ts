@@ -753,12 +753,7 @@ const updateProductPriceResolver = async (src: {}, args: ArgsValue<"Mutation", "
                     localShippingFee = v.localShippingFee;
                     localShippingCode = v.localShippingCode;
                 }
-                if (taobao.shop_id === "amazon" && !args.localShippingCode) {
-                    cnyRate = v.cnyRate;
-                    localShippingFee = v.localShippingFee;
-                    localShippingCode = v.localShippingCode;
-                }
-    
+                
                 let test = [];
                 let productMinprice =0;
                 test = await Promise.all(v.productOption.map(async v => {

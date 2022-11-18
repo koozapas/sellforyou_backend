@@ -478,6 +478,8 @@ export const mutation_taobao_product = extendType({
                             //todoconsole.log("updatedProduct = ",updatedProduct);
                             taobaoProducts.push({ ...updatedProduct, itemData: item, translateDataObject: translatedData });
 
+
+
                         }
                         catch (e) {
                             //todoconsole.log("taobaoProduct Upsert Error : ", e);
@@ -528,6 +530,16 @@ export const mutation_taobao_product = extendType({
                             info.marginRate = userInfo.marginRate;
                             info.marginUnitType = userInfo.marginUnitType ?? "PERCENT";
                             info.cnyRate = userInfo.cnyRate;
+                            //shopName - 아마존 예외처리 
+                            if(item.shopName.includes("amazon")){
+                                switch(item.shopName){
+                                    case "amazon-jp":  info.cnyRate = userInfo.cnyRateYen ; break;
+                                    case "amazon-de": info.cnyRate = userInfo.cnyRateEuro ; break;
+                                    case "amazon-us": info.cnyRate = userInfo.cnyRateDollar ; break;
+                                    default : break;
+                                }
+                            }
+
                             info.defaultShippingFee = userInfo.defaultShippingFee;
                             info.extraShippingFee = userInfo.extraShippingFee;
                             info.naverFee  = userInfo.naverFee

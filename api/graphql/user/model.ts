@@ -265,6 +265,9 @@ export const t_UserInfo = objectType({
     t.model.streetNormalApiMemo3();
     t.model.streetNormalApiMemo4();
     t.model.calculateWonType();
+    t.model.cnyRateDollar();
+    t.model.cnyRateEuro();
+    t.model.cnyRateYen();
   },
 });
 
