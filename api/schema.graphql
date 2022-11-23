@@ -809,6 +809,8 @@ input IntNullableFilter {
 }
 
 type Mutation {
+  EditPassword(checkNewPassword: String!, email: String!, newPassword: String!, verificationNumber: String!): String!
+  EditPasswordCreateVerification(email: String!, phoneNumber: String!): String!
   addWordByExcelByUser(data: Upload!, isReplace: Boolean!): Boolean!
   addWordByUser(findWord: String!, replaceWord: String): Boolean!
   cancelPurchasePlanByUser(merchantUid: String!): Boolean!
@@ -2164,6 +2166,7 @@ type User {
   token: String
   userInfo: UserInfo
   userLog(cursor: UserLogWhereUniqueInput, orderBy: [UserLogOrderByWithRelationInput!], skip: Int, take: Int, where: UserLogWhereInput): [UserLog!]!
+  verificationNumber: String!
 }
 
 type UserInfo {

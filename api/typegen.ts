@@ -2262,6 +2262,7 @@ export interface NexusGenObjects {
     refCode?: string | null; // String
     state: NexusGenEnums['UserState']; // UserState!
     token?: string | null; // String
+    verificationNumber: string; // String!
   }
   UserInfo: { // root type
     additionalShippingFeeJeju: number; // Int!
@@ -2701,6 +2702,8 @@ export interface NexusGenFieldTypes {
     name: string; // String!
   }
   Mutation: { // field return type
+    EditPassword: string; // String!
+    EditPasswordCreateVerification: string; // String!
     addWordByExcelByUser: boolean; // Boolean!
     addWordByUser: boolean; // Boolean!
     cancelPurchasePlanByUser: boolean; // Boolean!
@@ -3109,6 +3112,7 @@ export interface NexusGenFieldTypes {
     token: string | null; // String
     userInfo: NexusGenRootTypes['UserInfo'] | null; // UserInfo
     userLog: NexusGenRootTypes['UserLog'][]; // [UserLog!]!
+    verificationNumber: string; // String!
   }
   UserInfo: { // field return type
     additionalShippingFeeJeju: number; // Int!
@@ -3544,6 +3548,8 @@ export interface NexusGenFieldTypeNames {
     name: 'String'
   }
   Mutation: { // field return type name
+    EditPassword: 'String'
+    EditPasswordCreateVerification: 'String'
     addWordByExcelByUser: 'Boolean'
     addWordByUser: 'Boolean'
     cancelPurchasePlanByUser: 'Boolean'
@@ -3952,6 +3958,7 @@ export interface NexusGenFieldTypeNames {
     token: 'String'
     userInfo: 'UserInfo'
     userLog: 'UserLog'
+    verificationNumber: 'String'
   }
   UserInfo: { // field return type name
     additionalShippingFeeJeju: 'Int'
@@ -4221,6 +4228,16 @@ export interface NexusGenArgTypes {
     }
   }
   Mutation: {
+    EditPassword: { // args
+      checkNewPassword: string; // String!
+      email: string; // String!
+      newPassword: string; // String!
+      verificationNumber: string; // String!
+    }
+    EditPasswordCreateVerification: { // args
+      email: string; // String!
+      phoneNumber: string; // String!
+    }
     addWordByExcelByUser: { // args
       data: NexusGenScalars['Upload']; // Upload!
       isReplace: boolean; // Boolean!
