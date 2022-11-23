@@ -796,7 +796,7 @@ const updateProductPriceResolver = async (src: {}, args: ArgsValue<"Mutation", "
 
 const updateManyProductOption = async (src: {}, args: ArgsValue<"Mutation", "updateManyProductOption">, ctx: Context, info: GraphQLResolveInfo) => {
     try{
-        args.data.map(async (v :any)=>{
+        Promise.all(args.data.map(async (v :any)=>{
             console.log("records error input",v);
             const test = await ctx.prisma.productOption.update({
                 where :{ id : v.productOptionId},
@@ -808,7 +808,7 @@ const updateManyProductOption = async (src: {}, args: ArgsValue<"Mutation", "upd
                 }
             })
             console.log("records error result",test);
-        })
+        }))
         return "OK"
     }catch(e){
         return throwError(e,ctx);
