@@ -118,6 +118,7 @@ export const t_User = objectType({
             }
         }
     })
+    t.model.verificationNumber();
   },
 });
 

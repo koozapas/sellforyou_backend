@@ -14,28 +14,29 @@ datasource db {
 }
 
 model User {
-  id           Int            @id @default(autoincrement())
-  email        String         @unique @db.VarChar(50)
-  password     String         @db.VarChar(60)
-  state        UserState
-  naverId      String?        @unique @map("naver_id") @db.VarChar(10)
-  kakaoId      String?        @unique @map("kakao_id") @db.VarChar(12)
-  createdAt    DateTime       @default(now()) @map("created_at") @db.DateTime(0)
-  token        String?        @unique @db.VarChar(700)
-  createdToken DateTime?      @map("created_token") @db.DateTime(0)
-  master       Int            @default(1) @db.TinyInt
-  masterUserId Int?
-  refCode      String?        @db.VarChar(50)
-  refAvailable Boolean        @default(true)
-  credit       Int            @default(0)
-  order        order[]        @relation("orderTouser")
-  product      Product[]      @relation("productTouser")
-  productStore ProductStore[] @relation("product_storeTouser")
-  purchaseLog  PurchaseLog[]  @relation("purchase_logTouser")
-  userInfo     UserInfo?      @relation("userTouser_info")
-  userLog      UserLog[]      @relation("userTouser_log")
-  userQuestion UserQuestion[] @relation("userTouser_question")
-  wordTable    WordTable[]    @relation("userToword_table")
+  id                 Int            @id @default(autoincrement())
+  email              String         @unique @db.VarChar(50)
+  password           String         @db.VarChar(60)
+  state              UserState
+  naverId            String?        @unique @map("naver_id") @db.VarChar(10)
+  kakaoId            String?        @unique @map("kakao_id") @db.VarChar(12)
+  createdAt          DateTime       @default(now()) @map("created_at") @db.DateTime(0)
+  token              String?        @unique @db.VarChar(700)
+  createdToken       DateTime?      @map("created_token") @db.DateTime(0)
+  master             Int            @default(1) @db.TinyInt
+  masterUserId       Int?
+  refCode            String?        @db.VarChar(50)
+  refAvailable       Boolean        @default(true)
+  credit             Int            @default(0)
+  verificationNumber String         @db.Char(6)
+  order              order[]        @relation("orderTouser")
+  product            Product[]      @relation("productTouser")
+  productStore       ProductStore[] @relation("product_storeTouser")
+  purchaseLog        PurchaseLog[]  @relation("purchase_logTouser")
+  userInfo           UserInfo?      @relation("userTouser_info")
+  userLog            UserLog[]      @relation("userTouser_log")
+  userQuestion       UserQuestion[] @relation("userTouser_question")
+  wordTable          WordTable[]    @relation("userToword_table")
 
   @@map("user")
 }

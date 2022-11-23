@@ -34,10 +34,6 @@ export function getOptionHeaderHtml(optionValues: (ProductOptionValue & { produc
                 <span style="color: #2988FF;">
                     ${options[0].productOptionName.name}
                 </span>
-
-                <span style="color: #000000;">
-                    옵션 설명입니다.
-                </span>
             </div>
 
             <p>

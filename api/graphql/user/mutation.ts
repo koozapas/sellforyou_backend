@@ -9,10 +9,107 @@ import { APP_REFRESH_SECRET, APP_SECRET, regexPattern } from "../../utils/consta
 import { verify } from 'jsonwebtoken';
 import { arg, booleanArg, extendType, floatArg, intArg, nonNull, stringArg } from "nexus";
 import { Token } from '../../types';
+import fetch from "node-fetch";
+import { getRandomVerificationNumber } from "../../utils/local/phone_verification";
 
+type IheadersData ={
+    "Content-Type" : string;
+    "x-ncp-apigw-timestamp" : string ;
+    "x-ncp-iam-access-key" : string ;
+    "x-ncp-apigw-signature-v2" : string ;
+}
 export const mutation_user = extendType({
     type: "Mutation",
     definition(t) {
+        t.field("EditPassword",{
+            type : nonNull("String"),
+            args: {
+                email : nonNull(stringArg()),
+                verificationNumber: nonNull(stringArg()),
+                newPassword : nonNull(stringArg()),
+                checkNewPassword : nonNull(stringArg())
+            },
+            resolve : async(src,args,ctx,info) => {
+                try{
+                    if (args.userType === "EMAIL" && !regexPattern.email.test(args.email)) return throwError(errors.etc("이메일 형식이 잘못되었습니다."), ctx);
+                    const user = await ctx.prisma.user.findFirst({ where : {email : args.email , verificationNumber : args.verificationNumber} });
+                    if (!user) return throwError(errors.invalidUser, ctx);
+                    if (user.state !== 'ACTIVE') return throwError(errors.invalidUser, ctx);
+                    if (args.newPassword !== args.checkNewPassword) return throwError(errors.etc("신규 비밀번호가 일치하지 않습니다."),ctx);
+
+                    await ctx.prisma.user.update({
+                        where: { id : user.id},
+                        data : {
+                            password : hashSync(args.newPassword)
+                        }
+                    })
+                    return "비밀번호 변경 완료"
+                }catch(e){
+                    throwError(e,ctx);
+                }
+            }
+        })
+        t.field("EditPasswordCreateVerification",{
+        type : nonNull("String"),
+        args: {
+            email : nonNull(stringArg()),
+            phoneNumber: nonNull(stringArg()),
+        },
+        resolve : async(src,args,ctx,info) => {
+            try{
+                if (!regexPattern.phone.test(args.phoneNumber)) return throwError(errors.etc("휴대폰 번호 형식이 잘못되었습니다."),ctx);
+                    const tel = args.phoneNumber.replace(regexPattern.phone, "0$1$2$3");
+                    const userData = await ctx.prisma.user.findUnique({ where : {email : args.email}, include : { userInfo : true}});
+                    if(!userData) return throwError(errors.etc("존재하지 않는 이용자입니다."),ctx); 
+                    if(!userData.userInfo) return throwError(errors.etc("정상적인 이용자가 아닙니다."),ctx);
+                    if(userData.userInfo.phone !== args.phoneNumber) return throwError(errors.etc("전화번호가 일치하지 않습니다."),ctx); 
+                    const verificationNumber  = getRandomVerificationNumber();//숫자를만들어냄 
+                    console.log(`인증 번호 발송) ${tel} : ${verificationNumber}`);
+                    
+                    let verfifyData = {
+                        "type":"SMS",
+                        "contentType":"COMM",
+                        "countryCode":"82",
+                        "from":"07040647890",
+                        "subject":"",
+                        "content":`[셀포유] 인증번호 [${verificationNumber}]를 입력해주세요.`,
+                        "messages":[
+                            {
+                                "to": tel,
+                            }
+                        ],
+                    };
+            
+                    const now = new Date().getTime();
+                    const path = `/sms/v2/services/ncp:sms:kr:259001473572:verification/messages`;
+                    const accesskey = "xzd0g9r6eCQ8uS8033tu";
+                    const secretkey = "Hb3DJDmA0WaxXqE8qUWm4a6dSf2vliE7dizN3nq1";
+                    const base_str = `POST ${path}\n${now}\n${accesskey}`;
+                    const signature = CryptoJS.HmacSHA256(base_str, secretkey).toString(CryptoJS.enc.Base64);
+                    
+                    let headersData : IheadersData = {
+                        "Content-Type" : "application/json; charset=utf-8",
+        
+                        "x-ncp-apigw-timestamp" : now.toString(),
+                        "x-ncp-iam-access-key" : accesskey,
+                        "x-ncp-apigw-signature-v2" : signature
+                    }
+
+                    await fetch(`https://sens.apigw.ntruss.com${path}`, {
+                        headers: headersData,
+                        method: "POST",
+                        body: JSON.stringify(verfifyData)
+                    });
+
+                        await ctx.prisma.phoneVerification.update({ where : { id : userData.id}, data: { verificationNumber } });
+                       
+
+                return "인증번호가 발급되었습니다."
+            }catch(e){
+                throwError(e,ctx);
+            }
+        }
+    })
         t.field("signUpUserByEveryone", {//수성완료  회원가입 
             //type: nonNull("SignInType"),
             type: nonNull("String"),

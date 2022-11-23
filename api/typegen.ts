@@ -1540,6 +1540,7 @@ export interface NexusGenInputs {
     userInfo?: NexusGenInputs['UserInfoOrderByWithRelationInput'] | null; // UserInfoOrderByWithRelationInput
     userLog?: NexusGenInputs['UserLogOrderByRelationAggregateInput'] | null; // UserLogOrderByRelationAggregateInput
     userQuestion?: NexusGenInputs['UserQuestionOrderByRelationAggregateInput'] | null; // UserQuestionOrderByRelationAggregateInput
+    verificationNumber?: NexusGenEnums['SortOrder'] | null; // SortOrder
     wordTable?: NexusGenInputs['WordTableOrderByRelationAggregateInput'] | null; // WordTableOrderByRelationAggregateInput
   }
   UserQuestionListRelationFilter: { // input type
@@ -1606,6 +1607,7 @@ export interface NexusGenInputs {
     userInfo?: NexusGenInputs['UserInfoWhereInput'] | null; // UserInfoWhereInput
     userLog?: NexusGenInputs['UserLogListRelationFilter'] | null; // UserLogListRelationFilter
     userQuestion?: NexusGenInputs['UserQuestionListRelationFilter'] | null; // UserQuestionListRelationFilter
+    verificationNumber?: NexusGenInputs['StringFilter'] | null; // StringFilter
     wordTable?: NexusGenInputs['WordTableListRelationFilter'] | null; // WordTableListRelationFilter
   }
   UserWhereUniqueInput: { // input type

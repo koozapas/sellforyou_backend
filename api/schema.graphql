@@ -2567,6 +2567,7 @@ input UserOrderByWithRelationInput {
   userInfo: UserInfoOrderByWithRelationInput
   userLog: UserLogOrderByRelationAggregateInput
   userQuestion: UserQuestionOrderByRelationAggregateInput
+  verificationNumber: SortOrder
   wordTable: WordTableOrderByRelationAggregateInput
 }
 
@@ -2681,6 +2682,7 @@ input UserWhereInput {
   userInfo: UserInfoWhereInput
   userLog: UserLogListRelationFilter
   userQuestion: UserQuestionListRelationFilter
+  verificationNumber: StringFilter
   wordTable: WordTableListRelationFilter
 }
 
