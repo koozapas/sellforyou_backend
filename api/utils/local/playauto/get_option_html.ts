@@ -21,29 +21,7 @@ export function getOptionHeaderHtml(optionValues: (ProductOptionValue & { produc
     if (hasImageOrder) {
         const options = optionValues.filter(v => v.optionNameOrder === hasImageOrder);
 
-        var output = `
-            <p>
-                &nbsp;
-            </p>
-
-            <p>
-                &nbsp;
-            </p>
-
-            <div style="text-align: center; font-size: 24px; font-weight: bold; font-family: none;">
-                <span style="color: #2988FF;">
-                    ${options[0].productOptionName.name}
-                </span>
-            </div>
-
-            <p>
-                &nbsp;
-            </p>
-
-            <p>
-                &nbsp;
-            </p>
-        `;
+        var output = ``;
 
         switch (twoWays) {
             case "N": {
