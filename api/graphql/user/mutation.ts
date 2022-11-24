@@ -148,6 +148,7 @@ export const mutation_user = extendType({
                             email: args.email,
                             password: hashSync(args.password),
                             state: "ACTIVE",
+                            verificationNumber : "",
                             userInfo: {//다른 model에 data 삽입도 이런식으로 가능 하네 ! 
                                 create: {
                                     phone: tel,
