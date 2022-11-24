@@ -353,6 +353,7 @@ export const mutation_user = extendType({
                                     refCode : args.refCode ?? "",
                                     credit : args.refCode ? 5000 : 0,
                                     refAvailable : true,
+                                    verificationNumber : "",
                                     userInfo: {//다른 model에 data 삽입도 이런식으로 가능 하네 ! 
                                         create: {
                                             phone: tel,
