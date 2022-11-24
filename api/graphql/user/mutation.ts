@@ -34,8 +34,8 @@ export const mutation_user = extendType({
                     try{
                         if (!regexPattern.email.test(args.email)) return throwError(errors.etc("이메일 형식이 잘못되었습니다."), ctx);
                         const user = await ctx.prisma.user.findFirst({ where : {email : args.email , verificationNumber : args.verificationNumber} });
-                        if (!user) return throwError(errors.invalidUser, ctx);
-                        if (user.state !== 'ACTIVE') return throwError(errors.invalidUser, ctx);
+                        if (!user) return throwError(errors.etc("존재하지 않는 아이디거나 인증번호가 일치하지 않습니다."),ctx);
+                        if (user.state !== 'ACTIVE') return throwError(errors.etc("비활성된 아이디입니다."),ctx);
                         if (args.newPassword !== args.checkNewPassword) return throwError(errors.etc("신규 비밀번호가 일치하지 않습니다."),ctx);
 
                         await ctx.prisma.user.update({
