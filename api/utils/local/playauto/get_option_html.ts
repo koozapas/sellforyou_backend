@@ -21,7 +21,15 @@ export function getOptionHeaderHtml(optionValues: (ProductOptionValue & { produc
     if (hasImageOrder) {
         const options = optionValues.filter(v => v.optionNameOrder === hasImageOrder);
 
-        var output = ``;
+        var output = `
+        <p>
+            &nbsp;
+        </p>
+        
+        <p>
+            &nbsp;
+        </p>
+        `;
 
         switch (twoWays) {
             case "N": {
