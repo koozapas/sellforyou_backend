@@ -45,9 +45,9 @@ export const mutation_user = extendType({
                             }
                         })
                         return "비밀번호 변경 완료"
-                    }catch(e){
-                        throwError(e,ctx);
-                    }
+                        }catch(e){
+                            throwError(e,ctx);
+                        }
                 }
             })
             t.field("EditPasswordCreateVerification",{
@@ -102,13 +102,13 @@ export const mutation_user = extendType({
                             body: JSON.stringify(verfifyData)
                         });
 
-                            await ctx.prisma.phoneVerification.update({ where : { id : userData.id}, data: { verificationNumber } });
+                            await ctx.prisma.user.update({ where : { id : userData.id}, data: { verificationNumber } });
                         
 
                     return "인증번호가 발급되었습니다."
-                }catch(e){
-                    throwError(e,ctx);
-                }
+                    }catch(e){
+                        throwError(e,ctx);
+                    }
             }
         })
         t.field("signUpUserByEveryone", {//수성완료  회원가입 
