@@ -442,7 +442,8 @@ const updateImageThumbnailData =  async (src: {}, args: ArgsValue<"Mutation", "u
                     uploadImageresult.push("https://img.sellforyou.co.kr/sellforyou/"+image);
                 }
                 //썸네일 https 수정
-                imageArray.push(image.replace(/^https?:/, "http:"));
+                // imageArray.push(image.replace(/^https?:/, "http:"));
+                imageArray.push(image);
             }
             imageThumbnailData = JSON.stringify(imageArray);
         }
