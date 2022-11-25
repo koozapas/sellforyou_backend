@@ -89,8 +89,8 @@ export const mutation_user = extendType({
                         verificationNumber: nonNull(stringArg()),
                     },resolve : async(src,args,ctx,info) => {
                         try{
-                            if (!regexPattern.phone.test(args.phoneNumber)) return throwError(errors.etc("휴대폰 번호 형식이 잘못되었습니다."),ctx);
-                            const phone = args.phoneNumber.replace(regexPattern.phone, "0$1$2$3");
+                            if (!regexPattern.phone.test(args.phone)) return throwError(errors.etc("휴대폰 번호 형식이 잘못되었습니다."),ctx);
+                            const phone = args.phone.replace(regexPattern.phone, "0$1$2$3");
                             const userInfo = await ctx.prisma.userInfo.findMany({where : { phone }, include : {user : true}});
                             if(!userInfo) return throwError(errors.etc("존재하지 않는 이용자입니다."),ctx); 
                             const userList :any = userInfo.filter(v => v.user.verificationNumber === args.verificationNumber);
