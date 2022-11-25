@@ -47,7 +47,7 @@ export const translateCallbackHandler = async (req: Request, res: Response) => {
                 })
                 saveTaobaoItemToUser(prisma, taobaoProductsData, userId, info, request.categoryCode, request.siilCode, request.adminId ?? undefined).then(products => {
                     const resultProducts = products.filter((v): v is Product => v !== null);
-                    console.log(`콜백 : 상품 ${products.length} 개 중 ${resultProducts.length}개 추가완료 :${resultProducts.map(v => "SFY_" + v.id.toString(36))}`);
+                    // console.log(`콜백 : 상품 ${products.length} 개 중 ${resultProducts.length}개 추가완료 :${resultProducts.map(v => "SFY_" + v.id.toString(36))}`);
                     if (userId) {
                         const ctx = createContext(null);
                         ctx.token = { userId, iat: 0, exp: 0 }

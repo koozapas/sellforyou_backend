@@ -119,7 +119,7 @@ export const query_product = extendType({
                     const tt = Allnumber.filter(x => !test.includes(x));// 있는배열제거
                     // let ttt = Array.from(Array(766).keys());//단순확인용 제거대상 
                     // const tt2=tt.filter(x => !ttt.includes(x));//단순확인용 제거대상 
-                    console.log(tt);
+                    //console.log(tt);
                     
         await Promise.all (
             tt.map(async(v:any) => {

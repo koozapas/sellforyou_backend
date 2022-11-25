@@ -99,7 +99,7 @@ export const deleteS3Folder = async (Key: string): Promise<boolean> => {
 
         const result: any = await listAllKeys();
 
-        console.log(`result ${Key} ${result}`);
+        // console.log(`result ${Key} ${result}`);
 
         result.map((v: string) => {
             deleteFromS3(v);
@@ -163,7 +163,7 @@ export const uploadToS3AvoidDuplicate = async (pfile: FileUpload, pathArray: (st
     filename = filename.replace(regexPattern.fileNameAndExtension, `$1${tmpnumber ? (tmpnumber.toString()) : ""}.$2`);
     filename = filename.replace("jpeg", "jpg");
 
-    console.log(filename);
+    // console.log(filename);
 
     return (await uploadToS3(file, pathArray, filename)).url;
 };
@@ -207,7 +207,7 @@ export const uploadToS3WithEditor = async (content: string, pathArray: (string |
     content = /<img[^>]src="([^">]+)"([^>]+)?>/g.test(content) ? content.replace(/<img[^>]src="([^">]+)"([^>]+)?>/g, `<img src="$1" />`) : content.replace(/<img[^>]+src="([^">]+)"([^>]+)?>/g, `<img src="$1" />`);
     const result = content.match(/<img src="?data:(image\/.*?);base64,(.*?)"? ?\/?>/g);
 
-    console.log('matched', result?.length);
+    // console.log('matched', result?.length);
 
     let descriptionContents = content;
 
@@ -226,7 +226,7 @@ export const uploadToS3WithEditor = async (content: string, pathArray: (string |
             return await uploadToS3AvoidDuplicateByBuffer(buffer, `image${i}.${ext}`, mimetype, [...pathArray]);
         }));
 
-        console.log(urlArray);
+        // console.log(urlArray);
 
         descriptionContents = result?.reduce((p, c, i) => p.replace(c, `<img src="${EXTERNAL_S3_ADDRESS}/${urlArray[i]}">`), descriptionContents);
     }

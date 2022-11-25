@@ -262,7 +262,7 @@ const registerProductResolver = (data: IQueryAdminArg | null) => async (src: {},
                                 
                                 //상품판매가 계산
                                 let price = Math.round((v.product.price) / calculateWonType) * calculateWonType;
-                                console.log("start test22");
+                                //console.log("start test22");
     
                                 if (vSiteCode === 'A077') { //스마트스토어 할인금액 설정
                                     const productPrice = Math.round(v.product.price / calculateWonType) * calculateWonType;
@@ -275,7 +275,7 @@ const registerProductResolver = (data: IQueryAdminArg | null) => async (src: {},
                                 }
     
                                 if(vSiteCode === 'A112' || vSiteCode === 'A113' || vSiteCode === 'A001' || vSiteCode === 'A006' ){
-                                    console.log("start test33");
+                                    //console.log("start test33");
                                     if(v.product.productOption.length !== 0){
                                     if(userInfo?.defaultPrice === 'M'){//기준가 중간가 
                                     let minPrice = Math.min(...v.product.productOption.map((v2 :any) => Math.round((v2.price) / calculateWonType) * calculateWonType));
@@ -290,7 +290,7 @@ const registerProductResolver = (data: IQueryAdminArg | null) => async (src: {},
                                         }
                                     }
                                     price = Math.max(...middleLowPrice);
-                                    console.log("test444",price);
+                                    //console.log("test444",price);
                                    }else{// 기준가 최저가
                                        price = Math.min(...v.product.productOption.map((v2 :any) => Math.round((v2.price) / calculateWonType) * calculateWonType)); //실제상품가격 = 최저옵션가
                                     }
@@ -540,11 +540,11 @@ const registerProductResolver = (data: IQueryAdminArg | null) => async (src: {},
                                 } 
     
                                 if(vSiteCode === 'A112' || vSiteCode === 'A113' || vSiteCode === 'A001' || vSiteCode === 'A006' ){
-                                    console.log("start test33");
+                                    //console.log("start test33");
                                     if(v.product.productOption.length !== 0){
                                     if(userInfo?.defaultPrice === 'M'){//기준가 중간가 
                                     let minPrice = Math.min(...v.product.productOption.map((v2 :any) => Math.round((v2.price) / calculateWonType) * calculateWonType));
-                                    console.log("MinPrice",minPrice);
+                                    //console.log("MinPrice",minPrice);
                                     let maxPrice = Math.max(...v.product.productOption.map((v2 :any) => Math.round((v2.price) / calculateWonType) * calculateWonType));
                                     let middlePrice = (maxPrice + minPrice)/2 ;
                                     let priceList = [];
@@ -556,10 +556,10 @@ const registerProductResolver = (data: IQueryAdminArg | null) => async (src: {},
                                         }
                                     }
                                     price = Math.max(...middleLowPrice);
-                                    console.log("test444",price);
+                                    //console.log("test444",price);
                                    }else{// 기준가 최저가
                                        price = Math.min(...v.product.productOption.map((v2 :any) => Math.round((v2.price) / calculateWonType) * calculateWonType)); //실제상품가격 = 최저옵션가
-                                       console.log("price",price);
+                                       //console.log("price",price);
                                     }
                                      }
                                 }

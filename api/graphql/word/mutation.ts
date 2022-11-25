@@ -95,7 +95,7 @@ export const mutation_word = extendType({
                 try {
                     const userId = ctx.token!.userId!;
                     const file = await args.data;
-                    console.log(file.mimetype);
+                    // console.log(file.mimetype);
                     if (!file.mimetype.includes("spreadsheet") && !file.mimetype.includes("haansoft")) return throwError(errors.etc("엑셀 형식의 파일이 아닙니다."), ctx);
                     const workbook = new Excel.Workbook();
                     await workbook.xlsx.read(file.createReadStream());

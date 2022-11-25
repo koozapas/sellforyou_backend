@@ -23,9 +23,9 @@ export const iamportCallbackHandler = async (req: Req, res: Res) => {
         if (log) {
             const payRequest = Request.Payments.getByMerchantUid({ merchant_uid: data.merchant_uid, sorting: SortingEnum.STARTED_DESC, status: StatusEnum.ALL });
             const result = await payRequest.request(iamport).then(result => result.data.response as Payment).catch((e) => { console.log(e); return null; })
-            console.log("data", JSON.stringify(data));
-            console.log("result", JSON.stringify(result));
-            console.log("order", JSON.stringify(log));
+            // console.log("data", JSON.stringify(data));
+            // console.log("result", JSON.stringify(result));
+            // console.log("order", JSON.stringify(log));
             const purchaseInfo = JSON.parse(log.planInfo) as PurchaseLogPlanInfoType;
             if (result) {
                 if (result.amount === log.payAmount && result.status === data.status && result.imp_uid === data.imp_uid) { //정상결제 위조 점검
@@ -52,7 +52,7 @@ export const iamportCallbackHandler = async (req: Req, res: Res) => {
                         publishUserLogData({ prisma, pubsub, token: { userId: orderResult.userId } }, { type: "purchaseRenewed", title: '', renewedAccessToken: accessToken })
                     }
                     else if (data.status === 'cancelled') { //카드사에 의한 환불의 경우
-                        console.log(`처리되지 않은 환불 상태 : ${result}`)
+                        // console.log(`처리되지 않은 환불 상태 : ${result}`)
                         const updatedOrder = await prisma.purchaseLog.update({
                             where: { id: log.id },
                             data: {

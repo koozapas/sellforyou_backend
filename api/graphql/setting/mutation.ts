@@ -26,7 +26,6 @@ export const mutation_setting = extendType({
                     // });
 
                     // console.log("done");
-                    console.log("test");
 
                     await ctx.prisma.setting.update({ where: { name: "CNY_RATE" }, data: { value: args.cnyRate.toString() } });
                     return args.cnyRate;

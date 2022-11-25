@@ -65,7 +65,7 @@ const isNeedToTranslate = <T extends { name: string }>(object: T) => !/^[\x00-\x
 const translateProduct = async (ctx: Context, type: NexusGenAllTypes["TranslateTargetEnumType"], id: number): Promise<string> => {
     let ids: number[] = [];
     let isTranslated = false;
-    console.log("translate :", { type, id });
+    // console.log("translate :", { type, id });
     //상품 이름 번역
     if (['PRODUCT_ALL', 'PRODUCT_NAME'].includes(type)) {
         const product = await ctx.prisma.product.findUnique({ where: { id: id }, include: { productOptionName: { select: { id: true } } } });

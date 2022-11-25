@@ -119,7 +119,7 @@ const initProductOptionImageByUser = async (src: {}, args: ArgsValue<"Mutation",
             
          test.map( (data : any) => {
             data.optionValues.map(async( valueData : any) => {
-                console.log(`option ID = ${valueData.id}  image = ${valueData.img}`);
+                //console.log(`option ID = ${valueData.id}  image = ${valueData.img}`);
                 await ctx.prisma.productOptionValue.update({
                     where : {
                         id: valueData.id
@@ -516,8 +516,8 @@ const updateProductTagResolver = async (src: {}, args: ArgsValue<"Mutation", "up
 
 const updateManyProductTagResolver = async (src: {}, args: ArgsValue<"Mutation", "updateManyProductTagByUser">, ctx: Context, info: GraphQLResolveInfo) => {
     try {
-        console.log("1", args.searchTags);
-        console.log("2",args.immSearchTags);
+        //console.log("1", args.searchTags);
+        //console.log("2",args.immSearchTags);
                 await ctx.prisma.product.updateMany({
                     where: { id: { in : args.productIds } },
                     data: {
@@ -770,10 +770,10 @@ const updateProductPriceResolver = async (src: {}, args: ArgsValue<"Mutation", "
                     });
                     return result.isActive ? result.price : 0
                 }))
-                console.log("test",test);
+                //console.log("test",test);
                 let testZero = test.filter( (v :any)=> v  )
                 if(testZero.length >0) productMinprice = Math.min(...testZero);
-                console.log("productMinprice",productMinprice);
+                //console.log("productMinprice",productMinprice);
                 await ctx.prisma.product.update({
                     where: { id: v.id },
                     data: {
@@ -1510,7 +1510,7 @@ export const mutation_product = extendType({
                         }
                         return  { userId: product.userId, productId: product.id, reason: v.msg, state: v.state, storeUrl : v.slave_reg_code };
                     }))
-                    console.log("상품등록 결과",results);
+                    //console.log("상품등록 결과",results);
                 return true;
                 }
                 catch(e){
@@ -1897,7 +1897,7 @@ export const mutation_product = extendType({
                     return returnImage;
                 }
                     else if(args.productOptionNameId){
-                        console.log("옵션 전면 활성화");
+                        //console.log("옵션 전면 활성화");
                         const productOptionName = await ctx.prisma.productOptionName.findUnique({
                             where : {id : args.productOptionNameId},
                             select : { id : true , product : {select : {userId : true,id: true}}}

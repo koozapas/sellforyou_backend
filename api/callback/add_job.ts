@@ -153,8 +153,8 @@ export const addJobCallbackHandler = async (req: Request, res: Response) => {
             }
             catch (e) {
                 console.log('addJob Update Error');
-                console.log(e);
-                console.log({ result, config, jobId: response.job_id });
+                // console.log(e);
+                // console.log({ result, config, jobId: response.job_id });
                 res.sendStatus(500)
                 return throwError(errors.etc("connection error"),null);
 
