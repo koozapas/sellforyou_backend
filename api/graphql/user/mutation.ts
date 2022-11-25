@@ -93,7 +93,7 @@ export const mutation_user = extendType({
                             const phone = args.phone.replace(regexPattern.phone, "0$1$2$3");
                             const userInfo = await ctx.prisma.userInfo.findMany({where : { phone }, include : {user : true}});
                             if(!userInfo) return throwError(errors.etc("존재하지 않는 이용자입니다."),ctx); 
-                            const userList :any = userInfo.filter(v => v.user.verificationNumber === args.verificationNumber);
+                            const userList :any = userInfo.filter(v => v.user.verificationNumber === args.verificationNumber).map(v=>v.user.email);
                             
                             return JSON.stringify(userList);
                         }catch(e){
