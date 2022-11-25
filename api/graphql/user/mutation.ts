@@ -22,6 +22,85 @@ type IheadersData ={
 export const mutation_user = extendType({
     type: "Mutation",
     definition(t) {
+            t.field("findEmailCreateVerification",{
+                type : nonNull("String"),
+                args: {
+                    phoneNumber: nonNull(stringArg()),
+                },
+                resolve : async(src,args,ctx,info) => {
+                    try{
+                        if (!regexPattern.phone.test(args.phoneNumber)) return throwError(errors.etc("휴대폰 번호 형식이 잘못되었습니다."),ctx);
+                            const phone = args.phoneNumber.replace(regexPattern.phone, "0$1$2$3");
+                            const userInfo = await ctx.prisma.userInfo.findMany({where : { phone }});
+                            if(!userInfo) return throwError(errors.etc("존재하지 않는 이용자입니다."),ctx); 
+
+                            const verificationNumber  = getRandomVerificationNumber();//숫자를만들어냄 
+                            console.log(`인증 번호 발송) ${phone} : ${verificationNumber}`);
+                            
+                            let verfifyData = {
+                                "type":"SMS",
+                                "contentType":"COMM",
+                                "countryCode":"82",
+                                "from":"07040647890",
+                                "subject":"",
+                                "content":`[셀포유] 인증번호 [${verificationNumber}]를 입력해주세요.`,
+                                "messages":[
+                                    {
+                                        "to": phone,
+                                    }
+                                ],
+                            };
+                    
+                            const now = new Date().getTime();
+                            const path = `/sms/v2/services/ncp:sms:kr:259001473572:verification/messages`;
+                            const accesskey = "xzd0g9r6eCQ8uS8033tu";
+                            const secretkey = "Hb3DJDmA0WaxXqE8qUWm4a6dSf2vliE7dizN3nq1";
+                            const base_str = `POST ${path}\n${now}\n${accesskey}`;
+                            const signature = CryptoJS.HmacSHA256(base_str, secretkey).toString(CryptoJS.enc.Base64);
+                            
+                            let headersData : IheadersData = {
+                                "Content-Type" : "application/json; charset=utf-8",
+                
+                                "x-ncp-apigw-timestamp" : now.toString(),
+                                "x-ncp-iam-access-key" : accesskey,
+                                "x-ncp-apigw-signature-v2" : signature
+                            }
+
+                            await fetch(`https://sens.apigw.ntruss.com${path}`, {
+                                headers: headersData,
+                                method: "POST",
+                                body: JSON.stringify(verfifyData)
+                            });
+                            await Promise.all(userInfo.map(async v =>{
+                                await ctx.prisma.user.update({ where : { id : v.userId }, data: { verificationNumber } });
+                            }))
+                            
+
+                        return "인증번호가 발급되었습니다."
+                        }catch(e){
+                            throwError(e,ctx);
+                        }
+                }
+                })
+                t.field("findEmail",{
+                    type : nonNull("String"),
+                    args: {
+                        phone : nonNull(stringArg()),
+                        verificationNumber: nonNull(stringArg()),
+                    },resolve : async(src,args,ctx,info) => {
+                        try{
+                            if (!regexPattern.phone.test(args.phoneNumber)) return throwError(errors.etc("휴대폰 번호 형식이 잘못되었습니다."),ctx);
+                            const phone = args.phoneNumber.replace(regexPattern.phone, "0$1$2$3");
+                            const userInfo = await ctx.prisma.userInfo.findMany({where : { phone }, include : {user : true}});
+                            if(!userInfo) return throwError(errors.etc("존재하지 않는 이용자입니다."),ctx); 
+                            const userList :any = userInfo.filter(v => v.user.verificationNumber === args.verificationNumber);
+                            
+                            return JSON.stringify(userList);
+                        }catch(e){
+                            throwError(e,ctx);
+                        }
+                    }
+                })
             t.field("EditPassword",{
                 type : nonNull("String"),
                 args: {
