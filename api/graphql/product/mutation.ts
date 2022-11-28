@@ -76,12 +76,12 @@ const initProductThumbnailImageByUser = async (src: {}, args: ArgsValue<"Mutatio
 
         await ctx.prisma.product.update({
             where: { id: product.id }, data: {
-                imageThumbnailData,
+                imageThumbnailData : JSON.stringify(taobaoData.item_imgs),
                 isImageTranslated: false
             }
         });
 
-        return imageThumbnailData;
+        return JSON.stringify(taobaoData.item_imgs);
     } catch (e) {
         return throwError(e, ctx);
     }
