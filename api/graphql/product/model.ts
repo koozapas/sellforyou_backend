@@ -162,7 +162,7 @@ export const t_Product = objectType({
                     props : test.props,
                     skus : test.skus
                 }
-                console.log("test", JSON.stringify(originalData));
+                //console.log("test", JSON.stringify(originalData));
                 data.originalData = JSON.stringify(originalData);
                 return data;
             }catch(e){
@@ -293,7 +293,7 @@ export const t_Product = objectType({
             resolve: async (src, args, ctx, info) => {
                 try {
                     const id = src.id;
-                    return await getOptionHeaderHtmlByProductId(ctx.prisma, id, "Y", 1);
+                    return await getOptionHeaderHtmlByProductId(ctx.prisma, id, "Y", 1,"");
                 } catch (e) {
                     return throwError(e, ctx);
                 }
