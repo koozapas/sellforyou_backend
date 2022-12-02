@@ -1543,6 +1543,31 @@ export const mutation_product = extendType({
                 }
             }
         })
+        t.field("updateManyProductAttributeByUser",{
+            type: nonNull("String"),
+            args: {
+                productId : nonNull(list(nonNull(intArg()))),
+                brandName : stringArg(),
+                manufacturer : stringArg(),
+                modelName : stringArg(),
+            },
+            resolve : async (src, args, ctx, info) =>{
+                try{
+                    const update = await ctx.prisma.product.updateMany({
+                        where : { id : { in : args.productId }} ,
+                        data : {
+                            brandName : args.brandName ?? undefined,
+                            manuFacturer : args.manufacturer ?? undefined,
+                            modelName : args.modelName ?? undefined
+                        }
+                    })
+                    if(!update) return throwError(errors.etc("Fail to update Attribute"),ctx);
+                    return "Success"
+                }catch(e) {
+                    return throwError(e,ctx);
+                }
+            }
+        })
         t.field("updateProductByUser", {
             type: nonNull("Product"),
             args: {

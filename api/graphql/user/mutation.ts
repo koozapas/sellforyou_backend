@@ -416,9 +416,12 @@ export const mutation_user = extendType({
                                 default : {
                                     let refCodeInfo = await ctx.prisma.user.findUnique({
                                         where : { email : args.refCode},
-                                        select : { id : true}
+                                        include : { userInfo : { select : { phone : true}} },
                                     })
                                     if(!refCodeInfo) break;
+                                    if(refCodeInfo.userInfo?.phone === tel) {
+                                        return throwError(errors.etc("본인 계정은 추천인에 등록하실 수 없습니다."),ctx);
+                                    }
                                     refCodeId = refCodeInfo.id;
                                     break;
                                 }
@@ -608,7 +611,7 @@ export const mutation_user = extendType({
             // },
             resolve : async (src, args, ctx , info ) => {
                 try {
-
+                    
                    // const accessTokenInfo = verify(args.accessToken, APP_SECRET, {ignoreExpiration : true}) as Token;//인증결과는 decoded된 게 나옴 
                     let status = "";
                     //todoconsole.log("accessTokenInfo",ctx.token!.userId!);

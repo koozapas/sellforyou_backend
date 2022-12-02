@@ -139,7 +139,7 @@ export const getNameFromCookie = (cookie: string) => {
 }
 
 export const saveTaobaoItemToUser = async <T extends IFeeInfo>(prisma: PrismaClient, productCode: string | undefined, taobaoProducts: ((TaobaoProduct & { itemData: IOBItem, translateDataObject: ITranslateData | null }) | null)[], userId: number | null, userInfo: T, categoryCode?: string | null, categoryType?: string | null, adminId?: number, calculateWonType : number) => {
-    
+
     const boundCalculatePrice = (cnyPrice: number, cnyRate: number, defaultShippingFee: number,calculateWonType:number) => 
     calculatePrice.bind(null, cnyPrice, userInfo.marginRate, userInfo.marginUnitType, cnyRate, defaultShippingFee,calculateWonType)();
 
