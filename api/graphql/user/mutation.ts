@@ -420,7 +420,7 @@ export const mutation_user = extendType({
                                     })
                                     if(!refCodeInfo) break;
                                     if(refCodeInfo.userInfo?.phone === tel) {
-                                        return throwError(errors.etc("본인 계정은 추천인에 등록하실 수 없습니다."),ctx);
+                                        return throwError(errors.etc("본인 계정은 추천인에 등록하실 수 없습니다. 새로고침 후 다시 시도해주세요."),ctx);
                                     }
                                     refCodeId = refCodeInfo.id;
                                     break;
