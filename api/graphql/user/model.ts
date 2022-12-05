@@ -136,7 +136,6 @@ export const t_UserPurchaseAdditionalInfo = objectType({
   }
 });
 
-
 export const t_UserPurchaseInfo = objectType({
   name: "UserPurchaseInfo",
   definition(t) {
@@ -269,6 +268,7 @@ export const t_UserInfo = objectType({
     t.model.cnyRateDollar();
     t.model.cnyRateEuro();
     t.model.cnyRateYen();
+    t.model.useDetailInformation();
   },
 });
 

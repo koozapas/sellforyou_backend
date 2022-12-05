@@ -830,6 +830,8 @@ type Mutation {
   endProductSellStateByAdmin(productIds: [Int!]!): Int!
   endProductSellStateByUser(productIds: [Int!]!): Int!
   extendMyAccountByUser(masterId: Int!, slaveIds: [Int!]!): Boolean!
+  findEmail(phone: String!, verificationNumber: String!): String!
+  findEmailCreateVerification(phoneNumber: String!): String!
   getProductListAllKeys: Boolean!
   getTaobaoItemUsingExtensionByUser(data: String!): String!
   initProductDescriptionByUser(productId: Int!): String
@@ -880,6 +882,7 @@ type Mutation {
   updateFreeUserDayLimitByAdmin(day: Int!): Int!
   updateFreeUserProductLimitByAdmin(day: Int!): Int!
   updateImageThumbnailData(productId: Int!, thumbnails: [ProductThumbnailUpdateInput!]): String!
+  updateManyProductAttributeByUser(brandName: String, manufacturer: String, modelName: String, productId: [Int!]!): String!
   updateManyProductCategoryByAdmin(categoryA001: String, categoryA006: String, categoryA027: String, categoryA077: String, categoryA112: String, categoryB378: String, productIds: [Int!]!): Int!
   updateManyProductCategoryByUser(categoryA001: String, categoryA006: String, categoryA027: String, categoryA077: String, categoryA112: String, categoryA113: String, categoryA524: String, categoryA525: String, categoryB378: String, categoryB719: String, categoryB956: String, productIds: [Int!]!): Int!
   updateManyProductFee(auctionFee: Float, coupangFee: Float, gmarketFee: Float, interparkFee: Float, lotteonFee: Float, lotteonNormalFee: Float, naverFee: Float, productId: [Int!]!, streetFee: Float, streetNormalFee: Float, tmonFee: Float, wemakepriceFee: Float): String!
@@ -2269,6 +2272,7 @@ type UserInfo {
   tmonFee: Float!
   tmonId: String
   tmonUseType: String!
+  useDetailInformation: String!
   user: User!
   userId: Int!
   wemakepriceFee: Float!
@@ -2376,6 +2380,7 @@ input UserInfoOrderByWithRelationInput {
   tmonFee: SortOrder
   tmonId: SortOrder
   tmonUseType: SortOrder
+  useDetailInformation: SortOrder
   user: UserOrderByWithRelationInput
   userId: SortOrder
   wemakepriceFee: SortOrder
@@ -2486,6 +2491,7 @@ input UserInfoWhereInput {
   tmonFee: FloatFilter
   tmonId: StringNullableFilter
   tmonUseType: StringFilter
+  useDetailInformation: StringFilter
   user: UserWhereInput
   userId: IntFilter
   wemakepriceFee: FloatFilter

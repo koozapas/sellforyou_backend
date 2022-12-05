@@ -1370,6 +1370,7 @@ export interface NexusGenInputs {
     tmonFee?: NexusGenEnums['SortOrder'] | null; // SortOrder
     tmonId?: NexusGenEnums['SortOrder'] | null; // SortOrder
     tmonUseType?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    useDetailInformation?: NexusGenEnums['SortOrder'] | null; // SortOrder
     user?: NexusGenInputs['UserOrderByWithRelationInput'] | null; // UserOrderByWithRelationInput
     userId?: NexusGenEnums['SortOrder'] | null; // SortOrder
     wemakepriceFee?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1479,6 +1480,7 @@ export interface NexusGenInputs {
     tmonFee?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
     tmonId?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     tmonUseType?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    useDetailInformation?: NexusGenInputs['StringFilter'] | null; // StringFilter
     user?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
     userId?: NexusGenInputs['IntFilter'] | null; // IntFilter
     wemakepriceFee?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
@@ -2364,6 +2366,7 @@ export interface NexusGenObjects {
     tmonFee: number; // Float!
     tmonId?: string | null; // String
     tmonUseType: string; // String!
+    useDetailInformation: string; // String!
     userId: number; // Int!
     wemakepriceFee: number; // Float!
     wemakepriceId: string; // String!
@@ -2723,6 +2726,8 @@ export interface NexusGenFieldTypes {
     endProductSellStateByAdmin: number; // Int!
     endProductSellStateByUser: number; // Int!
     extendMyAccountByUser: boolean; // Boolean!
+    findEmail: string; // String!
+    findEmailCreateVerification: string; // String!
     getProductListAllKeys: boolean; // Boolean!
     getTaobaoItemUsingExtensionByUser: string; // String!
     initProductDescriptionByUser: string | null; // String
@@ -2758,6 +2763,7 @@ export interface NexusGenFieldTypes {
     updateFreeUserDayLimitByAdmin: number; // Int!
     updateFreeUserProductLimitByAdmin: number; // Int!
     updateImageThumbnailData: string; // String!
+    updateManyProductAttributeByUser: string; // String!
     updateManyProductCategoryByAdmin: number; // Int!
     updateManyProductCategoryByUser: number; // Int!
     updateManyProductFee: string; // String!
@@ -3214,6 +3220,7 @@ export interface NexusGenFieldTypes {
     tmonFee: number; // Float!
     tmonId: string | null; // String
     tmonUseType: string; // String!
+    useDetailInformation: string; // String!
     user: NexusGenRootTypes['User']; // User!
     userId: number; // Int!
     wemakepriceFee: number; // Float!
@@ -3569,6 +3576,8 @@ export interface NexusGenFieldTypeNames {
     endProductSellStateByAdmin: 'Int'
     endProductSellStateByUser: 'Int'
     extendMyAccountByUser: 'Boolean'
+    findEmail: 'String'
+    findEmailCreateVerification: 'String'
     getProductListAllKeys: 'Boolean'
     getTaobaoItemUsingExtensionByUser: 'String'
     initProductDescriptionByUser: 'String'
@@ -3604,6 +3613,7 @@ export interface NexusGenFieldTypeNames {
     updateFreeUserDayLimitByAdmin: 'Int'
     updateFreeUserProductLimitByAdmin: 'Int'
     updateImageThumbnailData: 'String'
+    updateManyProductAttributeByUser: 'String'
     updateManyProductCategoryByAdmin: 'Int'
     updateManyProductCategoryByUser: 'Int'
     updateManyProductFee: 'String'
@@ -4060,6 +4070,7 @@ export interface NexusGenFieldTypeNames {
     tmonFee: 'Float'
     tmonId: 'String'
     tmonUseType: 'String'
+    useDetailInformation: 'String'
     user: 'User'
     userId: 'Int'
     wemakepriceFee: 'Float'
@@ -4306,6 +4317,13 @@ export interface NexusGenArgTypes {
       masterId: number; // Int!
       slaveIds: number[]; // [Int!]!
     }
+    findEmail: { // args
+      phone: string; // String!
+      verificationNumber: string; // String!
+    }
+    findEmailCreateVerification: { // args
+      phoneNumber: string; // String!
+    }
     getTaobaoItemUsingExtensionByUser: { // args
       data: string; // String!
     }
@@ -4432,6 +4450,12 @@ export interface NexusGenArgTypes {
     updateImageThumbnailData: { // args
       productId: number; // Int!
       thumbnails?: NexusGenInputs['ProductThumbnailUpdateInput'][] | null; // [ProductThumbnailUpdateInput!]
+    }
+    updateManyProductAttributeByUser: { // args
+      brandName?: string | null; // String
+      manufacturer?: string | null; // String
+      modelName?: string | null; // String
+      productId: number[]; // [Int!]!
     }
     updateManyProductCategoryByAdmin: { // args
       categoryA001?: string | null; // String

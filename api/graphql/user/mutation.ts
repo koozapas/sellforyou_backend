@@ -905,6 +905,7 @@ export const mutation_user = extendType({
                 cnyRateDollar :floatArg(),
                 cnyRateYen :floatArg(),
                 cnyRateEuro:floatArg(),
+                useDetailInformation : stringArg(),
             },
             resolve: async (src, args, ctx, info) => {
                 try {
@@ -1044,6 +1045,7 @@ export const mutation_user = extendType({
                             streetNormalApiMemo3 : args.streetNormalApiMemo3 ?? undefined,
                             streetNormalApiMemo4 : args.streetNormalApiMemo4 ?? undefined,
                             calculateWonType : args.calculateWonType ?? undefined,
+                            useDetailInformation : args.useDetailInformation ?? undefined,
                         }
                     });
 
