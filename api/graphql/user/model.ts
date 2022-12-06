@@ -269,6 +269,7 @@ export const t_UserInfo = objectType({
     t.model.cnyRateEuro();
     t.model.cnyRateYen();
     t.model.useDetailInformation();
+    t.model.orderToDeliveryName();
   },
 });
 

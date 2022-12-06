@@ -293,7 +293,7 @@ export const t_Product = objectType({
             resolve: async (src, args, ctx, info) => {
                 try {
                     const id = src.id;
-                    return await getOptionHeaderHtmlByProductId(ctx.prisma, id, "Y", 1,"");
+                    return await getOptionHeaderHtmlByProductId(ctx.prisma, id, "Y", 1,"","N");
                 } catch (e) {
                     return throwError(e, ctx);
                 }

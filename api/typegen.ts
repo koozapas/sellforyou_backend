@@ -1338,6 +1338,7 @@ export interface NexusGenInputs {
     optionAlignTop?: NexusGenEnums['SortOrder'] | null; // SortOrder
     optionIndexType?: NexusGenEnums['SortOrder'] | null; // SortOrder
     optionTwoWays?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    orderToDeliveryName?: NexusGenEnums['SortOrder'] | null; // SortOrder
     phone?: NexusGenEnums['SortOrder'] | null; // SortOrder
     productCollectCount?: NexusGenEnums['SortOrder'] | null; // SortOrder
     refundShippingFee?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1448,6 +1449,7 @@ export interface NexusGenInputs {
     optionAlignTop?: NexusGenInputs['StringFilter'] | null; // StringFilter
     optionIndexType?: NexusGenInputs['IntFilter'] | null; // IntFilter
     optionTwoWays?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    orderToDeliveryName?: NexusGenInputs['StringFilter'] | null; // StringFilter
     phone?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     productCollectCount?: NexusGenInputs['IntFilter'] | null; // IntFilter
     refundShippingFee?: NexusGenInputs['IntFilter'] | null; // IntFilter
@@ -2334,6 +2336,7 @@ export interface NexusGenObjects {
     optionAlignTop: string; // String!
     optionIndexType: number; // Int!
     optionTwoWays: string; // String!
+    orderToDeliveryName: string; // String!
     phone?: string | null; // String
     productCollectCount: number; // Int!
     refundShippingFee: number; // Int!
@@ -3188,6 +3191,7 @@ export interface NexusGenFieldTypes {
     optionAlignTop: string; // String!
     optionIndexType: number; // Int!
     optionTwoWays: string; // String!
+    orderToDeliveryName: string; // String!
     phone: string | null; // String
     productCollectCount: number; // Int!
     refundShippingFee: number; // Int!
@@ -4038,6 +4042,7 @@ export interface NexusGenFieldTypeNames {
     optionAlignTop: 'String'
     optionIndexType: 'Int'
     optionTwoWays: 'String'
+    orderToDeliveryName: 'String'
     phone: 'String'
     productCollectCount: 'Int'
     refundShippingFee: 'Int'
@@ -4589,6 +4594,7 @@ export interface NexusGenArgTypes {
       optionAlignTop?: string | null; // String
       optionIndexType?: number | null; // Int
       optionTwoWays?: string | null; // String
+      orderToDeliveryName?: string | null; // String
       refundShippingFee?: number | null; // Int
       streetApiKey?: string | null; // String
       streetApiKey2?: string | null; // String
@@ -4619,6 +4625,7 @@ export interface NexusGenArgTypes {
       tmonFee?: number | null; // Float
       tmonId?: string | null; // String
       tmonUseType?: string | null; // String
+      useDetailInformation?: string | null; // String
       wemakepriceFee?: number | null; // Float
       wemakepriceId?: string | null; // String
       wemakepriceUseType?: string | null; // String

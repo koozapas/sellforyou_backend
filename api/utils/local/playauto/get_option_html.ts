@@ -2,35 +2,67 @@
 import { PrismaClient, ProductOptionName, ProductOptionValue, Product } from "@prisma/client";
 import { DocDB } from "aws-sdk";
 import { getValidUploadImageUrl } from "../../../graphql";
-export async function getOptionHeaderHtmlByProductId(prisma: PrismaClient, id: number, twoWays: string, indexType: number,shopName : any): Promise<string> {
+export async function getOptionHeaderHtmlByProductId(prisma: PrismaClient, id: number, twoWays: string, indexType: number,shopName : any,useDetailInformation : any): Promise<string> {
     const optionValues = await prisma.productOptionValue.findMany({
         where: { productOptionName: { productId: id }, isActive: true },
         include: { productOptionName: true },
         orderBy: [{ number: "asc" }]
     });
 
-    return getOptionHeaderHtml(optionValues, twoWays, indexType,shopName)
+    return getOptionHeaderHtml(optionValues, twoWays, indexType,shopName,useDetailInformation)
 }
 
 
 
 
-export function getOptionHeaderHtml(optionValues: (ProductOptionValue & { productOptionName: ProductOptionName })[], twoWays: string, indexType: number,shopName : any): string {
+export function getOptionHeaderHtml(optionValues: (ProductOptionValue & { productOptionName: ProductOptionName })[], twoWays: string, indexType: number,shopName : any, useDetailInformation :any): string {
     const hasImageOrder = optionValues.find(v => v.image !== null)?.optionNameOrder;
     
     if (hasImageOrder) {
         const options = optionValues.filter(v => v.optionNameOrder === hasImageOrder);
+        if(useDetailInformation ==='N'){
 
+            var output = `
+            <p>
+            &nbsp;
+            </p>
+            
+            <p>
+            &nbsp;
+            </p>
+            `;
+        }else{
+            
         var output = `
         <p>
             &nbsp;
         </p>
-        
+
         <p>
             &nbsp;
         </p>
-        `;
 
+        <div style="text-align: center; font-size: 24px; font-weight: bold; font-family: none;">
+            <span style="color: #2988FF;">
+                ${options[0].productOptionName.name}
+            </span>
+
+            <span style="color: #000000;">
+                옵션 설명입니다.
+            </span>
+        </div>
+
+        <p>
+            &nbsp;
+        </p>
+
+        <p>
+            &nbsp;
+        </p>
+    `;
+
+        }
+            
         switch (twoWays) {
             case "N": {
                 for (var i in options) {
