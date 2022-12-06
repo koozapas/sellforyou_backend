@@ -1338,6 +1338,8 @@ export interface NexusGenInputs {
     optionAlignTop?: NexusGenEnums['SortOrder'] | null; // SortOrder
     optionIndexType?: NexusGenEnums['SortOrder'] | null; // SortOrder
     optionTwoWays?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    orderToDeliveryMembership?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    orderToDeliveryMethod?: NexusGenEnums['SortOrder'] | null; // SortOrder
     orderToDeliveryName?: NexusGenEnums['SortOrder'] | null; // SortOrder
     phone?: NexusGenEnums['SortOrder'] | null; // SortOrder
     productCollectCount?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1449,6 +1451,8 @@ export interface NexusGenInputs {
     optionAlignTop?: NexusGenInputs['StringFilter'] | null; // StringFilter
     optionIndexType?: NexusGenInputs['IntFilter'] | null; // IntFilter
     optionTwoWays?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    orderToDeliveryMembership?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    orderToDeliveryMethod?: NexusGenInputs['StringFilter'] | null; // StringFilter
     orderToDeliveryName?: NexusGenInputs['StringFilter'] | null; // StringFilter
     phone?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     productCollectCount?: NexusGenInputs['IntFilter'] | null; // IntFilter
@@ -2336,6 +2340,8 @@ export interface NexusGenObjects {
     optionAlignTop: string; // String!
     optionIndexType: number; // Int!
     optionTwoWays: string; // String!
+    orderToDeliveryMembership: string; // String!
+    orderToDeliveryMethod: string; // String!
     orderToDeliveryName: string; // String!
     phone?: string | null; // String
     productCollectCount: number; // Int!
@@ -3191,6 +3197,8 @@ export interface NexusGenFieldTypes {
     optionAlignTop: string; // String!
     optionIndexType: number; // Int!
     optionTwoWays: string; // String!
+    orderToDeliveryMembership: string; // String!
+    orderToDeliveryMethod: string; // String!
     orderToDeliveryName: string; // String!
     phone: string | null; // String
     productCollectCount: number; // Int!
@@ -4042,6 +4050,8 @@ export interface NexusGenFieldTypeNames {
     optionAlignTop: 'String'
     optionIndexType: 'Int'
     optionTwoWays: 'String'
+    orderToDeliveryMembership: 'String'
+    orderToDeliveryMethod: 'String'
     orderToDeliveryName: 'String'
     phone: 'String'
     productCollectCount: 'Int'
@@ -4594,6 +4604,8 @@ export interface NexusGenArgTypes {
       optionAlignTop?: string | null; // String
       optionIndexType?: number | null; // Int
       optionTwoWays?: string | null; // String
+      orderToDeliveryMembership?: string | null; // String
+      orderToDeliveryMethod?: string | null; // String
       orderToDeliveryName?: string | null; // String
       refundShippingFee?: number | null; // Int
       streetApiKey?: string | null; // String

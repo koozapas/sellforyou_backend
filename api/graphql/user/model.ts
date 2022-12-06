@@ -270,6 +270,8 @@ export const t_UserInfo = objectType({
     t.model.cnyRateYen();
     t.model.useDetailInformation();
     t.model.orderToDeliveryName();
+    t.model.orderToDeliveryMembership();
+    t.model.orderToDeliveryMethod();
   },
 });
 

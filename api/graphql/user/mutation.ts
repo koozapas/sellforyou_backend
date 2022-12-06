@@ -907,6 +907,8 @@ export const mutation_user = extendType({
                 cnyRateEuro:floatArg(),
                 useDetailInformation : stringArg(),
                 orderToDeliveryName : stringArg(),
+                orderToDeliveryMembership : stringArg(),
+                orderToDeliveryMethod : stringArg(),
             },
             resolve: async (src, args, ctx, info) => {
                 try {
@@ -1048,6 +1050,8 @@ export const mutation_user = extendType({
                             calculateWonType : args.calculateWonType ?? undefined,
                             useDetailInformation : args.useDetailInformation ?? undefined,
                             orderToDeliveryName : args.orderToDeliveryName ?? undefined,
+                            orderToDeliveryMembership : args.orderToDeliveryMembership ?? undefined ,
+                            orderToDeliveryMethod : args.orderToDeliveryMethod ?? undefined,
                         }
                     });
 
