@@ -42,6 +42,16 @@ export const query_purchase = extendType({
                             //developing ...
                             return true;
                         }
+                        
+                        case "타오랜드" : {
+                            //developing ...
+                            return true;
+                        }
+
+                        case "taoland" : {
+                            //developing ...
+                            return true;
+                        }
                         default : {
                             const userId = await ctx.prisma.user.findUnique({
                                 where : { email : args.email },

@@ -413,6 +413,8 @@ export const mutation_user = extendType({
                                 case "1%": break;
                                 case "1%수강" :break;
                                 case "dream" : break;
+                                case "타오랜드" : break;
+                                case "taoland" : break;
                                 default : {
                                     let refCodeInfo = await ctx.prisma.user.findUnique({
                                         where : { email : args.refCode},
@@ -534,6 +536,9 @@ export const mutation_user = extendType({
                                             streetNormalApiMemo3 : "",
                                             streetNormalApiMemo4 : "",
                                             calculateWonType : "1000",
+                                            orderToDeliveryMembership : "",
+                                            orderToDeliveryMethod  : "",
+                                            orderToDeliveryName : "",
                                         }
                                     }
                                 }
