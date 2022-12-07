@@ -357,7 +357,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(prisma: PrismaCli
                 const regex = /[`~!@#$%^&*()_|+\-=?;:'".<>\{\}\[\]\\\/]/gim; 
             product = await prisma.product.create({
                 data: {
-                    name: taobaoData.nick !== "" ? replaceWordTable(taobaoData.nick,wordTable) : translateData?.title ?? replaceWordTable(taobaoData.title,wordTable),
+                    name: taobaoData.nick !== "" ? replaceWordTable(taobaoData.nick,wordTable) : translateData?.title ? replaceWordTable(translateData?.title,wordTable) : replaceWordTable(taobaoData.title,wordTable) ,
                     description,
                     price,
                     shippingFee: userInfo.extraShippingFee,
