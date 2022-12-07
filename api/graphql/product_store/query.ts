@@ -200,7 +200,7 @@ const registerProductResolver = (data: IQueryAdminArg | null) => async (src: {},
                         misc5: truncateOptionName(siteCode[0], v2.productOption5?.productOptionName.name ?? "" ), //옵션타입 5의 명칭
                     }
                 })
-                replaceWordTable(v.name, wordTable);
+                // replaceWordTable(v.name, wordTable);
             }
             catch (e) {
                 const a = e as Error;
@@ -709,7 +709,8 @@ const registerProductResolver = (data: IQueryAdminArg | null) => async (src: {},
                                     slave_reg_code: "",
                                     //slave_reg_code: `${prodSlaveCode}`, //쇼핑몰별 사이트 상품코드
                                     slave_type: "", //쇼핑몰별 판매방식
-                                    name3: `${replaceWordTable(v.product.name, wordTable)}`, //상품명
+                                    // name3: `${replaceWordTable(v.product.name, wordTable)}`, //상품명
+                                    name3: v.product.name, //상품명
                                     deliv2: v.product.shippingFee > 0 ? "선결제" : "무료", //쇼핑몰별 배송방법('무료','착불','선결제','착불/선결제')
                                     deliv_fee2: v.product.shippingFee, //쇼핑몰별 배송비
                                     cate_manual: "",
