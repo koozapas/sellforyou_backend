@@ -330,7 +330,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(prisma: PrismaCli
                     const tagInfo : any = data;
                     if(tagInfo.code === categories['A077'])  matchDictionaryData=tagInfo.tagJson;})
                     
-                    if(matchDictionaryData.length !== 0){
+                    if(Object.keys(matchDictionaryData).length !== 0){
 
                             //빨간줄무시
                             //이거 이렇게 데이터 안넣어주고 filter결과만 넣으면 filter형식으로 return되서 필요한 데이터가 안나와서 이렇게 처리함
