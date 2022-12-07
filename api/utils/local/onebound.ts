@@ -328,30 +328,38 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(prisma: PrismaCli
                   
                 Object.entries(dictData).filter(([index,data]) => {
                     const tagInfo : any = data;
-                    if(tagInfo.code === categories['A077'])  matchDictionaryData=tagInfo.tagJson;})//빨간줄무시
-                    //이거 이렇게 데이터 안넣어주고 filter결과만 넣으면 filter형식으로 return되서 필요한 데이터가 안나와서 이렇게 처리함
-                    let matchTagOb= [];
-                    let matchTagNm :any= [];
-                    matchTagOb = matchDictionaryData.event.concat(matchDictionaryData.target,matchDictionaryData.hot,matchDictionaryData.emotion);
-                    matchTagOb.map((data : any)=>matchTagNm.push(data.tagNm));
-        
-                    function shuffle(array :any) {
-                        var m = array.length,
-                          t,
-                          i
-                        // While there remain elements to shuffle…
-                        while (m) {
-                          // Pick a remaining element…
-                          i = Math.floor(Math.random() * m--)
-                          // And swap it with the current element.
-                          t = array[m]
-                          array[m] = array[i]
-                          array[i] = t
+                    if(tagInfo.code === categories['A077'])  matchDictionaryData=tagInfo.tagJson;})
+                    
+                    if(matchDictionaryData.length !== 0){
+
+                            //빨간줄무시
+                            //이거 이렇게 데이터 안넣어주고 filter결과만 넣으면 filter형식으로 return되서 필요한 데이터가 안나와서 이렇게 처리함
+                        let matchTagOb= [];
+                        let matchTagNm :any= [];
+                        matchTagOb = matchDictionaryData.event.concat(matchDictionaryData.target,matchDictionaryData.hot,matchDictionaryData.emotion);
+                        matchTagOb.map((data : any)=>matchTagNm.push(data.tagNm));
+            
+                        function shuffle(array :any) {
+                            var m = array.length,
+                            t,
+                            i
+                            // While there remain elements to shuffle…
+                            while (m) {
+                            // Pick a remaining element…
+                            i = Math.floor(Math.random() * m--)
+                            // And swap it with the current element.
+                            t = array[m]
+                            array[m] = array[i]
+                            array[i] = t
+                            }
+                            return array
                         }
-                        return array
-                      }
-                     matchTagNm = shuffle(matchTagNm)
-                     immSearchTagsData= matchTagNm.slice(0,10).join();
+
+                        matchTagNm = shuffle(matchTagNm)
+                        immSearchTagsData= matchTagNm.slice(0,10).join();
+                        
+                    }
+
                 }
 
                 const regex = /[`~!@#$%^&*()_|+\-=?;:'".<>\{\}\[\]\\\/]/gim; 
