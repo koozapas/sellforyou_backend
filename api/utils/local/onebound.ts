@@ -13,7 +13,7 @@ import { publishUserLogData } from "./pubsub";
 import { calculatePrice } from './calculate-product-price';
 import { join } from 'path'
 import fs from 'fs/promises';
-
+import {replaceWordTable } from "../../utils/local/word-replace";
 function delay (t: any, val: any) {
     return new Promise(resolve => {
         setTimeout(resolve.bind(null, val), t);
@@ -138,19 +138,11 @@ export const getNameFromCookie = (cookie: string) => {
     return null;
 }
 
-export const saveTaobaoItemToUser = async <T extends IFeeInfo>(prisma: PrismaClient, productCode: string | undefined, taobaoProducts: ((TaobaoProduct & { itemData: IOBItem, translateDataObject: ITranslateData | null }) | null)[], userId: number | null, userInfo: T, categoryCode?: string | null, categoryType?: string | null, adminId?: number, calculateWonType : number) => {
+export const saveTaobaoItemToUser = async <T extends IFeeInfo>(prisma: PrismaClient, productCode: string | undefined, taobaoProducts: ((TaobaoProduct & { itemData: IOBItem, translateDataObject: ITranslateData | null }) | null)[], userId: number | null, userInfo: T, categoryCode?: string | null, categoryType?: string | null, adminId?: number, calculateWonType : number,wordTable : any ) => {
 
     const boundCalculatePrice = (cnyPrice: number, cnyRate: number, defaultShippingFee: number,calculateWonType:number) => 
     calculatePrice.bind(null, cnyPrice, userInfo.marginRate, userInfo.marginUnitType, cnyRate, defaultShippingFee,calculateWonType)();
-
-    //todoconsole.log("calculatePrice = ", boundCalculatePrice);
-    // 메모 const calculatePrice: any = (cnyPrice: string | number, marginRate: number, marginUnitType: string, cnyRate: number, shippingFee: number) => {
-    //     if (marginUnitType === "WON") {
-    //         return Math.round((Math.floor(parseFloat(cnyPrice.toString()) * cnyRate) + shippingFee + marginRate) / 100) * 100;
-    //     } else {
-    //         return Math.round((Math.floor(parseFloat(cnyPrice.toString()) * cnyRate) + shippingFee) * (100 + marginRate) / 10000) * 100;
-    //     }
-    // }
+    
     return await Promise.all(taobaoProducts.filter((v): v is TaobaoProduct & { itemData: IOBItem, translateDataObject: ITranslateData | null } => v !== null).map(async v => {
         const taobaoData = v.itemData;
         const translateData = v.translateDataObject;
@@ -365,7 +357,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(prisma: PrismaCli
                 const regex = /[`~!@#$%^&*()_|+\-=?;:'".<>\{\}\[\]\\\/]/gim; 
             product = await prisma.product.create({
                 data: {
-                    name: taobaoData.nick !== "" ? taobaoData.nick : translateData?.title ?? taobaoData.title,
+                    name: taobaoData.nick !== "" ? replaceWordTable(taobaoData.nick,wordTable) : translateData?.title ?? replaceWordTable(taobaoData.title,wordTable),
                     description,
                     price,
                     shippingFee: userInfo.extraShippingFee,
@@ -549,7 +541,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(prisma: PrismaCli
                         //todoconsole.log("name",name);
                         const urlInfo = taobaoData.prop_imgs.prop_img.find(v2 => v2.properties.split(":")[0] === v.taobaoPid);
                         //todoconsole.log("옵션있는상품",v);
-                        const productOptionName =await prisma.productOptionName.create({ data: { taobaoPid : v.taobaoPid , order : v.order , hasImage: !!urlInfo, productId: product!.id, name } });
+                        const productOptionName =await prisma.productOptionName.create({ data: { taobaoPid : v.taobaoPid , order : v.order , hasImage: !!urlInfo, productId: product!.id, name : replaceWordTable(name,wordTable) } });
                         //todoconsole.log("productOptionName",productOptionName);//문제없고 
                         return productOptionName;
                     }));
@@ -696,7 +688,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(prisma: PrismaCli
 
                     return await prisma.productOptionValue.create({
                         data: {
-                            name,
+                            name : replaceWordTable(name,wordTable),
                             originalName: name,
                             image,
                             optionNameOrder: productOptionName.order,

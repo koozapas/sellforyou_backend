@@ -110,7 +110,9 @@ const truncateOptionNameInternal = (siteCode: string, text: string) => {
 
 //변경 2
 
-const truncateOptionName = <T extends IWordTable>(siteCode: string, text: string, wordTable: T[]) => replaceWordTable(truncateOptionNameInternal(siteCode, text), wordTable)
+const truncateOptionName = (siteCode: string, text: string) => truncateOptionNameInternal(siteCode, text)
+// const truncateOptionName = <T extends IWordTable>(siteCode: string[], text: string, wordTable: T[]) =>  replaceWordTable(truncateOptionNameInternal(siteCode, text),wordTable)
+
 // const truncateOptionName = <T extends IWordTable>(siteCode: string[], text: string, wordTable: T[]) => 
 // {
 //     const tmpTruncateOptionNameInternal : any = truncateOptionNameInternal(siteCode, text)
@@ -186,19 +188,19 @@ const registerProductResolver = (data: IQueryAdminArg | null) => async (src: {},
             try {
                 v.productOption.map(v2 => {
                     return {
-                        opt1: truncateOptionName(siteCode[0], ("00" + v2.productOption1.number).slice(-2) + " " + v2.productOption1.name, wordTable), //옵션타입1의 옵션명
-                        opt2: truncateOptionName(siteCode[0], v2.productOption2?.name ? ("00" + v2.productOption2.number).slice(-2) + " " + v2.productOption2.name : "", wordTable), //옵션타입2의 옵션명
-                        opt3: truncateOptionName(siteCode[0], v2.productOption3?.name ? ("00" + v2.productOption3.number).slice(-2) + " " + v2.productOption3.name : "", wordTable), //옵션타입3의 옵션명
-                        opt4: truncateOptionName(siteCode[0], v2.productOption4?.name ? ("00" + v2.productOption4.number).slice(-2) + " " + v2.productOption4.name : "", wordTable), //옵션타입4의 옵션명
-                        opt5: truncateOptionName(siteCode[0], v2.productOption5?.name ? ("00" + v2.productOption5.number).slice(-2) + " " + v2.productOption5.name : "", wordTable), //옵션타입5의 옵션명
-                        misc1: truncateOptionName(siteCode[0], v2.productOption1.productOptionName.name, wordTable), //옵션타입 1의 명칭
-                        misc2: truncateOptionName(siteCode[0], v2.productOption2?.productOptionName.name ?? "", wordTable), //옵션타입 2의 명칭
-                        misc3: truncateOptionName(siteCode[0], v2.productOption3?.productOptionName.name ?? "", wordTable), //옵션타입 3의 명칭
-                        misc4: truncateOptionName(siteCode[0], v2.productOption4?.productOptionName.name ?? "", wordTable), //옵션타입 4의 명칭
-                        misc5: truncateOptionName(siteCode[0], v2.productOption5?.productOptionName.name ?? "", wordTable), //옵션타입 5의 명칭
+                        opt1: truncateOptionName(siteCode[0], ("00" + v2.productOption1.number).slice(-2) + " " + v2.productOption1.name ), //옵션타입1의 옵션명
+                        opt2: truncateOptionName(siteCode[0], v2.productOption2?.name ? ("00" + v2.productOption2.number).slice(-2) + " " + v2.productOption2.name : "" ), //옵션타입2의 옵션명
+                        opt3: truncateOptionName(siteCode[0], v2.productOption3?.name ? ("00" + v2.productOption3.number).slice(-2) + " " + v2.productOption3.name : "" ), //옵션타입3의 옵션명
+                        opt4: truncateOptionName(siteCode[0], v2.productOption4?.name ? ("00" + v2.productOption4.number).slice(-2) + " " + v2.productOption4.name : "" ), //옵션타입4의 옵션명
+                        opt5: truncateOptionName(siteCode[0], v2.productOption5?.name ? ("00" + v2.productOption5.number).slice(-2) + " " + v2.productOption5.name : "" ), //옵션타입5의 옵션명
+                        misc1: truncateOptionName(siteCode[0], v2.productOption1.productOptionName.name ), //옵션타입 1의 명칭
+                        misc2: truncateOptionName(siteCode[0], v2.productOption2?.productOptionName.name ?? "" ), //옵션타입 2의 명칭
+                        misc3: truncateOptionName(siteCode[0], v2.productOption3?.productOptionName.name ?? "" ), //옵션타입 3의 명칭
+                        misc4: truncateOptionName(siteCode[0], v2.productOption4?.productOptionName.name ?? "" ), //옵션타입 4의 명칭
+                        misc5: truncateOptionName(siteCode[0], v2.productOption5?.productOptionName.name ?? "" ), //옵션타입 5의 명칭
                     }
                 })
-                replaceWordTable(v.name, wordTable);
+                // replaceWordTable(v.name, wordTable);
             }
             catch (e) {
                 const a = e as Error;
@@ -340,21 +342,21 @@ const registerProductResolver = (data: IQueryAdminArg | null) => async (src: {},
                                                 type: 'SELECT', //옵션 종류
                                                 code: v.product.productCode, //마스터 상품코드(작업대상 상품별 고유 코드)
                                                 manage_code: `SFY_${v.product.id.toString(36)}_${v2.id.toString(36)}`, //관리코드
-                                                opt1: truncateOptionName(vSiteCode, v2.productOption1.name, wordTable), //옵션타입1의 옵션명
-                                                opt2: truncateOptionName(vSiteCode, v2.productOption2?.name ? v2.productOption2.name : "", wordTable), //옵션타입2의 옵션명
-                                                opt3: truncateOptionName(vSiteCode, v2.productOption3?.name ? v2.productOption3.name : "", wordTable), //옵션타입3의 옵션명
-                                                opt4: truncateOptionName(vSiteCode, v2.productOption4?.name ? v2.productOption4.name : "", wordTable), //옵션타입3의 옵션명
-                                                opt5: truncateOptionName(vSiteCode, v2.productOption5?.name ? v2.productOption5.name : "", wordTable), //옵션타입3의 옵션명
+                                                opt1: truncateOptionName(vSiteCode, v2.productOption1.name ), //옵션타입1의 옵션명
+                                                opt2: truncateOptionName(vSiteCode, v2.productOption2?.name ? v2.productOption2.name : "" ), //옵션타입2의 옵션명
+                                                opt3: truncateOptionName(vSiteCode, v2.productOption3?.name ? v2.productOption3.name : "" ), //옵션타입3의 옵션명
+                                                opt4: truncateOptionName(vSiteCode, v2.productOption4?.name ? v2.productOption4.name : "" ), //옵션타입3의 옵션명
+                                                opt5: truncateOptionName(vSiteCode, v2.productOption5?.name ? v2.productOption5.name : "" ), //옵션타입3의 옵션명
                                                 price: opt_price, //옵션 추가 가격
                                                 wprice: opt_price_original,
                                                 stock: v2.stock ?? 0, //옵션 수량
                                                 soldout: 0, //품절 여부
                                                 wdate: '2020-11-27 08:59:40', //등록일자
-                                                misc1: truncateOptionName(vSiteCode, v2.productOption1.productOptionName.name, wordTable), //옵션타입 1의 명칭
-                                                misc2: truncateOptionName(vSiteCode, v2.productOption2?.productOptionName.name ?? "", wordTable), //옵션타입 2의 명칭
-                                                misc3: truncateOptionName(vSiteCode, v2.productOption3?.productOptionName.name ?? "", wordTable), //옵션타입 3의 명칭
-                                                misc4: truncateOptionName(vSiteCode, v2.productOption4?.productOptionName.name ?? "", wordTable), //옵션타입 3의 명칭
-                                                misc5: truncateOptionName(vSiteCode, v2.productOption5?.productOptionName.name ?? "", wordTable), //옵션타입 3의 명칭
+                                                misc1: truncateOptionName(vSiteCode, v2.productOption1.productOptionName.name ), //옵션타입 1의 명칭
+                                                misc2: truncateOptionName(vSiteCode, v2.productOption2?.productOptionName.name ?? "" ), //옵션타입 2의 명칭
+                                                misc3: truncateOptionName(vSiteCode, v2.productOption3?.productOptionName.name ?? "" ), //옵션타입 3의 명칭
+                                                misc4: truncateOptionName(vSiteCode, v2.productOption4?.productOptionName.name ?? "" ), //옵션타입 3의 명칭
+                                                misc5: truncateOptionName(vSiteCode, v2.productOption5?.productOptionName.name ?? "" ), //옵션타입 3의 명칭
                                                 weight: '0', //추가무게
                                                 optimg: image ? getValidUploadImageUrl(image,v.product.taobaoProduct.shopName) : null, //옵션 이미지}
                                             }
@@ -366,21 +368,21 @@ const registerProductResolver = (data: IQueryAdminArg | null) => async (src: {},
                                                 type: 'SELECT', //옵션 종류
                                                 code: v.product.productCode, //마스터 상품코드(작업대상 상품별 고유 코드)
                                                 manage_code: `SFY_${v.product.id.toString(36)}_${v2.id.toString(36)}`, //관리코드
-                                                opt1: truncateOptionName(vSiteCode, ("00" + v2.productOption1.number).slice(-2) + ". " + v2.productOption1.name, wordTable), //옵션타입1의 옵션명
-                                                opt2: truncateOptionName(vSiteCode, v2.productOption2?.name ? ("00" + v2.productOption2.number).slice(-2) + ". " + v2.productOption2.name : "", wordTable), //옵션타입2의 옵션명
-                                                opt3: truncateOptionName(vSiteCode, v2.productOption3?.name ? ("00" + v2.productOption3.number).slice(-2) + ". " + v2.productOption3.name : "", wordTable), //옵션타입3의 옵션명
-                                                opt4: truncateOptionName(vSiteCode, v2.productOption4?.name ? ("00" + v2.productOption4.number).slice(-2) + ". " + v2.productOption4.name : "", wordTable), //옵션타입3의 옵션명
-                                                opt5: truncateOptionName(vSiteCode, v2.productOption5?.name ? ("00" + v2.productOption5.number).slice(-2) + ". " + v2.productOption5.name : "", wordTable), //옵션타입3의 옵션명
+                                                opt1: truncateOptionName(vSiteCode, ("00" + v2.productOption1.number).slice(-2) + ". " + v2.productOption1.name ), //옵션타입1의 옵션명
+                                                opt2: truncateOptionName(vSiteCode, v2.productOption2?.name ? ("00" + v2.productOption2.number).slice(-2) + ". " + v2.productOption2.name : "" ), //옵션타입2의 옵션명
+                                                opt3: truncateOptionName(vSiteCode, v2.productOption3?.name ? ("00" + v2.productOption3.number).slice(-2) + ". " + v2.productOption3.name : "" ), //옵션타입3의 옵션명
+                                                opt4: truncateOptionName(vSiteCode, v2.productOption4?.name ? ("00" + v2.productOption4.number).slice(-2) + ". " + v2.productOption4.name : "" ), //옵션타입3의 옵션명
+                                                opt5: truncateOptionName(vSiteCode, v2.productOption5?.name ? ("00" + v2.productOption5.number).slice(-2) + ". " + v2.productOption5.name : "" ), //옵션타입3의 옵션명
                                                 price: opt_price, //옵션 추가 가격
                                                 wprice: opt_price_original,
                                                 stock: v2.stock ?? 0, //옵션 수량
                                                 soldout: 0, //품절 여부
                                                 wdate: '2020-11-27 08:59:40', //등록일자
-                                                misc1: truncateOptionName(vSiteCode, v2.productOption1.productOptionName.name, wordTable), //옵션타입 1의 명칭
-                                                misc2: truncateOptionName(vSiteCode, v2.productOption2?.productOptionName.name ?? "", wordTable), //옵션타입 2의 명칭
-                                                misc3: truncateOptionName(vSiteCode, v2.productOption3?.productOptionName.name ?? "", wordTable), //옵션타입 3의 명칭
-                                                misc4: truncateOptionName(vSiteCode, v2.productOption4?.productOptionName.name ?? "", wordTable), //옵션타입 4의 명칭
-                                                misc5: truncateOptionName(vSiteCode, v2.productOption5?.productOptionName.name ?? "", wordTable), //옵션타입 5의 명칭
+                                                misc1: truncateOptionName(vSiteCode, v2.productOption1.productOptionName.name ), //옵션타입 1의 명칭
+                                                misc2: truncateOptionName(vSiteCode, v2.productOption2?.productOptionName.name ?? "" ), //옵션타입 2의 명칭
+                                                misc3: truncateOptionName(vSiteCode, v2.productOption3?.productOptionName.name ?? "" ), //옵션타입 3의 명칭
+                                                misc4: truncateOptionName(vSiteCode, v2.productOption4?.productOptionName.name ?? "" ), //옵션타입 4의 명칭
+                                                misc5: truncateOptionName(vSiteCode, v2.productOption5?.productOptionName.name ?? "" ), //옵션타입 5의 명칭
                                                 weight: '0', //추가무게
                                                 optimg: image ? getValidUploadImageUrl(image,v.product.taobaoProduct.shopName) : null, //옵션 이미지}
                                             }
@@ -707,7 +709,8 @@ const registerProductResolver = (data: IQueryAdminArg | null) => async (src: {},
                                     slave_reg_code: "",
                                     //slave_reg_code: `${prodSlaveCode}`, //쇼핑몰별 사이트 상품코드
                                     slave_type: "", //쇼핑몰별 판매방식
-                                    name3: `${replaceWordTable(v.product.name, wordTable)}`, //상품명
+                                    // name3: `${replaceWordTable(v.product.name, wordTable)}`, //상품명
+                                    name3: `${v.product.name, wordTable}`, //상품명
                                     deliv2: v.product.shippingFee > 0 ? "선결제" : "무료", //쇼핑몰별 배송방법('무료','착불','선결제','착불/선결제')
                                     deliv_fee2: v.product.shippingFee, //쇼핑몰별 배송비
                                     cate_manual: "",

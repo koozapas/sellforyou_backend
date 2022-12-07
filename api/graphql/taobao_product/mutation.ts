@@ -395,6 +395,7 @@ export const mutation_taobao_product = extendType({
                 try {
                     const data = JSON.parse(args.data) as { onebound: { item: IOBItem }, sellforyou: { data: ITranslateData[] } };//JSON.parse는 JSON문자열 구문 분석해서 객체를 생성해냄 
                     //console.log("test1",data);
+
                     if (data.onebound?.item && (data.sellforyou?.data?.length > 0)) {
                         const translatedData = data.sellforyou.data[0];//번역한 데이터
                         const taobaoData = data.onebound.item;// 원본데이터 
@@ -614,8 +615,10 @@ export const mutation_taobao_product = extendType({
                         if(!data2) return throwError(errors.etc("no token"),ctx);
                         const calculateWonType = parseInt(data2.calculateWonType);
                 
+                        const wordTable = await ctx.prisma.wordTable.findMany({ where: { userId:ctx.token?.userId } });
+
                         //return type IFeeInfo ,/ args type : prisma , productCode, taobaoProduct(IOBItem,ITranslateData)[],userid,userInfo,categorycode,sillcode,admin 
-                        const products = await saveTaobaoItemToUser(ctx.prisma, undefined, taobaoProducts, userId, info, category, categoryType, ctx.token?.adminId ?? undefined,calculateWonType);
+                        const products = await saveTaobaoItemToUser(ctx.prisma, undefined, taobaoProducts, userId, info, category, categoryType, ctx.token?.adminId ?? undefined,calculateWonType,wordTable);
                         const resultProducts = products.filter((v): v is Product => v !== null);
 
                         if (userId) {
