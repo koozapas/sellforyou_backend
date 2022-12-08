@@ -160,7 +160,7 @@ export const t_Product = objectType({
                 const test = JSON.parse(data.originalData);
                 let originalData ={
                     props : test.props,
-                    skus : test.skusm,
+                    skus : test.skus,
                     propsList : test.props_list,
                 }
                 //console.log("test", JSON.stringify(originalData));
