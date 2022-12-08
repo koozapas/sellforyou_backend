@@ -365,7 +365,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(prisma: PrismaCli
                 const regex = /[`~!@#$%^&*()_|+\-=?;:'".<>\{\}\[\]\\\/]/gim; 
             product = await prisma.product.create({
                 data: {
-                    name: taobaoData.nick !== "" ? replaceWordTable(taobaoData.nick,wordTable) : translateData?.title ? replaceWordTable(translateData?.title,wordTable) : replaceWordTable(taobaoData.title,wordTable) ,
+                    name: taobaoData.nick !== "" ? replaceWordTable(taobaoData.nick,wordTable).replace(/  +/g, " ") : translateData?.title ? replaceWordTable(translateData?.title,wordTable).replace(/  +/g, " ") : replaceWordTable(taobaoData.title,wordTable).replace(/  +/g, " ") ,
                     description,
                     price,
                     shippingFee: userInfo.extraShippingFee,
@@ -549,7 +549,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(prisma: PrismaCli
                         //todoconsole.log("name",name);
                         const urlInfo = taobaoData.prop_imgs.prop_img.find(v2 => v2.properties.split(":")[0] === v.taobaoPid);
                         //todoconsole.log("옵션있는상품",v);
-                        const productOptionName =await prisma.productOptionName.create({ data: { taobaoPid : v.taobaoPid , order : v.order , hasImage: !!urlInfo, productId: product!.id, name : replaceWordTable(name,wordTable) } });
+                        const productOptionName =await prisma.productOptionName.create({ data: { taobaoPid : v.taobaoPid , order : v.order , hasImage: !!urlInfo, productId: product!.id, name : replaceWordTable(name,wordTable).replace(/  +/g, " ") } });
                         //todoconsole.log("productOptionName",productOptionName);//문제없고 
                         return productOptionName;
                     }));
@@ -696,7 +696,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(prisma: PrismaCli
 
                     return await prisma.productOptionValue.create({
                         data: {
-                            name : replaceWordTable(name,wordTable),
+                            name : replaceWordTable(name,wordTable).replace(/  +/g, " "),
                             originalName: name,
                             image,
                             optionNameOrder: productOptionName.order,
