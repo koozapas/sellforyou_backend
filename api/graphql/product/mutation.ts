@@ -183,6 +183,7 @@ const updateProductOptionShippingFee = async(src:{},args: ArgsValue<"mutation","
 }
 const updateProductOptionResolver = async(src:{},args: ArgsValue<"mutation","updateProductOption">,ctx: Context,info : GraphQLResolveInfo) => {
     try{
+        console.log("args.productOption.length",args.productOption.length);
         if(args.productOption.length !== 0 ){
         await ctx.prisma.productOption.deleteMany({ where: { productId : args.productOption[0].productId } });
        
@@ -971,6 +972,7 @@ export async function copyProductsToUser(targetProductIds: number[], ctx: Contex
                 };
             })
         });
+
         return newProduct;
     }));
 }
