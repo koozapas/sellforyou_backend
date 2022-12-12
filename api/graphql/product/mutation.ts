@@ -72,7 +72,10 @@ const initProductThumbnailImageByUser = async (src: {}, args: ArgsValue<"Mutatio
 
         let taobaoData = JSON.parse(product.taobaoProduct.originalData);
 
-        let imageThumbnailData = JSON.stringify(taobaoData.item_imgs.map((v: any) => v.url));
+        let imageThumbnailData = JSON.stringify(taobaoData.item_imgs.map((v: any) => {
+            if(!v.url.includes(`http`)) return `http:${v.url}`;
+            else return v.url;
+        }));
 
         await ctx.prisma.product.update({
             where: { id: product.id }, data: {

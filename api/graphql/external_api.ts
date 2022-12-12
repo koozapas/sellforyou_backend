@@ -72,7 +72,7 @@ const translateProduct = async (ctx: Context, type: NexusGenAllTypes["TranslateT
         if (!product) return throwError(errors.noSuchData, ctx);
         if (!product.isNameTranslated) {
             const name = isNeedToTranslate(product) ? await translateTextByPapagoAPI(product.name) : product.name;
-            console.log(`translate: ${id} 상품이름 번역 완료`)
+            // console.log(`translate: ${id} 상품이름 번역 완료`)
             isTranslated = isTranslated || isNeedToTranslate(product);
             await ctx.prisma.product.update({ where: { id: product.id }, data: { isNameTranslated: true, name } });
         }
@@ -89,7 +89,7 @@ const translateProduct = async (ctx: Context, type: NexusGenAllTypes["TranslateT
             if (!productOptionName) return throwError(errors.noSuchData, ctx);
             if (!productOptionName.isNameTranslated) {
                 const name = isNeedToTranslate(productOptionName) ? await translateTextByPapagoAPI(productOptionName.name) : productOptionName.name;
-                console.log(`translate: ${id} 상품옵션 종류 번역 완료`)
+                //console.log(`translate: ${id} 상품옵션 종류 번역 완료`)
                 isTranslated = isTranslated || isNeedToTranslate(productOptionName);
                 await ctx.prisma.productOptionName.update({ where: { id: productOptionName.id }, data: { isNameTranslated: true, name } });
             }
@@ -106,7 +106,7 @@ const translateProduct = async (ctx: Context, type: NexusGenAllTypes["TranslateT
             const productOptionValue = await ctx.prisma.productOptionValue.findUnique({ where: { id } });
             if (!productOptionValue) return throwError(errors.noSuchData, ctx);
             if (!productOptionValue.isNameTranslated) {
-                console.log(`translate: ${id} 상품옵션 이름 번역 완료`)
+                //console.log(`translate: ${id} 상품옵션 이름 번역 완료`)
                 const name = isNeedToTranslate(productOptionValue) ? await translateTextByPapagoAPI(productOptionValue.name) : productOptionValue.name;
                 isTranslated = isTranslated || isNeedToTranslate(productOptionValue);
                 await ctx.prisma.productOptionValue.update({ where: { id: productOptionValue.id }, data: { isNameTranslated: true, name } });
