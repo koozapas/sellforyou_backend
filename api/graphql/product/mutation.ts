@@ -1463,7 +1463,7 @@ export const mutation_product = extendType({
                                         }
                                     } : undefined,
                                     product: { connect: { id: product.id } },
-                                    etcVendorItemId : etcVendorItemId === '' ? undefined : etcVendorItemId,
+                                    etcVendorItemId : etcVendorItemId === '' || etcVendorItemId === null ? undefined : etcVendorItemId,
                                     storeUrl:  v.slave_reg_code !== '' ? shopDataUrlInfo[v.site_code]({ id: v.slave_reg_code, storeFullPath: product.user?.userInfo?.naverStoreUrl, vendorId: etcVendorItemId }) : undefined,
                                     siteCode: v.site_code,
                                     user: { connect: { id: product.userId! } },
@@ -1499,7 +1499,7 @@ export const mutation_product = extendType({
                                         }
                                     } ,
                                     product: { connect: { id: product.id } },
-                                    etcVendorItemId : etcVendorItemId === '' ? undefined : etcVendorItemId,
+                                    etcVendorItemId : etcVendorItemId === '' || etcVendorItemId === null ? undefined : etcVendorItemId,
                                     storeUrl: v.state !== 2 ?  v.slave_reg_code !== '' ? shopDataUrlInfo[v.site_code]({ id: v.slave_reg_code, storeFullPath: product.user?.userInfo?.naverStoreUrl, vendorId: etcVendorItemId }) : undefined : undefined,
                                     siteCode: v.site_code,
                                     user: { connect: { id: product.userId! } },
