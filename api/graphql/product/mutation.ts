@@ -73,7 +73,7 @@ const initProductThumbnailImageByUser = async (src: {}, args: ArgsValue<"Mutatio
         let taobaoData = JSON.parse(product.taobaoProduct.originalData);
 
         let imageThumbnailData = JSON.stringify(taobaoData.item_imgs.map((v: any) => {
-            if(!/^https?/.test(`http`)) return `http:${v.url}`;
+            if(!/^https?/.test(v.url)) return `http:${v.url}`;
             else return v.url;
         }));
 
