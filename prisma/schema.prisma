@@ -512,6 +512,7 @@ model CategoryInfoA001 {
   depth5             String             @db.Text
   depth6             String             @db.Text
   name               String             @db.Text
+  sillCode           String             @map("sill_code") @db.VarChar(200)
   category_info_a077 CategoryInfoA077[] @relation("category_info_a001Tocategory_info_a077")
   product            Product[]          @relation("category_info_a001Toproduct")
 
@@ -528,6 +529,7 @@ model CategoryInfoA006 {
   depth5             String             @db.Text
   depth6             String             @db.Text
   name               String             @db.Text
+  sillCode           String             @map("sill_code") @db.VarChar(200)
   category_info_a077 CategoryInfoA077[] @relation("category_info_a006Tocategory_info_a077")
   product            Product[]          @relation("category_info_a006Toproduct")
 
@@ -544,6 +546,7 @@ model CategoryInfoA027 {
   depth5             String             @db.Text
   depth6             String             @db.Text
   name               String             @db.Text
+  sillCode           String             @map("sill_code") @db.VarChar(200)
   category_info_a077 CategoryInfoA077[] @relation("category_info_a027Tocategory_info_a077")
   product            Product[]          @relation("category_info_a027Toproduct")
 
@@ -570,6 +573,7 @@ model CategoryInfoA077 {
   codeB956         String           @map("code_b956") @db.VarChar(40)
   codeA524         String           @map("code_a524") @db.VarChar(40)
   codeA525         String           @map("code_a525") @db.VarChar(40)
+  sillCode         String           @map("sill_code") @db.VarChar(200)
   categoryInfoA001 CategoryInfoA001 @relation("category_info_a001Tocategory_info_a077", fields: [codeA001], references: [code])
   categoryInfoA006 CategoryInfoA006 @relation("category_info_a006Tocategory_info_a077", fields: [codeA006], references: [code])
   categoryInfoA027 CategoryInfoA027 @relation("category_info_a027Tocategory_info_a077", fields: [codeA027], references: [code])
@@ -580,6 +584,7 @@ model CategoryInfoA077 {
   categoryInfoB378 CategoryInfoB378 @relation("category_info_a077Tocategory_info_b378", fields: [codeB378], references: [code])
   categoryInfoB719 CategoryInfoB719 @relation("category_info_a077Tocategory_info_b719", fields: [codeB719], references: [code])
   categoryInfoB956 CategoryInfoB956 @relation("category_info_a077Tocategory_info_b956", fields: [codeB956], references: [code])
+  sillInfoA077     SillInfoA077     @relation("category_info_a077Tosill_info_a077", fields: [sillCode], references: [code])
   product          Product[]        @relation("category_info_a077Toproduct")
 
   @@index([codeA001], name: "FK_category_info_a077_category_info_a001")
@@ -592,6 +597,7 @@ model CategoryInfoA077 {
   @@index([codeB378], name: "FK_category_info_a077_category_info_b378")
   @@index([codeB719], name: "FK_category_info_a077_category_info_b719")
   @@index([codeB956], name: "FK_category_info_a077_category_info_b956")
+  @@index([sillCode], name: "FK_category_info_a077_sill_info_a077")
   @@map("category_info_a077")
 }
 
@@ -605,6 +611,7 @@ model CategoryInfoA112 {
   depth5             String             @db.Text
   depth6             String             @db.Text
   name               String             @db.Text
+  sillCode           String             @map("sill_code") @db.VarChar(200)
   category_info_a077 CategoryInfoA077[] @relation("category_info_a077Tocategory_info_a112")
   product            Product[]          @relation("category_info_a112Toproduct")
 
@@ -621,6 +628,7 @@ model CategoryInfoA113 {
   depth5             String             @db.Text
   depth6             String             @db.Text
   name               String             @db.Text
+  sillCode           String             @map("sill_code") @db.VarChar(200)
   category_info_a077 CategoryInfoA077[] @relation("category_info_a077Tocategory_info_a113")
   product            Product[]          @relation("category_info_a113Toproduct")
 
@@ -637,6 +645,7 @@ model CategoryInfoA524 {
   depth5             String             @db.Text
   depth6             String             @db.Text
   name               String             @db.Text
+  sillCode           String             @map("sill_code") @db.VarChar(200)
   category_info_a077 CategoryInfoA077[] @relation("category_info_a077Tocategory_info_a524")
   product            Product[]          @relation("category_info_a524Toproduct")
 
@@ -653,6 +662,7 @@ model CategoryInfoA525 {
   depth5             String             @db.Text
   depth6             String             @db.Text
   name               String             @db.Text
+  sillCode           String             @map("sill_code") @db.VarChar(200)
   category_info_a077 CategoryInfoA077[] @relation("category_info_a077Tocategory_info_a525")
   product            Product[]          @relation("category_info_a525Toproduct")
 
@@ -670,6 +680,7 @@ model CategoryInfoB378 {
   depth6             String             @db.Text
   name               String             @db.Text
   codeA077           String             @map("code_a077") @db.Text
+  sillCode           String             @map("sill_code") @db.VarChar(200)
   category_info_a077 CategoryInfoA077[] @relation("category_info_a077Tocategory_info_b378")
   product            Product[]          @relation("category_info_b378Toproduct")
 
@@ -686,6 +697,7 @@ model CategoryInfoB719 {
   depth5             String             @db.Text
   depth6             String             @db.Text
   name               String             @db.Text
+  sillCode           String             @map("sill_code") @db.VarChar(200)
   category_info_a077 CategoryInfoA077[] @relation("category_info_a077Tocategory_info_b719")
   product            Product[]          @relation("category_info_b719Toproduct")
 
@@ -702,6 +714,7 @@ model CategoryInfoB956 {
   depth5             String             @db.Text
   depth6             String             @db.Text
   name               String             @db.Text
+  sillCode           String             @map("sill_code") @db.VarChar(200)
   category_info_a077 CategoryInfoA077[] @relation("category_info_a077Tocategory_info_b956")
   product            Product[]          @relation("category_info_b956Toproduct")
 
@@ -764,6 +777,146 @@ model orderStateEnum {
   name        String  @db.VarChar(45)
   description String? @db.VarChar(100)
   order       order[]
+}
+
+model SillInfoA001 {
+  id           Int            @id @default(autoincrement())
+  code         String         @unique @db.VarChar(200)
+  name         String         @db.VarChar(200)
+  data         String         @db.Text
+  sillInfoA077 SillInfoA077[] @relation("sillInfoA077ToSillInfoA001")
+
+  @@map("sill_info_a001")
+}
+
+model SillInfoA006 {
+  id           Int            @id @default(autoincrement())
+  code         String         @unique @db.VarChar(200)
+  name         String         @db.VarChar(200)
+  data         String         @db.Text
+  sillInfoA077 SillInfoA077[] @relation("sillInfoA077ToSillInfoA006")
+
+  @@map("sill_info_a006")
+}
+
+model SillInfoA027 {
+  id           Int            @id @default(autoincrement())
+  code         String         @unique @db.VarChar(200)
+  name         String         @db.VarChar(200)
+  data         String         @db.Text
+  sillInfoA077 SillInfoA077[] @relation("sillInfoA077ToSillInfoA027")
+
+  @@map("sill_info_a027")
+}
+
+model SillInfoA077 {
+  id               Int                @id @default(autoincrement())
+  code             String             @unique @db.VarChar(200)
+  name             String             @db.VarChar(200)
+  data             String             @db.Text
+  codeB378         String?            @map("code_b378") @db.VarChar(200)
+  codeA112         String?            @map("code_a112") @db.VarChar(200)
+  codeA113         String?            @map("code_a113") @db.VarChar(200)
+  codeA027         String?            @map("code_a027") @db.VarChar(200)
+  codeA006         String?            @map("code_a006") @db.VarChar(200)
+  codeA001         String?            @map("code_a001") @db.VarChar(200)
+  codeB719         String?            @map("code_b719") @db.VarChar(200)
+  codeB956         String?            @map("code_b956") @db.VarChar(200)
+  codeA524         String?            @map("code_a524") @db.VarChar(200)
+  codeA525         String?            @map("code_a525") @db.VarChar(200)
+  sillInfoA001     SillInfoA001?      @relation("sillInfoA077ToSillInfoA001", fields: [codeA001], references: [code])
+  sillInfoA006     SillInfoA006?      @relation("sillInfoA077ToSillInfoA006", fields: [codeA006], references: [code])
+  sillInfoA027     SillInfoA027?      @relation("sillInfoA077ToSillInfoA027", fields: [codeA027], references: [code])
+  sillInfoA112     SillInfoA112?      @relation("sillInfoA077ToSillInfoA112", fields: [codeA112], references: [code])
+  sillInfoA113     SillInfoA113?      @relation("sillInfoA077ToSillInfoA113", fields: [codeA113], references: [code])
+  sillInfoA524     SillInfoA524?      @relation("sillInfoA077ToSillInfoA524", fields: [codeA524], references: [code])
+  sillInfoA525     SillInfoA525?      @relation("sillInfoA077ToSillInfoA525", fields: [codeA525], references: [code])
+  sillInfoB378     SillInfoB378?      @relation("sillInfoA077ToSillInfoB378", fields: [codeB378], references: [code])
+  sillInfoB719     SillInfoB719?      @relation("sillInfoA077ToSillInfoB719", fields: [codeB719], references: [code])
+  sillInfoB956     SillInfoB956?      @relation("sillInfoA077ToSillInfoB956", fields: [codeB956], references: [code])
+  categoryInfoA077 CategoryInfoA077[] @relation("category_info_a077Tosill_info_a077")
+
+  @@index([codeA001], name: "FK_sill_info_a077_sellforyou.sill_info_a001")
+  @@index([codeA006], name: "FK_sill_info_a077_sellforyou.sill_info_a006")
+  @@index([codeA027], name: "FK_sill_info_a077_sellforyou.sill_info_a027")
+  @@index([codeA112], name: "FK_sill_info_a077_sellforyou.sill_info_a112")
+  @@index([codeA113], name: "FK_sill_info_a077_sellforyou.sill_info_a113")
+  @@index([codeA524], name: "FK_sill_info_a077_sellforyou.sill_info_a524")
+  @@index([codeA525], name: "FK_sill_info_a077_sellforyou.sill_info_a525")
+  @@index([codeB719], name: "FK_sill_info_a077_sellforyou.sill_info_b719")
+  @@index([codeB956], name: "FK_sill_info_a077_sellforyou.sill_info_b956")
+  @@index([codeB378], name: "FK_sill_info_a077_sill_info_b378")
+  @@map("sill_info_a077")
+}
+
+model SillInfoA112 {
+  id           Int            @id @default(autoincrement())
+  code         String         @unique @db.VarChar(200)
+  name         String         @db.VarChar(200)
+  data         String         @db.Text
+  sillInfoA077 SillInfoA077[] @relation("sillInfoA077ToSillInfoA112")
+
+  @@map("sill_info_a112")
+}
+
+model SillInfoA113 {
+  id           Int            @id @default(autoincrement())
+  code         String         @unique @db.VarChar(200)
+  name         String         @db.VarChar(200)
+  data         String         @db.Text
+  sillInfoA077 SillInfoA077[] @relation("sillInfoA077ToSillInfoA113")
+
+  @@map("sill_info_a113")
+}
+
+model SillInfoA524 {
+  id           Int            @id @default(autoincrement())
+  code         String         @unique @db.VarChar(200)
+  name         String         @db.VarChar(200)
+  data         String         @db.Text
+  sillInfoA077 SillInfoA077[] @relation("sillInfoA077ToSillInfoA524")
+
+  @@map("sill_info_a524")
+}
+
+model SillInfoA525 {
+  id           Int            @id @default(autoincrement())
+  code         String         @unique @db.VarChar(200)
+  name         String         @db.VarChar(200)
+  data         String         @db.Text
+  sillInfoA077 SillInfoA077[] @relation("sillInfoA077ToSillInfoA525")
+
+  @@map("sill_info_a525")
+}
+
+model SillInfoB378 {
+  id           Int            @id @default(autoincrement())
+  code         String         @unique @db.VarChar(200)
+  name         String         @db.VarChar(200)
+  data         String         @db.Text
+  sillInfoA077 SillInfoA077[] @relation("sillInfoA077ToSillInfoB378")
+
+  @@map("sill_info_b378")
+}
+
+model SillInfoB719 {
+  id           Int            @id @default(autoincrement())
+  code         String         @unique @db.VarChar(200)
+  name         String         @db.VarChar(200)
+  data         String         @db.Text
+  sillInfoA077 SillInfoA077[] @relation("sillInfoA077ToSillInfoB719")
+
+  @@map("sill_info_b719")
+}
+
+model SillInfoB956 {
+  id           Int            @id @default(autoincrement())
+  code         String         @unique @db.VarChar(200)
+  name         String         @db.VarChar(200)
+  data         String         @db.Text
+  sillInfoA077 SillInfoA077[] @relation("sillInfoA077ToSillInfoB956")
+
+  @@map("sill_info_b956")
 }
 
 enum UserState {

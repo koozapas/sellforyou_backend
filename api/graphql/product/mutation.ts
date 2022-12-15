@@ -841,14 +841,27 @@ const restoreProductOptionValue = async (src: {}, args: ArgsValue<"Mutation", "r
     }
 }
 
+const coupangCategorySillCodeInput = async (src: {}, args: ArgsValue<"Mutation", "coupangCategorySillCodeInput">, ctx: Context, info: GraphQLResolveInfo) => {
+    try{
+        await Promise.all(args.data.map(async (v:any) => {
+            await ctx.prisma.categoryInfoB378.update({
+                where : { code : v.categoryCode},
+                data : { sillCode : v.sillCode}
+            })
+        }))
+        return "OK"
+    }catch(e){
+        return throwError(e,ctx);
+    }
+}
 const updateManyProductOptionValue = async (src: {}, args: ArgsValue<"Mutation", "updateManyProductOptionValue">, ctx: Context, info: GraphQLResolveInfo) => {
     try{
-        args.data.map(async (v:any) => {
+        await Promise.all(args.data.map(async (v:any) => {
             await ctx.prisma.productOptionValue.update({
                 where : { id : v.productOptionValueId},
                 data : {name : v.name ?? undefined}
             })
-        })
+        }))
         return "OK"
     }catch(e){
         return throwError(e,ctx);
@@ -2020,6 +2033,13 @@ export const mutation_product = extendType({
                 data : nonNull(list(nonNull(arg({type : "ProductOptionValueInput"}))))
             },
             resolve : updateManyProductOptionValue
+        })
+        t.field("coupangCategorySillCodeInput",{
+            type: nonNull("String"),
+            args :  {
+                data : nonNull(list(nonNull(arg({type : "sillCodeInput"}))))
+            },
+            resolve : coupangCategorySillCodeInput
         })
         t.field("restoreProductOptionValue",{
             type : nonNull("String"),

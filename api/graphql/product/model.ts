@@ -323,7 +323,7 @@ export const t_Product = objectType({
 });
 
 export const t_CategoryInfoA077 = objectType({
-    name : "CategoryInfoA077",
+    name: "CategoryInfoA077",
     definition(t) {
         t.model.code();
         t.model.codeA001();
@@ -355,8 +355,151 @@ export const t_CategoryInfoA077 = objectType({
         t.model.categoryInfoB378();
         t.model.categoryInfoB719();
         t.model.categoryInfoB956();
+        t.model.sillCode();
+        t.model.sillInfoA077();//외래키 데이터 
     }
 })
+
+export const t_SillInfoA077 = objectType({
+    name : "SillInfoA077",
+    definition(t) {
+        t.model.id();
+        t.model.code();
+        t.model.name();
+        t.model.data();
+        t.model.codeA001();
+        t.model.codeA006();
+        t.model.codeA027();
+        t.model.codeA112();
+        t.model.codeA113();
+        t.model.codeA524();
+        t.model.codeA525();
+        t.model.codeB378();
+        t.model.codeB719();
+        t.model.codeB956();
+        t.model.sillInfoA001();
+        t.model.sillInfoA006();
+        t.model.sillInfoA027();
+        t.model.sillInfoA112();
+        t.model.sillInfoA113();
+        t.model.sillInfoA524();
+        t.model.sillInfoA525();
+        t.model.sillInfoB378();
+        t.model.sillInfoB719();
+        t.model.sillInfoB956();
+    },
+})
+
+export const t_SillInfoA001 = objectType({
+    name : "SillInfoA001",
+    definition(t) {
+        t.model.id();
+        t.model.code();
+        t.model.name();
+        t.model.data();
+        t.model.sillInfoA077();
+    },
+})
+
+export const t_SillInfoA006 = objectType({
+    name : "SillInfoA006",
+    definition(t) {
+        t.model.id();
+        t.model.code();
+        t.model.name();
+        t.model.data();
+        t.model.sillInfoA077();
+    },
+})
+
+export const t_SillInfoA027 = objectType({
+    name : "SillInfoA027",
+    definition(t) {
+        t.model.id();
+        t.model.code();
+        t.model.name();
+        t.model.data();
+        t.model.sillInfoA077();
+    },
+})
+
+export const t_SillInfoA112 = objectType({
+    name : "SillInfoA112",
+    definition(t) {
+        t.model.id();
+        t.model.code();
+        t.model.name();
+        t.model.data();
+        t.model.sillInfoA077();
+    },
+})
+
+export const t_SillInfoA113 = objectType({
+    name : "SillInfoA113",
+    definition(t) {
+        t.model.id();
+        t.model.code();
+        t.model.name();
+        t.model.data();
+        t.model.sillInfoA077();
+    },
+})
+
+export const t_SillInfoA524 = objectType({
+    name : "SillInfoA524",
+    definition(t) {
+        t.model.id();
+        t.model.code();
+        t.model.name();
+        t.model.data();
+        t.model.sillInfoA077();
+    },
+})
+
+export const t_SillInfoA525 = objectType({
+    name : "SillInfoA525",
+    definition(t) {
+        t.model.id();
+        t.model.code();
+        t.model.name();
+        t.model.data();
+        t.model.sillInfoA077();
+    },
+})
+
+export const t_SillInfoB378 = objectType({
+    name : "SillInfoB378",
+    definition(t) {
+        t.model.id();
+        t.model.code();
+        t.model.name();
+        t.model.data();
+        t.model.sillInfoA077();
+    },
+})
+
+export const t_SillInfoB719 = objectType({
+    name : "SillInfoB719",
+    definition(t) {
+        t.model.id();
+        t.model.code();
+        t.model.name();
+        t.model.data();
+        t.model.sillInfoA077();
+    },
+})
+
+export const t_SillInfoB956 = objectType({
+    name : "SillInfoB956",
+    definition(t) {
+        t.model.id();
+        t.model.code();
+        t.model.name();
+        t.model.data();
+        t.model.sillInfoA077();
+    },
+})
+
 
 export const t_CategoryInfoA001 = objectType({
         name: "CategoryInfoA001",
@@ -759,7 +902,13 @@ export const t_InputProductOptionValue = inputObjectType({
         t.string("name")
     }
 })
-
+export const t_sillCodeInput = inputObjectType({
+    name : "sillCodeInput",
+    definition(t){
+        t.nonNull.string("categoryCode")
+        t.nonNull.string("sillCode")
+    }
+})
 export const t_InputProductName = inputObjectType({
     name : "ProductOptionNameInput",
     definition(t){
