@@ -387,6 +387,30 @@ export const t_SillInfoA077 = objectType({
         t.model.sillInfoB378();
         t.model.sillInfoB719();
         t.model.sillInfoB956();
+        t.field("activeSillDataA001",{
+            type: nonNull(list(nonNull("SillInfoA001"))),
+            resolve : async (src, args, ctx, info) =>{
+                try{
+                const where : Prisma.SillInfoA001WhereInput = {
+                    OR : [{code : src.codeA001 ?? "" },
+                            {code : "35"}
+                ]
+                }
+                let data = await ctx.prisma.sillInfoA001.findMany({
+                    where : {
+                        ...where 
+                    } 
+                    
+                })
+                if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                //console.log("test", JSON.stringify(originalData));
+                return data;
+            }catch(e){
+                return throwError(e, ctx);
+            }
+            } 
+            
+        })
     },
 })
 
@@ -397,7 +421,7 @@ export const t_SillInfoA001 = objectType({
         t.model.code();
         t.model.name();
         t.model.data();
-        t.model.sillInfoA077();
+        
     },
 })
 
@@ -408,7 +432,6 @@ export const t_SillInfoA006 = objectType({
         t.model.code();
         t.model.name();
         t.model.data();
-        t.model.sillInfoA077();
     },
 })
 
@@ -419,7 +442,6 @@ export const t_SillInfoA027 = objectType({
         t.model.code();
         t.model.name();
         t.model.data();
-        t.model.sillInfoA077();
     },
 })
 
@@ -430,7 +452,6 @@ export const t_SillInfoA112 = objectType({
         t.model.code();
         t.model.name();
         t.model.data();
-        t.model.sillInfoA077();
     },
 })
 
@@ -441,7 +462,6 @@ export const t_SillInfoA113 = objectType({
         t.model.code();
         t.model.name();
         t.model.data();
-        t.model.sillInfoA077();
     },
 })
 
@@ -452,7 +472,6 @@ export const t_SillInfoA524 = objectType({
         t.model.code();
         t.model.name();
         t.model.data();
-        t.model.sillInfoA077();
     },
 })
 
@@ -463,7 +482,6 @@ export const t_SillInfoA525 = objectType({
         t.model.code();
         t.model.name();
         t.model.data();
-        t.model.sillInfoA077();
     },
 })
 
@@ -474,7 +492,6 @@ export const t_SillInfoB378 = objectType({
         t.model.code();
         t.model.name();
         t.model.data();
-        t.model.sillInfoA077();
     },
 })
 
@@ -485,7 +502,6 @@ export const t_SillInfoB719 = objectType({
         t.model.code();
         t.model.name();
         t.model.data();
-        t.model.sillInfoA077();
     },
 })
 
@@ -496,7 +512,6 @@ export const t_SillInfoB956 = objectType({
         t.model.code();
         t.model.name();
         t.model.data();
-        t.model.sillInfoA077();
     },
 })
 
