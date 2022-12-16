@@ -66,10 +66,23 @@ type CategoryInfoA001 {
   id: Int!
   name: String!
   product(cursor: ProductWhereUniqueInput, skip: Int, take: Int): [Product!]!
+  sillCode: String!
+  sillInfoA001: SillInfoA001!
+}
+
+input CategoryInfoA001ListRelationFilter {
+  every: CategoryInfoA001WhereInput
+  none: CategoryInfoA001WhereInput
+  some: CategoryInfoA001WhereInput
+}
+
+input CategoryInfoA001OrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
 }
 
 input CategoryInfoA001OrderByWithRelationInput {
-  category_info_a077: CategoryInfoA077OrderByRelationAggregateInput
+  categoryInfoA077: CategoryInfoA077OrderByRelationAggregateInput
   code: SortOrder
   depth1: SortOrder
   depth2: SortOrder
@@ -81,6 +94,7 @@ input CategoryInfoA001OrderByWithRelationInput {
   name: SortOrder
   product: ProductOrderByRelationAggregateInput
   sillCode: SortOrder
+  sillInfoA001: SillInfoA001OrderByWithRelationInput
 }
 
 type CategoryInfoA001Type {
@@ -92,7 +106,7 @@ input CategoryInfoA001WhereInput {
   AND: [CategoryInfoA001WhereInput!]
   NOT: [CategoryInfoA001WhereInput!]
   OR: [CategoryInfoA001WhereInput!]
-  category_info_a077: CategoryInfoA077ListRelationFilter
+  categoryInfoA077: CategoryInfoA077ListRelationFilter
   code: StringFilter
   depth1: StringFilter
   depth2: StringFilter
@@ -104,6 +118,7 @@ input CategoryInfoA001WhereInput {
   name: StringFilter
   product: ProductListRelationFilter
   sillCode: StringFilter
+  sillInfoA001: SillInfoA001WhereInput
 }
 
 type CategoryInfoA006 {
@@ -117,10 +132,23 @@ type CategoryInfoA006 {
   id: Int!
   name: String!
   product(cursor: ProductWhereUniqueInput, skip: Int, take: Int): [Product!]!
+  sillCode: String!
+  sillInfoA006: SillInfoA006!
+}
+
+input CategoryInfoA006ListRelationFilter {
+  every: CategoryInfoA006WhereInput
+  none: CategoryInfoA006WhereInput
+  some: CategoryInfoA006WhereInput
+}
+
+input CategoryInfoA006OrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
 }
 
 input CategoryInfoA006OrderByWithRelationInput {
-  category_info_a077: CategoryInfoA077OrderByRelationAggregateInput
+  categoryInfoA077: CategoryInfoA077OrderByRelationAggregateInput
   code: SortOrder
   depth1: SortOrder
   depth2: SortOrder
@@ -132,6 +160,7 @@ input CategoryInfoA006OrderByWithRelationInput {
   name: SortOrder
   product: ProductOrderByRelationAggregateInput
   sillCode: SortOrder
+  sillInfoA006: SillInfoA006OrderByWithRelationInput
 }
 
 type CategoryInfoA006Type {
@@ -143,7 +172,7 @@ input CategoryInfoA006WhereInput {
   AND: [CategoryInfoA006WhereInput!]
   NOT: [CategoryInfoA006WhereInput!]
   OR: [CategoryInfoA006WhereInput!]
-  category_info_a077: CategoryInfoA077ListRelationFilter
+  categoryInfoA077: CategoryInfoA077ListRelationFilter
   code: StringFilter
   depth1: StringFilter
   depth2: StringFilter
@@ -155,6 +184,7 @@ input CategoryInfoA006WhereInput {
   name: StringFilter
   product: ProductListRelationFilter
   sillCode: StringFilter
+  sillInfoA006: SillInfoA006WhereInput
 }
 
 type CategoryInfoA027 {
@@ -168,10 +198,23 @@ type CategoryInfoA027 {
   id: Int!
   name: String!
   product(cursor: ProductWhereUniqueInput, skip: Int, take: Int): [Product!]!
+  sillCode: String!
+  sillInfoA027: SillInfoA027!
+}
+
+input CategoryInfoA027ListRelationFilter {
+  every: CategoryInfoA027WhereInput
+  none: CategoryInfoA027WhereInput
+  some: CategoryInfoA027WhereInput
+}
+
+input CategoryInfoA027OrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
 }
 
 input CategoryInfoA027OrderByWithRelationInput {
-  category_info_a077: CategoryInfoA077OrderByRelationAggregateInput
+  categoryInfoA077: CategoryInfoA077OrderByRelationAggregateInput
   code: SortOrder
   depth1: SortOrder
   depth2: SortOrder
@@ -183,6 +226,7 @@ input CategoryInfoA027OrderByWithRelationInput {
   name: SortOrder
   product: ProductOrderByRelationAggregateInput
   sillCode: SortOrder
+  sillInfoA027: SillInfoA027OrderByWithRelationInput
 }
 
 type CategoryInfoA027Type {
@@ -194,7 +238,7 @@ input CategoryInfoA027WhereInput {
   AND: [CategoryInfoA027WhereInput!]
   NOT: [CategoryInfoA027WhereInput!]
   OR: [CategoryInfoA027WhereInput!]
-  category_info_a077: CategoryInfoA077ListRelationFilter
+  categoryInfoA077: CategoryInfoA077ListRelationFilter
   code: StringFilter
   depth1: StringFilter
   depth2: StringFilter
@@ -206,6 +250,7 @@ input CategoryInfoA027WhereInput {
   name: StringFilter
   product: ProductListRelationFilter
   sillCode: StringFilter
+  sillInfoA027: SillInfoA027WhereInput
 }
 
 type CategoryInfoA077 {
@@ -343,10 +388,23 @@ type CategoryInfoA112 {
   id: Int!
   name: String!
   product(cursor: ProductWhereUniqueInput, skip: Int, take: Int): [Product!]!
+  sillCode: String!
+  sillInfoA112: SillInfoA112!
+}
+
+input CategoryInfoA112ListRelationFilter {
+  every: CategoryInfoA112WhereInput
+  none: CategoryInfoA112WhereInput
+  some: CategoryInfoA112WhereInput
+}
+
+input CategoryInfoA112OrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
 }
 
 input CategoryInfoA112OrderByWithRelationInput {
-  category_info_a077: CategoryInfoA077OrderByRelationAggregateInput
+  categoryInfoA077: CategoryInfoA077OrderByRelationAggregateInput
   code: SortOrder
   depth1: SortOrder
   depth2: SortOrder
@@ -358,6 +416,7 @@ input CategoryInfoA112OrderByWithRelationInput {
   name: SortOrder
   product: ProductOrderByRelationAggregateInput
   sillCode: SortOrder
+  sillInfoA112: SillInfoA112OrderByWithRelationInput
 }
 
 type CategoryInfoA112Type {
@@ -369,7 +428,7 @@ input CategoryInfoA112WhereInput {
   AND: [CategoryInfoA112WhereInput!]
   NOT: [CategoryInfoA112WhereInput!]
   OR: [CategoryInfoA112WhereInput!]
-  category_info_a077: CategoryInfoA077ListRelationFilter
+  categoryInfoA077: CategoryInfoA077ListRelationFilter
   code: StringFilter
   depth1: StringFilter
   depth2: StringFilter
@@ -381,6 +440,7 @@ input CategoryInfoA112WhereInput {
   name: StringFilter
   product: ProductListRelationFilter
   sillCode: StringFilter
+  sillInfoA112: SillInfoA112WhereInput
 }
 
 type CategoryInfoA113 {
@@ -394,10 +454,23 @@ type CategoryInfoA113 {
   id: Int!
   name: String!
   product(cursor: ProductWhereUniqueInput, skip: Int, take: Int): [Product!]!
+  sillCode: String!
+  sillInfoA113: SillInfoA113!
+}
+
+input CategoryInfoA113ListRelationFilter {
+  every: CategoryInfoA113WhereInput
+  none: CategoryInfoA113WhereInput
+  some: CategoryInfoA113WhereInput
+}
+
+input CategoryInfoA113OrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
 }
 
 input CategoryInfoA113OrderByWithRelationInput {
-  category_info_a077: CategoryInfoA077OrderByRelationAggregateInput
+  categoryInfoA077: CategoryInfoA077OrderByRelationAggregateInput
   code: SortOrder
   depth1: SortOrder
   depth2: SortOrder
@@ -409,6 +482,7 @@ input CategoryInfoA113OrderByWithRelationInput {
   name: SortOrder
   product: ProductOrderByRelationAggregateInput
   sillCode: SortOrder
+  sillInfoA113: SillInfoA113OrderByWithRelationInput
 }
 
 type CategoryInfoA113Type {
@@ -420,7 +494,7 @@ input CategoryInfoA113WhereInput {
   AND: [CategoryInfoA113WhereInput!]
   NOT: [CategoryInfoA113WhereInput!]
   OR: [CategoryInfoA113WhereInput!]
-  category_info_a077: CategoryInfoA077ListRelationFilter
+  categoryInfoA077: CategoryInfoA077ListRelationFilter
   code: StringFilter
   depth1: StringFilter
   depth2: StringFilter
@@ -432,6 +506,7 @@ input CategoryInfoA113WhereInput {
   name: StringFilter
   product: ProductListRelationFilter
   sillCode: StringFilter
+  sillInfoA113: SillInfoA113WhereInput
 }
 
 type CategoryInfoA524 {
@@ -445,10 +520,23 @@ type CategoryInfoA524 {
   id: Int!
   name: String!
   product(cursor: ProductWhereUniqueInput, skip: Int, take: Int): [Product!]!
+  sillCode: String!
+  sillInfoA524: SillInfoA524!
+}
+
+input CategoryInfoA524ListRelationFilter {
+  every: CategoryInfoA524WhereInput
+  none: CategoryInfoA524WhereInput
+  some: CategoryInfoA524WhereInput
+}
+
+input CategoryInfoA524OrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
 }
 
 input CategoryInfoA524OrderByWithRelationInput {
-  category_info_a077: CategoryInfoA077OrderByRelationAggregateInput
+  categoryInfoA077: CategoryInfoA077OrderByRelationAggregateInput
   code: SortOrder
   depth1: SortOrder
   depth2: SortOrder
@@ -460,6 +548,7 @@ input CategoryInfoA524OrderByWithRelationInput {
   name: SortOrder
   product: ProductOrderByRelationAggregateInput
   sillCode: SortOrder
+  sillInfoA524: SillInfoA524OrderByWithRelationInput
 }
 
 type CategoryInfoA524Type {
@@ -471,7 +560,7 @@ input CategoryInfoA524WhereInput {
   AND: [CategoryInfoA524WhereInput!]
   NOT: [CategoryInfoA524WhereInput!]
   OR: [CategoryInfoA524WhereInput!]
-  category_info_a077: CategoryInfoA077ListRelationFilter
+  categoryInfoA077: CategoryInfoA077ListRelationFilter
   code: StringFilter
   depth1: StringFilter
   depth2: StringFilter
@@ -483,6 +572,7 @@ input CategoryInfoA524WhereInput {
   name: StringFilter
   product: ProductListRelationFilter
   sillCode: StringFilter
+  sillInfoA524: SillInfoA524WhereInput
 }
 
 type CategoryInfoA525 {
@@ -496,10 +586,23 @@ type CategoryInfoA525 {
   id: Int!
   name: String!
   product(cursor: ProductWhereUniqueInput, skip: Int, take: Int): [Product!]!
+  sillCode: String!
+  sillInfoA525: SillInfoA525!
+}
+
+input CategoryInfoA525ListRelationFilter {
+  every: CategoryInfoA525WhereInput
+  none: CategoryInfoA525WhereInput
+  some: CategoryInfoA525WhereInput
+}
+
+input CategoryInfoA525OrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
 }
 
 input CategoryInfoA525OrderByWithRelationInput {
-  category_info_a077: CategoryInfoA077OrderByRelationAggregateInput
+  categoryInfoA077: CategoryInfoA077OrderByRelationAggregateInput
   code: SortOrder
   depth1: SortOrder
   depth2: SortOrder
@@ -511,6 +614,7 @@ input CategoryInfoA525OrderByWithRelationInput {
   name: SortOrder
   product: ProductOrderByRelationAggregateInput
   sillCode: SortOrder
+  sillInfoA525: SillInfoA525OrderByWithRelationInput
 }
 
 type CategoryInfoA525Type {
@@ -522,7 +626,7 @@ input CategoryInfoA525WhereInput {
   AND: [CategoryInfoA525WhereInput!]
   NOT: [CategoryInfoA525WhereInput!]
   OR: [CategoryInfoA525WhereInput!]
-  category_info_a077: CategoryInfoA077ListRelationFilter
+  categoryInfoA077: CategoryInfoA077ListRelationFilter
   code: StringFilter
   depth1: StringFilter
   depth2: StringFilter
@@ -534,6 +638,7 @@ input CategoryInfoA525WhereInput {
   name: StringFilter
   product: ProductListRelationFilter
   sillCode: StringFilter
+  sillInfoA525: SillInfoA525WhereInput
 }
 
 type CategoryInfoB378 {
@@ -547,10 +652,23 @@ type CategoryInfoB378 {
   id: Int!
   name: String!
   product(cursor: ProductWhereUniqueInput, skip: Int, take: Int): [Product!]!
+  sillCode: String!
+  sillInfoB378: SillInfoB378!
+}
+
+input CategoryInfoB378ListRelationFilter {
+  every: CategoryInfoB378WhereInput
+  none: CategoryInfoB378WhereInput
+  some: CategoryInfoB378WhereInput
+}
+
+input CategoryInfoB378OrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
 }
 
 input CategoryInfoB378OrderByWithRelationInput {
-  category_info_a077: CategoryInfoA077OrderByRelationAggregateInput
+  categoryInfoA077: CategoryInfoA077OrderByRelationAggregateInput
   code: SortOrder
   codeA077: SortOrder
   depth1: SortOrder
@@ -563,6 +681,7 @@ input CategoryInfoB378OrderByWithRelationInput {
   name: SortOrder
   product: ProductOrderByRelationAggregateInput
   sillCode: SortOrder
+  sillInfoB378: SillInfoB378OrderByWithRelationInput
 }
 
 type CategoryInfoB378Type {
@@ -574,7 +693,7 @@ input CategoryInfoB378WhereInput {
   AND: [CategoryInfoB378WhereInput!]
   NOT: [CategoryInfoB378WhereInput!]
   OR: [CategoryInfoB378WhereInput!]
-  category_info_a077: CategoryInfoA077ListRelationFilter
+  categoryInfoA077: CategoryInfoA077ListRelationFilter
   code: StringFilter
   codeA077: StringFilter
   depth1: StringFilter
@@ -587,6 +706,7 @@ input CategoryInfoB378WhereInput {
   name: StringFilter
   product: ProductListRelationFilter
   sillCode: StringFilter
+  sillInfoB378: SillInfoB378WhereInput
 }
 
 type CategoryInfoB719 {
@@ -600,10 +720,23 @@ type CategoryInfoB719 {
   id: Int!
   name: String!
   product(cursor: ProductWhereUniqueInput, skip: Int, take: Int): [Product!]!
+  sillCode: String!
+  sillInfoB719: SillInfoB719!
+}
+
+input CategoryInfoB719ListRelationFilter {
+  every: CategoryInfoB719WhereInput
+  none: CategoryInfoB719WhereInput
+  some: CategoryInfoB719WhereInput
+}
+
+input CategoryInfoB719OrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
 }
 
 input CategoryInfoB719OrderByWithRelationInput {
-  category_info_a077: CategoryInfoA077OrderByRelationAggregateInput
+  categoryInfoA077: CategoryInfoA077OrderByRelationAggregateInput
   code: SortOrder
   depth1: SortOrder
   depth2: SortOrder
@@ -615,6 +748,7 @@ input CategoryInfoB719OrderByWithRelationInput {
   name: SortOrder
   product: ProductOrderByRelationAggregateInput
   sillCode: SortOrder
+  sillInfoB719: SillInfoB719OrderByWithRelationInput
 }
 
 type CategoryInfoB719Type {
@@ -626,7 +760,7 @@ input CategoryInfoB719WhereInput {
   AND: [CategoryInfoB719WhereInput!]
   NOT: [CategoryInfoB719WhereInput!]
   OR: [CategoryInfoB719WhereInput!]
-  category_info_a077: CategoryInfoA077ListRelationFilter
+  categoryInfoA077: CategoryInfoA077ListRelationFilter
   code: StringFilter
   depth1: StringFilter
   depth2: StringFilter
@@ -638,6 +772,7 @@ input CategoryInfoB719WhereInput {
   name: StringFilter
   product: ProductListRelationFilter
   sillCode: StringFilter
+  sillInfoB719: SillInfoB719WhereInput
 }
 
 type CategoryInfoB956 {
@@ -651,10 +786,23 @@ type CategoryInfoB956 {
   id: Int!
   name: String!
   product(cursor: ProductWhereUniqueInput, skip: Int, take: Int): [Product!]!
+  sillCode: String!
+  sillInfoB956: SillInfoB956!
+}
+
+input CategoryInfoB956ListRelationFilter {
+  every: CategoryInfoB956WhereInput
+  none: CategoryInfoB956WhereInput
+  some: CategoryInfoB956WhereInput
+}
+
+input CategoryInfoB956OrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
 }
 
 input CategoryInfoB956OrderByWithRelationInput {
-  category_info_a077: CategoryInfoA077OrderByRelationAggregateInput
+  categoryInfoA077: CategoryInfoA077OrderByRelationAggregateInput
   code: SortOrder
   depth1: SortOrder
   depth2: SortOrder
@@ -666,6 +814,7 @@ input CategoryInfoB956OrderByWithRelationInput {
   name: SortOrder
   product: ProductOrderByRelationAggregateInput
   sillCode: SortOrder
+  sillInfoB956: SillInfoB956OrderByWithRelationInput
 }
 
 type CategoryInfoB956Type {
@@ -677,7 +826,7 @@ input CategoryInfoB956WhereInput {
   AND: [CategoryInfoB956WhereInput!]
   NOT: [CategoryInfoB956WhereInput!]
   OR: [CategoryInfoB956WhereInput!]
-  category_info_a077: CategoryInfoA077ListRelationFilter
+  categoryInfoA077: CategoryInfoA077ListRelationFilter
   code: StringFilter
   depth1: StringFilter
   depth2: StringFilter
@@ -689,6 +838,7 @@ input CategoryInfoB956WhereInput {
   name: StringFilter
   product: ProductListRelationFilter
   sillCode: StringFilter
+  sillInfoB956: SillInfoB956WhereInput
 }
 
 type CategoryInformationType {
@@ -1620,6 +1770,28 @@ input ProductOrderByWithRelationInput {
   shippingFee: SortOrder
   siilCode: SortOrder
   siilData: SortOrder
+  sillCodeA001: SortOrder
+  sillCodeA006: SortOrder
+  sillCodeA027: SortOrder
+  sillCodeA077: SortOrder
+  sillCodeA112: SortOrder
+  sillCodeA113: SortOrder
+  sillCodeA524: SortOrder
+  sillCodeA525: SortOrder
+  sillCodeB378: SortOrder
+  sillCodeB719: SortOrder
+  sillCodeB956: SortOrder
+  sillDataA001: SortOrder
+  sillDataA006: SortOrder
+  sillDataA027: SortOrder
+  sillDataA077: SortOrder
+  sillDataA112: SortOrder
+  sillDataA113: SortOrder
+  sillDataA524: SortOrder
+  sillDataA525: SortOrder
+  sillDataB378: SortOrder
+  sillDataB719: SortOrder
+  sillDataB956: SortOrder
   state: SortOrder
   stockUpdatedAt: SortOrder
   streetFee: SortOrder
@@ -1861,6 +2033,28 @@ input ProductWhereInput {
   shippingFee: IntFilter
   siilCode: StringNullableFilter
   siilData: StringNullableFilter
+  sillCodeA001: StringFilter
+  sillCodeA006: StringFilter
+  sillCodeA027: StringFilter
+  sillCodeA077: StringFilter
+  sillCodeA112: StringFilter
+  sillCodeA113: StringFilter
+  sillCodeA524: StringFilter
+  sillCodeA525: StringFilter
+  sillCodeB378: StringFilter
+  sillCodeB719: StringFilter
+  sillCodeB956: StringFilter
+  sillDataA001: StringFilter
+  sillDataA006: StringFilter
+  sillDataA027: StringFilter
+  sillDataA077: StringFilter
+  sillDataA112: StringFilter
+  sillDataA113: StringFilter
+  sillDataA524: StringFilter
+  sillDataA525: StringFilter
+  sillDataB378: StringFilter
+  sillDataB719: StringFilter
+  sillDataB956: StringFilter
   state: IntFilter
   stockUpdatedAt: DateTimeFilter
   streetFee: FloatNullableFilter
@@ -2028,6 +2222,7 @@ type SillInfoA001 {
 }
 
 input SillInfoA001OrderByWithRelationInput {
+  categoryInfoA001: CategoryInfoA001OrderByRelationAggregateInput
   code: SortOrder
   data: SortOrder
   id: SortOrder
@@ -2039,6 +2234,7 @@ input SillInfoA001WhereInput {
   AND: [SillInfoA001WhereInput!]
   NOT: [SillInfoA001WhereInput!]
   OR: [SillInfoA001WhereInput!]
+  categoryInfoA001: CategoryInfoA001ListRelationFilter
   code: StringFilter
   data: StringFilter
   id: IntFilter
@@ -2055,6 +2251,7 @@ type SillInfoA006 {
 }
 
 input SillInfoA006OrderByWithRelationInput {
+  categoryInfoA006: CategoryInfoA006OrderByRelationAggregateInput
   code: SortOrder
   data: SortOrder
   id: SortOrder
@@ -2066,6 +2263,7 @@ input SillInfoA006WhereInput {
   AND: [SillInfoA006WhereInput!]
   NOT: [SillInfoA006WhereInput!]
   OR: [SillInfoA006WhereInput!]
+  categoryInfoA006: CategoryInfoA006ListRelationFilter
   code: StringFilter
   data: StringFilter
   id: IntFilter
@@ -2082,6 +2280,7 @@ type SillInfoA027 {
 }
 
 input SillInfoA027OrderByWithRelationInput {
+  categoryInfoA027: CategoryInfoA027OrderByRelationAggregateInput
   code: SortOrder
   data: SortOrder
   id: SortOrder
@@ -2093,6 +2292,7 @@ input SillInfoA027WhereInput {
   AND: [SillInfoA027WhereInput!]
   NOT: [SillInfoA027WhereInput!]
   OR: [SillInfoA027WhereInput!]
+  categoryInfoA027: CategoryInfoA027ListRelationFilter
   code: StringFilter
   data: StringFilter
   id: IntFilter
@@ -2211,6 +2411,7 @@ type SillInfoA112 {
 }
 
 input SillInfoA112OrderByWithRelationInput {
+  categoryInfoA112: CategoryInfoA112OrderByRelationAggregateInput
   code: SortOrder
   data: SortOrder
   id: SortOrder
@@ -2222,6 +2423,7 @@ input SillInfoA112WhereInput {
   AND: [SillInfoA112WhereInput!]
   NOT: [SillInfoA112WhereInput!]
   OR: [SillInfoA112WhereInput!]
+  categoryInfoA112: CategoryInfoA112ListRelationFilter
   code: StringFilter
   data: StringFilter
   id: IntFilter
@@ -2238,6 +2440,7 @@ type SillInfoA113 {
 }
 
 input SillInfoA113OrderByWithRelationInput {
+  categoryInfoA113: CategoryInfoA113OrderByRelationAggregateInput
   code: SortOrder
   data: SortOrder
   id: SortOrder
@@ -2249,6 +2452,7 @@ input SillInfoA113WhereInput {
   AND: [SillInfoA113WhereInput!]
   NOT: [SillInfoA113WhereInput!]
   OR: [SillInfoA113WhereInput!]
+  categoryInfoA113: CategoryInfoA113ListRelationFilter
   code: StringFilter
   data: StringFilter
   id: IntFilter
@@ -2265,6 +2469,7 @@ type SillInfoA524 {
 }
 
 input SillInfoA524OrderByWithRelationInput {
+  categoryInfoA524: CategoryInfoA524OrderByRelationAggregateInput
   code: SortOrder
   data: SortOrder
   id: SortOrder
@@ -2276,6 +2481,7 @@ input SillInfoA524WhereInput {
   AND: [SillInfoA524WhereInput!]
   NOT: [SillInfoA524WhereInput!]
   OR: [SillInfoA524WhereInput!]
+  categoryInfoA524: CategoryInfoA524ListRelationFilter
   code: StringFilter
   data: StringFilter
   id: IntFilter
@@ -2292,6 +2498,7 @@ type SillInfoA525 {
 }
 
 input SillInfoA525OrderByWithRelationInput {
+  categoryInfoA525: CategoryInfoA525OrderByRelationAggregateInput
   code: SortOrder
   data: SortOrder
   id: SortOrder
@@ -2303,6 +2510,7 @@ input SillInfoA525WhereInput {
   AND: [SillInfoA525WhereInput!]
   NOT: [SillInfoA525WhereInput!]
   OR: [SillInfoA525WhereInput!]
+  categoryInfoA525: CategoryInfoA525ListRelationFilter
   code: StringFilter
   data: StringFilter
   id: IntFilter
@@ -2319,6 +2527,7 @@ type SillInfoB378 {
 }
 
 input SillInfoB378OrderByWithRelationInput {
+  categoryInfoB378: CategoryInfoB378OrderByRelationAggregateInput
   code: SortOrder
   data: SortOrder
   id: SortOrder
@@ -2330,6 +2539,7 @@ input SillInfoB378WhereInput {
   AND: [SillInfoB378WhereInput!]
   NOT: [SillInfoB378WhereInput!]
   OR: [SillInfoB378WhereInput!]
+  categoryInfoB378: CategoryInfoB378ListRelationFilter
   code: StringFilter
   data: StringFilter
   id: IntFilter
@@ -2346,6 +2556,7 @@ type SillInfoB719 {
 }
 
 input SillInfoB719OrderByWithRelationInput {
+  categoryInfoB719: CategoryInfoB719OrderByRelationAggregateInput
   code: SortOrder
   data: SortOrder
   id: SortOrder
@@ -2357,6 +2568,7 @@ input SillInfoB719WhereInput {
   AND: [SillInfoB719WhereInput!]
   NOT: [SillInfoB719WhereInput!]
   OR: [SillInfoB719WhereInput!]
+  categoryInfoB719: CategoryInfoB719ListRelationFilter
   code: StringFilter
   data: StringFilter
   id: IntFilter
@@ -2373,6 +2585,7 @@ type SillInfoB956 {
 }
 
 input SillInfoB956OrderByWithRelationInput {
+  categoryInfoB956: CategoryInfoB956OrderByRelationAggregateInput
   code: SortOrder
   data: SortOrder
   id: SortOrder
@@ -2384,6 +2597,7 @@ input SillInfoB956WhereInput {
   AND: [SillInfoB956WhereInput!]
   NOT: [SillInfoB956WhereInput!]
   OR: [SillInfoB956WhereInput!]
+  categoryInfoB956: CategoryInfoB956ListRelationFilter
   code: StringFilter
   data: StringFilter
   id: IntFilter

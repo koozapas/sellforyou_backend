@@ -514,6 +514,8 @@ export const t_CategoryInfoA001 = objectType({
             t.model.id();
             t.model.name();
             t.model.product();
+            t.model.sillCode();
+            t.model.sillInfoA001();
         }
 })
 export const t_CategoryInfoA006 = objectType({
@@ -529,6 +531,8 @@ export const t_CategoryInfoA006 = objectType({
             t.model.id();
             t.model.name();
             t.model.product();
+            t.model.sillCode();
+            t.model.sillInfoA006();
         }
 })
 export const t_CategoryInfoA027 = objectType({
@@ -544,6 +548,8 @@ export const t_CategoryInfoA027 = objectType({
             t.model.id();
             t.model.name();
             t.model.product();
+            t.model.sillCode();
+            t.model.sillInfoA027();
         }
 })
 export const t_CategoryInfoA112 = objectType({
@@ -559,6 +565,8 @@ export const t_CategoryInfoA112 = objectType({
             t.model.id();
             t.model.name();
             t.model.product();
+            t.model.sillCode();
+            t.model.sillInfoA112();
         }
 })
 export const t_CategoryInfoA113 = objectType({
@@ -574,6 +582,8 @@ export const t_CategoryInfoA113 = objectType({
             t.model.id();
             t.model.name();
             t.model.product();
+            t.model.sillCode();
+            t.model.sillInfoA113();
         }
 })
 export const t_CategoryInfoA524 = objectType({
@@ -589,6 +599,8 @@ export const t_CategoryInfoA524 = objectType({
             t.model.id();
             t.model.name();
             t.model.product();
+            t.model.sillCode();
+            t.model.sillInfoA524();
         }
 })
 export const t_CategoryInfoA525 = objectType({
@@ -604,6 +616,8 @@ export const t_CategoryInfoA525 = objectType({
             t.model.id();
             t.model.name();
             t.model.product();
+            t.model.sillCode();
+            t.model.sillInfoA525();
         }
 })
 export const t_CategoryInfoB378 = objectType({
@@ -619,6 +633,8 @@ export const t_CategoryInfoB378 = objectType({
             t.model.id();
             t.model.name();
             t.model.product();
+            t.model.sillCode();
+            t.model.sillInfoB378();
         }
 })
 export const t_CategoryInfoB719 = objectType({
@@ -634,6 +650,8 @@ export const t_CategoryInfoB719 = objectType({
             t.model.id();
             t.model.name();
             t.model.product();
+            t.model.sillCode();
+            t.model.sillInfoB719();
         }
 })
 export const t_CategoryInfoB956 = objectType({
@@ -649,6 +667,8 @@ export const t_CategoryInfoB956 = objectType({
             t.model.id();
             t.model.name();
             t.model.product();
+            t.model.sillCode();
+            t.model.sillInfoB956();
     }})
 
 export const t_ProductOption = objectType({

@@ -69,8 +69,17 @@ export interface NexusGenInputs {
     equals?: boolean | null; // Boolean
     not?: NexusGenInputs['NestedBoolNullableFilter'] | null; // NestedBoolNullableFilter
   }
+  CategoryInfoA001ListRelationFilter: { // input type
+    every?: NexusGenInputs['CategoryInfoA001WhereInput'] | null; // CategoryInfoA001WhereInput
+    none?: NexusGenInputs['CategoryInfoA001WhereInput'] | null; // CategoryInfoA001WhereInput
+    some?: NexusGenInputs['CategoryInfoA001WhereInput'] | null; // CategoryInfoA001WhereInput
+  }
+  CategoryInfoA001OrderByRelationAggregateInput: { // input type
+    _count?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    count?: NexusGenEnums['SortOrder'] | null; // SortOrder
+  }
   CategoryInfoA001OrderByWithRelationInput: { // input type
-    category_info_a077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     depth1?: NexusGenEnums['SortOrder'] | null; // SortOrder
     depth2?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -82,12 +91,13 @@ export interface NexusGenInputs {
     name?: NexusGenEnums['SortOrder'] | null; // SortOrder
     product?: NexusGenInputs['ProductOrderByRelationAggregateInput'] | null; // ProductOrderByRelationAggregateInput
     sillCode?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillInfoA001?: NexusGenInputs['SillInfoA001OrderByWithRelationInput'] | null; // SillInfoA001OrderByWithRelationInput
   }
   CategoryInfoA001WhereInput: { // input type
     AND?: NexusGenInputs['CategoryInfoA001WhereInput'][] | null; // [CategoryInfoA001WhereInput!]
     NOT?: NexusGenInputs['CategoryInfoA001WhereInput'][] | null; // [CategoryInfoA001WhereInput!]
     OR?: NexusGenInputs['CategoryInfoA001WhereInput'][] | null; // [CategoryInfoA001WhereInput!]
-    category_info_a077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     depth1?: NexusGenInputs['StringFilter'] | null; // StringFilter
     depth2?: NexusGenInputs['StringFilter'] | null; // StringFilter
@@ -99,9 +109,19 @@ export interface NexusGenInputs {
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
     product?: NexusGenInputs['ProductListRelationFilter'] | null; // ProductListRelationFilter
     sillCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillInfoA001?: NexusGenInputs['SillInfoA001WhereInput'] | null; // SillInfoA001WhereInput
+  }
+  CategoryInfoA006ListRelationFilter: { // input type
+    every?: NexusGenInputs['CategoryInfoA006WhereInput'] | null; // CategoryInfoA006WhereInput
+    none?: NexusGenInputs['CategoryInfoA006WhereInput'] | null; // CategoryInfoA006WhereInput
+    some?: NexusGenInputs['CategoryInfoA006WhereInput'] | null; // CategoryInfoA006WhereInput
+  }
+  CategoryInfoA006OrderByRelationAggregateInput: { // input type
+    _count?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    count?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
   CategoryInfoA006OrderByWithRelationInput: { // input type
-    category_info_a077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     depth1?: NexusGenEnums['SortOrder'] | null; // SortOrder
     depth2?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -113,12 +133,13 @@ export interface NexusGenInputs {
     name?: NexusGenEnums['SortOrder'] | null; // SortOrder
     product?: NexusGenInputs['ProductOrderByRelationAggregateInput'] | null; // ProductOrderByRelationAggregateInput
     sillCode?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillInfoA006?: NexusGenInputs['SillInfoA006OrderByWithRelationInput'] | null; // SillInfoA006OrderByWithRelationInput
   }
   CategoryInfoA006WhereInput: { // input type
     AND?: NexusGenInputs['CategoryInfoA006WhereInput'][] | null; // [CategoryInfoA006WhereInput!]
     NOT?: NexusGenInputs['CategoryInfoA006WhereInput'][] | null; // [CategoryInfoA006WhereInput!]
     OR?: NexusGenInputs['CategoryInfoA006WhereInput'][] | null; // [CategoryInfoA006WhereInput!]
-    category_info_a077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     depth1?: NexusGenInputs['StringFilter'] | null; // StringFilter
     depth2?: NexusGenInputs['StringFilter'] | null; // StringFilter
@@ -130,9 +151,19 @@ export interface NexusGenInputs {
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
     product?: NexusGenInputs['ProductListRelationFilter'] | null; // ProductListRelationFilter
     sillCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillInfoA006?: NexusGenInputs['SillInfoA006WhereInput'] | null; // SillInfoA006WhereInput
+  }
+  CategoryInfoA027ListRelationFilter: { // input type
+    every?: NexusGenInputs['CategoryInfoA027WhereInput'] | null; // CategoryInfoA027WhereInput
+    none?: NexusGenInputs['CategoryInfoA027WhereInput'] | null; // CategoryInfoA027WhereInput
+    some?: NexusGenInputs['CategoryInfoA027WhereInput'] | null; // CategoryInfoA027WhereInput
+  }
+  CategoryInfoA027OrderByRelationAggregateInput: { // input type
+    _count?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    count?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
   CategoryInfoA027OrderByWithRelationInput: { // input type
-    category_info_a077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     depth1?: NexusGenEnums['SortOrder'] | null; // SortOrder
     depth2?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -144,12 +175,13 @@ export interface NexusGenInputs {
     name?: NexusGenEnums['SortOrder'] | null; // SortOrder
     product?: NexusGenInputs['ProductOrderByRelationAggregateInput'] | null; // ProductOrderByRelationAggregateInput
     sillCode?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillInfoA027?: NexusGenInputs['SillInfoA027OrderByWithRelationInput'] | null; // SillInfoA027OrderByWithRelationInput
   }
   CategoryInfoA027WhereInput: { // input type
     AND?: NexusGenInputs['CategoryInfoA027WhereInput'][] | null; // [CategoryInfoA027WhereInput!]
     NOT?: NexusGenInputs['CategoryInfoA027WhereInput'][] | null; // [CategoryInfoA027WhereInput!]
     OR?: NexusGenInputs['CategoryInfoA027WhereInput'][] | null; // [CategoryInfoA027WhereInput!]
-    category_info_a077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     depth1?: NexusGenInputs['StringFilter'] | null; // StringFilter
     depth2?: NexusGenInputs['StringFilter'] | null; // StringFilter
@@ -161,6 +193,7 @@ export interface NexusGenInputs {
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
     product?: NexusGenInputs['ProductListRelationFilter'] | null; // ProductListRelationFilter
     sillCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillInfoA027?: NexusGenInputs['SillInfoA027WhereInput'] | null; // SillInfoA027WhereInput
   }
   CategoryInfoA077ListRelationFilter: { // input type
     every?: NexusGenInputs['CategoryInfoA077WhereInput'] | null; // CategoryInfoA077WhereInput
@@ -242,8 +275,17 @@ export interface NexusGenInputs {
     sillCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
     sillInfoA077?: NexusGenInputs['SillInfoA077WhereInput'] | null; // SillInfoA077WhereInput
   }
+  CategoryInfoA112ListRelationFilter: { // input type
+    every?: NexusGenInputs['CategoryInfoA112WhereInput'] | null; // CategoryInfoA112WhereInput
+    none?: NexusGenInputs['CategoryInfoA112WhereInput'] | null; // CategoryInfoA112WhereInput
+    some?: NexusGenInputs['CategoryInfoA112WhereInput'] | null; // CategoryInfoA112WhereInput
+  }
+  CategoryInfoA112OrderByRelationAggregateInput: { // input type
+    _count?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    count?: NexusGenEnums['SortOrder'] | null; // SortOrder
+  }
   CategoryInfoA112OrderByWithRelationInput: { // input type
-    category_info_a077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     depth1?: NexusGenEnums['SortOrder'] | null; // SortOrder
     depth2?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -255,12 +297,13 @@ export interface NexusGenInputs {
     name?: NexusGenEnums['SortOrder'] | null; // SortOrder
     product?: NexusGenInputs['ProductOrderByRelationAggregateInput'] | null; // ProductOrderByRelationAggregateInput
     sillCode?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillInfoA112?: NexusGenInputs['SillInfoA112OrderByWithRelationInput'] | null; // SillInfoA112OrderByWithRelationInput
   }
   CategoryInfoA112WhereInput: { // input type
     AND?: NexusGenInputs['CategoryInfoA112WhereInput'][] | null; // [CategoryInfoA112WhereInput!]
     NOT?: NexusGenInputs['CategoryInfoA112WhereInput'][] | null; // [CategoryInfoA112WhereInput!]
     OR?: NexusGenInputs['CategoryInfoA112WhereInput'][] | null; // [CategoryInfoA112WhereInput!]
-    category_info_a077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     depth1?: NexusGenInputs['StringFilter'] | null; // StringFilter
     depth2?: NexusGenInputs['StringFilter'] | null; // StringFilter
@@ -272,9 +315,19 @@ export interface NexusGenInputs {
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
     product?: NexusGenInputs['ProductListRelationFilter'] | null; // ProductListRelationFilter
     sillCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillInfoA112?: NexusGenInputs['SillInfoA112WhereInput'] | null; // SillInfoA112WhereInput
+  }
+  CategoryInfoA113ListRelationFilter: { // input type
+    every?: NexusGenInputs['CategoryInfoA113WhereInput'] | null; // CategoryInfoA113WhereInput
+    none?: NexusGenInputs['CategoryInfoA113WhereInput'] | null; // CategoryInfoA113WhereInput
+    some?: NexusGenInputs['CategoryInfoA113WhereInput'] | null; // CategoryInfoA113WhereInput
+  }
+  CategoryInfoA113OrderByRelationAggregateInput: { // input type
+    _count?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    count?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
   CategoryInfoA113OrderByWithRelationInput: { // input type
-    category_info_a077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     depth1?: NexusGenEnums['SortOrder'] | null; // SortOrder
     depth2?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -286,12 +339,13 @@ export interface NexusGenInputs {
     name?: NexusGenEnums['SortOrder'] | null; // SortOrder
     product?: NexusGenInputs['ProductOrderByRelationAggregateInput'] | null; // ProductOrderByRelationAggregateInput
     sillCode?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillInfoA113?: NexusGenInputs['SillInfoA113OrderByWithRelationInput'] | null; // SillInfoA113OrderByWithRelationInput
   }
   CategoryInfoA113WhereInput: { // input type
     AND?: NexusGenInputs['CategoryInfoA113WhereInput'][] | null; // [CategoryInfoA113WhereInput!]
     NOT?: NexusGenInputs['CategoryInfoA113WhereInput'][] | null; // [CategoryInfoA113WhereInput!]
     OR?: NexusGenInputs['CategoryInfoA113WhereInput'][] | null; // [CategoryInfoA113WhereInput!]
-    category_info_a077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     depth1?: NexusGenInputs['StringFilter'] | null; // StringFilter
     depth2?: NexusGenInputs['StringFilter'] | null; // StringFilter
@@ -303,9 +357,19 @@ export interface NexusGenInputs {
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
     product?: NexusGenInputs['ProductListRelationFilter'] | null; // ProductListRelationFilter
     sillCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillInfoA113?: NexusGenInputs['SillInfoA113WhereInput'] | null; // SillInfoA113WhereInput
+  }
+  CategoryInfoA524ListRelationFilter: { // input type
+    every?: NexusGenInputs['CategoryInfoA524WhereInput'] | null; // CategoryInfoA524WhereInput
+    none?: NexusGenInputs['CategoryInfoA524WhereInput'] | null; // CategoryInfoA524WhereInput
+    some?: NexusGenInputs['CategoryInfoA524WhereInput'] | null; // CategoryInfoA524WhereInput
+  }
+  CategoryInfoA524OrderByRelationAggregateInput: { // input type
+    _count?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    count?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
   CategoryInfoA524OrderByWithRelationInput: { // input type
-    category_info_a077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     depth1?: NexusGenEnums['SortOrder'] | null; // SortOrder
     depth2?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -317,12 +381,13 @@ export interface NexusGenInputs {
     name?: NexusGenEnums['SortOrder'] | null; // SortOrder
     product?: NexusGenInputs['ProductOrderByRelationAggregateInput'] | null; // ProductOrderByRelationAggregateInput
     sillCode?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillInfoA524?: NexusGenInputs['SillInfoA524OrderByWithRelationInput'] | null; // SillInfoA524OrderByWithRelationInput
   }
   CategoryInfoA524WhereInput: { // input type
     AND?: NexusGenInputs['CategoryInfoA524WhereInput'][] | null; // [CategoryInfoA524WhereInput!]
     NOT?: NexusGenInputs['CategoryInfoA524WhereInput'][] | null; // [CategoryInfoA524WhereInput!]
     OR?: NexusGenInputs['CategoryInfoA524WhereInput'][] | null; // [CategoryInfoA524WhereInput!]
-    category_info_a077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     depth1?: NexusGenInputs['StringFilter'] | null; // StringFilter
     depth2?: NexusGenInputs['StringFilter'] | null; // StringFilter
@@ -334,9 +399,19 @@ export interface NexusGenInputs {
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
     product?: NexusGenInputs['ProductListRelationFilter'] | null; // ProductListRelationFilter
     sillCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillInfoA524?: NexusGenInputs['SillInfoA524WhereInput'] | null; // SillInfoA524WhereInput
+  }
+  CategoryInfoA525ListRelationFilter: { // input type
+    every?: NexusGenInputs['CategoryInfoA525WhereInput'] | null; // CategoryInfoA525WhereInput
+    none?: NexusGenInputs['CategoryInfoA525WhereInput'] | null; // CategoryInfoA525WhereInput
+    some?: NexusGenInputs['CategoryInfoA525WhereInput'] | null; // CategoryInfoA525WhereInput
+  }
+  CategoryInfoA525OrderByRelationAggregateInput: { // input type
+    _count?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    count?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
   CategoryInfoA525OrderByWithRelationInput: { // input type
-    category_info_a077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     depth1?: NexusGenEnums['SortOrder'] | null; // SortOrder
     depth2?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -348,12 +423,13 @@ export interface NexusGenInputs {
     name?: NexusGenEnums['SortOrder'] | null; // SortOrder
     product?: NexusGenInputs['ProductOrderByRelationAggregateInput'] | null; // ProductOrderByRelationAggregateInput
     sillCode?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillInfoA525?: NexusGenInputs['SillInfoA525OrderByWithRelationInput'] | null; // SillInfoA525OrderByWithRelationInput
   }
   CategoryInfoA525WhereInput: { // input type
     AND?: NexusGenInputs['CategoryInfoA525WhereInput'][] | null; // [CategoryInfoA525WhereInput!]
     NOT?: NexusGenInputs['CategoryInfoA525WhereInput'][] | null; // [CategoryInfoA525WhereInput!]
     OR?: NexusGenInputs['CategoryInfoA525WhereInput'][] | null; // [CategoryInfoA525WhereInput!]
-    category_info_a077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     depth1?: NexusGenInputs['StringFilter'] | null; // StringFilter
     depth2?: NexusGenInputs['StringFilter'] | null; // StringFilter
@@ -365,9 +441,19 @@ export interface NexusGenInputs {
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
     product?: NexusGenInputs['ProductListRelationFilter'] | null; // ProductListRelationFilter
     sillCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillInfoA525?: NexusGenInputs['SillInfoA525WhereInput'] | null; // SillInfoA525WhereInput
+  }
+  CategoryInfoB378ListRelationFilter: { // input type
+    every?: NexusGenInputs['CategoryInfoB378WhereInput'] | null; // CategoryInfoB378WhereInput
+    none?: NexusGenInputs['CategoryInfoB378WhereInput'] | null; // CategoryInfoB378WhereInput
+    some?: NexusGenInputs['CategoryInfoB378WhereInput'] | null; // CategoryInfoB378WhereInput
+  }
+  CategoryInfoB378OrderByRelationAggregateInput: { // input type
+    _count?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    count?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
   CategoryInfoB378OrderByWithRelationInput: { // input type
-    category_info_a077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     codeA077?: NexusGenEnums['SortOrder'] | null; // SortOrder
     depth1?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -380,12 +466,13 @@ export interface NexusGenInputs {
     name?: NexusGenEnums['SortOrder'] | null; // SortOrder
     product?: NexusGenInputs['ProductOrderByRelationAggregateInput'] | null; // ProductOrderByRelationAggregateInput
     sillCode?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillInfoB378?: NexusGenInputs['SillInfoB378OrderByWithRelationInput'] | null; // SillInfoB378OrderByWithRelationInput
   }
   CategoryInfoB378WhereInput: { // input type
     AND?: NexusGenInputs['CategoryInfoB378WhereInput'][] | null; // [CategoryInfoB378WhereInput!]
     NOT?: NexusGenInputs['CategoryInfoB378WhereInput'][] | null; // [CategoryInfoB378WhereInput!]
     OR?: NexusGenInputs['CategoryInfoB378WhereInput'][] | null; // [CategoryInfoB378WhereInput!]
-    category_info_a077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     codeA077?: NexusGenInputs['StringFilter'] | null; // StringFilter
     depth1?: NexusGenInputs['StringFilter'] | null; // StringFilter
@@ -398,9 +485,19 @@ export interface NexusGenInputs {
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
     product?: NexusGenInputs['ProductListRelationFilter'] | null; // ProductListRelationFilter
     sillCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillInfoB378?: NexusGenInputs['SillInfoB378WhereInput'] | null; // SillInfoB378WhereInput
+  }
+  CategoryInfoB719ListRelationFilter: { // input type
+    every?: NexusGenInputs['CategoryInfoB719WhereInput'] | null; // CategoryInfoB719WhereInput
+    none?: NexusGenInputs['CategoryInfoB719WhereInput'] | null; // CategoryInfoB719WhereInput
+    some?: NexusGenInputs['CategoryInfoB719WhereInput'] | null; // CategoryInfoB719WhereInput
+  }
+  CategoryInfoB719OrderByRelationAggregateInput: { // input type
+    _count?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    count?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
   CategoryInfoB719OrderByWithRelationInput: { // input type
-    category_info_a077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     depth1?: NexusGenEnums['SortOrder'] | null; // SortOrder
     depth2?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -412,12 +509,13 @@ export interface NexusGenInputs {
     name?: NexusGenEnums['SortOrder'] | null; // SortOrder
     product?: NexusGenInputs['ProductOrderByRelationAggregateInput'] | null; // ProductOrderByRelationAggregateInput
     sillCode?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillInfoB719?: NexusGenInputs['SillInfoB719OrderByWithRelationInput'] | null; // SillInfoB719OrderByWithRelationInput
   }
   CategoryInfoB719WhereInput: { // input type
     AND?: NexusGenInputs['CategoryInfoB719WhereInput'][] | null; // [CategoryInfoB719WhereInput!]
     NOT?: NexusGenInputs['CategoryInfoB719WhereInput'][] | null; // [CategoryInfoB719WhereInput!]
     OR?: NexusGenInputs['CategoryInfoB719WhereInput'][] | null; // [CategoryInfoB719WhereInput!]
-    category_info_a077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     depth1?: NexusGenInputs['StringFilter'] | null; // StringFilter
     depth2?: NexusGenInputs['StringFilter'] | null; // StringFilter
@@ -429,9 +527,19 @@ export interface NexusGenInputs {
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
     product?: NexusGenInputs['ProductListRelationFilter'] | null; // ProductListRelationFilter
     sillCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillInfoB719?: NexusGenInputs['SillInfoB719WhereInput'] | null; // SillInfoB719WhereInput
+  }
+  CategoryInfoB956ListRelationFilter: { // input type
+    every?: NexusGenInputs['CategoryInfoB956WhereInput'] | null; // CategoryInfoB956WhereInput
+    none?: NexusGenInputs['CategoryInfoB956WhereInput'] | null; // CategoryInfoB956WhereInput
+    some?: NexusGenInputs['CategoryInfoB956WhereInput'] | null; // CategoryInfoB956WhereInput
+  }
+  CategoryInfoB956OrderByRelationAggregateInput: { // input type
+    _count?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    count?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
   CategoryInfoB956OrderByWithRelationInput: { // input type
-    category_info_a077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077OrderByRelationAggregateInput'] | null; // CategoryInfoA077OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     depth1?: NexusGenEnums['SortOrder'] | null; // SortOrder
     depth2?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -443,12 +551,13 @@ export interface NexusGenInputs {
     name?: NexusGenEnums['SortOrder'] | null; // SortOrder
     product?: NexusGenInputs['ProductOrderByRelationAggregateInput'] | null; // ProductOrderByRelationAggregateInput
     sillCode?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillInfoB956?: NexusGenInputs['SillInfoB956OrderByWithRelationInput'] | null; // SillInfoB956OrderByWithRelationInput
   }
   CategoryInfoB956WhereInput: { // input type
     AND?: NexusGenInputs['CategoryInfoB956WhereInput'][] | null; // [CategoryInfoB956WhereInput!]
     NOT?: NexusGenInputs['CategoryInfoB956WhereInput'][] | null; // [CategoryInfoB956WhereInput!]
     OR?: NexusGenInputs['CategoryInfoB956WhereInput'][] | null; // [CategoryInfoB956WhereInput!]
-    category_info_a077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
+    categoryInfoA077?: NexusGenInputs['CategoryInfoA077ListRelationFilter'] | null; // CategoryInfoA077ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     depth1?: NexusGenInputs['StringFilter'] | null; // StringFilter
     depth2?: NexusGenInputs['StringFilter'] | null; // StringFilter
@@ -460,6 +569,7 @@ export interface NexusGenInputs {
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
     product?: NexusGenInputs['ProductListRelationFilter'] | null; // ProductListRelationFilter
     sillCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillInfoB956?: NexusGenInputs['SillInfoB956WhereInput'] | null; // SillInfoB956WhereInput
   }
   DateTimeFilter: { // input type
     equals?: NexusGenScalars['DateTime'] | null; // DateTime
@@ -994,6 +1104,28 @@ export interface NexusGenInputs {
     shippingFee?: NexusGenEnums['SortOrder'] | null; // SortOrder
     siilCode?: NexusGenEnums['SortOrder'] | null; // SortOrder
     siilData?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillCodeA001?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillCodeA006?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillCodeA027?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillCodeA077?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillCodeA112?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillCodeA113?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillCodeA524?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillCodeA525?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillCodeB378?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillCodeB719?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillCodeB956?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillDataA001?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillDataA006?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillDataA027?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillDataA077?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillDataA112?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillDataA113?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillDataA524?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillDataA525?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillDataB378?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillDataB719?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillDataB956?: NexusGenEnums['SortOrder'] | null; // SortOrder
     state?: NexusGenEnums['SortOrder'] | null; // SortOrder
     stockUpdatedAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
     streetFee?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1183,6 +1315,28 @@ export interface NexusGenInputs {
     shippingFee?: NexusGenInputs['IntFilter'] | null; // IntFilter
     siilCode?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     siilData?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
+    sillCodeA001?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillCodeA006?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillCodeA027?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillCodeA077?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillCodeA112?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillCodeA113?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillCodeA524?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillCodeA525?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillCodeB378?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillCodeB719?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillCodeB956?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillDataA001?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillDataA006?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillDataA027?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillDataA077?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillDataA112?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillDataA113?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillDataA524?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillDataA525?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillDataB378?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillDataB719?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    sillDataB956?: NexusGenInputs['StringFilter'] | null; // StringFilter
     state?: NexusGenInputs['IntFilter'] | null; // IntFilter
     stockUpdatedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
     streetFee?: NexusGenInputs['FloatNullableFilter'] | null; // FloatNullableFilter
@@ -1227,6 +1381,7 @@ export interface NexusGenInputs {
     value: string; // String!
   }
   SillInfoA001OrderByWithRelationInput: { // input type
+    categoryInfoA001?: NexusGenInputs['CategoryInfoA001OrderByRelationAggregateInput'] | null; // CategoryInfoA001OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     data?: NexusGenEnums['SortOrder'] | null; // SortOrder
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1237,6 +1392,7 @@ export interface NexusGenInputs {
     AND?: NexusGenInputs['SillInfoA001WhereInput'][] | null; // [SillInfoA001WhereInput!]
     NOT?: NexusGenInputs['SillInfoA001WhereInput'][] | null; // [SillInfoA001WhereInput!]
     OR?: NexusGenInputs['SillInfoA001WhereInput'][] | null; // [SillInfoA001WhereInput!]
+    categoryInfoA001?: NexusGenInputs['CategoryInfoA001ListRelationFilter'] | null; // CategoryInfoA001ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     data?: NexusGenInputs['StringFilter'] | null; // StringFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
@@ -1244,6 +1400,7 @@ export interface NexusGenInputs {
     sillInfoA077?: NexusGenInputs['SillInfoA077ListRelationFilter'] | null; // SillInfoA077ListRelationFilter
   }
   SillInfoA006OrderByWithRelationInput: { // input type
+    categoryInfoA006?: NexusGenInputs['CategoryInfoA006OrderByRelationAggregateInput'] | null; // CategoryInfoA006OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     data?: NexusGenEnums['SortOrder'] | null; // SortOrder
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1254,6 +1411,7 @@ export interface NexusGenInputs {
     AND?: NexusGenInputs['SillInfoA006WhereInput'][] | null; // [SillInfoA006WhereInput!]
     NOT?: NexusGenInputs['SillInfoA006WhereInput'][] | null; // [SillInfoA006WhereInput!]
     OR?: NexusGenInputs['SillInfoA006WhereInput'][] | null; // [SillInfoA006WhereInput!]
+    categoryInfoA006?: NexusGenInputs['CategoryInfoA006ListRelationFilter'] | null; // CategoryInfoA006ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     data?: NexusGenInputs['StringFilter'] | null; // StringFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
@@ -1261,6 +1419,7 @@ export interface NexusGenInputs {
     sillInfoA077?: NexusGenInputs['SillInfoA077ListRelationFilter'] | null; // SillInfoA077ListRelationFilter
   }
   SillInfoA027OrderByWithRelationInput: { // input type
+    categoryInfoA027?: NexusGenInputs['CategoryInfoA027OrderByRelationAggregateInput'] | null; // CategoryInfoA027OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     data?: NexusGenEnums['SortOrder'] | null; // SortOrder
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1271,6 +1430,7 @@ export interface NexusGenInputs {
     AND?: NexusGenInputs['SillInfoA027WhereInput'][] | null; // [SillInfoA027WhereInput!]
     NOT?: NexusGenInputs['SillInfoA027WhereInput'][] | null; // [SillInfoA027WhereInput!]
     OR?: NexusGenInputs['SillInfoA027WhereInput'][] | null; // [SillInfoA027WhereInput!]
+    categoryInfoA027?: NexusGenInputs['CategoryInfoA027ListRelationFilter'] | null; // CategoryInfoA027ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     data?: NexusGenInputs['StringFilter'] | null; // StringFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
@@ -1348,6 +1508,7 @@ export interface NexusGenInputs {
     id?: number | null; // Int
   }
   SillInfoA112OrderByWithRelationInput: { // input type
+    categoryInfoA112?: NexusGenInputs['CategoryInfoA112OrderByRelationAggregateInput'] | null; // CategoryInfoA112OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     data?: NexusGenEnums['SortOrder'] | null; // SortOrder
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1358,6 +1519,7 @@ export interface NexusGenInputs {
     AND?: NexusGenInputs['SillInfoA112WhereInput'][] | null; // [SillInfoA112WhereInput!]
     NOT?: NexusGenInputs['SillInfoA112WhereInput'][] | null; // [SillInfoA112WhereInput!]
     OR?: NexusGenInputs['SillInfoA112WhereInput'][] | null; // [SillInfoA112WhereInput!]
+    categoryInfoA112?: NexusGenInputs['CategoryInfoA112ListRelationFilter'] | null; // CategoryInfoA112ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     data?: NexusGenInputs['StringFilter'] | null; // StringFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
@@ -1365,6 +1527,7 @@ export interface NexusGenInputs {
     sillInfoA077?: NexusGenInputs['SillInfoA077ListRelationFilter'] | null; // SillInfoA077ListRelationFilter
   }
   SillInfoA113OrderByWithRelationInput: { // input type
+    categoryInfoA113?: NexusGenInputs['CategoryInfoA113OrderByRelationAggregateInput'] | null; // CategoryInfoA113OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     data?: NexusGenEnums['SortOrder'] | null; // SortOrder
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1375,6 +1538,7 @@ export interface NexusGenInputs {
     AND?: NexusGenInputs['SillInfoA113WhereInput'][] | null; // [SillInfoA113WhereInput!]
     NOT?: NexusGenInputs['SillInfoA113WhereInput'][] | null; // [SillInfoA113WhereInput!]
     OR?: NexusGenInputs['SillInfoA113WhereInput'][] | null; // [SillInfoA113WhereInput!]
+    categoryInfoA113?: NexusGenInputs['CategoryInfoA113ListRelationFilter'] | null; // CategoryInfoA113ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     data?: NexusGenInputs['StringFilter'] | null; // StringFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
@@ -1382,6 +1546,7 @@ export interface NexusGenInputs {
     sillInfoA077?: NexusGenInputs['SillInfoA077ListRelationFilter'] | null; // SillInfoA077ListRelationFilter
   }
   SillInfoA524OrderByWithRelationInput: { // input type
+    categoryInfoA524?: NexusGenInputs['CategoryInfoA524OrderByRelationAggregateInput'] | null; // CategoryInfoA524OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     data?: NexusGenEnums['SortOrder'] | null; // SortOrder
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1392,6 +1557,7 @@ export interface NexusGenInputs {
     AND?: NexusGenInputs['SillInfoA524WhereInput'][] | null; // [SillInfoA524WhereInput!]
     NOT?: NexusGenInputs['SillInfoA524WhereInput'][] | null; // [SillInfoA524WhereInput!]
     OR?: NexusGenInputs['SillInfoA524WhereInput'][] | null; // [SillInfoA524WhereInput!]
+    categoryInfoA524?: NexusGenInputs['CategoryInfoA524ListRelationFilter'] | null; // CategoryInfoA524ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     data?: NexusGenInputs['StringFilter'] | null; // StringFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
@@ -1399,6 +1565,7 @@ export interface NexusGenInputs {
     sillInfoA077?: NexusGenInputs['SillInfoA077ListRelationFilter'] | null; // SillInfoA077ListRelationFilter
   }
   SillInfoA525OrderByWithRelationInput: { // input type
+    categoryInfoA525?: NexusGenInputs['CategoryInfoA525OrderByRelationAggregateInput'] | null; // CategoryInfoA525OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     data?: NexusGenEnums['SortOrder'] | null; // SortOrder
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1409,6 +1576,7 @@ export interface NexusGenInputs {
     AND?: NexusGenInputs['SillInfoA525WhereInput'][] | null; // [SillInfoA525WhereInput!]
     NOT?: NexusGenInputs['SillInfoA525WhereInput'][] | null; // [SillInfoA525WhereInput!]
     OR?: NexusGenInputs['SillInfoA525WhereInput'][] | null; // [SillInfoA525WhereInput!]
+    categoryInfoA525?: NexusGenInputs['CategoryInfoA525ListRelationFilter'] | null; // CategoryInfoA525ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     data?: NexusGenInputs['StringFilter'] | null; // StringFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
@@ -1416,6 +1584,7 @@ export interface NexusGenInputs {
     sillInfoA077?: NexusGenInputs['SillInfoA077ListRelationFilter'] | null; // SillInfoA077ListRelationFilter
   }
   SillInfoB378OrderByWithRelationInput: { // input type
+    categoryInfoB378?: NexusGenInputs['CategoryInfoB378OrderByRelationAggregateInput'] | null; // CategoryInfoB378OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     data?: NexusGenEnums['SortOrder'] | null; // SortOrder
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1426,6 +1595,7 @@ export interface NexusGenInputs {
     AND?: NexusGenInputs['SillInfoB378WhereInput'][] | null; // [SillInfoB378WhereInput!]
     NOT?: NexusGenInputs['SillInfoB378WhereInput'][] | null; // [SillInfoB378WhereInput!]
     OR?: NexusGenInputs['SillInfoB378WhereInput'][] | null; // [SillInfoB378WhereInput!]
+    categoryInfoB378?: NexusGenInputs['CategoryInfoB378ListRelationFilter'] | null; // CategoryInfoB378ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     data?: NexusGenInputs['StringFilter'] | null; // StringFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
@@ -1433,6 +1603,7 @@ export interface NexusGenInputs {
     sillInfoA077?: NexusGenInputs['SillInfoA077ListRelationFilter'] | null; // SillInfoA077ListRelationFilter
   }
   SillInfoB719OrderByWithRelationInput: { // input type
+    categoryInfoB719?: NexusGenInputs['CategoryInfoB719OrderByRelationAggregateInput'] | null; // CategoryInfoB719OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     data?: NexusGenEnums['SortOrder'] | null; // SortOrder
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1443,6 +1614,7 @@ export interface NexusGenInputs {
     AND?: NexusGenInputs['SillInfoB719WhereInput'][] | null; // [SillInfoB719WhereInput!]
     NOT?: NexusGenInputs['SillInfoB719WhereInput'][] | null; // [SillInfoB719WhereInput!]
     OR?: NexusGenInputs['SillInfoB719WhereInput'][] | null; // [SillInfoB719WhereInput!]
+    categoryInfoB719?: NexusGenInputs['CategoryInfoB719ListRelationFilter'] | null; // CategoryInfoB719ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     data?: NexusGenInputs['StringFilter'] | null; // StringFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
@@ -1450,6 +1622,7 @@ export interface NexusGenInputs {
     sillInfoA077?: NexusGenInputs['SillInfoA077ListRelationFilter'] | null; // SillInfoA077ListRelationFilter
   }
   SillInfoB956OrderByWithRelationInput: { // input type
+    categoryInfoB956?: NexusGenInputs['CategoryInfoB956OrderByRelationAggregateInput'] | null; // CategoryInfoB956OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
     data?: NexusGenEnums['SortOrder'] | null; // SortOrder
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1460,6 +1633,7 @@ export interface NexusGenInputs {
     AND?: NexusGenInputs['SillInfoB956WhereInput'][] | null; // [SillInfoB956WhereInput!]
     NOT?: NexusGenInputs['SillInfoB956WhereInput'][] | null; // [SillInfoB956WhereInput!]
     OR?: NexusGenInputs['SillInfoB956WhereInput'][] | null; // [SillInfoB956WhereInput!]
+    categoryInfoB956?: NexusGenInputs['CategoryInfoB956ListRelationFilter'] | null; // CategoryInfoB956ListRelationFilter
     code?: NexusGenInputs['StringFilter'] | null; // StringFilter
     data?: NexusGenInputs['StringFilter'] | null; // StringFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
@@ -2123,6 +2297,7 @@ export interface NexusGenObjects {
     depth6: string; // String!
     id: number; // Int!
     name: string; // String!
+    sillCode: string; // String!
   }
   CategoryInfoA001Type: { // root type
     code: string; // String!
@@ -2138,6 +2313,7 @@ export interface NexusGenObjects {
     depth6: string; // String!
     id: number; // Int!
     name: string; // String!
+    sillCode: string; // String!
   }
   CategoryInfoA006Type: { // root type
     code: string; // String!
@@ -2153,6 +2329,7 @@ export interface NexusGenObjects {
     depth6: string; // String!
     id: number; // Int!
     name: string; // String!
+    sillCode: string; // String!
   }
   CategoryInfoA027Type: { // root type
     code: string; // String!
@@ -2194,6 +2371,7 @@ export interface NexusGenObjects {
     depth6: string; // String!
     id: number; // Int!
     name: string; // String!
+    sillCode: string; // String!
   }
   CategoryInfoA112Type: { // root type
     code: string; // String!
@@ -2209,6 +2387,7 @@ export interface NexusGenObjects {
     depth6: string; // String!
     id: number; // Int!
     name: string; // String!
+    sillCode: string; // String!
   }
   CategoryInfoA113Type: { // root type
     code: string; // String!
@@ -2224,6 +2403,7 @@ export interface NexusGenObjects {
     depth6: string; // String!
     id: number; // Int!
     name: string; // String!
+    sillCode: string; // String!
   }
   CategoryInfoA524Type: { // root type
     code: string; // String!
@@ -2239,6 +2419,7 @@ export interface NexusGenObjects {
     depth6: string; // String!
     id: number; // Int!
     name: string; // String!
+    sillCode: string; // String!
   }
   CategoryInfoA525Type: { // root type
     code: string; // String!
@@ -2254,6 +2435,7 @@ export interface NexusGenObjects {
     depth6: string; // String!
     id: number; // Int!
     name: string; // String!
+    sillCode: string; // String!
   }
   CategoryInfoB378Type: { // root type
     code: string; // String!
@@ -2269,6 +2451,7 @@ export interface NexusGenObjects {
     depth6: string; // String!
     id: number; // Int!
     name: string; // String!
+    sillCode: string; // String!
   }
   CategoryInfoB719Type: { // root type
     code: string; // String!
@@ -2284,6 +2467,7 @@ export interface NexusGenObjects {
     depth6: string; // String!
     id: number; // Int!
     name: string; // String!
+    sillCode: string; // String!
   }
   CategoryInfoB956Type: { // root type
     code: string; // String!
@@ -2837,6 +3021,8 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     name: string; // String!
     product: NexusGenRootTypes['Product'][]; // [Product!]!
+    sillCode: string; // String!
+    sillInfoA001: NexusGenRootTypes['SillInfoA001']; // SillInfoA001!
   }
   CategoryInfoA001Type: { // field return type
     code: string; // String!
@@ -2853,6 +3039,8 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     name: string; // String!
     product: NexusGenRootTypes['Product'][]; // [Product!]!
+    sillCode: string; // String!
+    sillInfoA006: NexusGenRootTypes['SillInfoA006']; // SillInfoA006!
   }
   CategoryInfoA006Type: { // field return type
     code: string; // String!
@@ -2869,6 +3057,8 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     name: string; // String!
     product: NexusGenRootTypes['Product'][]; // [Product!]!
+    sillCode: string; // String!
+    sillInfoA027: NexusGenRootTypes['SillInfoA027']; // SillInfoA027!
   }
   CategoryInfoA027Type: { // field return type
     code: string; // String!
@@ -2923,6 +3113,8 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     name: string; // String!
     product: NexusGenRootTypes['Product'][]; // [Product!]!
+    sillCode: string; // String!
+    sillInfoA112: NexusGenRootTypes['SillInfoA112']; // SillInfoA112!
   }
   CategoryInfoA112Type: { // field return type
     code: string; // String!
@@ -2939,6 +3131,8 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     name: string; // String!
     product: NexusGenRootTypes['Product'][]; // [Product!]!
+    sillCode: string; // String!
+    sillInfoA113: NexusGenRootTypes['SillInfoA113']; // SillInfoA113!
   }
   CategoryInfoA113Type: { // field return type
     code: string; // String!
@@ -2955,6 +3149,8 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     name: string; // String!
     product: NexusGenRootTypes['Product'][]; // [Product!]!
+    sillCode: string; // String!
+    sillInfoA524: NexusGenRootTypes['SillInfoA524']; // SillInfoA524!
   }
   CategoryInfoA524Type: { // field return type
     code: string; // String!
@@ -2971,6 +3167,8 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     name: string; // String!
     product: NexusGenRootTypes['Product'][]; // [Product!]!
+    sillCode: string; // String!
+    sillInfoA525: NexusGenRootTypes['SillInfoA525']; // SillInfoA525!
   }
   CategoryInfoA525Type: { // field return type
     code: string; // String!
@@ -2987,6 +3185,8 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     name: string; // String!
     product: NexusGenRootTypes['Product'][]; // [Product!]!
+    sillCode: string; // String!
+    sillInfoB378: NexusGenRootTypes['SillInfoB378']; // SillInfoB378!
   }
   CategoryInfoB378Type: { // field return type
     code: string; // String!
@@ -3003,6 +3203,8 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     name: string; // String!
     product: NexusGenRootTypes['Product'][]; // [Product!]!
+    sillCode: string; // String!
+    sillInfoB719: NexusGenRootTypes['SillInfoB719']; // SillInfoB719!
   }
   CategoryInfoB719Type: { // field return type
     code: string; // String!
@@ -3019,6 +3221,8 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     name: string; // String!
     product: NexusGenRootTypes['Product'][]; // [Product!]!
+    sillCode: string; // String!
+    sillInfoB956: NexusGenRootTypes['SillInfoB956']; // SillInfoB956!
   }
   CategoryInfoB956Type: { // field return type
     code: string; // String!
@@ -3789,6 +3993,8 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     name: 'String'
     product: 'Product'
+    sillCode: 'String'
+    sillInfoA001: 'SillInfoA001'
   }
   CategoryInfoA001Type: { // field return type name
     code: 'String'
@@ -3805,6 +4011,8 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     name: 'String'
     product: 'Product'
+    sillCode: 'String'
+    sillInfoA006: 'SillInfoA006'
   }
   CategoryInfoA006Type: { // field return type name
     code: 'String'
@@ -3821,6 +4029,8 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     name: 'String'
     product: 'Product'
+    sillCode: 'String'
+    sillInfoA027: 'SillInfoA027'
   }
   CategoryInfoA027Type: { // field return type name
     code: 'String'
@@ -3875,6 +4085,8 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     name: 'String'
     product: 'Product'
+    sillCode: 'String'
+    sillInfoA112: 'SillInfoA112'
   }
   CategoryInfoA112Type: { // field return type name
     code: 'String'
@@ -3891,6 +4103,8 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     name: 'String'
     product: 'Product'
+    sillCode: 'String'
+    sillInfoA113: 'SillInfoA113'
   }
   CategoryInfoA113Type: { // field return type name
     code: 'String'
@@ -3907,6 +4121,8 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     name: 'String'
     product: 'Product'
+    sillCode: 'String'
+    sillInfoA524: 'SillInfoA524'
   }
   CategoryInfoA524Type: { // field return type name
     code: 'String'
@@ -3923,6 +4139,8 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     name: 'String'
     product: 'Product'
+    sillCode: 'String'
+    sillInfoA525: 'SillInfoA525'
   }
   CategoryInfoA525Type: { // field return type name
     code: 'String'
@@ -3939,6 +4157,8 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     name: 'String'
     product: 'Product'
+    sillCode: 'String'
+    sillInfoB378: 'SillInfoB378'
   }
   CategoryInfoB378Type: { // field return type name
     code: 'String'
@@ -3955,6 +4175,8 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     name: 'String'
     product: 'Product'
+    sillCode: 'String'
+    sillInfoB719: 'SillInfoB719'
   }
   CategoryInfoB719Type: { // field return type name
     code: 'String'
@@ -3971,6 +4193,8 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     name: 'String'
     product: 'Product'
+    sillCode: 'String'
+    sillInfoB956: 'SillInfoB956'
   }
   CategoryInfoB956Type: { // field return type name
     code: 'String'
