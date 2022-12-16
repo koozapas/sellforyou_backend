@@ -422,7 +422,7 @@ export const t_SillInfoA077 = objectType({
                 let data = await ctx.prisma.sillInfoA001.findMany({
                     where : {
                         ...where 
-                    } 
+                    } ,select : {id:true,name: true,code:true,data:true}
                     
                 })
                 if(!data) return throwError(errors.etc("데이터없음."),ctx);
