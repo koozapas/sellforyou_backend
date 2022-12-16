@@ -357,6 +357,29 @@ export const t_CategoryInfoA077 = objectType({
         t.model.categoryInfoB956();
         t.model.sillCode();
         t.model.sillInfoA077();//외래키 데이터 
+        t.field("activeSillDataA077",{
+            type: nonNull(list(nonNull("SillInfoA077"))),
+            resolve : async (src, args, ctx, info) =>{
+                try{
+                const where : Prisma.SillInfoA077WhereInput = {
+                    OR : [{code : src.sillCode ?? "" },
+                            {code : "ETC"}
+                ]
+                }
+                let data = await ctx.prisma.sillInfoA077.findMany({
+                    where : {
+                        ...where 
+                    } 
+                    
+                })
+                if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                //console.log("test", JSON.stringify(originalData));
+                return data;
+            }catch(e){
+                return throwError(e, ctx);
+            }
+            } 
+        });
     }
 })
 
@@ -409,8 +432,239 @@ export const t_SillInfoA077 = objectType({
                 return throwError(e, ctx);
             }
             } 
-            
-        })
+        });
+        t.field("activeSillDataA006",{
+            type: nonNull(list(nonNull("SillInfoA006"))),
+            resolve : async (src, args, ctx, info) =>{
+                try{
+                const where : Prisma.SillInfoA006WhereInput = {
+                    OR : [{code : src.codeA006 ?? "" },
+                            {code : "35"}
+                ]
+                }
+                let data = await ctx.prisma.sillInfoA006.findMany({
+                    where : {
+                        ...where 
+                    } 
+                    
+                })
+                if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                //console.log("test", JSON.stringify(originalData));
+                return data;
+            }catch(e){
+                return throwError(e, ctx);
+            }
+            } 
+        });
+        t.field("activeSillDataA027",{
+            type: nonNull(list(nonNull("SillInfoA027"))),
+            resolve : async (src, args, ctx, info) =>{
+                try{
+                const where : Prisma.SillInfoA027WhereInput = {
+                    OR : [{code : src.codeA027 ?? "" },
+                            {code : "38"}
+                ]
+                }
+                let data = await ctx.prisma.sillInfoA027.findMany({
+                    where : {
+                        ...where 
+                    } 
+                    
+                })
+                if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                //console.log("test", JSON.stringify(originalData));
+                return data;
+            }catch(e){
+                return throwError(e, ctx);
+            }
+            } 
+        });
+        t.field("activeSillDataA077",{
+            type: nonNull(list(nonNull("SillInfoA077"))),
+            resolve : async (src, args, ctx, info) =>{
+                try{
+                const where : Prisma.SillInfoA077WhereInput = {
+                    OR : [{code : src.code ?? "" },
+                            {code : "ETC"}
+                ]
+                }
+                let data = await ctx.prisma.sillInfoA077.findMany({
+                    where : {
+                        ...where 
+                    } 
+                    
+                })
+                if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                //console.log("test", JSON.stringify(originalData));
+                return data;
+            }catch(e){
+                return throwError(e, ctx);
+            }
+            } 
+        });
+        t.field("activeSillDataA112",{
+            type: nonNull(list(nonNull("SillInfoA112"))),
+            resolve : async (src, args, ctx, info) =>{
+                try{
+                const where : Prisma.SillInfoA112WhereInput = {
+                    OR : [{code : src.codeA112 ?? "" },
+                            {code : "891045"}
+                ]
+                }
+                let data = await ctx.prisma.sillInfoA112.findMany({
+                    where : {
+                        ...where 
+                    } 
+                    
+                })
+                if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                //console.log("test", JSON.stringify(originalData));
+                return data;
+            }catch(e){
+                return throwError(e, ctx);
+            }
+            } 
+        });
+        t.field("activeSillDataA113",{
+            type: nonNull(list(nonNull("SillInfoA113"))),
+            resolve : async (src, args, ctx, info) =>{
+                try{
+                const where : Prisma.SillInfoA113WhereInput = {
+                    OR : [{code : src.codeA113 ?? "" },
+                            {code : "891045"}
+                ]
+                }
+                let data = await ctx.prisma.sillInfoA113.findMany({
+                    where : {
+                        ...where 
+                    } 
+                    
+                })
+                if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                //console.log("test", JSON.stringify(originalData));
+                return data;
+            }catch(e){
+                return throwError(e, ctx);
+            }
+            } 
+        });
+        t.field("activeSillDataA524",{
+            type: nonNull(list(nonNull("SillInfoA524"))),
+            resolve : async (src, args, ctx, info) =>{
+                try{
+                const where : Prisma.SillInfoA524WhereInput = {
+                    OR : [{code : src.codeA524 ?? "" },
+                            {code : "38"}
+                ]
+                }
+                let data = await ctx.prisma.sillInfoA524.findMany({
+                    where : {
+                        ...where 
+                    } 
+                    
+                })
+                if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                //console.log("test", JSON.stringify(originalData));
+                return data;
+            }catch(e){
+                return throwError(e, ctx);
+            }
+            } 
+        });
+        
+        t.field("activeSillDataA525",{
+            type: nonNull(list(nonNull("SillInfoA525"))),
+            resolve : async (src, args, ctx, info) =>{
+                try{
+                const where : Prisma.SillInfoA525WhereInput = {
+                    OR : [{code : src.codeA525 ?? "" },
+                            {code : "38"}
+                ]
+                }
+                let data = await ctx.prisma.sillInfoA525.findMany({
+                    where : {
+                        ...where 
+                    } 
+                    
+                })
+                if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                //console.log("test", JSON.stringify(originalData));
+                return data;
+            }catch(e){
+                return throwError(e, ctx);
+            }
+            } 
+        });
+        t.field("activeSillDataB378",{
+            type: nonNull(list(nonNull("SillInfoB378"))),
+            resolve : async (src, args, ctx, info) =>{
+                try{
+                const where : Prisma.SillInfoB378WhereInput = {
+                    OR : [{code : src.codeB378 ?? "" },
+                            {code : "기타 재화"}
+                ]
+                }
+                let data = await ctx.prisma.sillInfoB378.findMany({
+                    where : {
+                        ...where 
+                    } 
+                    
+                })
+                if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                //console.log("test", JSON.stringify(originalData));
+                return data;
+            }catch(e){
+                return throwError(e, ctx);
+            }
+            } 
+        });
+        t.field("activeSillDataB719",{
+            type: nonNull(list(nonNull("SillInfoB719"))),
+            resolve : async (src, args, ctx, info) =>{
+                try{
+                const where : Prisma.SillInfoB719WhereInput = {
+                    OR : [{code : src.codeB719 ?? "" },
+                            {code : "38"}
+                ]
+                }
+                let data = await ctx.prisma.sillInfoB719.findMany({
+                    where : {
+                        ...where 
+                    } 
+                    
+                })
+                if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                //console.log("test", JSON.stringify(originalData));
+                return data;
+            }catch(e){
+                return throwError(e, ctx);
+            }
+            } 
+        });
+        t.field("activeSillDataB956",{
+            type: nonNull(list(nonNull("SillInfoB956"))),
+            resolve : async (src, args, ctx, info) =>{
+                try{
+                const where : Prisma.SillInfoB956WhereInput = {
+                    OR : [{code : src.codeB956 ?? "" },
+                            {code : "31"}
+                ]
+                }
+                let data = await ctx.prisma.sillInfoB956.findMany({
+                    where : {
+                        ...where 
+                    } 
+                    
+                })
+                if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                //console.log("test", JSON.stringify(originalData));
+                return data;
+            }catch(e){
+                return throwError(e, ctx);
+            }
+            } 
+        });
+
     },
 })
 
@@ -531,6 +785,29 @@ export const t_CategoryInfoA001 = objectType({
             t.model.product();
             t.model.sillCode();
             t.model.sillInfoA001();
+            t.field("activeSillDataA001",{
+                type: nonNull(list(nonNull("SillInfoA001"))),
+                resolve : async (src, args, ctx, info) =>{
+                    try{
+                    const where : Prisma.SillInfoA001WhereInput = {
+                        OR : [{code : src.sillCode ?? "" },
+                                {code : "35"}
+                    ]
+                    }
+                    let data = await ctx.prisma.sillInfoA001.findMany({
+                        where : {
+                            ...where 
+                        } 
+                        
+                    })
+                    if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                    //console.log("test", JSON.stringify(originalData));
+                    return data;
+                }catch(e){
+                    return throwError(e, ctx);
+                }
+                } 
+            });
         }
 })
 export const t_CategoryInfoA006 = objectType({
@@ -548,6 +825,29 @@ export const t_CategoryInfoA006 = objectType({
             t.model.product();
             t.model.sillCode();
             t.model.sillInfoA006();
+            t.field("activeSillDataA006",{
+                type: nonNull(list(nonNull("SillInfoA006"))),
+                resolve : async (src, args, ctx, info) =>{
+                    try{
+                    const where : Prisma.SillInfoA006WhereInput = {
+                        OR : [{code : src.sillCode ?? "" },
+                                {code : "35"}
+                    ]
+                    }
+                    let data = await ctx.prisma.sillInfoA006.findMany({
+                        where : {
+                            ...where 
+                        } 
+                        
+                    })
+                    if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                    //console.log("test", JSON.stringify(originalData));
+                    return data;
+                }catch(e){
+                    return throwError(e, ctx);
+                }
+                } 
+            });
         }
 })
 export const t_CategoryInfoA027 = objectType({
@@ -565,6 +865,29 @@ export const t_CategoryInfoA027 = objectType({
             t.model.product();
             t.model.sillCode();
             t.model.sillInfoA027();
+            t.field("activeSillDataA027",{
+                type: nonNull(list(nonNull("SillInfoA027"))),
+                resolve : async (src, args, ctx, info) =>{
+                    try{
+                    const where : Prisma.SillInfoA027WhereInput = {
+                        OR : [{code : src.sillCode ?? "" },
+                                {code : "38"}
+                    ]
+                    }
+                    let data = await ctx.prisma.sillInfoA027.findMany({
+                        where : {
+                            ...where 
+                        } 
+                        
+                    })
+                    if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                    //console.log("test", JSON.stringify(originalData));
+                    return data;
+                }catch(e){
+                    return throwError(e, ctx);
+                }
+                } 
+            });
         }
 })
 export const t_CategoryInfoA112 = objectType({
@@ -582,6 +905,29 @@ export const t_CategoryInfoA112 = objectType({
             t.model.product();
             t.model.sillCode();
             t.model.sillInfoA112();
+            t.field("activeSillDataA112",{
+                type: nonNull(list(nonNull("SillInfoA112"))),
+                resolve : async (src, args, ctx, info) =>{
+                    try{
+                    const where : Prisma.SillInfoA112WhereInput = {
+                        OR : [{code : src.sillCode ?? "" },
+                                {code : "891045"}
+                    ]
+                    }
+                    let data = await ctx.prisma.sillInfoA112.findMany({
+                        where : {
+                            ...where 
+                        } 
+                        
+                    })
+                    if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                    //console.log("test", JSON.stringify(originalData));
+                    return data;
+                }catch(e){
+                    return throwError(e, ctx);
+                }
+                } 
+            });
         }
 })
 export const t_CategoryInfoA113 = objectType({
@@ -599,6 +945,29 @@ export const t_CategoryInfoA113 = objectType({
             t.model.product();
             t.model.sillCode();
             t.model.sillInfoA113();
+            t.field("activeSillDataA113",{
+                type: nonNull(list(nonNull("SillInfoA113"))),
+                resolve : async (src, args, ctx, info) =>{
+                    try{
+                    const where : Prisma.SillInfoA113WhereInput = {
+                        OR : [{code : src.sillCode ?? "" },
+                                {code : "891045"}
+                    ]
+                    }
+                    let data = await ctx.prisma.sillInfoA113.findMany({
+                        where : {
+                            ...where 
+                        } 
+                        
+                    })
+                    if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                    //console.log("test", JSON.stringify(originalData));
+                    return data;
+                }catch(e){
+                    return throwError(e, ctx);
+                }
+                } 
+            });
         }
 })
 export const t_CategoryInfoA524 = objectType({
@@ -616,6 +985,29 @@ export const t_CategoryInfoA524 = objectType({
             t.model.product();
             t.model.sillCode();
             t.model.sillInfoA524();
+            t.field("activeSillDataA524",{
+                type: nonNull(list(nonNull("SillInfoA524"))),
+                resolve : async (src, args, ctx, info) =>{
+                    try{
+                    const where : Prisma.SillInfoA524WhereInput = {
+                        OR : [{code : src.sillCode ?? "" },
+                                {code : "38"}
+                    ]
+                    }
+                    let data = await ctx.prisma.sillInfoA524.findMany({
+                        where : {
+                            ...where 
+                        } 
+                        
+                    })
+                    if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                    //console.log("test", JSON.stringify(originalData));
+                    return data;
+                }catch(e){
+                    return throwError(e, ctx);
+                }
+                } 
+            });
         }
 })
 export const t_CategoryInfoA525 = objectType({
@@ -633,6 +1025,29 @@ export const t_CategoryInfoA525 = objectType({
             t.model.product();
             t.model.sillCode();
             t.model.sillInfoA525();
+            t.field("activeSillDataA525",{
+                type: nonNull(list(nonNull("SillInfoA525"))),
+                resolve : async (src, args, ctx, info) =>{
+                    try{
+                    const where : Prisma.SillInfoA525WhereInput = {
+                        OR : [{code : src.sillCode ?? "" },
+                                {code : "38"}
+                    ]
+                    }
+                    let data = await ctx.prisma.sillInfoA525.findMany({
+                        where : {
+                            ...where 
+                        } 
+                        
+                    })
+                    if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                    //console.log("test", JSON.stringify(originalData));
+                    return data;
+                }catch(e){
+                    return throwError(e, ctx);
+                }
+                } 
+            });
         }
 })
 export const t_CategoryInfoB378 = objectType({
@@ -650,6 +1065,29 @@ export const t_CategoryInfoB378 = objectType({
             t.model.product();
             t.model.sillCode();
             t.model.sillInfoB378();
+        t.field("activeSillDataB378",{
+            type: nonNull(list(nonNull("SillInfoB378"))),
+            resolve : async (src, args, ctx, info) =>{
+                try{
+                const where : Prisma.SillInfoB378WhereInput = {
+                    OR : [{code : src.sillCode ?? "" },
+                            {code : "기타 재화"}
+                ]
+                }
+                let data = await ctx.prisma.sillInfoB378.findMany({
+                    where : {
+                        ...where 
+                    } 
+                    
+                })
+                if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                //console.log("test", JSON.stringify(originalData));
+                return data;
+            }catch(e){
+                return throwError(e, ctx);
+            }
+            } 
+        });
         }
 })
 export const t_CategoryInfoB719 = objectType({
@@ -667,6 +1105,29 @@ export const t_CategoryInfoB719 = objectType({
             t.model.product();
             t.model.sillCode();
             t.model.sillInfoB719();
+            t.field("activeSillDataB719",{
+            type: nonNull(list(nonNull("SillInfoB719"))),
+            resolve : async (src, args, ctx, info) =>{
+                try{
+                const where : Prisma.SillInfoB719WhereInput = {
+                    OR : [{code : src.sillCode ?? "" },
+                            {code : "38"}
+                ]
+                }
+                let data = await ctx.prisma.sillInfoB719.findMany({
+                    where : {
+                        ...where 
+                    } 
+                    
+                })
+                if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                //console.log("test", JSON.stringify(originalData));
+                return data;
+            }catch(e){
+                return throwError(e, ctx);
+            }
+            } 
+        });
         }
 })
 export const t_CategoryInfoB956 = objectType({
@@ -684,6 +1145,30 @@ export const t_CategoryInfoB956 = objectType({
             t.model.product();
             t.model.sillCode();
             t.model.sillInfoB956();
+            t.field("activeSillDataB956",{
+                type: nonNull(list(nonNull("SillInfoB956"))),
+                resolve : async (src, args, ctx, info) =>{
+                    try{
+                    const where : Prisma.SillInfoB956WhereInput = {
+                        OR : [{code : src.sillCode ?? "" },
+                                {code : "31"}
+                    ]
+                    }
+                    let data = await ctx.prisma.sillInfoB956.findMany({
+                        where : {
+                            ...where 
+                        } 
+                        
+                    })
+                    if(!data) return throwError(errors.etc("데이터없음."),ctx);
+                    //console.log("test", JSON.stringify(originalData));
+                    return data;
+                }catch(e){
+                    return throwError(e, ctx);
+                }
+                } 
+            });
+
     }})
 
 export const t_ProductOption = objectType({
