@@ -34,16 +34,18 @@ export const t_CategoryInformationType = objectType({
         t.nullable.string('code_a525');
         t.nullable.string('code_b956');
         
-        t.nullable.field("categoryInfoB378",{ type : "CategoryInfoB378Type" })
-        t.nullable.field("categoryInfoA112",{ type : "CategoryInfoA112Type" })
-        t.nullable.field("categoryInfoA027",{ type : "CategoryInfoA027Type" })
-        t.nullable.field("categoryInfoA001",{ type : "CategoryInfoA001Type" })
-        t.nullable.field("categoryInfoA006",{ type : "CategoryInfoA006Type" })
-        t.nullable.field("categoryInfoB719",{ type : "CategoryInfoB719Type" })
-        t.nullable.field("categoryInfoA113",{ type : "CategoryInfoA113Type" })
-        t.nullable.field("categoryInfoA524",{ type : "CategoryInfoA524Type" })
-        t.nullable.field("categoryInfoA525",{ type : "CategoryInfoA525Type" })
-        t.nullable.field("categoryInfoB956",{ type : "CategoryInfoB956Type" })
+        t.nullable.field("categoryInfoB378",{ type : "CategoryInfoB378Type" });
+        t.nullable.field("categoryInfoA112",{ type : "CategoryInfoA112Type" });
+        t.nullable.field("categoryInfoA027",{ type : "CategoryInfoA027Type" });
+        t.nullable.field("categoryInfoA001",{ type : "CategoryInfoA001Type" });
+        t.nullable.field("categoryInfoA006",{ type : "CategoryInfoA006Type" });
+        t.nullable.field("categoryInfoB719",{ type : "CategoryInfoB719Type" });
+        t.nullable.field("categoryInfoA113",{ type : "CategoryInfoA113Type" });
+        t.nullable.field("categoryInfoA524",{ type : "CategoryInfoA524Type" });
+        t.nullable.field("categoryInfoA525",{ type : "CategoryInfoA525Type" });
+        t.nullable.field("categoryInfoB956",{ type : "CategoryInfoB956Type" });
+
+        
     }
 });
 

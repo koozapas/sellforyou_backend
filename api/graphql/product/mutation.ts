@@ -232,17 +232,20 @@ const updateProductOptionResolver = async(src:{},args: ArgsValue<"mutation","upd
         return throwError(e,ctx);
     }
 }
-
-const updateProductCategory = async (src: {}, args: ArgsValue<"Mutation", "updateProductCategory">, ctx: Context, info: GraphQLResolveInfo) => {
-    const productStore = await ctx.prisma.productStore.findMany(
-        {
-            where : {
-                productId : args.productId,
-            }
-        }
-    )
-    if(!productStore) return throwError(errors.etc("해당 product의 productStore가 존재하지 않습니다."),ctx);
-    const result = await ctx.prisma.product.update(
+const updateProductCategory2 = async (src: {}, args: ArgsValue<"Mutation", "updateProductCategory2">, ctx: Context, info: GraphQLResolveInfo) => {
+    //이거뭐고 
+    // const productStore = await ctx.prisma.productStore.findMany(
+    //     {
+    //         where : {
+    //             productId : args.productId,
+    //             state : 2,
+    //         }
+            
+    //     }
+    // )
+    // if(productStore.length > 0) return throwError(errors.etc("해당 product의 productStore가 존재하지 않습니다."),ctx);
+    let result : any ;
+     await ctx.prisma.product.update(
         {
         where: { id: args.productId },
          data: {
@@ -257,9 +260,59 @@ const updateProductCategory = async (src: {}, args: ArgsValue<"Mutation", "updat
             categoryA524: args.categoryA524 ?? undefined,
             categoryA525: args.categoryA525 ?? undefined,
             categoryB956: args.categoryB956 ?? undefined,
+        }})
+        if(args.categoryA077){
+            result = await ctx.prisma.categoryInfoA077.findUnique({
+                where : { code : args.categoryA077 },
+                include : { sillInfoA077 : { include : { sillInfoA001 : true, sillInfoA006 : true, sillInfoA027 : true , sillInfoA112: true, sillInfoA113 : true, sillInfoA524 : true , sillInfoA525 : true, sillInfoB378 : true, sillInfoB719 : true, sillInfoB956 : true}} }
+            });
+        }else {
+            if(args.categoryB378){ result = await ctx.prisma.categoryInfoB378.findUnique({ where : {code : args.categoryB378},include : {sillInfoB378 : true }}); }
+            else if(args.categoryA112){ result = await ctx.prisma.categoryInfoA112.findUnique({ where : {code : args.categoryA112},include : {sillInfoA112 : true }}); }
+            else if(args.categoryA027){ result = await ctx.prisma.categoryInfoA027.findUnique({ where : {code : args.categoryA027},include : {sillInfoA027 : true }}); }
+            else if(args.categoryA001){ result = await ctx.prisma.categoryInfoA001.findUnique({ where : {code : args.categoryA001},include : {sillInfoA001 : true }}); }
+            else if(args.categoryA006){ result = await ctx.prisma.categoryInfoA006.findUnique({ where : {code : args.categoryA006},include : {sillInfoA006 : true }}); }
+            else if(args.categoryB719){ result = await ctx.prisma.categoryInfoB719.findUnique({ where : {code : args.categoryB719},include : {sillInfoB719 : true }}); }
+            else if(args.categoryA113){ result = await ctx.prisma.categoryInfoA113.findUnique({ where : {code : args.categoryA113},include : {sillInfoA113 : true }}); }
+            else if(args.categoryA524){ result = await ctx.prisma.categoryInfoA524.findUnique({ where : {code : args.categoryA524},include : {sillInfoA524 : true }}); }
+            else if(args.categoryA525){ result = await ctx.prisma.categoryInfoA525.findUnique({ where : {code : args.categoryA525},include : {sillInfoA525 : true }}); }
+            else if(args.categoryB956){ result = await ctx.prisma.categoryInfoB956.findUnique({ where : {code : args.categoryB956},include : {sillInfoB956 : true }}); }
         }
-    }
-    )
+    if(!result) return throwError(errors.etc("해당 product의 업데이트가 실패하였습니다."),ctx);
+    return JSON.stringify(result);
+    
+
+}
+const updateProductCategory = async (src: {}, args: ArgsValue<"Mutation", "updateProductCategory">, ctx: Context, info: GraphQLResolveInfo) => {
+    //이거뭐고 
+    // const productStore = await ctx.prisma.productStore.findMany(
+    //     {
+    //         where : {
+    //             productId : args.productId,
+    //             state : 2,
+    //         }
+            
+    //     }
+    // )
+    // if(productStore.length > 0) return throwError(errors.etc("해당 product의 productStore가 존재하지 않습니다."),ctx);
+    
+    const result =  await ctx.prisma.product.update(
+        {
+        where: { id: args.productId },
+         data: {
+            categoryA077: args.categoryA077 ?? undefined,
+            categoryB378: args.categoryB378 ?? undefined,
+            categoryA112: args.categoryA112 ?? undefined,
+            categoryA027: args.categoryA027 ?? undefined,
+            categoryA001: args.categoryA001 ?? undefined,
+            categoryA006: args.categoryA006 ?? undefined,
+            categoryB719: args.categoryB719 ?? undefined,
+            categoryA113: args.categoryA113 ?? undefined,
+            categoryA524: args.categoryA524 ?? undefined,
+            categoryA525: args.categoryA525 ?? undefined,
+            categoryB956: args.categoryB956 ?? undefined,
+        }})
+        
     if(!result) return throwError(errors.etc("해당 product의 업데이트가 실패하였습니다."),ctx);
     return "OK";
     
@@ -867,6 +920,55 @@ const updateManyProductOptionValue = async (src: {}, args: ArgsValue<"Mutation",
         return throwError(e,ctx);
     }
 }
+
+
+const updateProductSillDatasByUser = async (src: {}, args: ArgsValue<"Mutation", "updateProductSillDatasByUser">, ctx: Context, info: GraphQLResolveInfo) => {
+    try {
+        const products = await ctx.prisma.product.updateMany({ where: { userId: ctx.token!.userId, id: { in: args.productIds } }, 
+            data: { 
+                sillDataA001 : args.data_a001 ?? undefined,
+                sillDataA006 : args.data_a006 ?? undefined,               
+                sillDataA113 : args.data_a113 ?? undefined,               
+                sillDataA112 : args.data_a112 ?? undefined,               
+                sillDataA524 : args.data_a524 ?? undefined,               
+                sillDataA525 : args.data_a525 ?? undefined,               
+                sillDataA077 : args.data_a077 ?? undefined,               
+                sillDataB378 : args.data_b378 ?? undefined,               
+                sillDataB719 : args.data_b719 ?? undefined,               
+                sillDataB956 : args.data_b956 ?? undefined,               
+                sillDataA027 : args.data_a027 ?? undefined,               
+             } 
+        });
+        return JSON.stringify(products);
+    } catch (e) {
+        return throwError(e, ctx);
+    }
+}
+
+
+const updateProductSillCodesByUser = async (src: {}, args: ArgsValue<"Mutation", "updateProductSillCodesByUser">, ctx: Context, info: GraphQLResolveInfo) => {
+    try {
+        const products = await ctx.prisma.product.updateMany({ where: { userId: ctx.token!.userId, id: { in: args.productIds } }, 
+            data: { 
+                sillCodeA001 : args.code_a001 ?? undefined,
+                sillCodeA006 : args.code_a006 ?? undefined,               
+                sillCodeA113 : args.code_a113 ?? undefined,               
+                sillCodeA112 : args.code_a112 ?? undefined,               
+                sillCodeA524 : args.code_a524 ?? undefined,               
+                sillCodeA525 : args.code_a525 ?? undefined,               
+                sillCodeA077 : args.code_a077 ?? undefined,               
+                sillCodeB378 : args.code_b378 ?? undefined,               
+                sillCodeB719 : args.code_b719 ?? undefined,               
+                sillCodeB956 : args.code_b956 ?? undefined,               
+                sillCodeA027 : args.code_a027 ?? undefined,               
+             } 
+        });
+        return JSON.stringify(products);
+    } catch (e) {
+        return throwError(e, ctx);
+    }
+}
+
 const endProductSellStateResolver = async (src: {}, args: ArgsValue<"Mutation", "endProductSellStateByUser">, ctx: Context, info: GraphQLResolveInfo) => {
     try {
         const products = await ctx.prisma.product.updateMany({ where: { userId: ctx.token!.userId, id: { in: args.productIds } }, data: { state: 10 } });
@@ -996,6 +1098,42 @@ export async function copyProductsToUser(targetProductIds: number[], ctx: Contex
 export const mutation_product = extendType({
     type: "Mutation",
     definition(t) {
+        t.field("updateProductSillDatasByUser",{
+            type: "String",
+            args:{
+                productIds : nonNull(list(nonNull(intArg()))),
+                data_a077 : stringArg(),
+                data_b378 : stringArg(),
+                data_a112 : stringArg(),
+                data_a027 : stringArg(),
+                data_a001 : stringArg(),
+                data_a006 : stringArg(),
+                data_a113 : stringArg(),
+                data_a524 : stringArg(),
+                data_a525 : stringArg(),
+                data_b719 : stringArg(),
+                data_b956 : stringArg(),
+            },
+            resolve : updateProductSillDatasByUser 
+        })
+        t.field("updateProductSillCodesByUser",{
+            type: "String",
+            args:{
+                productIds : nonNull(list(nonNull(intArg()))),
+                code_a077 : stringArg(),
+                code_b378 : stringArg(),
+                code_a112 : stringArg(),
+                code_a027 : stringArg(),
+                code_a001 : stringArg(),
+                code_a006 : stringArg(),
+                code_a113 : stringArg(),
+                code_a524 : stringArg(),
+                code_a525 : stringArg(),
+                code_b719 : stringArg(),
+                code_b956 : stringArg(),
+            },
+            resolve : updateProductSillCodesByUser 
+        });
         t.field("initProductThumbnailImageByUser", {
             type: "String",
             args: {
@@ -1679,6 +1817,25 @@ export const mutation_product = extendType({
                 categoryB956: stringArg(),
             },
             resolve : updateProductCategory
+        })
+        t.field("updateProductCategory2",{
+            type:nonNull("String"),
+            args:{
+                productId: nonNull(intArg()),
+                categoryCode: stringArg(),
+                categoryA077: stringArg(),
+                categoryB378: stringArg(),
+                categoryA112: stringArg(),
+                categoryA027: stringArg(),
+                categoryA001: stringArg(),
+                categoryA006: stringArg(),
+                categoryB719: stringArg(),
+                categoryA113: stringArg(),
+                categoryA524: stringArg(),
+                categoryA525: stringArg(),
+                categoryB956: stringArg(),
+            },
+            resolve : updateProductCategory2
         })
         t.field("updateProductNameByUser", {
             type: nonNull("String"),

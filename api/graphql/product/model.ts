@@ -319,6 +319,28 @@ export const t_Product = objectType({
         t.model.manuFacturer();
         t.model.modelName();
         t.model.attribute();
+        t.model.sillCodeA001();
+        t.model.sillDataA001();
+        t.model.sillCodeA006();
+        t.model.sillDataA006();
+        t.model.sillCodeA027();
+        t.model.sillDataA027();
+        t.model.sillCodeA077();
+        t.model.sillDataA077();
+        t.model.sillCodeA112();
+        t.model.sillDataA112();
+        t.model.sillCodeA113();
+        t.model.sillDataA113();
+        t.model.sillCodeA524();
+        t.model.sillDataA524();
+        t.model.sillCodeA525();
+        t.model.sillDataA525();
+        t.model.sillCodeB378();
+        t.model.sillDataB378();
+        t.model.sillCodeB719();
+        t.model.sillDataB719();
+        t.model.sillCodeB956();
+        t.model.sillDataB956();
     }
 });
 

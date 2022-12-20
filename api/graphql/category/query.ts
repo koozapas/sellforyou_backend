@@ -58,7 +58,7 @@ export const query_category = extendType({
                             categoryInfoA525: {select : { code: true, name : true}},
                             categoryInfoB378: {select : { code: true, name : true}},
                             categoryInfoB719: {select : { code: true, name : true}},
-                            categoryInfoB956: {select : { code: true, name : true}}
+                            categoryInfoB956: {select : { code: true, name : true}},
                             },
                             orderBy: { name: "asc" }
                         });
