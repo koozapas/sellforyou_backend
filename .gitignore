@@ -1,7 +1,7 @@
 prisma/schema.dbml
 prisma/test.ts
 *firebase*.json
-
+update.sh
 log/*
 ref_data/*
 
