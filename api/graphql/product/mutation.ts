@@ -254,7 +254,7 @@ const updateProductCategory2 = async (src: {}, args: ArgsValue<"Mutation", "upda
         if(args.categoryA077){
             result = await ctx.prisma.categoryInfoA077.findUnique({
                 where : { code : args.categoryA077 },
-                include : { sillInfoA077 :{ select : { code : true , name : true, data :true } , include : { sillInfoA001 : true, sillInfoA006 : true, sillInfoA027 : true , sillInfoA112: true, sillInfoA113 : true, sillInfoA524 : true , sillInfoA525 : true, sillInfoB378 : true, sillInfoB719 : true, sillInfoB956 : true}} 
+                select : { sillInfoA077 : {select : {  code : true,name:true,data :true,  sillInfoA001 : true, sillInfoA006 : true, sillInfoA027 : true , sillInfoA112: true, sillInfoA113 : true, sillInfoA524 : true , sillInfoA525 : true, sillInfoB378 : true, sillInfoB719 : true, sillInfoB956 : true}}
                 }
             });
             results.push({ sillInfoA077: [ result.sillInfoA077 , {code : 'ETC' , name : '기타 재화', data : '[{"code": "itemName", "name": "품명", "type": "input"}, {"code": "modelName", "name": "모델명", "type": "input"}, {"code": "certificateDetails", "name": "법에 의한 인증, 허가 등을 받았음을 확인할 수 있는 경우 그에 대한 사항.", "type": "input"}, {"code": "manufacturer", "name": "제조자(사)", "type": "input"}, {"code": "afterServiceDirector", "name": "A/S 책임자 또는 소비자상담 관련 전화번호", "type": "input"}]'}],
