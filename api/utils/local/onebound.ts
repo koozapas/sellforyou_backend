@@ -354,16 +354,13 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(prisma: PrismaCli
                             }
                             return array
                         }
-
                         matchTagNm = shuffle(matchTagNm)
                         immSearchTagsData= matchTagNm.slice(0,10).join();
-                        
                     }
-
                 }
 
                 const regex = /[`~!@#$%^&*()_|+\-=?;:'".<>\{\}\[\]\\\/]/gim; 
-            product = await prisma.product.create({
+                product = await prisma.product.create({
                 data: {
                     name: taobaoData.nick !== "" ? replaceWordTable(taobaoData.nick,wordTable).replace(/  +/g, " ") : translateData?.title ? replaceWordTable(translateData?.title,wordTable).replace(/  +/g, " ") : replaceWordTable(taobaoData.title,wordTable).replace(/  +/g, " ") ,
                     description,
@@ -444,7 +441,6 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(prisma: PrismaCli
                     sillDataB719 : "",
                     sillCodeB956 : "",
                     sillDataB956 : "",
-
                 },
             });
             //todoconsole.log("product",product);

@@ -670,7 +670,7 @@ export const t_SillInfoA077 = objectType({
                 try{
                 const where : Prisma.SillInfoB956WhereInput = {
                     OR : [{code : src.codeB956 ?? "" },
-                            {code : "31"}
+                            {code : "기타 재화"}
                 ]
                 }
                 let data = await ctx.prisma.sillInfoB956.findMany({
@@ -1174,7 +1174,7 @@ export const t_CategoryInfoB956 = objectType({
                     try{
                     const where : Prisma.SillInfoB956WhereInput = {
                         OR : [{code : src.sillCode ?? "" },
-                                {code : "31"}
+                                {code : "기타 재화"}
                     ]
                     }
                     let data = await ctx.prisma.sillInfoB956.findMany({
