@@ -272,6 +272,8 @@ export const t_UserInfo = objectType({
     t.model.orderToDeliveryName();
     t.model.orderToDeliveryMembership();
     t.model.orderToDeliveryMethod();
+    t.model.collectCheckPosition();
+    t.model.sillFromCategory();
   },
 });
 

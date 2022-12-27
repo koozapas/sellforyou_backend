@@ -1503,10 +1503,6 @@ export interface NexusGenInputs {
     sillInfoB719?: NexusGenInputs['SillInfoB719WhereInput'] | null; // SillInfoB719WhereInput
     sillInfoB956?: NexusGenInputs['SillInfoB956WhereInput'] | null; // SillInfoB956WhereInput
   }
-  SillInfoA077WhereUniqueInput: { // input type
-    code?: string | null; // String
-    id?: number | null; // Int
-  }
   SillInfoA112OrderByWithRelationInput: { // input type
     categoryInfoA112?: NexusGenInputs['CategoryInfoA112OrderByRelationAggregateInput'] | null; // CategoryInfoA112OrderByRelationAggregateInput
     code?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1720,6 +1716,7 @@ export interface NexusGenInputs {
     cnyRateDollar?: NexusGenEnums['SortOrder'] | null; // SortOrder
     cnyRateEuro?: NexusGenEnums['SortOrder'] | null; // SortOrder
     cnyRateYen?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    collectCheckPosition?: NexusGenEnums['SortOrder'] | null; // SortOrder
     collectStock?: NexusGenEnums['SortOrder'] | null; // SortOrder
     collectTimeout?: NexusGenEnums['SortOrder'] | null; // SortOrder
     coupangAccessKey?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1782,6 +1779,7 @@ export interface NexusGenInputs {
     phone?: NexusGenEnums['SortOrder'] | null; // SortOrder
     productCollectCount?: NexusGenEnums['SortOrder'] | null; // SortOrder
     refundShippingFee?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sillFromCategory?: NexusGenEnums['SortOrder'] | null; // SortOrder
     streetApiKey?: NexusGenEnums['SortOrder'] | null; // SortOrder
     streetApiKey2?: NexusGenEnums['SortOrder'] | null; // SortOrder
     streetApiKey3?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1833,6 +1831,7 @@ export interface NexusGenInputs {
     cnyRateDollar?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
     cnyRateEuro?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
     cnyRateYen?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
+    collectCheckPosition?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     collectStock?: NexusGenInputs['IntFilter'] | null; // IntFilter
     collectTimeout?: NexusGenInputs['IntFilter'] | null; // IntFilter
     coupangAccessKey?: NexusGenInputs['StringFilter'] | null; // StringFilter
@@ -1895,6 +1894,7 @@ export interface NexusGenInputs {
     phone?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     productCollectCount?: NexusGenInputs['IntFilter'] | null; // IntFilter
     refundShippingFee?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    sillFromCategory?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     streetApiKey?: NexusGenInputs['StringFilter'] | null; // StringFilter
     streetApiKey2?: NexusGenInputs['StringFilter'] | null; // StringFilter
     streetApiKey3?: NexusGenInputs['StringFilter'] | null; // StringFilter
@@ -2568,6 +2568,28 @@ export interface NexusGenObjects {
     shippingFee: number; // Int!
     siilCode?: string | null; // String
     siilData?: string | null; // String
+    sillCodeA001: string; // String!
+    sillCodeA006: string; // String!
+    sillCodeA027: string; // String!
+    sillCodeA077: string; // String!
+    sillCodeA112: string; // String!
+    sillCodeA113: string; // String!
+    sillCodeA524: string; // String!
+    sillCodeA525: string; // String!
+    sillCodeB378: string; // String!
+    sillCodeB719: string; // String!
+    sillCodeB956: string; // String!
+    sillDataA001: string; // String!
+    sillDataA006: string; // String!
+    sillDataA027: string; // String!
+    sillDataA077: string; // String!
+    sillDataA112: string; // String!
+    sillDataA113: string; // String!
+    sillDataA524: string; // String!
+    sillDataA525: string; // String!
+    sillDataB378: string; // String!
+    sillDataB719: string; // String!
+    sillDataB956: string; // String!
     state: number; // Int!
     stockUpdatedAt: NexusGenScalars['DateTime']; // DateTime!
     streetFee?: number | null; // Float
@@ -2813,6 +2835,7 @@ export interface NexusGenObjects {
     cnyRateDollar: number; // Float!
     cnyRateEuro: number; // Float!
     cnyRateYen: number; // Float!
+    collectCheckPosition?: string | null; // String
     collectStock: number; // Int!
     collectTimeout: number; // Int!
     coupangAccessKey: string; // String!
@@ -2875,6 +2898,7 @@ export interface NexusGenObjects {
     phone?: string | null; // String
     productCollectCount: number; // Int!
     refundShippingFee: number; // Int!
+    sillFromCategory?: string | null; // String
     streetApiKey: string; // String!
     streetApiKey2: string; // String!
     streetApiKey3: string; // String!
@@ -3011,6 +3035,7 @@ export interface NexusGenFieldTypes {
     state: NexusGenEnums['AdminState']; // AdminState!
   }
   CategoryInfoA001: { // field return type
+    activeSillDataA001: NexusGenRootTypes['SillInfoA001'][]; // [SillInfoA001!]!
     code: string; // String!
     depth1: string; // String!
     depth2: string; // String!
@@ -3029,6 +3054,7 @@ export interface NexusGenFieldTypes {
     name: string; // String!
   }
   CategoryInfoA006: { // field return type
+    activeSillDataA006: NexusGenRootTypes['SillInfoA006'][]; // [SillInfoA006!]!
     code: string; // String!
     depth1: string; // String!
     depth2: string; // String!
@@ -3047,6 +3073,7 @@ export interface NexusGenFieldTypes {
     name: string; // String!
   }
   CategoryInfoA027: { // field return type
+    activeSillDataA027: NexusGenRootTypes['SillInfoA027'][]; // [SillInfoA027!]!
     code: string; // String!
     depth1: string; // String!
     depth2: string; // String!
@@ -3065,6 +3092,7 @@ export interface NexusGenFieldTypes {
     name: string; // String!
   }
   CategoryInfoA077: { // field return type
+    activeSillDataA077: NexusGenRootTypes['SillInfoA077'][]; // [SillInfoA077!]!
     categoryInfoA001: NexusGenRootTypes['CategoryInfoA001']; // CategoryInfoA001!
     categoryInfoA006: NexusGenRootTypes['CategoryInfoA006']; // CategoryInfoA006!
     categoryInfoA027: NexusGenRootTypes['CategoryInfoA027']; // CategoryInfoA027!
@@ -3103,6 +3131,7 @@ export interface NexusGenFieldTypes {
     name: string; // String!
   }
   CategoryInfoA112: { // field return type
+    activeSillDataA112: NexusGenRootTypes['SillInfoA112'][]; // [SillInfoA112!]!
     code: string; // String!
     depth1: string; // String!
     depth2: string; // String!
@@ -3121,6 +3150,7 @@ export interface NexusGenFieldTypes {
     name: string; // String!
   }
   CategoryInfoA113: { // field return type
+    activeSillDataA113: NexusGenRootTypes['SillInfoA113'][]; // [SillInfoA113!]!
     code: string; // String!
     depth1: string; // String!
     depth2: string; // String!
@@ -3139,6 +3169,7 @@ export interface NexusGenFieldTypes {
     name: string; // String!
   }
   CategoryInfoA524: { // field return type
+    activeSillDataA524: NexusGenRootTypes['SillInfoA524'][]; // [SillInfoA524!]!
     code: string; // String!
     depth1: string; // String!
     depth2: string; // String!
@@ -3157,6 +3188,7 @@ export interface NexusGenFieldTypes {
     name: string; // String!
   }
   CategoryInfoA525: { // field return type
+    activeSillDataA525: NexusGenRootTypes['SillInfoA525'][]; // [SillInfoA525!]!
     code: string; // String!
     depth1: string; // String!
     depth2: string; // String!
@@ -3175,6 +3207,7 @@ export interface NexusGenFieldTypes {
     name: string; // String!
   }
   CategoryInfoB378: { // field return type
+    activeSillDataB378: NexusGenRootTypes['SillInfoB378'][]; // [SillInfoB378!]!
     code: string; // String!
     depth1: string; // String!
     depth2: string; // String!
@@ -3193,6 +3226,7 @@ export interface NexusGenFieldTypes {
     name: string; // String!
   }
   CategoryInfoB719: { // field return type
+    activeSillDataB719: NexusGenRootTypes['SillInfoB719'][]; // [SillInfoB719!]!
     code: string; // String!
     depth1: string; // String!
     depth2: string; // String!
@@ -3211,6 +3245,7 @@ export interface NexusGenFieldTypes {
     name: string; // String!
   }
   CategoryInfoB956: { // field return type
+    activeSillDataB956: NexusGenRootTypes['SillInfoB956'][]; // [SillInfoB956!]!
     code: string; // String!
     depth1: string; // String!
     depth2: string; // String!
@@ -3310,7 +3345,6 @@ export interface NexusGenFieldTypes {
     signInUserByEveryone: NexusGenRootTypes['SignInType']; // SignInType!
     signOutUserByEveryone: string; // String!
     signUpAdminByAdmin: boolean; // Boolean!
-    signUpUserByEveryone: string; // String!
     signUpUserByEveryone2: string; // String!
     silentRefreshToken: NexusGenRootTypes['SignInType'] | null; // SignInType
     t_createProduct: boolean | null; // Boolean
@@ -3345,6 +3379,7 @@ export interface NexusGenFieldTypes {
     updateProductByAdmin: NexusGenRootTypes['Product']; // Product!
     updateProductByUser: NexusGenRootTypes['Product']; // Product!
     updateProductCategory: string; // String!
+    updateProductCategory2: string; // String!
     updateProductFee: string; // String!
     updateProductImageBySomeone: NexusGenRootTypes['Product']; // Product!
     updateProductImageBySomeone2: string; // String!
@@ -3354,6 +3389,8 @@ export interface NexusGenFieldTypes {
     updateProductOptionShippingFee: string | null; // String
     updateProductPriceByAdmin: number; // Int!
     updateProductPriceByUser: number; // Int!
+    updateProductSillCodesByUser: string | null; // String
+    updateProductSillDatasByUser: string | null; // String
     updateProductSinglePriceByUser: string; // String!
     updateProductStoreUrlInfoBySomeone: string; // String!
     updateProductTagByUser: string; // String!
@@ -3441,6 +3478,28 @@ export interface NexusGenFieldTypes {
     siilCode: string | null; // String
     siilData: string | null; // String
     siilInfo: NexusGenRootTypes['SiilSavedData'] | null; // SiilSavedData
+    sillCodeA001: string; // String!
+    sillCodeA006: string; // String!
+    sillCodeA027: string; // String!
+    sillCodeA077: string; // String!
+    sillCodeA112: string; // String!
+    sillCodeA113: string; // String!
+    sillCodeA524: string; // String!
+    sillCodeA525: string; // String!
+    sillCodeB378: string; // String!
+    sillCodeB719: string; // String!
+    sillCodeB956: string; // String!
+    sillDataA001: string; // String!
+    sillDataA006: string; // String!
+    sillDataA027: string; // String!
+    sillDataA077: string; // String!
+    sillDataA112: string; // String!
+    sillDataA113: string; // String!
+    sillDataA524: string; // String!
+    sillDataA525: string; // String!
+    sillDataB378: string; // String!
+    sillDataB719: string; // String!
+    sillDataB956: string; // String!
     state: number; // Int!
     stockUpdatedAt: NexusGenScalars['DateTime']; // DateTime!
     streetFee: number | null; // Float
@@ -3625,23 +3684,31 @@ export interface NexusGenFieldTypes {
     data: string; // String!
     id: number; // Int!
     name: string; // String!
-    sillInfoA077: NexusGenRootTypes['SillInfoA077'][]; // [SillInfoA077!]!
   }
   SillInfoA006: { // field return type
     code: string; // String!
     data: string; // String!
     id: number; // Int!
     name: string; // String!
-    sillInfoA077: NexusGenRootTypes['SillInfoA077'][]; // [SillInfoA077!]!
   }
   SillInfoA027: { // field return type
     code: string; // String!
     data: string; // String!
     id: number; // Int!
     name: string; // String!
-    sillInfoA077: NexusGenRootTypes['SillInfoA077'][]; // [SillInfoA077!]!
   }
   SillInfoA077: { // field return type
+    activeSillDataA001: NexusGenRootTypes['SillInfoA001'][]; // [SillInfoA001!]!
+    activeSillDataA006: NexusGenRootTypes['SillInfoA006'][]; // [SillInfoA006!]!
+    activeSillDataA027: NexusGenRootTypes['SillInfoA027'][]; // [SillInfoA027!]!
+    activeSillDataA077: NexusGenRootTypes['SillInfoA077'][]; // [SillInfoA077!]!
+    activeSillDataA112: NexusGenRootTypes['SillInfoA112'][]; // [SillInfoA112!]!
+    activeSillDataA113: NexusGenRootTypes['SillInfoA113'][]; // [SillInfoA113!]!
+    activeSillDataA524: NexusGenRootTypes['SillInfoA524'][]; // [SillInfoA524!]!
+    activeSillDataA525: NexusGenRootTypes['SillInfoA525'][]; // [SillInfoA525!]!
+    activeSillDataB378: NexusGenRootTypes['SillInfoB378'][]; // [SillInfoB378!]!
+    activeSillDataB719: NexusGenRootTypes['SillInfoB719'][]; // [SillInfoB719!]!
+    activeSillDataB956: NexusGenRootTypes['SillInfoB956'][]; // [SillInfoB956!]!
     code: string; // String!
     codeA001: string | null; // String
     codeA006: string | null; // String
@@ -3672,49 +3739,42 @@ export interface NexusGenFieldTypes {
     data: string; // String!
     id: number; // Int!
     name: string; // String!
-    sillInfoA077: NexusGenRootTypes['SillInfoA077'][]; // [SillInfoA077!]!
   }
   SillInfoA113: { // field return type
     code: string; // String!
     data: string; // String!
     id: number; // Int!
     name: string; // String!
-    sillInfoA077: NexusGenRootTypes['SillInfoA077'][]; // [SillInfoA077!]!
   }
   SillInfoA524: { // field return type
     code: string; // String!
     data: string; // String!
     id: number; // Int!
     name: string; // String!
-    sillInfoA077: NexusGenRootTypes['SillInfoA077'][]; // [SillInfoA077!]!
   }
   SillInfoA525: { // field return type
     code: string; // String!
     data: string; // String!
     id: number; // Int!
     name: string; // String!
-    sillInfoA077: NexusGenRootTypes['SillInfoA077'][]; // [SillInfoA077!]!
   }
   SillInfoB378: { // field return type
     code: string; // String!
     data: string; // String!
     id: number; // Int!
     name: string; // String!
-    sillInfoA077: NexusGenRootTypes['SillInfoA077'][]; // [SillInfoA077!]!
   }
   SillInfoB719: { // field return type
     code: string; // String!
     data: string; // String!
     id: number; // Int!
     name: string; // String!
-    sillInfoA077: NexusGenRootTypes['SillInfoA077'][]; // [SillInfoA077!]!
   }
   SillInfoB956: { // field return type
     code: string; // String!
     data: string; // String!
     id: number; // Int!
     name: string; // String!
-    sillInfoA077: NexusGenRootTypes['SillInfoA077'][]; // [SillInfoA077!]!
   }
   Subscription: { // field return type
     subscribeUserEvent: NexusGenRootTypes['UserLog'] | null; // UserLog
@@ -3789,6 +3849,7 @@ export interface NexusGenFieldTypes {
     cnyRateDollar: number; // Float!
     cnyRateEuro: number; // Float!
     cnyRateYen: number; // Float!
+    collectCheckPosition: string | null; // String
     collectStock: number; // Int!
     collectTimeout: number; // Int!
     coupangAccessKey: string; // String!
@@ -3851,6 +3912,7 @@ export interface NexusGenFieldTypes {
     phone: string | null; // String
     productCollectCount: number; // Int!
     refundShippingFee: number; // Int!
+    sillFromCategory: string | null; // String
     streetApiKey: string; // String!
     streetApiKey2: string; // String!
     streetApiKey3: string; // String!
@@ -3983,6 +4045,7 @@ export interface NexusGenFieldTypeNames {
     state: 'AdminState'
   }
   CategoryInfoA001: { // field return type name
+    activeSillDataA001: 'SillInfoA001'
     code: 'String'
     depth1: 'String'
     depth2: 'String'
@@ -4001,6 +4064,7 @@ export interface NexusGenFieldTypeNames {
     name: 'String'
   }
   CategoryInfoA006: { // field return type name
+    activeSillDataA006: 'SillInfoA006'
     code: 'String'
     depth1: 'String'
     depth2: 'String'
@@ -4019,6 +4083,7 @@ export interface NexusGenFieldTypeNames {
     name: 'String'
   }
   CategoryInfoA027: { // field return type name
+    activeSillDataA027: 'SillInfoA027'
     code: 'String'
     depth1: 'String'
     depth2: 'String'
@@ -4037,6 +4102,7 @@ export interface NexusGenFieldTypeNames {
     name: 'String'
   }
   CategoryInfoA077: { // field return type name
+    activeSillDataA077: 'SillInfoA077'
     categoryInfoA001: 'CategoryInfoA001'
     categoryInfoA006: 'CategoryInfoA006'
     categoryInfoA027: 'CategoryInfoA027'
@@ -4075,6 +4141,7 @@ export interface NexusGenFieldTypeNames {
     name: 'String'
   }
   CategoryInfoA112: { // field return type name
+    activeSillDataA112: 'SillInfoA112'
     code: 'String'
     depth1: 'String'
     depth2: 'String'
@@ -4093,6 +4160,7 @@ export interface NexusGenFieldTypeNames {
     name: 'String'
   }
   CategoryInfoA113: { // field return type name
+    activeSillDataA113: 'SillInfoA113'
     code: 'String'
     depth1: 'String'
     depth2: 'String'
@@ -4111,6 +4179,7 @@ export interface NexusGenFieldTypeNames {
     name: 'String'
   }
   CategoryInfoA524: { // field return type name
+    activeSillDataA524: 'SillInfoA524'
     code: 'String'
     depth1: 'String'
     depth2: 'String'
@@ -4129,6 +4198,7 @@ export interface NexusGenFieldTypeNames {
     name: 'String'
   }
   CategoryInfoA525: { // field return type name
+    activeSillDataA525: 'SillInfoA525'
     code: 'String'
     depth1: 'String'
     depth2: 'String'
@@ -4147,6 +4217,7 @@ export interface NexusGenFieldTypeNames {
     name: 'String'
   }
   CategoryInfoB378: { // field return type name
+    activeSillDataB378: 'SillInfoB378'
     code: 'String'
     depth1: 'String'
     depth2: 'String'
@@ -4165,6 +4236,7 @@ export interface NexusGenFieldTypeNames {
     name: 'String'
   }
   CategoryInfoB719: { // field return type name
+    activeSillDataB719: 'SillInfoB719'
     code: 'String'
     depth1: 'String'
     depth2: 'String'
@@ -4183,6 +4255,7 @@ export interface NexusGenFieldTypeNames {
     name: 'String'
   }
   CategoryInfoB956: { // field return type name
+    activeSillDataB956: 'SillInfoB956'
     code: 'String'
     depth1: 'String'
     depth2: 'String'
@@ -4282,7 +4355,6 @@ export interface NexusGenFieldTypeNames {
     signInUserByEveryone: 'SignInType'
     signOutUserByEveryone: 'String'
     signUpAdminByAdmin: 'Boolean'
-    signUpUserByEveryone: 'String'
     signUpUserByEveryone2: 'String'
     silentRefreshToken: 'SignInType'
     t_createProduct: 'Boolean'
@@ -4317,6 +4389,7 @@ export interface NexusGenFieldTypeNames {
     updateProductByAdmin: 'Product'
     updateProductByUser: 'Product'
     updateProductCategory: 'String'
+    updateProductCategory2: 'String'
     updateProductFee: 'String'
     updateProductImageBySomeone: 'Product'
     updateProductImageBySomeone2: 'String'
@@ -4326,6 +4399,8 @@ export interface NexusGenFieldTypeNames {
     updateProductOptionShippingFee: 'String'
     updateProductPriceByAdmin: 'Int'
     updateProductPriceByUser: 'Int'
+    updateProductSillCodesByUser: 'String'
+    updateProductSillDatasByUser: 'String'
     updateProductSinglePriceByUser: 'String'
     updateProductStoreUrlInfoBySomeone: 'String'
     updateProductTagByUser: 'String'
@@ -4413,6 +4488,28 @@ export interface NexusGenFieldTypeNames {
     siilCode: 'String'
     siilData: 'String'
     siilInfo: 'SiilSavedData'
+    sillCodeA001: 'String'
+    sillCodeA006: 'String'
+    sillCodeA027: 'String'
+    sillCodeA077: 'String'
+    sillCodeA112: 'String'
+    sillCodeA113: 'String'
+    sillCodeA524: 'String'
+    sillCodeA525: 'String'
+    sillCodeB378: 'String'
+    sillCodeB719: 'String'
+    sillCodeB956: 'String'
+    sillDataA001: 'String'
+    sillDataA006: 'String'
+    sillDataA027: 'String'
+    sillDataA077: 'String'
+    sillDataA112: 'String'
+    sillDataA113: 'String'
+    sillDataA524: 'String'
+    sillDataA525: 'String'
+    sillDataB378: 'String'
+    sillDataB719: 'String'
+    sillDataB956: 'String'
     state: 'Int'
     stockUpdatedAt: 'DateTime'
     streetFee: 'Float'
@@ -4597,23 +4694,31 @@ export interface NexusGenFieldTypeNames {
     data: 'String'
     id: 'Int'
     name: 'String'
-    sillInfoA077: 'SillInfoA077'
   }
   SillInfoA006: { // field return type name
     code: 'String'
     data: 'String'
     id: 'Int'
     name: 'String'
-    sillInfoA077: 'SillInfoA077'
   }
   SillInfoA027: { // field return type name
     code: 'String'
     data: 'String'
     id: 'Int'
     name: 'String'
-    sillInfoA077: 'SillInfoA077'
   }
   SillInfoA077: { // field return type name
+    activeSillDataA001: 'SillInfoA001'
+    activeSillDataA006: 'SillInfoA006'
+    activeSillDataA027: 'SillInfoA027'
+    activeSillDataA077: 'SillInfoA077'
+    activeSillDataA112: 'SillInfoA112'
+    activeSillDataA113: 'SillInfoA113'
+    activeSillDataA524: 'SillInfoA524'
+    activeSillDataA525: 'SillInfoA525'
+    activeSillDataB378: 'SillInfoB378'
+    activeSillDataB719: 'SillInfoB719'
+    activeSillDataB956: 'SillInfoB956'
     code: 'String'
     codeA001: 'String'
     codeA006: 'String'
@@ -4644,49 +4749,42 @@ export interface NexusGenFieldTypeNames {
     data: 'String'
     id: 'Int'
     name: 'String'
-    sillInfoA077: 'SillInfoA077'
   }
   SillInfoA113: { // field return type name
     code: 'String'
     data: 'String'
     id: 'Int'
     name: 'String'
-    sillInfoA077: 'SillInfoA077'
   }
   SillInfoA524: { // field return type name
     code: 'String'
     data: 'String'
     id: 'Int'
     name: 'String'
-    sillInfoA077: 'SillInfoA077'
   }
   SillInfoA525: { // field return type name
     code: 'String'
     data: 'String'
     id: 'Int'
     name: 'String'
-    sillInfoA077: 'SillInfoA077'
   }
   SillInfoB378: { // field return type name
     code: 'String'
     data: 'String'
     id: 'Int'
     name: 'String'
-    sillInfoA077: 'SillInfoA077'
   }
   SillInfoB719: { // field return type name
     code: 'String'
     data: 'String'
     id: 'Int'
     name: 'String'
-    sillInfoA077: 'SillInfoA077'
   }
   SillInfoB956: { // field return type name
     code: 'String'
     data: 'String'
     id: 'Int'
     name: 'String'
-    sillInfoA077: 'SillInfoA077'
   }
   Subscription: { // field return type name
     subscribeUserEvent: 'UserLog'
@@ -4761,6 +4859,7 @@ export interface NexusGenFieldTypeNames {
     cnyRateDollar: 'Float'
     cnyRateEuro: 'Float'
     cnyRateYen: 'Float'
+    collectCheckPosition: 'String'
     collectStock: 'Int'
     collectTimeout: 'Int'
     coupangAccessKey: 'String'
@@ -4823,6 +4922,7 @@ export interface NexusGenFieldTypeNames {
     phone: 'String'
     productCollectCount: 'Int'
     refundShippingFee: 'Int'
+    sillFromCategory: 'String'
     streetApiKey: 'String'
     streetApiKey2: 'String'
     streetApiKey3: 'String'
@@ -5184,12 +5284,6 @@ export interface NexusGenArgTypes {
       id: string; // String!
       password: string; // String!
     }
-    signUpUserByEveryone: { // args
-      email: string; // String!
-      password: string; // String!
-      phone: string; // String!
-      verificationId: number; // Int!
-    }
     signUpUserByEveryone2: { // args
       email: string; // String!
       password: string; // String!
@@ -5319,6 +5413,7 @@ export interface NexusGenArgTypes {
       cnyRateDollar?: number | null; // Float
       cnyRateEuro?: number | null; // Float
       cnyRateYen?: number | null; // Float
+      collectCheckPosition?: string | null; // String
       collectStock?: number | null; // Int
       collectTimeout?: number | null; // Int
       coupangAccessKey?: string | null; // String
@@ -5378,6 +5473,7 @@ export interface NexusGenArgTypes {
       orderToDeliveryMethod?: string | null; // String
       orderToDeliveryName?: string | null; // String
       refundShippingFee?: number | null; // Int
+      sillFromCategory?: string | null; // String
       streetApiKey?: string | null; // String
       streetApiKey2?: string | null; // String
       streetApiKey3?: string | null; // String
@@ -5504,6 +5600,21 @@ export interface NexusGenArgTypes {
       categoryCode?: string | null; // String
       productId: number; // Int!
     }
+    updateProductCategory2: { // args
+      categoryA001?: string | null; // String
+      categoryA006?: string | null; // String
+      categoryA027?: string | null; // String
+      categoryA077?: string | null; // String
+      categoryA112?: string | null; // String
+      categoryA113?: string | null; // String
+      categoryA524?: string | null; // String
+      categoryA525?: string | null; // String
+      categoryB378?: string | null; // String
+      categoryB719?: string | null; // String
+      categoryB956?: string | null; // String
+      categoryCode?: string | null; // String
+      productId: number; // Int!
+    }
     updateProductFee: { // args
       auctionFee?: number | null; // Float
       coupangFee?: number | null; // Float
@@ -5563,6 +5674,34 @@ export interface NexusGenArgTypes {
       marginUnitType: string; // String!
       productIds: number[]; // [Int!]!
       shippingFee: number; // Int!
+    }
+    updateProductSillCodesByUser: { // args
+      code_a001?: string | null; // String
+      code_a006?: string | null; // String
+      code_a027?: string | null; // String
+      code_a077?: string | null; // String
+      code_a112?: string | null; // String
+      code_a113?: string | null; // String
+      code_a524?: string | null; // String
+      code_a525?: string | null; // String
+      code_b378?: string | null; // String
+      code_b719?: string | null; // String
+      code_b956?: string | null; // String
+      productIds: number[]; // [Int!]!
+    }
+    updateProductSillDatasByUser: { // args
+      data_a001?: string | null; // String
+      data_a006?: string | null; // String
+      data_a027?: string | null; // String
+      data_a077?: string | null; // String
+      data_a112?: string | null; // String
+      data_a113?: string | null; // String
+      data_a524?: string | null; // String
+      data_a525?: string | null; // String
+      data_b378?: string | null; // String
+      data_b719?: string | null; // String
+      data_b956?: string | null; // String
+      productIds: number[]; // [Int!]!
     }
     updateProductSinglePriceByUser: { // args
       price: number; // Int!
@@ -5834,76 +5973,6 @@ export interface NexusGenArgTypes {
     translateText: { // args
       engine: NexusGenEnums['TranslateEngineEnumType']; // TranslateEngineEnumType!
       text: string; // String!
-    }
-  }
-  SillInfoA001: {
-    sillInfoA077: { // args
-      cursor?: NexusGenInputs['SillInfoA077WhereUniqueInput'] | null; // SillInfoA077WhereUniqueInput
-      skip?: number | null; // Int
-      take?: number | null; // Int
-    }
-  }
-  SillInfoA006: {
-    sillInfoA077: { // args
-      cursor?: NexusGenInputs['SillInfoA077WhereUniqueInput'] | null; // SillInfoA077WhereUniqueInput
-      skip?: number | null; // Int
-      take?: number | null; // Int
-    }
-  }
-  SillInfoA027: {
-    sillInfoA077: { // args
-      cursor?: NexusGenInputs['SillInfoA077WhereUniqueInput'] | null; // SillInfoA077WhereUniqueInput
-      skip?: number | null; // Int
-      take?: number | null; // Int
-    }
-  }
-  SillInfoA112: {
-    sillInfoA077: { // args
-      cursor?: NexusGenInputs['SillInfoA077WhereUniqueInput'] | null; // SillInfoA077WhereUniqueInput
-      skip?: number | null; // Int
-      take?: number | null; // Int
-    }
-  }
-  SillInfoA113: {
-    sillInfoA077: { // args
-      cursor?: NexusGenInputs['SillInfoA077WhereUniqueInput'] | null; // SillInfoA077WhereUniqueInput
-      skip?: number | null; // Int
-      take?: number | null; // Int
-    }
-  }
-  SillInfoA524: {
-    sillInfoA077: { // args
-      cursor?: NexusGenInputs['SillInfoA077WhereUniqueInput'] | null; // SillInfoA077WhereUniqueInput
-      skip?: number | null; // Int
-      take?: number | null; // Int
-    }
-  }
-  SillInfoA525: {
-    sillInfoA077: { // args
-      cursor?: NexusGenInputs['SillInfoA077WhereUniqueInput'] | null; // SillInfoA077WhereUniqueInput
-      skip?: number | null; // Int
-      take?: number | null; // Int
-    }
-  }
-  SillInfoB378: {
-    sillInfoA077: { // args
-      cursor?: NexusGenInputs['SillInfoA077WhereUniqueInput'] | null; // SillInfoA077WhereUniqueInput
-      skip?: number | null; // Int
-      take?: number | null; // Int
-    }
-  }
-  SillInfoB719: {
-    sillInfoA077: { // args
-      cursor?: NexusGenInputs['SillInfoA077WhereUniqueInput'] | null; // SillInfoA077WhereUniqueInput
-      skip?: number | null; // Int
-      take?: number | null; // Int
-    }
-  }
-  SillInfoB956: {
-    sillInfoA077: { // args
-      cursor?: NexusGenInputs['SillInfoA077WhereUniqueInput'] | null; // SillInfoA077WhereUniqueInput
-      skip?: number | null; // Int
-      take?: number | null; // Int
     }
   }
   TaobaoProduct: {

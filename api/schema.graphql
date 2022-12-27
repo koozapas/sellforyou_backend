@@ -56,6 +56,7 @@ input BoolNullableFilter {
 }
 
 type CategoryInfoA001 {
+  activeSillDataA001: [SillInfoA001!]!
   code: String!
   depth1: String!
   depth2: String!
@@ -122,6 +123,7 @@ input CategoryInfoA001WhereInput {
 }
 
 type CategoryInfoA006 {
+  activeSillDataA006: [SillInfoA006!]!
   code: String!
   depth1: String!
   depth2: String!
@@ -188,6 +190,7 @@ input CategoryInfoA006WhereInput {
 }
 
 type CategoryInfoA027 {
+  activeSillDataA027: [SillInfoA027!]!
   code: String!
   depth1: String!
   depth2: String!
@@ -254,6 +257,7 @@ input CategoryInfoA027WhereInput {
 }
 
 type CategoryInfoA077 {
+  activeSillDataA077: [SillInfoA077!]!
   categoryInfoA001: CategoryInfoA001!
   categoryInfoA006: CategoryInfoA006!
   categoryInfoA027: CategoryInfoA027!
@@ -378,6 +382,7 @@ input CategoryInfoA077WhereInput {
 }
 
 type CategoryInfoA112 {
+  activeSillDataA112: [SillInfoA112!]!
   code: String!
   depth1: String!
   depth2: String!
@@ -444,6 +449,7 @@ input CategoryInfoA112WhereInput {
 }
 
 type CategoryInfoA113 {
+  activeSillDataA113: [SillInfoA113!]!
   code: String!
   depth1: String!
   depth2: String!
@@ -510,6 +516,7 @@ input CategoryInfoA113WhereInput {
 }
 
 type CategoryInfoA524 {
+  activeSillDataA524: [SillInfoA524!]!
   code: String!
   depth1: String!
   depth2: String!
@@ -576,6 +583,7 @@ input CategoryInfoA524WhereInput {
 }
 
 type CategoryInfoA525 {
+  activeSillDataA525: [SillInfoA525!]!
   code: String!
   depth1: String!
   depth2: String!
@@ -642,6 +650,7 @@ input CategoryInfoA525WhereInput {
 }
 
 type CategoryInfoB378 {
+  activeSillDataB378: [SillInfoB378!]!
   code: String!
   depth1: String!
   depth2: String!
@@ -710,6 +719,7 @@ input CategoryInfoB378WhereInput {
 }
 
 type CategoryInfoB719 {
+  activeSillDataB719: [SillInfoB719!]!
   code: String!
   depth1: String!
   depth2: String!
@@ -776,6 +786,7 @@ input CategoryInfoB719WhereInput {
 }
 
 type CategoryInfoB956 {
+  activeSillDataB956: [SillInfoB956!]!
   code: String!
   depth1: String!
   depth2: String!
@@ -1045,7 +1056,6 @@ type Mutation {
   ): SignInType!
   signOutUserByEveryone: String!
   signUpAdminByAdmin(id: String!, password: String!): Boolean!
-  signUpUserByEveryone(email: String!, password: String!, phone: String!, verificationId: Int! = 0): String!
   signUpUserByEveryone2(email: String!, password: String!, phone: String!, refCode: String, verificationId: Int! = 0): String!
   silentRefreshToken(refreshToken: String!): SignInType
   t_createProduct: Boolean
@@ -1070,7 +1080,7 @@ type Mutation {
   updateManyProductSiilInfoByUser(productIds: [Int!]!, siilCode: String!): Int!
   updateManyProductTagByUser(immSearchTags: String, productIds: [Int!]!, searchTags: String): String!
   updateMultipleProductNameByUser(data: [ProductOptionNameInput!]!): String!
-  updateMyDataByUser(additionalShippingFeeJeju: Int, asInformation: String, asTel: String, auctionFee: Float, auctionUseType: String, autoPrice: String, calculateWonType: String, cnyRate: Float, cnyRateDollar: Float, cnyRateEuro: Float, cnyRateYen: Float, collectStock: Int, collectTimeout: Int, coupangAccessKey: String, coupangDefaultInbound: String, coupangDefaultOutbound: String, coupangFee: Float, coupangImageOpt: String, coupangLoginId: String, coupangMaximumBuyForPerson: Int, coupangOutboundShippingTimeDay: Int, coupangSecretKey: String, coupangUnionDeliveryType: String, coupangUseType: String, coupangVendorId: String, defaultPrice: String, defaultShippingFee: Int, descriptionShowTitle: String, discountAmount: Int, discountUnitType: String, esmplusAuctionId: String, esmplusGmarketId: String, esmplusMasterId: String, exchangeShippingFee: Int, extraShippingFee: Int, fixImageBottom: Upload, fixImageSubBottom: Upload, fixImageSubTop: Upload, fixImageTop: Upload, gmarketFee: Float, gmarketUseType: String, interparkCertKey: String, interparkEditCertKey: String, interparkEditSecretKey: String, interparkFee: Float, interparkSecretKey: String, interparkUseType: String, lotteonApiKey: String, lotteonFee: Float, lotteonNormalFee: Float, lotteonNormalUseType: String, lotteonSellerType: String, lotteonUseType: String, lotteonVendorId: String, marginRate: Float, marginUnitType: String, naverAutoSearchTag: String, naverFee: Float, naverOrigin: String, naverOriginCode: String, naverStoreOnly: String, naverStoreUrl: String, naverUseType: String, optionAlignTop: String, optionIndexType: Int, optionTwoWays: String, orderToDeliveryMembership: String, orderToDeliveryMethod: String, orderToDeliveryName: String, refundShippingFee: Int, streetApiKey: String, streetApiKey2: String, streetApiKey3: String, streetApiKey4: String, streetApiMemo: String, streetApiMemo2: String, streetApiMemo3: String, streetApiMemo4: String, streetDefaultInbound: String, streetDefaultOutbound: String, streetFee: Float, streetNormalApiKey: String, streetNormalApiKey2: String, streetNormalApiKey3: String, streetNormalApiKey4: String, streetNormalApiMemo: String, streetNormalApiMemo2: String, streetNormalApiMemo3: String, streetNormalApiMemo4: String, streetNormalFee: Float, streetNormalInbound: String, streetNormalOutbound: String, streetNormalUseKeyType: String, streetNormalUseType: String, streetUseKeyType: String, streetUseType: String, tmonFee: Float, tmonId: String, tmonUseType: String, useDetailInformation: String, wemakepriceFee: Float, wemakepriceId: String, wemakepriceUseType: String): Boolean!
+  updateMyDataByUser(additionalShippingFeeJeju: Int, asInformation: String, asTel: String, auctionFee: Float, auctionUseType: String, autoPrice: String, calculateWonType: String, cnyRate: Float, cnyRateDollar: Float, cnyRateEuro: Float, cnyRateYen: Float, collectCheckPosition: String, collectStock: Int, collectTimeout: Int, coupangAccessKey: String, coupangDefaultInbound: String, coupangDefaultOutbound: String, coupangFee: Float, coupangImageOpt: String, coupangLoginId: String, coupangMaximumBuyForPerson: Int, coupangOutboundShippingTimeDay: Int, coupangSecretKey: String, coupangUnionDeliveryType: String, coupangUseType: String, coupangVendorId: String, defaultPrice: String, defaultShippingFee: Int, descriptionShowTitle: String, discountAmount: Int, discountUnitType: String, esmplusAuctionId: String, esmplusGmarketId: String, esmplusMasterId: String, exchangeShippingFee: Int, extraShippingFee: Int, fixImageBottom: Upload, fixImageSubBottom: Upload, fixImageSubTop: Upload, fixImageTop: Upload, gmarketFee: Float, gmarketUseType: String, interparkCertKey: String, interparkEditCertKey: String, interparkEditSecretKey: String, interparkFee: Float, interparkSecretKey: String, interparkUseType: String, lotteonApiKey: String, lotteonFee: Float, lotteonNormalFee: Float, lotteonNormalUseType: String, lotteonSellerType: String, lotteonUseType: String, lotteonVendorId: String, marginRate: Float, marginUnitType: String, naverAutoSearchTag: String, naverFee: Float, naverOrigin: String, naverOriginCode: String, naverStoreOnly: String, naverStoreUrl: String, naverUseType: String, optionAlignTop: String, optionIndexType: Int, optionTwoWays: String, orderToDeliveryMembership: String, orderToDeliveryMethod: String, orderToDeliveryName: String, refundShippingFee: Int, sillFromCategory: String, streetApiKey: String, streetApiKey2: String, streetApiKey3: String, streetApiKey4: String, streetApiMemo: String, streetApiMemo2: String, streetApiMemo3: String, streetApiMemo4: String, streetDefaultInbound: String, streetDefaultOutbound: String, streetFee: Float, streetNormalApiKey: String, streetNormalApiKey2: String, streetNormalApiKey3: String, streetNormalApiKey4: String, streetNormalApiMemo: String, streetNormalApiMemo2: String, streetNormalApiMemo3: String, streetNormalApiMemo4: String, streetNormalFee: Float, streetNormalInbound: String, streetNormalOutbound: String, streetNormalUseKeyType: String, streetNormalUseType: String, streetUseKeyType: String, streetUseType: String, tmonFee: Float, tmonId: String, tmonUseType: String, useDetailInformation: String, wemakepriceFee: Float, wemakepriceId: String, wemakepriceUseType: String): Boolean!
   updateMyImageByUser(fixImageBottom: String, fixImageSubBottom: String, fixImageSubTop: String, fixImageTop: String): Boolean!
   updateNewProductImageBySomeone(description: String, optionValues: [ProductOptionValueImageUpdateInput!]!, productId: Int!, thumbnails: [ProductNewThumbnailImageUpdateInput!]): String!
   updateNoticeByAdmin(attachment: Upload, content: String, noticeId: Int!, title: String): Boolean!
@@ -1080,6 +1090,7 @@ type Mutation {
   updateProductByAdmin(categoryCode: String, description: String, localShippingFee: Int, name: String, optionNames: [ProductOptionNameUpdateInput!]!, optionValues: [ProductOptionValueUpdateInput!]!, options: [ProductOptionUpdateInput!]!, price: Int, productId: Int!, shippingFee: Int, siilCode: String, siilData: [SiilInput!], thumbnails: [ProductThumbnailUpdateInput!]): Product!
   updateProductByUser(categoryA001: String, categoryA006: String, categoryA027: String, categoryA077: String, categoryA112: String, categoryA113: String, categoryA524: String, categoryA525: String, categoryB378: String, categoryB719: String, categoryB956: String, categoryCode: String, description: String, localShippingCode: Int, localShippingFee: Int, name: String, optionNames: [ProductOptionNameUpdateInput!]!, optionValues: [ProductOptionValueUpdateInput!]!, options: [ProductOptionUpdateInput!]!, price: Int, productId: Int!, shippingFee: Int, siilCode: String, siilData: [SiilInput!], thumbnails: [ProductThumbnailUpdateInput!]): Product!
   updateProductCategory(categoryA001: String, categoryA006: String, categoryA027: String, categoryA077: String, categoryA112: String, categoryA113: String, categoryA524: String, categoryA525: String, categoryB378: String, categoryB719: String, categoryB956: String, categoryCode: String, productId: Int!): String!
+  updateProductCategory2(categoryA001: String, categoryA006: String, categoryA027: String, categoryA077: String, categoryA112: String, categoryA113: String, categoryA524: String, categoryA525: String, categoryB378: String, categoryB719: String, categoryB956: String, categoryCode: String, productId: Int!): String!
   updateProductFee(auctionFee: Float, coupangFee: Float, gmarketFee: Float, interparkFee: Float, lotteonFee: Float, lotteonNormalFee: Float, naverFee: Float, productId: Int!, streetFee: Float, streetNormalFee: Float, tmonFee: Float, wemakepriceFee: Float): String!
   updateProductImageBySomeone(description: String, optionValues: [ProductOptionValueImageUpdateInput!]!, productId: Int!, thumbnails: [ProductThumbnailImageUpdateInput!]): Product!
   updateProductImageBySomeone2(description: String, optionValues: [ProductOptionValueImageUpdateInput!]!, productId: Int!, thumbnails: [ProductThumbnailImageUpdateInput!]): String!
@@ -1113,6 +1124,8 @@ type Mutation {
     """유료배송비"""
     shippingFee: Int!
   ): Int!
+  updateProductSillCodesByUser(code_a001: String, code_a006: String, code_a027: String, code_a077: String, code_a112: String, code_a113: String, code_a524: String, code_a525: String, code_b378: String, code_b719: String, code_b956: String, productIds: [Int!]!): String
+  updateProductSillDatasByUser(data_a001: String, data_a006: String, data_a027: String, data_a077: String, data_a112: String, data_a113: String, data_a524: String, data_a525: String, data_b378: String, data_b719: String, data_b956: String, productIds: [Int!]!): String
   updateProductSinglePriceByUser(price: Int!, productId: Int!): String!
   updateProductStoreUrlInfoBySomeone(productStoreId: Int!, storeProductId: String!): String!
   updateProductTagByUser(immSearchTags: String, productId: Int!, searchTags: String): String!
@@ -1398,6 +1411,28 @@ type Product {
   siilCode: String
   siilData: String
   siilInfo: SiilSavedData
+  sillCodeA001: String!
+  sillCodeA006: String!
+  sillCodeA027: String!
+  sillCodeA077: String!
+  sillCodeA112: String!
+  sillCodeA113: String!
+  sillCodeA524: String!
+  sillCodeA525: String!
+  sillCodeB378: String!
+  sillCodeB719: String!
+  sillCodeB956: String!
+  sillDataA001: String!
+  sillDataA006: String!
+  sillDataA027: String!
+  sillDataA077: String!
+  sillDataA112: String!
+  sillDataA113: String!
+  sillDataA524: String!
+  sillDataA525: String!
+  sillDataB378: String!
+  sillDataB719: String!
+  sillDataB956: String!
   state: Int!
   stockUpdatedAt: DateTime!
   streetFee: Float
@@ -2218,7 +2253,6 @@ type SillInfoA001 {
   data: String!
   id: Int!
   name: String!
-  sillInfoA077(cursor: SillInfoA077WhereUniqueInput, skip: Int, take: Int): [SillInfoA077!]!
 }
 
 input SillInfoA001OrderByWithRelationInput {
@@ -2247,7 +2281,6 @@ type SillInfoA006 {
   data: String!
   id: Int!
   name: String!
-  sillInfoA077(cursor: SillInfoA077WhereUniqueInput, skip: Int, take: Int): [SillInfoA077!]!
 }
 
 input SillInfoA006OrderByWithRelationInput {
@@ -2276,7 +2309,6 @@ type SillInfoA027 {
   data: String!
   id: Int!
   name: String!
-  sillInfoA077(cursor: SillInfoA077WhereUniqueInput, skip: Int, take: Int): [SillInfoA077!]!
 }
 
 input SillInfoA027OrderByWithRelationInput {
@@ -2301,6 +2333,17 @@ input SillInfoA027WhereInput {
 }
 
 type SillInfoA077 {
+  activeSillDataA001: [SillInfoA001!]!
+  activeSillDataA006: [SillInfoA006!]!
+  activeSillDataA027: [SillInfoA027!]!
+  activeSillDataA077: [SillInfoA077!]!
+  activeSillDataA112: [SillInfoA112!]!
+  activeSillDataA113: [SillInfoA113!]!
+  activeSillDataA524: [SillInfoA524!]!
+  activeSillDataA525: [SillInfoA525!]!
+  activeSillDataB378: [SillInfoB378!]!
+  activeSillDataB719: [SillInfoB719!]!
+  activeSillDataB956: [SillInfoB956!]!
   code: String!
   codeA001: String
   codeA006: String
@@ -2397,17 +2440,11 @@ input SillInfoA077WhereInput {
   sillInfoB956: SillInfoB956WhereInput
 }
 
-input SillInfoA077WhereUniqueInput {
-  code: String
-  id: Int
-}
-
 type SillInfoA112 {
   code: String!
   data: String!
   id: Int!
   name: String!
-  sillInfoA077(cursor: SillInfoA077WhereUniqueInput, skip: Int, take: Int): [SillInfoA077!]!
 }
 
 input SillInfoA112OrderByWithRelationInput {
@@ -2436,7 +2473,6 @@ type SillInfoA113 {
   data: String!
   id: Int!
   name: String!
-  sillInfoA077(cursor: SillInfoA077WhereUniqueInput, skip: Int, take: Int): [SillInfoA077!]!
 }
 
 input SillInfoA113OrderByWithRelationInput {
@@ -2465,7 +2501,6 @@ type SillInfoA524 {
   data: String!
   id: Int!
   name: String!
-  sillInfoA077(cursor: SillInfoA077WhereUniqueInput, skip: Int, take: Int): [SillInfoA077!]!
 }
 
 input SillInfoA524OrderByWithRelationInput {
@@ -2494,7 +2529,6 @@ type SillInfoA525 {
   data: String!
   id: Int!
   name: String!
-  sillInfoA077(cursor: SillInfoA077WhereUniqueInput, skip: Int, take: Int): [SillInfoA077!]!
 }
 
 input SillInfoA525OrderByWithRelationInput {
@@ -2523,7 +2557,6 @@ type SillInfoB378 {
   data: String!
   id: Int!
   name: String!
-  sillInfoA077(cursor: SillInfoA077WhereUniqueInput, skip: Int, take: Int): [SillInfoA077!]!
 }
 
 input SillInfoB378OrderByWithRelationInput {
@@ -2552,7 +2585,6 @@ type SillInfoB719 {
   data: String!
   id: Int!
   name: String!
-  sillInfoA077(cursor: SillInfoA077WhereUniqueInput, skip: Int, take: Int): [SillInfoA077!]!
 }
 
 input SillInfoB719OrderByWithRelationInput {
@@ -2581,7 +2613,6 @@ type SillInfoB956 {
   data: String!
   id: Int!
   name: String!
-  sillInfoA077(cursor: SillInfoA077WhereUniqueInput, skip: Int, take: Int): [SillInfoA077!]!
 }
 
 input SillInfoB956OrderByWithRelationInput {
@@ -2797,6 +2828,7 @@ type UserInfo {
   cnyRateDollar: Float!
   cnyRateEuro: Float!
   cnyRateYen: Float!
+  collectCheckPosition: String
   collectStock: Int!
   collectTimeout: Int!
   coupangAccessKey: String!
@@ -2859,6 +2891,7 @@ type UserInfo {
   phone: String
   productCollectCount: Int!
   refundShippingFee: Int!
+  sillFromCategory: String
   streetApiKey: String!
   streetApiKey2: String!
   streetApiKey3: String!
@@ -2908,6 +2941,7 @@ input UserInfoOrderByWithRelationInput {
   cnyRateDollar: SortOrder
   cnyRateEuro: SortOrder
   cnyRateYen: SortOrder
+  collectCheckPosition: SortOrder
   collectStock: SortOrder
   collectTimeout: SortOrder
   coupangAccessKey: SortOrder
@@ -2970,6 +3004,7 @@ input UserInfoOrderByWithRelationInput {
   phone: SortOrder
   productCollectCount: SortOrder
   refundShippingFee: SortOrder
+  sillFromCategory: SortOrder
   streetApiKey: SortOrder
   streetApiKey2: SortOrder
   streetApiKey3: SortOrder
@@ -3022,6 +3057,7 @@ input UserInfoWhereInput {
   cnyRateDollar: FloatFilter
   cnyRateEuro: FloatFilter
   cnyRateYen: FloatFilter
+  collectCheckPosition: StringNullableFilter
   collectStock: IntFilter
   collectTimeout: IntFilter
   coupangAccessKey: StringFilter
@@ -3084,6 +3120,7 @@ input UserInfoWhereInput {
   phone: StringNullableFilter
   productCollectCount: IntFilter
   refundShippingFee: IntFilter
+  sillFromCategory: StringNullableFilter
   streetApiKey: StringFilter
   streetApiKey2: StringFilter
   streetApiKey3: StringFilter

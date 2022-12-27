@@ -356,6 +356,8 @@ export const mutation_user = extendType({
                                             orderToDeliveryMembership : "",
                                             orderToDeliveryMethod  : "",
                                             orderToDeliveryName : "",
+                                            collectCheckPosition : "L",
+                                            sillFromCategory : "Y"
                                         }
                                     }
                                 }
@@ -731,6 +733,8 @@ export const mutation_user = extendType({
                 orderToDeliveryName : stringArg(),
                 orderToDeliveryMembership : stringArg(),
                 orderToDeliveryMethod : stringArg(),
+                collectCheckPosition :stringArg(),
+                sillFromCategory :stringArg(),
             },
             resolve: async (src, args, ctx, info) => {
                 try {
@@ -874,6 +878,8 @@ export const mutation_user = extendType({
                             orderToDeliveryName : args.orderToDeliveryName ?? undefined,
                             orderToDeliveryMembership : args.orderToDeliveryMembership ?? undefined ,
                             orderToDeliveryMethod : args.orderToDeliveryMethod ?? undefined,
+                            collectCheckPosition : args.collectCheckPosition ?? undefined,
+                            sillFromCategory : args.sillFromCategory ?? undefined,
                         }
                     });
 
