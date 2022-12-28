@@ -1438,6 +1438,22 @@ export const t_InputProductOption = inputObjectType({
     }
 })
 
+export const t_InputProductOptionNameSwap = inputObjectType({
+    name : "ProductOptionNameSwapInput",
+    definition(t) {
+        t.nonNull.int("productOptionNameId"),
+        t.int("order")
+    }
+})
+
+export const t_InputProductOptionValueSwap = inputObjectType({
+    name : "ProductOptionValueSwapInput",
+    definition(t) {
+        t.nonNull.int("productOptionValueId"),
+        t.int("number")
+    }
+})
+
 export const t_InputProductOptionValue = inputObjectType({
     name : "ProductOptionValueInput",
     definition(t){

@@ -2178,7 +2178,7 @@ export const mutation_product = extendType({
             args: {
                 productOptionNameId: nonNull(intArg()),
                 isActive: nonNull(booleanArg()),
-                name : nonNull(stringArg())
+                name : nonNull(stringArg()),
             },
             resolve: async (src, args, ctx, info) => {
                 try {
@@ -2205,6 +2205,44 @@ export const mutation_product = extendType({
                     //     }
                     // })
                     // if (!optionValue) return throwError(errors.etc("하위 옵션을 업데이트 하지 못했습니다."), ctx);
+                    return true;
+                } catch (e) {
+                    return throwError(e, ctx);
+                }
+            }
+        });
+        t.field("ProductOptionNameSwap", {
+            type: nonNull("Boolean"),
+            args: {
+                data : nonNull(list(nonNull(arg({type : "ProductOptionNameSwapInput"}))))
+            },
+            resolve: async (src, args, ctx, info) => {
+                try {
+                    await Promise.all(args.data.map(async (v:any) => {
+                        await ctx.prisma.productOptionName.update({
+                            where : { id : v.productOptionNameId},
+                            data : {order : v.order ?? undefined}
+                        })
+                    }))
+                    return true;
+                } catch (e) {
+                    return throwError(e, ctx);
+                }
+            }
+        });
+        t.field("ProductOptionValueSwap", {
+            type: nonNull("Boolean"),
+            args: {
+                data : nonNull(list(nonNull(arg({type : "ProductOptionValueSwapInput"}))))
+            },
+            resolve: async (src, args, ctx, info) => {
+                try {
+                    await Promise.all(args.data.map(async (v:any) => {
+                        await ctx.prisma.productOptionValue.update({
+                            where : { id : v.productOptionValueId},
+                            data : {number : v.number ?? undefined}
+                        })
+                    }))
                     return true;
                 } catch (e) {
                     return throwError(e, ctx);
