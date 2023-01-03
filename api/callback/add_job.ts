@@ -85,6 +85,7 @@ export const addJobCallbackHandler = async (req: Request, res: Response) => {
                                             errorMessage: v.msg,
                                         }
                                     } : undefined,
+                                    cnt : 0,
                                     product: { connect: { id: product.id } },
                                     etcVendorItemId : etcVendorItemId,
                                     storeUrl:  v.slave_reg_code !== '' ? shopDataUrlInfo[v.site_code]({ id: v.slave_reg_code, storeFullPath: product.user?.userInfo?.naverStoreUrl, vendorId: etcVendorItemId }) : undefined,

@@ -1454,7 +1454,24 @@ export const mutation_product = extendType({
                 }
             }
         })
-
+        t.field("testProductStoreCnt",{
+            type : nonNull("String"),
+            args : {
+                siteCode : nonNull(stringArg()),
+                productId : nonNull(intArg())
+            },
+            resolve : async(src,args,ctx,info) => {
+                try{
+                    const productStore = await ctx.prisma.productStore.updateMany({
+                        where : { siteCode : args.siteCode , productId : args.productId},
+                        data : { cnt : {increment : 1}}
+                    })
+                return "OK";
+                } catch (e) {
+                    return throwError(e, ctx);
+                }
+            }
+        })
         t.field("updateNewProductImageBySomeone", {
             type: nonNull("String"),
             args: {
@@ -1667,6 +1684,7 @@ export const mutation_product = extendType({
                                             errorMessage: v.msg,
                                         }
                                     } : undefined,
+                                    cnt : 0,
                                     product: { connect: { id: product.id } },
                                     etcVendorItemId : etcVendorItemId === '' || etcVendorItemId === null ? undefined : etcVendorItemId,
                                     storeUrl:  v.slave_reg_code !== '' ? shopDataUrlInfo[v.site_code]({ id: v.slave_reg_code, storeFullPath: product.user?.userInfo?.naverStoreUrl, vendorId: etcVendorItemId }) : undefined,

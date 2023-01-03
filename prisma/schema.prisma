@@ -363,6 +363,7 @@ model ProductStore {
   siteCode          String            @map("site_code") @db.VarChar(10)
   storeUrl          String?           @map("store_url") @db.VarChar(200)
   connectedAt       DateTime          @default(now()) @map("connected_at") @db.DateTime(0)
+  cnt               Int               @default(0)
   product           Product           @relation("productToproduct_store", fields: [productId], references: [id])
   productStoreState ProductStoreState @relation("product_storeToproduct_store_state", fields: [state], references: [id])
   user              User              @relation("product_storeTouser", fields: [userId], references: [id])

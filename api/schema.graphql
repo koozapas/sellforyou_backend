@@ -998,6 +998,8 @@ input IntNullableFilter {
 type Mutation {
   EditPassword(checkNewPassword: String!, email: String!, newPassword: String!, verificationNumber: String!): String!
   EditPasswordCreateVerification(email: String!, phoneNumber: String!): String!
+  ProductOptionNameSwap(data: [ProductOptionNameSwapInput!]!): Boolean!
+  ProductOptionValueSwap(data: [ProductOptionValueSwapInput!]!): Boolean!
   addWordByExcelByUser(data: Upload!, isReplace: Boolean!): Boolean!
   addWordByUser(findWord: String!, replaceWord: String): Boolean!
   cancelPurchasePlanByUser(merchantUid: String!): Boolean!
@@ -1060,6 +1062,7 @@ type Mutation {
   silentRefreshToken(refreshToken: String!): SignInType
   t_createProduct: Boolean
   testAddjobCallBack(response: String!): Boolean!
+  testProductStoreCnt(productId: Int!, siteCode: String!): String!
   transferProductsToUserByAdmin(productIds: [Int!]!, targetUserId: Int!): String!
   translateProductTextByUser(id: Int!, type: TranslateTargetEnumType!): String!
   translateProductsTextByUser(ids: [Int!]!, type: TranslateTargetEnumType!): String!
@@ -1535,6 +1538,11 @@ input ProductOptionNameOrderByWithRelationInput {
   taobaoPid: SortOrder
 }
 
+input ProductOptionNameSwapInput {
+  order: Int
+  productOptionNameId: Int!
+}
+
 input ProductOptionNameUpdateInput {
   id: Int!
   name: String!
@@ -1671,6 +1679,11 @@ input ProductOptionValueOrderByWithRelationInput {
   productOptionName: ProductOptionNameOrderByWithRelationInput
   productOptionNameId: SortOrder
   taobaoVid: SortOrder
+}
+
+input ProductOptionValueSwapInput {
+  number: Int
+  productOptionValueId: Int!
 }
 
 input ProductOptionValueUpdateInput {
@@ -1840,6 +1853,7 @@ input ProductOrderByWithRelationInput {
 }
 
 type ProductStore {
+  cnt: Int!
   connectedAt: DateTime!
   etcVendorItemId: String
   id: Int!
@@ -1927,6 +1941,7 @@ input ProductStoreOrderByRelationAggregateInput {
 }
 
 input ProductStoreOrderByWithRelationInput {
+  cnt: SortOrder
   connectedAt: SortOrder
   etcVendorItemId: SortOrder
   id: SortOrder
@@ -1971,6 +1986,7 @@ input ProductStoreWhereInput {
   AND: [ProductStoreWhereInput!]
   NOT: [ProductStoreWhereInput!]
   OR: [ProductStoreWhereInput!]
+  cnt: IntFilter
   connectedAt: DateTimeFilter
   etcVendorItemId: StringNullableFilter
   id: IntFilter

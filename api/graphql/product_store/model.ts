@@ -23,6 +23,7 @@ export const t_ProductStore = objectType({
         t.model.etcVendorItemId();
         t.model.storeUrl();
         t.model.connectedAt();
+        t.model.cnt();
     }
 });
 

@@ -874,6 +874,10 @@ export interface NexusGenInputs {
     productOptionValue?: NexusGenInputs['ProductOptionValueOrderByRelationAggregateInput'] | null; // ProductOptionValueOrderByRelationAggregateInput
     taobaoPid?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
+  ProductOptionNameSwapInput: { // input type
+    order?: number | null; // Int
+    productOptionNameId: number; // Int!
+  }
   ProductOptionNameUpdateInput: { // input type
     id: number; // Int!
     name: string; // String!
@@ -977,6 +981,10 @@ export interface NexusGenInputs {
     productOptionName?: NexusGenInputs['ProductOptionNameOrderByWithRelationInput'] | null; // ProductOptionNameOrderByWithRelationInput
     productOptionNameId?: NexusGenEnums['SortOrder'] | null; // SortOrder
     taobaoVid?: NexusGenEnums['SortOrder'] | null; // SortOrder
+  }
+  ProductOptionValueSwapInput: { // input type
+    number?: number | null; // Int
+    productOptionValueId: number; // Int!
   }
   ProductOptionValueUpdateInput: { // input type
     id: number; // Int!
@@ -1188,6 +1196,7 @@ export interface NexusGenInputs {
     count?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
   ProductStoreOrderByWithRelationInput: { // input type
+    cnt?: NexusGenEnums['SortOrder'] | null; // SortOrder
     connectedAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
     etcVendorItemId?: NexusGenEnums['SortOrder'] | null; // SortOrder
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1223,6 +1232,7 @@ export interface NexusGenInputs {
     AND?: NexusGenInputs['ProductStoreWhereInput'][] | null; // [ProductStoreWhereInput!]
     NOT?: NexusGenInputs['ProductStoreWhereInput'][] | null; // [ProductStoreWhereInput!]
     OR?: NexusGenInputs['ProductStoreWhereInput'][] | null; // [ProductStoreWhereInput!]
+    cnt?: NexusGenInputs['IntFilter'] | null; // IntFilter
     connectedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
     etcVendorItemId?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
@@ -2637,6 +2647,7 @@ export interface NexusGenObjects {
     taobaoVid: string; // String!
   }
   ProductStore: { // root type
+    cnt: number; // Int!
     connectedAt: NexusGenScalars['DateTime']; // DateTime!
     etcVendorItemId?: string | null; // String
     id: number; // Int!
@@ -3302,6 +3313,8 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     EditPassword: string; // String!
     EditPasswordCreateVerification: string; // String!
+    ProductOptionNameSwap: boolean; // Boolean!
+    ProductOptionValueSwap: boolean; // Boolean!
     addWordByExcelByUser: boolean; // Boolean!
     addWordByUser: boolean; // Boolean!
     cancelPurchasePlanByUser: boolean; // Boolean!
@@ -3349,6 +3362,7 @@ export interface NexusGenFieldTypes {
     silentRefreshToken: NexusGenRootTypes['SignInType'] | null; // SignInType
     t_createProduct: boolean | null; // Boolean
     testAddjobCallBack: boolean; // Boolean!
+    testProductStoreCnt: string; // String!
     transferProductsToUserByAdmin: string; // String!
     translateProductTextByUser: string; // String!
     translateProductsTextByUser: string; // String!
@@ -3565,6 +3579,7 @@ export interface NexusGenFieldTypes {
     taobaoVid: string; // String!
   }
   ProductStore: { // field return type
+    cnt: number; // Int!
     connectedAt: NexusGenScalars['DateTime']; // DateTime!
     etcVendorItemId: string | null; // String
     id: number; // Int!
@@ -4312,6 +4327,8 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     EditPassword: 'String'
     EditPasswordCreateVerification: 'String'
+    ProductOptionNameSwap: 'Boolean'
+    ProductOptionValueSwap: 'Boolean'
     addWordByExcelByUser: 'Boolean'
     addWordByUser: 'Boolean'
     cancelPurchasePlanByUser: 'Boolean'
@@ -4359,6 +4376,7 @@ export interface NexusGenFieldTypeNames {
     silentRefreshToken: 'SignInType'
     t_createProduct: 'Boolean'
     testAddjobCallBack: 'Boolean'
+    testProductStoreCnt: 'String'
     transferProductsToUserByAdmin: 'String'
     translateProductTextByUser: 'String'
     translateProductsTextByUser: 'String'
@@ -4575,6 +4593,7 @@ export interface NexusGenFieldTypeNames {
     taobaoVid: 'String'
   }
   ProductStore: { // field return type name
+    cnt: 'Int'
     connectedAt: 'DateTime'
     etcVendorItemId: 'String'
     id: 'Int'
@@ -5131,6 +5150,12 @@ export interface NexusGenArgTypes {
       email: string; // String!
       phoneNumber: string; // String!
     }
+    ProductOptionNameSwap: { // args
+      data: NexusGenInputs['ProductOptionNameSwapInput'][]; // [ProductOptionNameSwapInput!]!
+    }
+    ProductOptionValueSwap: { // args
+      data: NexusGenInputs['ProductOptionValueSwapInput'][]; // [ProductOptionValueSwapInput!]!
+    }
     addWordByExcelByUser: { // args
       data: NexusGenScalars['Upload']; // Upload!
       isReplace: boolean; // Boolean!
@@ -5296,6 +5321,10 @@ export interface NexusGenArgTypes {
     }
     testAddjobCallBack: { // args
       response: string; // String!
+    }
+    testProductStoreCnt: { // args
+      productId: number; // Int!
+      siteCode: string; // String!
     }
     transferProductsToUserByAdmin: { // args
       productIds: number[]; // [Int!]!
