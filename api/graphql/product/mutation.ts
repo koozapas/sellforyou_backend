@@ -593,14 +593,14 @@ const updateProductNameResolver = async (src: {}, args: ArgsValue<"Mutation", "u
 const updateMultipleProductNameByUser = async (src: {}, args: ArgsValue<"Mutation", "updateMultipleProductNameByUser">, ctx: Context, info: GraphQLResolveInfo) => {
     try {
       
-        args.data.map(async (v : any) => {
+        await Promise.all(args.data.map(async (v : any) => {
             await ctx.prisma.product.update({
                 where : { id : v.productIds},
                 data : {
                     name : v.name
                 }
             })
-        })
+        }))
             return "OK"
     } catch (e) {
         return throwError(e, ctx);
