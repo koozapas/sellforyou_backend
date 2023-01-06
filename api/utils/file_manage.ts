@@ -69,6 +69,7 @@ export const deleteFromS3 = async (Key: string): Promise<boolean> => {
     return await S3Client.deleteObject({ Key, Bucket: AWS_BUCKET }).promise().then(result => result.$response.error ? false : true).catch(() => false);
 }
 
+
 export const deleteS3Folder = async (Key: string): Promise<boolean> => {
     try {
         var params = {
