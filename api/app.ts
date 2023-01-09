@@ -15,10 +15,10 @@ import * as HTTP from 'http'
 import * as fs from 'fs';
 import { graphqlUploadExpress } from 'graphql-upload'
 import { iamportCallbackHandler } from './callback/payment'
-import { addJobCallbackHandler, jsonToXmlUploader } from './callback'
+import { addJobCallbackHandler, jsonToXmlUploader,dataProvider } from './callback'
 import multer from 'multer'
 import { runScheduler } from './schedule'
-import { translateCallbackHandler } from './callback/translate'
+// import { translateCallbackHandler } from './callback/translate'
 
 import { PrismaClient } from '@prisma/client'
 
@@ -69,8 +69,11 @@ app.route("/playauto/add_job_callback*").post((req, res) => addJobCallbackHandle
 
 app.use("/callback/*", multer().any());
 app.route("/callback/iamport_pay_result*").post((req, res) => iamportCallbackHandler(req, res));
-app.route("/callback/translate*").post((req, res) => translateCallbackHandler(req, res));
+// app.route("/callback/translate*").post((req, res) => translateCallbackHandler(req, res));
 app.route("/callback/xml_upload*").post((req, res) => jsonToXmlUploader(req, res));
+
+app.use("/api/*",multer().any());
+app.route("/app/dataProvider*").get((req,res) => dataProvider(req,res));
 
 const PORT = process.env.PORT || 3000
 
