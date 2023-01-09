@@ -9,24 +9,28 @@ import { ProductStoreStateEnum } from "../graphql";
 import { publishUserLogData } from "../utils/local/pubsub";
 import { pubsub } from "../utils/helpers";
 import { errors, throwError } from "../utils/error";
+import { closestIndexTo } from "date-fns";
 
 export const dataProvider = async (req: Request, res: Response) => {
     try {
-        
-        let productId = req.query.productId;
-        let siteCode = req.query.siteCode;
+        let productId :any = req.query.productId;
+        let siteCode : any= req.query.siteCode;
         const prisma = new PrismaClient();
         try{
-            
-            return res.json({
-                isSuccess : true,
-                code : 200,
-                queryTest : {
-                    productId : productId,
-                    siteCode :siteCode
-                }
-            });
-
+            let productStore = await prisma.productStore.updateMany({
+                where : { siteCode , productId},
+                data : { cnt:{increment : 1}}
+            })
+            if(!productStore) throwError(errors.etc("조회 업데이트 실패"),null);
+            // return res.json({
+            //     isSuccess : true,
+            //     code : 200,
+            //     queryTest : {
+            //         productId : productId,
+            //         siteCode :siteCode
+            //     }
+            // });
+            res.sendFile(join(__dirname,"tiny_white.png"))
         }
         catch (e) {
                 console.log('검색 Update Error');
