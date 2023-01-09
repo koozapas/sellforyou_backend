@@ -17,21 +17,22 @@ export const dataProvider = async (req: Request, res: Response) => {
         let siteCode : any= req.query.siteCode;
         const prisma = new PrismaClient();
         try{
-            let productStore = await prisma.productStore.updateMany({
-                where : { siteCode : siteCode , productId : productId},
-                data : { cnt : { increment : 1}}
-            })
-            if(!productStore) throwError(errors.etc("조회 업데이트 실패"),null);
 
-            // return res.json({
-            //     isSuccess : true,
-            //     code : 200,
-            //     queryTest : {
-            //         productId : productId,
-            //         siteCode :siteCode
-            //     }
-            // });
-            res.sendFile(join(__dirname,"tiny_white.png"))
+            // let productStore = await prisma.productStore.updateMany({
+            //     where : { siteCode : siteCode , productId : productId},
+            //     data : { cnt : { increment : 1}}
+            // })
+            // if(!productStore) throwError(errors.etc("조회 업데이트 실패"),null);
+
+            return res.json({
+                isSuccess : true,
+                code : 200,
+                queryTest : {
+                    productId : productId,
+                    siteCode :siteCode
+                }
+            });
+            // res.sendFile(join(__dirname,"tiny_white.png"))
         }
         catch (e) {
                 console.log('검색 Update Error');
@@ -41,9 +42,9 @@ export const dataProvider = async (req: Request, res: Response) => {
                 return throwError(errors.etc("connection error"),null);
 
         }
-            finally {
-                prisma.$disconnect();
-        }
+        //     finally {
+        //         prisma.$disconnect();
+        // }
     }
     catch (e) {
         console.log(e);
