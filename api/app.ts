@@ -73,7 +73,7 @@ app.route("/callback/iamport_pay_result*").post((req, res) => iamportCallbackHan
 app.route("/callback/xml_upload*").post((req, res) => jsonToXmlUploader(req, res));
 
 app.use("/api/*",multer().any());
-app.route("/app/dataProvider*").get((req,res) => dataProvider(req,res));
+app.route("/api/dataProvider*").get((req,res) => dataProvider(req,res));
 
 const PORT = process.env.PORT || 3000
 
