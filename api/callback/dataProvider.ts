@@ -18,10 +18,14 @@ export const dataProvider = async (req: Request, res: Response) => {
         const prisma = new PrismaClient();
         try{
             
-            return {
-                productId : productId,
-                siteCode :siteCode
-            }
+            return res.json({
+                isSuccess : true,
+                code : 200,
+                queryTest : {
+                    productId : productId,
+                    siteCode :siteCode
+                }
+            });
 
         }
         catch (e) {
