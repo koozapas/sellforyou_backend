@@ -2,7 +2,7 @@ import deepmerge from "deepmerge";
 import { extendType, nonNull, stringArg } from "nexus";
 import { errors, throwError } from "../../utils/error";
 import { generateToken, generateUserToken } from "../../utils/helpers";
-import { getPurchaseInfo } from "../user";
+import { getPurchaseInfo2 } from "../user";
 
 export const query_purchase = extendType({
     type: "Query",
@@ -59,7 +59,7 @@ export const query_purchase = extendType({
                             })
                             if(!userId)  return throwError(errors.etc(`${args.email}은(는) 존재하지 않는 사용자입니다.`),ctx);
 
-                            const existingInfo = await getPurchaseInfo(ctx.prisma, userId.id);
+                            const existingInfo = await getPurchaseInfo2(ctx.prisma, userId.id);
                             if(existingInfo.level < 2) return throwError(errors.etc(`${args.email}는 이용중인 사용자가 아닙니다.`),ctx);
 
                             return true;

@@ -2,7 +2,7 @@ import { add, endOfDay } from "date-fns";
 import { arg, booleanArg, extendType, intArg, nonNull, stringArg ,list} from "nexus";
 import { NexusGenAllTypes } from "../../typegen";
 import { errors, throwError } from "../../utils/error";
-import { getPurchaseInfo } from "../user";
+import { getPurchaseInfo2 } from "../user";
 
 export const mutation_purchase = extendType({
     type: "Mutation",
@@ -19,10 +19,10 @@ export const mutation_purchase = extendType({
                     if (!plan) return throwError(errors.noSuchData, ctx);
                     if (!plan.isActive) return throwError(errors.etc("구매할 수 없는 상품입니다."), ctx);
                     const { description, isActive, ...etcPlanData } = plan;
-                    const existingInfo = await getPurchaseInfo(ctx.prisma, ctx.token!.userId!);
+                    const existingInfo = await getPurchaseInfo2(ctx.prisma, ctx.token!.userId!);
                     if (plan.planLevel) {
-                        if (existingInfo.level === plan.planLevel) return throwError(errors.etc("이미 해당 상품을 이용중입니다."), ctx);
-                        else if (existingInfo.level >= plan.planLevel) return throwError(errors.etc("하위 단계의 상품을 주문할 수 없습니다. 고객센터로 문의해주세요."), ctx);
+                        // if (existingInfo.level === plan.planLevel) return throwError(errors.etc("이미 해당 상품을 이용중입니다."), ctx);
+                        // else if (existingInfo.level >= plan.planLevel) return throwError(errors.etc("하위 단계의 상품을 주문할 수 없습니다. 고객센터로 문의해주세요."), ctx);
                     }
                     if (plan.externalFeatureVariableId) {
                         if (existingInfo.additionalInfo.find(v => v.type === plan.externalFeatureVariableId)) return throwError(errors.etc("이미 해당 상품을 이용중입니다."), ctx);
@@ -103,7 +103,7 @@ export const mutation_purchase = extendType({
                     if (!plan) return throwError(errors.noSuchData, ctx);
                     if (!plan.isActive) return throwError(errors.etc("구매할 수 없는 등급입니다."), ctx);
                     const { description, isActive, ...etcPlanData } = plan;
-                    const existingInfo = await getPurchaseInfo(ctx.prisma, args.userId);
+                    const existingInfo = await getPurchaseInfo2(ctx.prisma, args.userId);
                     const user :any = await ctx.prisma.user.findUnique({ where: { id: args.userId } });
                     if (!user) return throwError(errors.etc("해당 유저가 없습니다."), ctx);
                     const userEmail :any= user.email;
@@ -115,8 +115,8 @@ export const mutation_purchase = extendType({
                     }
                     if (plan.planLevel) {
                         //if (existingInfo.level === plan.planLevel) return throwError(errors.etc(userEmail + ": 님이 해당 상품을 이용중입다."), ctx);
-                        if (existingInfo.level > plan.planLevel) return throwError(errors.etc(userEmail + ": 하위 단계의 상품을 주문할 수 없습니다. 먼저 기존 주문의 무효화 처리를 해주세요."), ctx);
-                        else if(existingInfo.level === plan.planLevel && existingInfo.levelExpiredAt > expiredAt  ){
+                        // if (existingInfo.level > plan.planLevel) return throwError(errors.etc(userEmail + ": 하위 단계의 상품을 주문할 수 없습니다. 먼저 기존 주문의 무효화 처리를 해주세요."), ctx);
+                            if(existingInfo.level === plan.planLevel && existingInfo.levelExpiredAt > expiredAt  ){
                             const test = await ctx.prisma.purchaseLog.updateMany({
                                 where : { userId : args.userId , expiredAt : existingInfo.levelExpiredAt},
                                 data : { expiredAt : expiredAt }
@@ -240,7 +240,7 @@ export const mutation_purchase = extendType({
                             id : undefined,
                             planInfo: v.planInfoId === 2  ?`{"id":2,"planLevel":2,"name":"2단계","month":1,"price":99000,"externalFeatureVariableId":null}` : v.planInfoId === 3 ?
                             `{"id":3,"planLevel":3,"name":"3단계","month":1,"price":129000,"externalFeatureVariableId":null}` : v.planInfoId === 4 ? 
-                            `{"id":4,"planLevel":4,"name":"4단계","month":1,"price":149000,"externalFeatureVariableId":null}` : undefined ,
+                            `{"id":4,"planLevel":4,"name":"4단계","month":1,"price":149000,"externalFeatureVariableId":null}` : "" ,
                             payAmount: v.planInfoId === 2 ? 99000 :  v.planInfoId === 3 ? 129000 : v.planInfoId === 4 ? 149000 : 99000,
                             state: "ACTIVE",
                             payId: null,
