@@ -37,7 +37,11 @@ export const getPurchaseInfo2 = async (prisma: PrismaClient, userId: number): Pr
   if (!userId) return { level: 0, levelExpiredAt: new Date(9990, 11, 31),history: "" ,additionalInfo: [] };
   const purchaseInfos = await prisma.purchaseLog.findMany({ where: { userId, state: "ACTIVE", expiredAt: { gte: new Date() } } });
   const processedInfos :any= purchaseInfos.map((v:any) => ({ ...v, planInfo: JSON.parse(v.planInfo) as PurchaseLogPlanInfoType }))
-      .sort((a : any, b: any) => (a.expiredAt) - (b.expiredAt));
+      .sort((a : any, b: any) => 
+      { let source : any = new Date(a.expiredAt);
+        let target : any = new Date(b.expiredAt)
+        return source - target
+      });
 
   const additionalInfo: NexusGenAllTypes["UserPurchaseAdditionalInfo"][] = [];
   const imageTranslate = processedInfos.find(v => v.planInfo.externalFeatureVariableId === 'IMAGE_TRANSLATE');
