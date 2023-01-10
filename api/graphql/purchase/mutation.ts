@@ -239,9 +239,9 @@ export const mutation_purchase = extendType({
                             return {
                             id : undefined,
                             planInfo: v.planInfoId === 2  ?`{"id":2,"planLevel":2,"name":"2단계","month":1,"price":99000,"externalFeatureVariableId":null}` : v.planInfoId === 3 ?
-                            `{"id":3,"planLevel":3,"name":"3단계","month":1,"price":129000,"externalFeatureVariableId":null}` : v.planInfoId === 4 ? 
-                            `{"id":4,"planLevel":4,"name":"4단계","month":1,"price":149000,"externalFeatureVariableId":null}` : "" ,
-                            payAmount: v.planInfoId === 2 ? 99000 :  v.planInfoId === 3 ? 129000 : v.planInfoId === 4 ? 149000 : 99000,
+                            `{"id":3,"planLevel":3,"name":"3단계","month":1,"price":132000,"externalFeatureVariableId":null}` : v.planInfoId === 4 ? 
+                            `{"id":4,"planLevel":4,"name":"4단계","month":1,"price":149000,"externalFeatureVariableId":null}` : `{"id":2,"planLevel":2,"name":"2단계","month":1,"price":99000,"externalFeatureVariableId":null}` ,
+                            payAmount: v.planInfoId === 2 ? 99000 :  v.planInfoId === 3 ? 132000 : v.planInfoId === 4 ? 149000 : 99000,
                             state: "ACTIVE",
                             payId: null,
                             type : "PLAN",
