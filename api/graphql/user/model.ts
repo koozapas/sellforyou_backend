@@ -31,6 +31,30 @@ export const getPurchaseInfo = async (prisma: PrismaClient, userId: number): Pro
   return { level: planLevel, levelExpiredAt: processedInfos2[0].expiredAt, history: JSON.stringify(purchaseInfos2), additionalInfo };
 }
 
+
+
+export const getPurchaseInfo2 = async (prisma: PrismaClient, userId: number): Promise<NexusGenAllTypes["UserPurchaseInfo"]> => {
+  if (!userId) return { level: 0, levelExpiredAt: new Date(9990, 11, 31),history: "" ,additionalInfo: [] };
+  const purchaseInfos = await prisma.purchaseLog.findMany({ where: { userId, state: "ACTIVE", expiredAt: { gte: new Date() } } });
+  const processedInfos = purchaseInfos.map(v => ({ ...v, planInfo: JSON.parse(v.planInfo) as PurchaseLogPlanInfoType }))
+      .sort((a, b) => (b.planInfo.planLevel ?? 0) - (a.planInfo.planLevel ?? 0));
+
+  const additionalInfo: NexusGenAllTypes["UserPurchaseAdditionalInfo"][] = [];
+  const imageTranslate = processedInfos.find(v => v.planInfo.externalFeatureVariableId === 'IMAGE_TRANSLATE');
+  const stock = processedInfos.find(v => v.planInfo.externalFeatureVariableId === 'STOCK');
+  if (imageTranslate) {
+      additionalInfo.push({ type: "IMAGE_TRANSLATE", expiredAt: imageTranslate.expiredAt });
+  }
+  if (stock) {
+      additionalInfo.push({ type: "STOCK", expiredAt: stock.expiredAt });
+  }
+  //결제 플랜 계산
+  const levelInfo = processedInfos.find(v => v.planInfo.planLevel);
+  if (!levelInfo) return { level: 0, levelExpiredAt: new Date(9990, 11, 31),history : JSON.stringify(processedInfos) ,additionalInfo  };
+  return { level: levelInfo.planInfo.planLevel!, levelExpiredAt: levelInfo.expiredAt, history : JSON.stringify(processedInfos),additionalInfo };
+}
+
+
 export const t_User = objectType({
   name: "User",
   definition(t) {
@@ -109,6 +133,16 @@ export const t_User = objectType({
             }
         }
     })
+    t.nonNull.field("purchaseInfo2", {
+      type: nonNull("UserPurchaseInfo"),
+      resolve: async (src, args, ctx, info) => {
+          try {
+              return getPurchaseInfo2(ctx.prisma, src.id);
+          } catch (e) {
+              return throwError(e, ctx);
+          }
+      }
+  })
     t.nonNull.int("productCount", {
         resolve: async (src, args, ctx, info) => {
             try {

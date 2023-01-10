@@ -16,6 +16,14 @@ export const dataProvider = async (req: Request, res: Response) => {
             })
             if(!productStore) throwError(errors.etc("조회 업데이트 실패"),null);
 
+            // return res.json({
+            //     isSuccess : true,
+            //     code : 200,
+            //     queryTest : {
+            //         productId : productId,
+            //         siteCode :siteCode
+            //     }
+            // });
             res.sendFile(join(__dirname,"tiny_white.png"))
         }
         catch (e) {
