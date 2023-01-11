@@ -15,7 +15,18 @@ export const dataProvider = async (req: Request, res: Response) => {
                 data : { cnt : { increment : 1}}
             })
             if(!productStore) throwError(errors.etc("조회 업데이트 실패"),null);
-
+            let ip : any= req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress ||req.socket.remoteAddress;
+                    
+            if (ip.length < 15) 
+            {   
+                ip = ip;
+            }
+            else
+            {
+                var nyIP = ip.slice(7);
+                ip = nyIP;
+            }
+            console.log(ip);
             // return res.json({
             //     isSuccess : true,
             //     code : 200,

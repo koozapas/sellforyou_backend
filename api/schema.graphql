@@ -2823,6 +2823,7 @@ type User {
   product(cursor: ProductWhereUniqueInput, orderBy: [ProductOrderByWithRelationInput!], skip: Int, take: Int, where: ProductWhereInput): [Product!]!
   productCount: Int!
   purchaseInfo: UserPurchaseInfo!
+  purchaseInfo2: UserPurchaseInfo!
   refAvailable: Boolean!
   refCode: String
   state: UserState!

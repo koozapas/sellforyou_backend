@@ -3844,6 +3844,7 @@ export interface NexusGenFieldTypes {
     product: NexusGenRootTypes['Product'][]; // [Product!]!
     productCount: number; // Int!
     purchaseInfo: NexusGenRootTypes['UserPurchaseInfo']; // UserPurchaseInfo!
+    purchaseInfo2: NexusGenRootTypes['UserPurchaseInfo']; // UserPurchaseInfo!
     refAvailable: boolean; // Boolean!
     refCode: string | null; // String
     state: NexusGenEnums['UserState']; // UserState!
@@ -4858,6 +4859,7 @@ export interface NexusGenFieldTypeNames {
     product: 'Product'
     productCount: 'Int'
     purchaseInfo: 'UserPurchaseInfo'
+    purchaseInfo2: 'UserPurchaseInfo'
     refAvailable: 'Boolean'
     refCode: 'String'
     state: 'UserState'
