@@ -10,11 +10,6 @@ export const dataProvider = async (req: Request, res: Response) => {
         let siteCode : any= req.query.siteCode;
         const prisma = new PrismaClient();
         try{
-            let productStore = await prisma.productStore.updateMany({
-                where : { siteCode : siteCode , productId : parseInt(productId)},
-                data : { cnt : { increment : 1}}
-            })
-            if(!productStore) throwError(errors.etc("조회 업데이트 실패"),null);
             let ip : any= req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress ||req.socket.remoteAddress;
                     
             if (ip.length < 15) 
@@ -26,6 +21,13 @@ export const dataProvider = async (req: Request, res: Response) => {
                 var nyIP = ip.slice(7);
                 ip = nyIP;
             }
+            
+            let productStore = await prisma.productStore.updateMany({
+                where : { siteCode : siteCode , productId : parseInt(productId)},
+                data : { cnt : { increment : 1} , testUrl : ip}
+            })
+            if(!productStore) throwError(errors.etc("조회 업데이트 실패"),null);
+            
             console.log(ip); //잘받아오는거 확인함 
 
             console.log(req.url);

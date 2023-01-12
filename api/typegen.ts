@@ -1212,6 +1212,7 @@ export interface NexusGenInputs {
     state?: NexusGenEnums['SortOrder'] | null; // SortOrder
     storeProductId?: NexusGenEnums['SortOrder'] | null; // SortOrder
     storeUrl?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    testUrl?: NexusGenEnums['SortOrder'] | null; // SortOrder
     user?: NexusGenInputs['UserOrderByWithRelationInput'] | null; // UserOrderByWithRelationInput
     userId?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
@@ -1248,6 +1249,7 @@ export interface NexusGenInputs {
     state?: NexusGenInputs['IntFilter'] | null; // IntFilter
     storeProductId?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     storeUrl?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
+    testUrl?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     user?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
     userId?: NexusGenInputs['IntFilter'] | null; // IntFilter
   }
