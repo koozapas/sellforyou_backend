@@ -312,6 +312,7 @@ export const t_UserInfo = objectType({
     t.model.orderToDeliveryMethod();
     t.model.collectCheckPosition();
     t.model.sillFromCategory();
+    t.model.thumbnailRepresentNo();
   },
 });
 

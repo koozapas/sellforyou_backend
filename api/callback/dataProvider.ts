@@ -26,7 +26,17 @@ export const dataProvider = async (req: Request, res: Response) => {
                 var nyIP = ip.slice(7);
                 ip = nyIP;
             }
-            console.log(ip);
+            console.log(ip); //잘받아오는거 확인함 
+
+            console.log(req.url);
+            //  2번째  
+            //if(typeof window !== "undefined") {
+            //     console.log(window.tempProperty);
+
+            // } backend에서 window의 위치를 특정할수 없어서 window 객체는 front에서만 사용 가능하다고 나오긴하네 .. 흠  
+
+
+            // 3번째 pc에서 api 호추했는지 모바일에서 호출했는지 아는방법 찾기 .
             // return res.json({
             //     isSuccess : true,
             //     code : 200,

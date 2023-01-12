@@ -1481,3 +1481,11 @@ export const t_productStateEnum= objectType({
         t.model.id()
         t.model.state()
     }})
+
+export const t_InputDescriptionData = inputObjectType({
+    name : "DescriptionDataInput",
+    definition(t) {
+        t.nonNull.int("productId")
+        t.nonNull.string("description")
+    },
+})

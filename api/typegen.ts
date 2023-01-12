@@ -591,6 +591,10 @@ export interface NexusGenInputs {
     not?: NexusGenInputs['NestedDateTimeNullableFilter'] | null; // NestedDateTimeNullableFilter
     notIn?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
   }
+  DescriptionDataInput: { // input type
+    description: string; // String!
+    productId: number; // Int!
+  }
   EnumAdminStateFilter: { // input type
     equals?: NexusGenEnums['AdminState'] | null; // AdminState
     in?: NexusGenEnums['AdminState'][] | null; // [AdminState!]
@@ -1816,6 +1820,7 @@ export interface NexusGenInputs {
     streetNormalUseType?: NexusGenEnums['SortOrder'] | null; // SortOrder
     streetUseKeyType?: NexusGenEnums['SortOrder'] | null; // SortOrder
     streetUseType?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    thumbnailRepresentNo?: NexusGenEnums['SortOrder'] | null; // SortOrder
     tmonFee?: NexusGenEnums['SortOrder'] | null; // SortOrder
     tmonId?: NexusGenEnums['SortOrder'] | null; // SortOrder
     tmonUseType?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1931,6 +1936,7 @@ export interface NexusGenInputs {
     streetNormalUseType?: NexusGenInputs['StringFilter'] | null; // StringFilter
     streetUseKeyType?: NexusGenInputs['StringFilter'] | null; // StringFilter
     streetUseType?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    thumbnailRepresentNo?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     tmonFee?: NexusGenInputs['FloatFilter'] | null; // FloatFilter
     tmonId?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     tmonUseType?: NexusGenInputs['StringFilter'] | null; // StringFilter
@@ -2936,6 +2942,7 @@ export interface NexusGenObjects {
     streetNormalUseType: string; // String!
     streetUseKeyType: string; // String!
     streetUseType: string; // String!
+    thumbnailRepresentNo?: string | null; // String
     tmonFee: number; // Float!
     tmonId?: string | null; // String
     tmonUseType: string; // String!
@@ -3372,6 +3379,7 @@ export interface NexusGenFieldTypes {
     updateFreeUserDayLimitByAdmin: number; // Int!
     updateFreeUserProductLimitByAdmin: number; // Int!
     updateImageThumbnailData: string; // String!
+    updateManyDescription: string; // String!
     updateManyProductAttributeByUser: string; // String!
     updateManyProductCategoryByAdmin: number; // Int!
     updateManyProductCategoryByUser: number; // Int!
@@ -3955,6 +3963,7 @@ export interface NexusGenFieldTypes {
     streetNormalUseType: string; // String!
     streetUseKeyType: string; // String!
     streetUseType: string; // String!
+    thumbnailRepresentNo: string | null; // String
     tmonFee: number; // Float!
     tmonId: string | null; // String
     tmonUseType: string; // String!
@@ -4387,6 +4396,7 @@ export interface NexusGenFieldTypeNames {
     updateFreeUserDayLimitByAdmin: 'Int'
     updateFreeUserProductLimitByAdmin: 'Int'
     updateImageThumbnailData: 'String'
+    updateManyDescription: 'String'
     updateManyProductAttributeByUser: 'String'
     updateManyProductCategoryByAdmin: 'Int'
     updateManyProductCategoryByUser: 'Int'
@@ -4970,6 +4980,7 @@ export interface NexusGenFieldTypeNames {
     streetNormalUseType: 'String'
     streetUseKeyType: 'String'
     streetUseType: 'String'
+    thumbnailRepresentNo: 'String'
     tmonFee: 'Float'
     tmonId: 'String'
     tmonUseType: 'String'
@@ -5361,6 +5372,9 @@ export interface NexusGenArgTypes {
       productId: number; // Int!
       thumbnails?: NexusGenInputs['ProductThumbnailUpdateInput'][] | null; // [ProductThumbnailUpdateInput!]
     }
+    updateManyDescription: { // args
+      data: NexusGenInputs['DescriptionDataInput'][]; // [DescriptionDataInput!]!
+    }
     updateManyProductAttributeByUser: { // args
       brandName?: string | null; // String
       manufacturer?: string | null; // String
@@ -5531,6 +5545,7 @@ export interface NexusGenArgTypes {
       streetNormalUseType?: string | null; // String
       streetUseKeyType?: string | null; // String
       streetUseType?: string | null; // String
+      thumbnailRepresentNo?: string | null; // String
       tmonFee?: number | null; // Float
       tmonId?: string | null; // String
       tmonUseType?: string | null; // String

@@ -1,7 +1,7 @@
 //user/mutation
 import { hashSync, compareSync } from "bcryptjs";
 import { isBefore } from "date-fns";
- import { getPurchaseInfo } from ".";
+ import { getPurchaseInfo2 } from ".";
 import { APP_REFRESH_SECRET, APP_SECRET, regexPattern } from "../../utils/constants";
  import { throwError, errors } from "../../utils/error";
  import { uploadToS3 } from "../../utils/file_manage";
@@ -357,7 +357,8 @@ export const mutation_user = extendType({
                                             orderToDeliveryMethod  : "",
                                             orderToDeliveryName : "",
                                             collectCheckPosition : "L",
-                                            sillFromCategory : "Y"
+                                            sillFromCategory : "Y",
+                                            thumbnailRepresentNo : "1",
                                         }
                                     }
                                 }
@@ -539,7 +540,7 @@ export const mutation_user = extendType({
         //                 if (!user) return throwError(errors.invalidUser, ctx);
         //                 if (user.state !== 'ACTIVE') return throwError(errors.invalidUser, ctx);
         //                 if (args.userType === "EMAIL" && !compareSync(args.password, user.password)) return throwError(errors.invalidUser, ctx);
-        //                 const purchaseInfo = await getPurchaseInfo(ctx.prisma, user.id);
+        //                 const purchaseInfo = await getPurchaseInfo2(ctx.prisma, user.id);
         //                 const d = purchaseInfo.additionalInfo.find(v => v.type === 'IMAGE_TRANSLATE');
         //                 if (!d) return throwError(errors.additionalPermissionRequired, ctx);
         //                 if (isBefore(d.expiredAt, new Date())) throw errors.additionalPermissionRequired;
@@ -735,6 +736,7 @@ export const mutation_user = extendType({
                 orderToDeliveryMethod : stringArg(),
                 collectCheckPosition :stringArg(),
                 sillFromCategory :stringArg(),
+                thumbnailRepresentNo : stringArg(),
             },
             resolve: async (src, args, ctx, info) => {
                 try {
@@ -880,6 +882,7 @@ export const mutation_user = extendType({
                             orderToDeliveryMethod : args.orderToDeliveryMethod ?? undefined,
                             collectCheckPosition : args.collectCheckPosition ?? undefined,
                             sillFromCategory : args.sillFromCategory ?? undefined,
+                            thumbnailRepresentNo : args.thumbnailRepresentNo ?? undefined,
                         }
                     });
 

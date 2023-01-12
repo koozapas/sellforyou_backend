@@ -917,6 +917,11 @@ input DateTimeNullableFilter {
   notIn: [DateTime!]
 }
 
+input DescriptionDataInput {
+  description: String!
+  productId: Int!
+}
+
 input EnumAdminStateFilter {
   equals: AdminState
   in: [AdminState!]
@@ -1072,6 +1077,7 @@ type Mutation {
   updateFreeUserDayLimitByAdmin(day: Int!): Int!
   updateFreeUserProductLimitByAdmin(day: Int!): Int!
   updateImageThumbnailData(productId: Int!, thumbnails: [ProductThumbnailUpdateInput!]): String!
+  updateManyDescription(data: [DescriptionDataInput!]!): String!
   updateManyProductAttributeByUser(brandName: String, manufacturer: String, modelName: String, productId: [Int!]!): String!
   updateManyProductCategoryByAdmin(categoryA001: String, categoryA006: String, categoryA027: String, categoryA077: String, categoryA112: String, categoryB378: String, productIds: [Int!]!): Int!
   updateManyProductCategoryByUser(categoryA001: String, categoryA006: String, categoryA027: String, categoryA077: String, categoryA112: String, categoryA113: String, categoryA524: String, categoryA525: String, categoryB378: String, categoryB719: String, categoryB956: String, productIds: [Int!]!): Int!
@@ -1083,7 +1089,7 @@ type Mutation {
   updateManyProductSiilInfoByUser(productIds: [Int!]!, siilCode: String!): Int!
   updateManyProductTagByUser(immSearchTags: String, productIds: [Int!]!, searchTags: String): String!
   updateMultipleProductNameByUser(data: [ProductOptionNameInput!]!): String!
-  updateMyDataByUser(additionalShippingFeeJeju: Int, asInformation: String, asTel: String, auctionFee: Float, auctionUseType: String, autoPrice: String, calculateWonType: String, cnyRate: Float, cnyRateDollar: Float, cnyRateEuro: Float, cnyRateYen: Float, collectCheckPosition: String, collectStock: Int, collectTimeout: Int, coupangAccessKey: String, coupangDefaultInbound: String, coupangDefaultOutbound: String, coupangFee: Float, coupangImageOpt: String, coupangLoginId: String, coupangMaximumBuyForPerson: Int, coupangOutboundShippingTimeDay: Int, coupangSecretKey: String, coupangUnionDeliveryType: String, coupangUseType: String, coupangVendorId: String, defaultPrice: String, defaultShippingFee: Int, descriptionShowTitle: String, discountAmount: Int, discountUnitType: String, esmplusAuctionId: String, esmplusGmarketId: String, esmplusMasterId: String, exchangeShippingFee: Int, extraShippingFee: Int, fixImageBottom: Upload, fixImageSubBottom: Upload, fixImageSubTop: Upload, fixImageTop: Upload, gmarketFee: Float, gmarketUseType: String, interparkCertKey: String, interparkEditCertKey: String, interparkEditSecretKey: String, interparkFee: Float, interparkSecretKey: String, interparkUseType: String, lotteonApiKey: String, lotteonFee: Float, lotteonNormalFee: Float, lotteonNormalUseType: String, lotteonSellerType: String, lotteonUseType: String, lotteonVendorId: String, marginRate: Float, marginUnitType: String, naverAutoSearchTag: String, naverFee: Float, naverOrigin: String, naverOriginCode: String, naverStoreOnly: String, naverStoreUrl: String, naverUseType: String, optionAlignTop: String, optionIndexType: Int, optionTwoWays: String, orderToDeliveryMembership: String, orderToDeliveryMethod: String, orderToDeliveryName: String, refundShippingFee: Int, sillFromCategory: String, streetApiKey: String, streetApiKey2: String, streetApiKey3: String, streetApiKey4: String, streetApiMemo: String, streetApiMemo2: String, streetApiMemo3: String, streetApiMemo4: String, streetDefaultInbound: String, streetDefaultOutbound: String, streetFee: Float, streetNormalApiKey: String, streetNormalApiKey2: String, streetNormalApiKey3: String, streetNormalApiKey4: String, streetNormalApiMemo: String, streetNormalApiMemo2: String, streetNormalApiMemo3: String, streetNormalApiMemo4: String, streetNormalFee: Float, streetNormalInbound: String, streetNormalOutbound: String, streetNormalUseKeyType: String, streetNormalUseType: String, streetUseKeyType: String, streetUseType: String, tmonFee: Float, tmonId: String, tmonUseType: String, useDetailInformation: String, wemakepriceFee: Float, wemakepriceId: String, wemakepriceUseType: String): Boolean!
+  updateMyDataByUser(additionalShippingFeeJeju: Int, asInformation: String, asTel: String, auctionFee: Float, auctionUseType: String, autoPrice: String, calculateWonType: String, cnyRate: Float, cnyRateDollar: Float, cnyRateEuro: Float, cnyRateYen: Float, collectCheckPosition: String, collectStock: Int, collectTimeout: Int, coupangAccessKey: String, coupangDefaultInbound: String, coupangDefaultOutbound: String, coupangFee: Float, coupangImageOpt: String, coupangLoginId: String, coupangMaximumBuyForPerson: Int, coupangOutboundShippingTimeDay: Int, coupangSecretKey: String, coupangUnionDeliveryType: String, coupangUseType: String, coupangVendorId: String, defaultPrice: String, defaultShippingFee: Int, descriptionShowTitle: String, discountAmount: Int, discountUnitType: String, esmplusAuctionId: String, esmplusGmarketId: String, esmplusMasterId: String, exchangeShippingFee: Int, extraShippingFee: Int, fixImageBottom: Upload, fixImageSubBottom: Upload, fixImageSubTop: Upload, fixImageTop: Upload, gmarketFee: Float, gmarketUseType: String, interparkCertKey: String, interparkEditCertKey: String, interparkEditSecretKey: String, interparkFee: Float, interparkSecretKey: String, interparkUseType: String, lotteonApiKey: String, lotteonFee: Float, lotteonNormalFee: Float, lotteonNormalUseType: String, lotteonSellerType: String, lotteonUseType: String, lotteonVendorId: String, marginRate: Float, marginUnitType: String, naverAutoSearchTag: String, naverFee: Float, naverOrigin: String, naverOriginCode: String, naverStoreOnly: String, naverStoreUrl: String, naverUseType: String, optionAlignTop: String, optionIndexType: Int, optionTwoWays: String, orderToDeliveryMembership: String, orderToDeliveryMethod: String, orderToDeliveryName: String, refundShippingFee: Int, sillFromCategory: String, streetApiKey: String, streetApiKey2: String, streetApiKey3: String, streetApiKey4: String, streetApiMemo: String, streetApiMemo2: String, streetApiMemo3: String, streetApiMemo4: String, streetDefaultInbound: String, streetDefaultOutbound: String, streetFee: Float, streetNormalApiKey: String, streetNormalApiKey2: String, streetNormalApiKey3: String, streetNormalApiKey4: String, streetNormalApiMemo: String, streetNormalApiMemo2: String, streetNormalApiMemo3: String, streetNormalApiMemo4: String, streetNormalFee: Float, streetNormalInbound: String, streetNormalOutbound: String, streetNormalUseKeyType: String, streetNormalUseType: String, streetUseKeyType: String, streetUseType: String, thumbnailRepresentNo: String, tmonFee: Float, tmonId: String, tmonUseType: String, useDetailInformation: String, wemakepriceFee: Float, wemakepriceId: String, wemakepriceUseType: String): Boolean!
   updateMyImageByUser(fixImageBottom: String, fixImageSubBottom: String, fixImageSubTop: String, fixImageTop: String): Boolean!
   updateNewProductImageBySomeone(description: String, optionValues: [ProductOptionValueImageUpdateInput!]!, productId: Int!, thumbnails: [ProductNewThumbnailImageUpdateInput!]): String!
   updateNoticeByAdmin(attachment: Upload, content: String, noticeId: Int!, title: String): Boolean!
@@ -2935,6 +2941,7 @@ type UserInfo {
   streetNormalUseType: String!
   streetUseKeyType: String!
   streetUseType: String!
+  thumbnailRepresentNo: String
   tmonFee: Float!
   tmonId: String
   tmonUseType: String!
@@ -3048,6 +3055,7 @@ input UserInfoOrderByWithRelationInput {
   streetNormalUseType: SortOrder
   streetUseKeyType: SortOrder
   streetUseType: SortOrder
+  thumbnailRepresentNo: SortOrder
   tmonFee: SortOrder
   tmonId: SortOrder
   tmonUseType: SortOrder
@@ -3164,6 +3172,7 @@ input UserInfoWhereInput {
   streetNormalUseType: StringFilter
   streetUseKeyType: StringFilter
   streetUseType: StringFilter
+  thumbnailRepresentNo: StringNullableFilter
   tmonFee: FloatFilter
   tmonId: StringNullableFilter
   tmonUseType: StringFilter

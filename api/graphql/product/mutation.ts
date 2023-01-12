@@ -536,6 +536,30 @@ const updateDescription = async (src: {}, args: ArgsValue<"Mutation", "updateDes
     }
 }
 
+const updateManyDescription = async ( src : {}, args: ArgsValue<"Mutation","updateManyDescription">, ctx : Context,info : GraphQLResolveInfo) => {
+    try{
+        let descriptionList :any =[];
+        await Promise.all(args.data.map(async (v : any) => {
+            const product = await ctx.prisma.product.findUnique({ where: { id: v.productId }})
+            if(!product) return throwError(errors.etc("해당 상품이 존재하지 않습니다."),ctx);
+            const description = v.description ? await uploadToS3WithEditor(v.description, ["product", product.id], "description") : undefined;
+            if(!description) return throwError(errors.etc("description 업데이트 과정에 문제가 생겼습니다."),ctx);
+            await ctx.prisma.product.update({
+                where : { id : product.id},
+                data : { description }
+            })
+
+            descriptionList.push({
+                "productid" : product.id,
+                "description" : description
+            });
+            
+        }))
+            return JSON.stringify(descriptionList)
+    }catch(e){
+        return throwError(e,ctx);
+    }
+}
 const updateImageThumbnailData =  async (src: {}, args: ArgsValue<"Mutation", "updateImageThumbnailData">, ctx: Context, info: GraphQLResolveInfo) => {
     try{
         const product = await ctx.prisma.product.findUnique({ where: { id: args.productId }})
@@ -1834,6 +1858,11 @@ export const mutation_product = extendType({
                 description: nonNull(stringArg()),
             },
             resolve : updateDescription
+        })
+        t.field("updateManyDescription",{
+            type : nonNull("String"),
+            args : { data : nonNull(list(nonNull(arg({type : "DescriptionDataInput"})))) },
+            resolve : updateManyDescription
         })
         t.field("updateProductFee",{
             type : nonNull("String"),
