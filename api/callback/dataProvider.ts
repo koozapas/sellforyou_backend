@@ -21,7 +21,7 @@ export const dataProvider = async (req: Request, res: Response) => {
                 var nyIP = ip.slice(7);
                 ip = nyIP;
             }
-            
+
             let productStore = await prisma.productStore.updateMany({
                 where : { siteCode : siteCode , productId : parseInt(productId)},
                 data : { cnt : { increment : 1} , testUrl : ip}
@@ -32,7 +32,7 @@ export const dataProvider = async (req: Request, res: Response) => {
 
             console.log(req.url);
             //  2번째  
-            //if(typeof window !== "undefined") {
+            // if(typeof window !== "undefined") {
             //     console.log(window.tempProperty);
 
             // } backend에서 window의 위치를 특정할수 없어서 window 객체는 front에서만 사용 가능하다고 나오긴하네 .. 흠  

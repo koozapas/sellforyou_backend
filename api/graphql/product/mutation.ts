@@ -538,7 +538,6 @@ const updateDescription = async (src: {}, args: ArgsValue<"Mutation", "updateDes
 
 const updateManyDescription = async ( src : {}, args: ArgsValue<"Mutation","updateManyDescription">, ctx : Context,info : GraphQLResolveInfo) => {
     try{
-        let descriptionList :any =[];
         await Promise.all(args.data.map(async (v : any) => {
             const product = await ctx.prisma.product.findUnique({ where: { id: v.productId }})
             if(!product) return throwError(errors.etc("해당 상품이 존재하지 않습니다."),ctx);
@@ -549,13 +548,9 @@ const updateManyDescription = async ( src : {}, args: ArgsValue<"Mutation","upda
                 data : { description }
             })
 
-            descriptionList.push({
-                "productid" : product.id,
-                "description" : description
-            });
             
         }))
-            return JSON.stringify(descriptionList)
+            return "OK"
     }catch(e){
         return throwError(e,ctx);
     }

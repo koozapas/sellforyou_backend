@@ -615,7 +615,7 @@ export const mutation_taobao_product = extendType({
                         if(!data2) return throwError(errors.etc("no token"),ctx);
                         const calculateWonType = parseInt(data2.calculateWonType);
                 
-                        const wordTable = await ctx.prisma.wordTable.findMany({ where: { userId:ctx.token?.userId } });
+                        const wordTable = await ctx.prisma.wordTable.findMany({ where: { userId:ctx.token?.userId } ,orderBy: { id: "asc" } });
 
                         //return type IFeeInfo ,/ args type : prisma , productCode, taobaoProduct(IOBItem,ITranslateData)[],userid,userInfo,categorycode,sillcode,admin 
                         const products = await saveTaobaoItemToUser(ctx.prisma, undefined, taobaoProducts, userId, info, category, categoryType, ctx.token?.adminId ?? undefined,calculateWonType,wordTable);
