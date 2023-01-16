@@ -232,6 +232,7 @@ export const mutation_user = extendType({
                                 case "dream" : break;
                                 case "타오랜드" : break;
                                 case "taoland" : break;
+                                case "돈벌삶" : break;
                                 default : {
                                     let refCodeInfo = await ctx.prisma.user.findUnique({
                                         where : { email : args.refCode},

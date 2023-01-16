@@ -149,6 +149,7 @@ export const mutation_purchase = extendType({
                             case "dream" : break;
                             case "타오랜드" : break;
                             case "taoland" : break;
+                            case "돈벌삶" : break;
                             default : {
                                 await ctx.prisma.user.update({
                                     where : { email : user.refCode},
@@ -221,6 +222,7 @@ export const mutation_purchase = extendType({
                             case "dream" : break;
                             case "타오랜드" : break;
                             case "taoland" : break;
+                            case "돈벌삶" : break;
                             default : {
                                 await ctx.prisma.user.update({
                                     where : { email : user.refCode},

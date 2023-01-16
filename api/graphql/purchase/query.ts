@@ -35,6 +35,9 @@ export const query_purchase = extendType({
                             //developing ...
                             return true;
                         }
+                        case "돈벌삶" :{
+                            return true;
+                        }
                         case "1%수강" : {
                             return true;
                         }
