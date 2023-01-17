@@ -72,6 +72,7 @@ export const deleteFromS3 = async (Key: string): Promise<boolean> => {
 
 export const deleteS3Folder = async (Key: string): Promise<boolean> => {
     try {
+        console.log(Key);
         var params = {
             Bucket: AWS_BUCKET,
             MaxKeys: 1000,
@@ -88,7 +89,7 @@ export const deleteS3Folder = async (Key: string): Promise<boolean> => {
                         rej(err);
                     } else {
                         var contents = data.Contents;
-
+                        console.log(data);
                         for (let content in contents) {
                             allKeys.push(contents[content].Key);
                         }
@@ -99,7 +100,7 @@ export const deleteS3Folder = async (Key: string): Promise<boolean> => {
         }
 
         const result: any = await listAllKeys();
-
+        console.log(result);
         // console.log(`result ${Key} ${result}`);
 
         result.map((v: string) => {

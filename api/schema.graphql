@@ -1020,6 +1020,7 @@ type Mutation {
   deleteProductByAdmin(productId: [Int!]!): Boolean!
   deleteProductByUser(productId: [Int!]!): Boolean!
   deleteStore(id: Int!, store: String!): Boolean!
+  deleteUserByAdmin(userId: [Int!]!): Boolean!
   deleteWordByUser(wordId: [Int!]!): Boolean!
   disableUserOption(id: Int!): Boolean!
   endProductSellStateByAdmin(productIds: [Int!]!): Int!

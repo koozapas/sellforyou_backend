@@ -796,6 +796,67 @@ const updateManyProductSiilInfoResolver = async (src: {}, args: ArgsValue<"Mutat
         return throwError(e, ctx);
     }
 }
+const deleteUserResolver = async (src: {}, args : ArgsValue<"Mutation", "deleteUserByAdmin">, ctx: Context, info: GraphQLResolveInfo) => {
+    try {
+        //userId 는 배열로 받을수있게끔 설정, 
+        //todo list product가 존재할경우 -> 등록상품의경우는 등록된상품 해지하지않고 걍 수집과 동일하게 일괄삭제, product가 존재하지 않을경우엔 유저 삭제 순서 .  
+        const product = await ctx.prisma.product.findMany({
+            where: { userId: {in : args.userId }},
+            select: { id: true, userId: true, productStore: true, productOptionName: { select: { id: true } } }
+        });
+        if (!product) {//상품이 존재하지 않을때 
+            await ctx.prisma.purchaseLog.deleteMany({where : { userId : { in : args.userId}}})
+            await ctx.prisma.userInfo.deleteMany({where : { userId : { in : args.userId}}})
+            await ctx.prisma.userLog.deleteMany({where : { userId : { in : args.userId}}})
+            await ctx.prisma.wordTable.deleteMany({where : { userId : { in : args.userId}}})
+            await ctx.prisma.user.deleteMany({where : { id : { in : args.userId}}})
+        }
+        else{//상품이 존재할떄
+
+            let productIdList :any=[];
+            product.map(v=>productIdList.push(v.id))
+            await ctx.prisma.productOption.deleteMany({ where: { productId: { in : productIdList }  } });
+            
+            const productOptionNameId : any=[] ;
+            const productStoreId : any =[];
+            
+            product.map((v : any) => {
+            v.productStore.map((w :any) => {productStoreId.push(w.id)}) 
+            v.productOptionName.map((w :any) => {productOptionNameId.push(w.id)}) 
+        })
+
+        await Promise.all (
+            productIdList.map(async(v:any) => {
+            await deleteS3Folder(`product/${v}/`);
+        }) 
+        )
+
+        await ctx.prisma.productStoreLog.deleteMany({ where: { productStoreId: { in: productStoreId } } });
+        await ctx.prisma.productOptionValue.deleteMany({ where: { productOptionNameId: { in: productOptionNameId } } });
+        await ctx.prisma.productStore.deleteMany({ where: { productId: { in: productIdList } } });
+        await ctx.prisma.productOptionName.deleteMany({ where: { productId: {in : productIdList} } });
+        await ctx.prisma.product.deleteMany({ where: { id: {in :productIdList} } });
+        //여기까지 모든  수집 상품삭제 완료 
+        await ctx.prisma.purchaseLog.deleteMany({where : { userId : { in : args.userId}}})
+        await ctx.prisma.userInfo.deleteMany({where : { userId : { in : args.userId}}})
+        await ctx.prisma.wordTable.deleteMany({where : { userId : { in : args.userId}}})
+        await ctx.prisma.userLog.deleteMany({where : { userId : { in : args.userId}}})
+        await ctx.prisma.user.deleteMany({where : { id : { in : args.userId}}})
+    }
+            
+        await Promise.all (
+            args.userId.map(async(v:any) => {
+                console.log(v);
+            await deleteS3Folder(`user/${v}/info/`);
+        }) 
+        )
+
+        return true;
+    } catch (e) {
+        return throwError(e, ctx);
+    }
+}
+
 const deleteProductResolver = async (src: {}, args: ArgsValue<"Mutation", "deleteProductByUser">, ctx: Context, info: GraphQLResolveInfo) => {
     try {
        
@@ -2009,6 +2070,13 @@ export const mutation_product = extendType({
                 productId: nonNull(list(nonNull(intArg())))
             },
             resolve: deleteProductResolver
+        })
+        t.field("deleteUserByAdmin", {
+            type: nonNull("Boolean"),
+            args: {
+                userId: nonNull(list(nonNull(intArg())))
+            },
+            resolve: deleteUserResolver
         })
         t.field("updateProductPriceByUser", {
             type: nonNull("Int"),

@@ -3339,6 +3339,7 @@ export interface NexusGenFieldTypes {
     deleteProductByAdmin: boolean; // Boolean!
     deleteProductByUser: boolean; // Boolean!
     deleteStore: boolean; // Boolean!
+    deleteUserByAdmin: boolean; // Boolean!
     deleteWordByUser: boolean; // Boolean!
     disableUserOption: boolean; // Boolean!
     endProductSellStateByAdmin: number; // Int!
@@ -4356,6 +4357,7 @@ export interface NexusGenFieldTypeNames {
     deleteProductByAdmin: 'Boolean'
     deleteProductByUser: 'Boolean'
     deleteStore: 'Boolean'
+    deleteUserByAdmin: 'Boolean'
     deleteWordByUser: 'Boolean'
     disableUserOption: 'Boolean'
     endProductSellStateByAdmin: 'Int'
@@ -5225,6 +5227,9 @@ export interface NexusGenArgTypes {
     deleteStore: { // args
       id: number; // Int!
       store: string; // String!
+    }
+    deleteUserByAdmin: { // args
+      userId: number[]; // [Int!]!
     }
     deleteWordByUser: { // args
       wordId: number[]; // [Int!]!
