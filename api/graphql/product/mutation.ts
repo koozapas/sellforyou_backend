@@ -3,7 +3,7 @@ import { arg, extendType, floatArg, intArg, list, nonNull, stringArg } from "nex
 import { ArgsValue, booleanArg, isObject } from "nexus/dist/core";
 import { Context } from "../../types";
 import { errors, throwError } from "../../utils/error";
-import { uploadToS3AvoidDuplicate, uploadToS3AvoidDuplicateByBuffer, uploadToS3WithEditor,deleteFromS3,deleteS3Folder,getProductListAllKeys } from "../../utils/file_manage";
+import { uploadToS3AvoidDuplicate, uploadToS3AvoidDuplicateByBuffer, uploadToS3WithEditor2,uploadToS3WithEditor,deleteFromS3,deleteS3Folder,getProductListAllKeys } from "../../utils/file_manage";
 import { calculatePrice } from "../../utils/local/calculate-product-price";
 import { publishUserLogData } from "../../utils/local/pubsub";
 import { SiilEncodedSavedData, siilInfo } from "../siil";
@@ -150,6 +150,7 @@ const initProductDescriptionByUser = async (src: {}, args: ArgsValue<"Mutation",
 
         let taobaoData = JSON.parse(product.taobaoProduct.originalData);
         let description = await uploadToS3WithEditor(taobaoData.desc, ["product", product.id], "description")
+
         // let desc_html = ``;
 
         // for (var i in taobaoData.desc_img) {
@@ -523,7 +524,7 @@ const updateDescription = async (src: {}, args: ArgsValue<"Mutation", "updateDes
     try{
         const product = await ctx.prisma.product.findUnique({ where: { id: args.productId }})
         if(!product) return throwError(errors.etc("해당 상품이 존재하지 않습니다."),ctx);
-        const description = args.description ? await uploadToS3WithEditor(args.description, ["product", product.id], "description") : undefined;
+        const description = args.description ? await uploadToS3WithEditor2(args.description, ["product", product.id], "description") : undefined;
         if(!description) return throwError(errors.etc("description 업데이트 과정에 문제가 생겼습니다."),ctx);
         const success = await ctx.prisma.product.update({
             where : {id : product.id},
@@ -541,7 +542,7 @@ const updateManyDescription = async ( src : {}, args: ArgsValue<"Mutation","upda
         await Promise.all(args.data.map(async (v : any) => {
             const product = await ctx.prisma.product.findUnique({ where: { id: v.productId }})
             if(!product) return throwError(errors.etc("해당 상품이 존재하지 않습니다."),ctx);
-            const description = v.description ? await uploadToS3WithEditor(v.description, ["product", product.id], "description") : undefined;
+            const description = v.description ? await uploadToS3WithEditor2(v.description, ["product", product.id], "description") : undefined;
             if(!description) return throwError(errors.etc("description 업데이트 과정에 문제가 생겼습니다."),ctx);
             await ctx.prisma.product.update({
                 where : { id : product.id},

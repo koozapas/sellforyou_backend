@@ -206,7 +206,10 @@ export const uploadToS3AvoidDuplicateByBuffer = async (pfile: Buffer, filename: 
 };
 
 export const uploadToS3WithEditor = async (content: string, pathArray: (string | number)[], fileNameExcludeExtension: string | null) => {
+
+    //img태그에 잡다한 속성들 제거
     content = /<img[^>]src="([^">]+)"([^>]+)?>/g.test(content) ? content.replace(/<img[^>]src="([^">]+)"([^>]+)?>/g, `<img src="$1" />`) : content.replace(/<img[^>]+src="([^">]+)"([^>]+)?>/g, `<img src="$1" />`);
+
     const result = content.match(/<img src="?data:(image\/.*?);base64,(.*?)"? ?\/?>/g);
 
     // console.log('matched', result?.length);
@@ -216,7 +219,7 @@ export const uploadToS3WithEditor = async (content: string, pathArray: (string |
     if (result) {
         const urlArray = await Promise.all(result.map(async (v, i) => {
             const a = v.replace(/<img src="?data:(image\/.*?);base64,(.*?)"? ?\/?>/g, "$1*$*~$2").split("*$*~");
-
+            
             let [mimetype, buffer] = [a[0], Buffer.from(a[1], "base64")];
 
             let ext = mimetype.slice(mimetype.indexOf("/") + 1, 10);
@@ -224,16 +227,61 @@ export const uploadToS3WithEditor = async (content: string, pathArray: (string |
             if (ext === 'jpeg') {
                 ext = 'jpg';
             }
-
+            
             return await uploadToS3AvoidDuplicateByBuffer(buffer, `image${i}.${ext}`, mimetype, [...pathArray]);
         }));
 
         // console.log(urlArray);
-
+        
         descriptionContents = result?.reduce((p, c, i) => p.replace(c, `<img src="${EXTERNAL_S3_ADDRESS}/${urlArray[i]}">`), descriptionContents);
+        //p컴포넌트의 스타일들을 제거하는 작업     
+    }
+    
+    descriptionContents = descriptionContents.replace(/(?<!<p ?>)(<img [^>]*?>)(?!<p>)/g, "<p>$1</p>");
+
+    if (fileNameExcludeExtension) {
+        const description = (await uploadToS3ByBuffer(Buffer.from(descriptionContents, "utf8"), `${fileNameExcludeExtension}.html`, 'text/html', [...pathArray])).url;
+
+        return description;
     }
 
-    descriptionContents = descriptionContents.replace(/(?<!<p ?>)(<img [^>]*?>)(?!<p>)/g, "<p>$1</p>");
+    return descriptionContents;
+}
+
+
+//descripition 수정하는경우에는 img태그랑 p태그의 속성을 살려줘야하므로(상세에서 자유롭게 처리하는거 저장용도 )
+export const uploadToS3WithEditor2 = async (content: string, pathArray: (string | number)[], fileNameExcludeExtension: string | null) => {
+
+    //img태그에 잡다한 속성들 제거
+    //content = /<img[^>]src="([^">]+)"([^>]+)?>/g.test(content) ? content.replace(/<img[^>]src="([^">]+)"([^>]+)?>/g, `<img src="$1" />`) : content.replace(/<img[^>]+src="([^">]+)"([^>]+)?>/g, `<img src="$1" />`);
+
+    const result = content.match(/<img src="?data:(image\/.*?);base64,(.*?)"? ?\/?>/g);
+
+    // console.log('matched', result?.length);
+
+    let descriptionContents = content;
+
+    if (result) {
+        const urlArray = await Promise.all(result.map(async (v, i) => {
+            const a = v.replace(/<img src="?data:(image\/.*?);base64,(.*?)"? ?\/?>/g, "$1*$*~$2").split("*$*~");
+            
+            let [mimetype, buffer] = [a[0], Buffer.from(a[1], "base64")];
+
+            let ext = mimetype.slice(mimetype.indexOf("/") + 1, 10);
+
+            if (ext === 'jpeg') {
+                ext = 'jpg';
+            }
+            
+            return await uploadToS3AvoidDuplicateByBuffer(buffer, `image${i}.${ext}`, mimetype, [...pathArray]);
+        }));
+
+        // console.log(urlArray);
+        
+        descriptionContents = result?.reduce((p, c, i) => p.replace(c, `<img src="${EXTERNAL_S3_ADDRESS}/${urlArray[i]}">`), descriptionContents);
+        //p컴포넌트의 스타일들을 제거하는 작업     
+    }
+    // descriptionContents = descriptionContents.replace(/(?<!<p ?>)(<img [^>]*?>)(?!<p>)/g, "<p>$1</p>");
 
     if (fileNameExcludeExtension) {
         const description = (await uploadToS3ByBuffer(Buffer.from(descriptionContents, "utf8"), `${fileNameExcludeExtension}.html`, 'text/html', [...pathArray])).url;
