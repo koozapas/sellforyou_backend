@@ -57,6 +57,8 @@ const apollo = new ApolloServer({
 })
 
 const app = express();
+app.set('trust proxy',()=>true);
+
 app.use("/graphql", graphqlUploadExpress({ maxFieldSize: 100000000, maxFileSize: 100000000, maxFiles: 1000, }));
 app.use(express.json({ limit: '100mb' }));
 

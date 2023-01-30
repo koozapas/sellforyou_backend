@@ -205,6 +205,7 @@ export const uploadToS3AvoidDuplicateByBuffer = async (pfile: Buffer, filename: 
     return (await uploadToS3ByBuffer(pfile, filename, mimetype, pathArray)).url;
 };
 
+//기본적인 수집 이나 다른 기능에 의한 스타일 제거하여 이미지 업로드하는 기능 
 export const uploadToS3WithEditor = async (content: string, pathArray: (string | number)[], fileNameExcludeExtension: string | null) => {
 
     //img태그에 잡다한 속성들 제거
@@ -249,7 +250,7 @@ export const uploadToS3WithEditor = async (content: string, pathArray: (string |
 }
 
 
-//descripition 수정하는경우에는 img태그랑 p태그의 속성을 살려줘야하므로(상세에서 자유롭게 처리하는거 저장용도 )
+//descripition 셀포유에서 수정하는경우에는 img태그랑 p태그의 속성을 살려줘야하므로(상세에서 자유롭게 처리하는거 저장용도 )
 export const uploadToS3WithEditor2 = async (content: string, pathArray: (string | number)[], fileNameExcludeExtension: string | null) => {
 
     //img태그에 잡다한 속성들 제거
