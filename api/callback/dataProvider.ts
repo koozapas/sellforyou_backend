@@ -10,8 +10,9 @@ export const dataProvider = async (req: Request, res: Response) => {
         let siteCode : any= req.query.siteCode;
         const prisma = new PrismaClient();
         try{
-            let ip : any= req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-                    
+            let ip : any= req.ip;
+            // req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress ||req.socket.remoteAddress;
+             
             if (ip.length < 15) 
             {   
                 ip = ip;
