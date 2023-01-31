@@ -11,17 +11,7 @@ export const dataProvider = async (req: Request, res: Response) => {
         const prisma = new PrismaClient();
         try{
             let ip : any= req.headers['x-real-ip'] || req.connection.remoteAddress;
-             
-            if (ip.length < 15) 
-            {   
-                ip = ip;
-            }
-            else
-            {
-                var nyIP = ip.slice(7);
-                ip = nyIP;
-            }
-
+         
             let productStore = await prisma.productStore.updateMany({
                 where : { siteCode : siteCode , productId : parseInt(productId)},
                 data : { cnt : { increment : 1} , testUrl : ip}
