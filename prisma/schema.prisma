@@ -369,6 +369,7 @@ model ProductStore {
   product           Product           @relation("productToproduct_store", fields: [productId], references: [id])
   productStoreState ProductStoreState @relation("product_storeToproduct_store_state", fields: [state], references: [id])
   user              User              @relation("product_storeTouser", fields: [userId], references: [id])
+  productViewLog    productViewLog[]  @relation("productViewLogToproduct_store")
   productStoreLog   ProductStoreLog[] @relation("product_storeToproduct_store_log")
 
   @@index([productId], name: "FK_product_store_product_id_product_id")
@@ -974,6 +975,17 @@ model SillInfoB956 {
   sillInfoA077     SillInfoA077[]     @relation("sillInfoA077ToSillInfoB956")
 
   @@map("sill_info_b956")
+}
+
+model productViewLog {
+  id             Int          @id @default(autoincrement())
+  productStoreId Int
+  clientIp       String       @db.VarChar(100)
+  viewTime       DateTime     @default(now()) @db.DateTime(0)
+  siteCode       String       @db.VarChar(10)
+  product_store  ProductStore @relation("productViewLogToproduct_store", fields: [productStoreId], references: [id])
+
+  @@index([productStoreId], name: "FK_productViewLog_product_store")
 }
 
 enum UserState {

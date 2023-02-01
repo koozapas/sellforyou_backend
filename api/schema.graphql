@@ -1021,6 +1021,7 @@ type Mutation {
   deleteProductByUser(productId: [Int!]!): Boolean!
   deleteStore(id: Int!, store: String!): Boolean!
   deleteUserByAdmin(userId: [Int!]!): Boolean!
+  deleteUserProductByAdmin(userId: [Int!]!): Boolean!
   deleteWordByUser(wordId: [Int!]!): Boolean!
   disableUserOption(id: Int!): Boolean!
   endProductSellStateByAdmin(productIds: [Int!]!): Int!
@@ -1956,6 +1957,7 @@ input ProductStoreOrderByWithRelationInput {
   productId: SortOrder
   productStoreLog: ProductStoreLogOrderByRelationAggregateInput
   productStoreState: ProductStoreStateOrderByWithRelationInput
+  productViewLog: productViewLogOrderByRelationAggregateInput
   siteCode: SortOrder
   state: SortOrder
   storeProductId: SortOrder
@@ -2002,6 +2004,7 @@ input ProductStoreWhereInput {
   productId: IntFilter
   productStoreLog: ProductStoreLogListRelationFilter
   productStoreState: ProductStoreStateWhereInput
+  productViewLog: ProductViewLogListRelationFilter
   siteCode: StringFilter
   state: IntFilter
   storeProductId: StringNullableFilter
@@ -2028,6 +2031,12 @@ input ProductThumbnailUpdateInput {
 input ProductUQ_user_id_taobao_product_idCompoundUniqueInput {
   taobaoProductId: Int!
   userId: Int!
+}
+
+input ProductViewLogListRelationFilter {
+  every: productViewLogWhereInput
+  none: productViewLogWhereInput
+  some: productViewLogWhereInput
 }
 
 input ProductWhereInput {
@@ -3615,6 +3624,31 @@ input productStoreLogEnumWhereInput {
   id: IntFilter
   productStoreLog: ProductStoreLogListRelationFilter
   state: StringNullableFilter
+}
+
+type productViewLog {
+  clientIp: String!
+  id: Int!
+  productStoreId: Int!
+  siteCode: String!
+  viewTime: DateTime!
+}
+
+input productViewLogOrderByRelationAggregateInput {
+  _count: SortOrder
+  count: SortOrder
+}
+
+input productViewLogWhereInput {
+  AND: [productViewLogWhereInput!]
+  NOT: [productViewLogWhereInput!]
+  OR: [productViewLogWhereInput!]
+  clientIp: StringFilter
+  id: IntFilter
+  productStoreId: IntFilter
+  product_store: ProductStoreWhereInput
+  siteCode: StringFilter
+  viewTime: DateTimeFilter
 }
 
 input purchaseInputs {

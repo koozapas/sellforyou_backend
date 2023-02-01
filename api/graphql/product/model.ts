@@ -344,6 +344,16 @@ export const t_Product = objectType({
     }
 });
 
+export const t_productViewLog = objectType({
+    name: "productViewLog",
+    definition(t){
+        t.model.id();
+        t.model.productStoreId();
+        t.model.clientIp();
+        t.model.viewTime();
+        t.model.siteCode();
+    }
+})
 export const t_CategoryInfoA077 = objectType({
     name: "CategoryInfoA077",
     definition(t) {

@@ -1208,6 +1208,7 @@ export interface NexusGenInputs {
     productId?: NexusGenEnums['SortOrder'] | null; // SortOrder
     productStoreLog?: NexusGenInputs['ProductStoreLogOrderByRelationAggregateInput'] | null; // ProductStoreLogOrderByRelationAggregateInput
     productStoreState?: NexusGenInputs['ProductStoreStateOrderByWithRelationInput'] | null; // ProductStoreStateOrderByWithRelationInput
+    productViewLog?: NexusGenInputs['productViewLogOrderByRelationAggregateInput'] | null; // productViewLogOrderByRelationAggregateInput
     siteCode?: NexusGenEnums['SortOrder'] | null; // SortOrder
     state?: NexusGenEnums['SortOrder'] | null; // SortOrder
     storeProductId?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1245,6 +1246,7 @@ export interface NexusGenInputs {
     productId?: NexusGenInputs['IntFilter'] | null; // IntFilter
     productStoreLog?: NexusGenInputs['ProductStoreLogListRelationFilter'] | null; // ProductStoreLogListRelationFilter
     productStoreState?: NexusGenInputs['ProductStoreStateWhereInput'] | null; // ProductStoreStateWhereInput
+    productViewLog?: NexusGenInputs['ProductViewLogListRelationFilter'] | null; // ProductViewLogListRelationFilter
     siteCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
     state?: NexusGenInputs['IntFilter'] | null; // IntFilter
     storeProductId?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
@@ -1267,6 +1269,11 @@ export interface NexusGenInputs {
   ProductUQ_user_id_taobao_product_idCompoundUniqueInput: { // input type
     taobaoProductId: number; // Int!
     userId: number; // Int!
+  }
+  ProductViewLogListRelationFilter: { // input type
+    every?: NexusGenInputs['productViewLogWhereInput'] | null; // productViewLogWhereInput
+    none?: NexusGenInputs['productViewLogWhereInput'] | null; // productViewLogWhereInput
+    some?: NexusGenInputs['productViewLogWhereInput'] | null; // productViewLogWhereInput
   }
   ProductWhereInput: { // input type
     AND?: NexusGenInputs['ProductWhereInput'][] | null; // [ProductWhereInput!]
@@ -2240,6 +2247,21 @@ export interface NexusGenInputs {
     productStoreLog?: NexusGenInputs['ProductStoreLogListRelationFilter'] | null; // ProductStoreLogListRelationFilter
     state?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
   }
+  productViewLogOrderByRelationAggregateInput: { // input type
+    _count?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    count?: NexusGenEnums['SortOrder'] | null; // SortOrder
+  }
+  productViewLogWhereInput: { // input type
+    AND?: NexusGenInputs['productViewLogWhereInput'][] | null; // [productViewLogWhereInput!]
+    NOT?: NexusGenInputs['productViewLogWhereInput'][] | null; // [productViewLogWhereInput!]
+    OR?: NexusGenInputs['productViewLogWhereInput'][] | null; // [productViewLogWhereInput!]
+    clientIp?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    id?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    productStoreId?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    product_store?: NexusGenInputs['ProductStoreWhereInput'] | null; // ProductStoreWhereInput
+    siteCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    viewTime?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+  }
   purchaseInputs: { // input type
     expiredAt: NexusGenScalars['DateTime']; // DateTime!
     planInfoId: number; // Int!
@@ -3025,6 +3047,13 @@ export interface NexusGenObjects {
     id: number; // Int!
     state?: string | null; // String
   }
+  productViewLog: { // root type
+    clientIp: string; // String!
+    id: number; // Int!
+    productStoreId: number; // Int!
+    siteCode: string; // String!
+    viewTime: NexusGenScalars['DateTime']; // DateTime!
+  }
   testType: { // root type
     optionvalues?: Array<string | null> | null; // [String]
     productId?: number | null; // Int
@@ -3340,6 +3369,7 @@ export interface NexusGenFieldTypes {
     deleteProductByUser: boolean; // Boolean!
     deleteStore: boolean; // Boolean!
     deleteUserByAdmin: boolean; // Boolean!
+    deleteUserProductByAdmin: boolean; // Boolean!
     deleteWordByUser: boolean; // Boolean!
     disableUserOption: boolean; // Boolean!
     endProductSellStateByAdmin: number; // Int!
@@ -4053,6 +4083,13 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     state: string | null; // String
   }
+  productViewLog: { // field return type
+    clientIp: string; // String!
+    id: number; // Int!
+    productStoreId: number; // Int!
+    siteCode: string; // String!
+    viewTime: NexusGenScalars['DateTime']; // DateTime!
+  }
   testType: { // field return type
     optionvalues: Array<string | null> | null; // [String]
     productId: number | null; // Int
@@ -4358,6 +4395,7 @@ export interface NexusGenFieldTypeNames {
     deleteProductByUser: 'Boolean'
     deleteStore: 'Boolean'
     deleteUserByAdmin: 'Boolean'
+    deleteUserProductByAdmin: 'Boolean'
     deleteWordByUser: 'Boolean'
     disableUserOption: 'Boolean'
     endProductSellStateByAdmin: 'Int'
@@ -5071,6 +5109,13 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     state: 'String'
   }
+  productViewLog: { // field return type name
+    clientIp: 'String'
+    id: 'Int'
+    productStoreId: 'Int'
+    siteCode: 'String'
+    viewTime: 'DateTime'
+  }
   testType: { // field return type name
     optionvalues: 'String'
     productId: 'Int'
@@ -5229,6 +5274,9 @@ export interface NexusGenArgTypes {
       store: string; // String!
     }
     deleteUserByAdmin: { // args
+      userId: number[]; // [Int!]!
+    }
+    deleteUserProductByAdmin: { // args
       userId: number[]; // [Int!]!
     }
     deleteWordByUser: { // args
