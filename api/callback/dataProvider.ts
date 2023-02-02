@@ -29,7 +29,7 @@ export const dataProvider = async (req: Request, res: Response) => {
                     data : { cnt : { increment : 1} }
                 })
 
-                if(!productStore) throwError(errors.etc("조회 업데이트 실패"),null);
+                if(!productStore) return throwError(errors.etc("조회 업데이트 실패"),null);
                 
                 await prisma.productViewLog.create({
                     data : {
@@ -51,7 +51,7 @@ export const dataProvider = async (req: Request, res: Response) => {
                         where : { siteCode : siteCode , productId : parseInt(productId)},
                         data : { cnt : { increment : 1} }
                     })
-                    if(!productStore) throwError(errors.etc("조회 업데이트 실패"),null);
+                    if(!productStore) return throwError(errors.etc("조회 업데이트 실패"),null);
 
                     await prisma.productViewLog.update({
                         where : {id : productViewLog[0].id },data : { viewTime : new Date()}
@@ -65,7 +65,6 @@ export const dataProvider = async (req: Request, res: Response) => {
         catch (e) {
                 console.log(e);
                 res.sendStatus(500)
-                return throwError(errors.etc("connection error"),null);
 
         }
             finally {
@@ -76,6 +75,5 @@ export const dataProvider = async (req: Request, res: Response) => {
         console.log(e);
         console.log(req.body);
         res.sendStatus(500)
-        return throwError(errors.etc("connection error"),null);
     }
 }
