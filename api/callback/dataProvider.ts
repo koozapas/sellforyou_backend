@@ -13,7 +13,7 @@ export const dataProvider = async (req: Request, res: Response) => {
             let ip : any= req.headers['x-real-ip'] || req.connection.remoteAddress;
          
             let productStoreId = await prisma.productStore.findMany({
-                where : { siteCode , productId : parseInt(productId)} 
+                where : { siteCode , productId : parseInt(productId)} ,
             }) 
 
             if(productStoreId.length === 0) return throwError(errors.etc("Not productStore Id"),null);
@@ -28,7 +28,7 @@ export const dataProvider = async (req: Request, res: Response) => {
                     where : { siteCode : siteCode , productId : parseInt(productId)},
                     data : { cnt : { increment : 1} }
                 })
-
+                
                 if(!productStore) return throwError(errors.etc("조회 업데이트 실패"),null);
                 
                 await prisma.productViewLog.create({
@@ -51,6 +51,7 @@ export const dataProvider = async (req: Request, res: Response) => {
                         where : { siteCode : siteCode , productId : parseInt(productId)},
                         data : { cnt : { increment : 1} }
                     })
+                    
                     if(!productStore) return throwError(errors.etc("조회 업데이트 실패"),null);
 
                     await prisma.productViewLog.update({
