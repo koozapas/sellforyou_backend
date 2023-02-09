@@ -622,7 +622,8 @@ const registerProductResolver = (data: IQueryAdminArg | null) => async (src: {},
                                     edate: "2022-11-26 19:43:09", //상품 만료일자
                                     code: v.product.productCode, //마스터 상품코드(작업대상 상품별 고유 코드)
                                     name: "SellForYou",
-                                    name2: v.product.productStore.find(v2 => v2.siteCode === vSiteCode && v2.state === 2)?.storeProductId?? null, //productStore의 id를 반환
+                                    name2: vSiteCode === 'B378' ? v.product.productStore.find(v2 => v2.siteCode === vSiteCode && v2.state === 2)?.etcVendorItemId ?? null 
+                                    : v.product.productStore.find(v2 => v2.siteCode === vSiteCode && v2.state === 2)?.storeProductId?? null, //productStore의 id를 반환
                                     eng_name: "", //영어상품명
                                     china_name: "", //중국어상품명
                                     japan_name: "", //일본어상품명
