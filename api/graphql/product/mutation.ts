@@ -835,6 +835,7 @@ const deleteUserResolver = async (src: {}, args : ArgsValue<"Mutation", "deleteU
 
         await ctx.prisma.productStoreLog.deleteMany({ where: { productStoreId: { in: productStoreId } } });
         await ctx.prisma.productOptionValue.deleteMany({ where: { productOptionNameId: { in: productOptionNameId } } });
+        await ctx.prisma.productViewLog.deleteMany({ where : { productId : { in : productIdList}}});
         await ctx.prisma.productStore.deleteMany({ where: { productId: { in: productIdList } } });
         await ctx.prisma.productOptionName.deleteMany({ where: { productId: {in : productIdList} } });
         await ctx.prisma.product.deleteMany({ where: { id: {in :productIdList} } });
@@ -886,6 +887,7 @@ const deleteUserProductResolver = async (src: {}, args : ArgsValue<"Mutation", "
         )
         await ctx.prisma.productStoreLog.deleteMany({ where: { productStoreId: { in: productStoreId } } });
         await ctx.prisma.productOptionValue.deleteMany({ where: { productOptionNameId: { in: productOptionNameId } } });
+        await ctx.prisma.productViewLog.deleteMany({ where : { productId : { in : productIdList}}});
         await ctx.prisma.productStore.deleteMany({ where: { productId: { in: productIdList } } });
         await ctx.prisma.productOptionName.deleteMany({ where: { productId: {in : productIdList} } });
         await ctx.prisma.product.deleteMany({ where: { id: {in :productIdList} } });
@@ -928,6 +930,7 @@ const deleteProductResolver = async (src: {}, args: ArgsValue<"Mutation", "delet
 
         await ctx.prisma.productStoreLog.deleteMany({ where: { productStoreId: { in: productStoreId } } });
         await ctx.prisma.productOptionValue.deleteMany({ where: { productOptionNameId: { in: productOptionNameId } } });
+        await ctx.prisma.productViewLog.deleteMany({ where : { productId : { in : args.productId}}});
         await ctx.prisma.productStore.deleteMany({ where: { productId: { in: args.productId } } });
         await ctx.prisma.productOptionName.deleteMany({ where: { productId: {in : args.productId} } });
         await ctx.prisma.product.deleteMany({ where: { id: {in :args.productId} } });
@@ -1914,6 +1917,25 @@ export const mutation_product = extendType({
                     });
 
                     return JSON.stringify({total,a077,b378,a112,a113,a001,a006,a027,b719,a524,a525,b956});
+                }catch(e){
+                    return throwError(e,ctx);
+                }
+            }
+        })
+        t.field("selectProductViewLogDateByUsers",{
+            type : nonNull("String"),
+            args: {
+                timeStart : nonNull(stringArg()),
+                timeEnd : nonNull(stringArg()),
+            },
+            resolve : async (src,args,ctx,info) => {
+                try{
+                    const total : any= await ctx.prisma.productViewLog.findMany({
+                        where : { userId : ctx.token?.userId , viewTime : { gte : new Date(args.timeStart) , lte : new Date(args.timeEnd)} },
+                        select : { viewTime : true }
+                    });
+
+                    return JSON.stringify(total);
                 }catch(e){
                     return throwError(e,ctx);
                 }

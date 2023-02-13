@@ -76,6 +76,7 @@ export const mutation_product_store = extendType({
                 
                         await ctx.prisma.productStoreLog.deleteMany({ where: { productStoreId: { in: productStoreId } } });
                         await ctx.prisma.productOptionValue.deleteMany({ where: { productOptionNameId: { in: productOptionNameId } } });
+                        await ctx.prisma.productViewLog.deleteMany({where : {productStoreId : {in : productStoreId }}})
                         await ctx.prisma.productStore.deleteMany({ where: { productId: { in: args.productId } } });
                         await ctx.prisma.productOptionName.deleteMany({ where: { productId: {in : args.productId} } });
                         await ctx.prisma.product.deleteMany({ where: { id: {in :args.productId} } });
