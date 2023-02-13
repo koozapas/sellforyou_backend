@@ -3646,6 +3646,7 @@ input productViewLogWhereInput {
   OR: [productViewLogWhereInput!]
   clientIp: StringFilter
   id: IntFilter
+  productId: IntFilter
   productStoreId: IntFilter
   product_store: ProductStoreWhereInput
   siteCode: StringFilter

@@ -984,6 +984,7 @@ model productViewLog {
   viewTime       DateTime     @default(now()) @db.DateTime(0)
   siteCode       String       @db.VarChar(10)
   userId         Int
+  productId      Int
   product_store  ProductStore @relation("productViewLogToproduct_store", fields: [productStoreId], references: [id])
 
   @@index([productStoreId], name: "FK_productViewLog_product_store")

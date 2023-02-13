@@ -2257,6 +2257,7 @@ export interface NexusGenInputs {
     OR?: NexusGenInputs['productViewLogWhereInput'][] | null; // [productViewLogWhereInput!]
     clientIp?: NexusGenInputs['StringFilter'] | null; // StringFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    productId?: NexusGenInputs['IntFilter'] | null; // IntFilter
     productStoreId?: NexusGenInputs['IntFilter'] | null; // IntFilter
     product_store?: NexusGenInputs['ProductStoreWhereInput'] | null; // ProductStoreWhereInput
     siteCode?: NexusGenInputs['StringFilter'] | null; // StringFilter

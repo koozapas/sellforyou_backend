@@ -28,6 +28,7 @@ export const dataProvider = async (req: Request, res: Response) => {
                         clientIp : ip,
                         userId : productStoreId.userId,
                         productStoreId : productStoreId.id,
+                        productId : productStoreId.productId,
                         siteCode 
                     }
                 })
@@ -41,17 +42,15 @@ export const dataProvider = async (req: Request, res: Response) => {
                 const diffMin = diffMSec / (60 * 1000);
 
                 if(diffMin > 30){
-
                     await prisma.productViewLog.create({
                         data : {
                             clientIp : ip,
                             userId :  productStoreId.userId,
                             productStoreId : productStoreId.id,
+                            productId : productStoreId.productId,
                             siteCode 
                         }
                     })
-    
-                    
                 }
             }
 
