@@ -1040,6 +1040,7 @@ type Mutation {
   purchasePlanByUser(merchantUid: String!, planInfoId: Int!): Int!
   requestPhoneVerificationByEveryone(phoneNumber: String!): Boolean!
   restoreProductOptionValue(productOptionNameId: Int!): String!
+  selectProductViewLogByUsers(timeEnd: String!, timeStart: String!): String!
   setMaxProductLimitByAdmin(
     """미설정시 무제한"""
     productLimit: Int

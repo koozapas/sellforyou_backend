@@ -21,7 +21,6 @@ export const dataProvider = async (req: Request, res: Response) => {
             let productViewLog = await prisma.productViewLog.findMany({
                 where : { clientIp : ip , siteCode , productStoreId : productStoreId.id} 
             })
-            console.log("list",productViewLog);
             if(productViewLog.length ===0){
                 
                 await prisma.productViewLog.create({
@@ -37,12 +36,10 @@ export const dataProvider = async (req: Request, res: Response) => {
                 const nowdate = new Date();
                 // let lastViewTime :any = productViewLog[0].viewTime ;
                 let lastView : any = productViewLog.reduce((prev : any,curr:any) => { return new Date(prev).getTime() <= new Date(curr).getTime() ? prev : curr ;});
-                console.log(lastView);
                 let lastViewTime : any = lastView.viewTime;
                 const diffMSec = nowdate.getTime() - lastViewTime.getTime();
                 const diffMin = diffMSec / (60 * 1000);
 
-                console.log("diffMin",diffMin);
                 if(diffMin > 30){
 
                     await prisma.productViewLog.create({

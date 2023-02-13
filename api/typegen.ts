@@ -3389,6 +3389,7 @@ export interface NexusGenFieldTypes {
     purchasePlanByUser: number; // Int!
     requestPhoneVerificationByEveryone: boolean; // Boolean!
     restoreProductOptionValue: string; // String!
+    selectProductViewLogByUsers: string; // String!
     setMaxProductLimitByAdmin: boolean; // Boolean!
     setMultiPurchaseInfoByAdmin: boolean; // Boolean!
     setProductOptionNameBySomeOne: boolean; // Boolean!
@@ -4415,6 +4416,7 @@ export interface NexusGenFieldTypeNames {
     purchasePlanByUser: 'Int'
     requestPhoneVerificationByEveryone: 'Boolean'
     restoreProductOptionValue: 'String'
+    selectProductViewLogByUsers: 'String'
     setMaxProductLimitByAdmin: 'Boolean'
     setMultiPurchaseInfoByAdmin: 'Boolean'
     setProductOptionNameBySomeOne: 'Boolean'
@@ -5335,6 +5337,10 @@ export interface NexusGenArgTypes {
     }
     restoreProductOptionValue: { // args
       productOptionNameId: number; // Int!
+    }
+    selectProductViewLogByUsers: { // args
+      timeEnd: string; // String!
+      timeStart: string; // String!
     }
     setMaxProductLimitByAdmin: { // args
       productLimit?: number | null; // Int

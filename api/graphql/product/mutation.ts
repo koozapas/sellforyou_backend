@@ -1868,6 +1868,57 @@ export const mutation_product = extendType({
                 }
             }
         })
+        t.field("selectProductViewLogByUsers",{
+            type : nonNull("String"),
+            args: {
+                timeStart : nonNull(stringArg()),
+                timeEnd : nonNull(stringArg()),
+            },
+            resolve : async (src,args,ctx,info) => {
+                try{
+                    const total : any= await ctx.prisma.productViewLog.count({
+                        where : { userId : ctx.token?.userId , viewTime : { gte : new Date(args.timeStart) , lte : new Date(args.timeEnd)} }
+                    });
+                    const a077 = await ctx.prisma.productViewLog.count({
+                        where : { userId : ctx.token?.userId , viewTime : { gte : new Date(args.timeStart) , lte : new Date(args.timeEnd)} ,siteCode : "a077" }
+                    });
+                    const b378 = await ctx.prisma.productViewLog.count({
+                        where : { userId : ctx.token?.userId , viewTime : { gte : new Date(args.timeStart) , lte : new Date(args.timeEnd)} ,siteCode : "b378" }
+                    });
+                    const a112 = await ctx.prisma.productViewLog.count({
+                        where : { userId : ctx.token?.userId , viewTime : { gte : new Date(args.timeStart) , lte : new Date(args.timeEnd)} ,siteCode : "a112" }
+                    });
+                    const a113 = await ctx.prisma.productViewLog.count({
+                        where : { userId : ctx.token?.userId , viewTime : { gte : new Date(args.timeStart) , lte : new Date(args.timeEnd)} ,siteCode : "a113" }
+                    });
+                    const a001 = await ctx.prisma.productViewLog.count({
+                        where : { userId : ctx.token?.userId , viewTime : { gte : new Date(args.timeStart) , lte : new Date(args.timeEnd)} ,siteCode : "a001" }
+                    });
+                    const a006 = await ctx.prisma.productViewLog.count({
+                        where : { userId : ctx.token?.userId , viewTime : { gte : new Date(args.timeStart) , lte : new Date(args.timeEnd)} ,siteCode : "a006" }
+                    });
+                    const a027 = await ctx.prisma.productViewLog.count({
+                        where : { userId : ctx.token?.userId , viewTime : { gte : new Date(args.timeStart) , lte : new Date(args.timeEnd)} ,siteCode : "a027" }
+                    });
+                    const b719 = await ctx.prisma.productViewLog.count({
+                        where : { userId : ctx.token?.userId , viewTime : { gte : new Date(args.timeStart) , lte : new Date(args.timeEnd)} ,siteCode : "b719" }
+                    });
+                    const a524 = await ctx.prisma.productViewLog.count({
+                        where : { userId : ctx.token?.userId , viewTime : { gte : new Date(args.timeStart) , lte : new Date(args.timeEnd)}, siteCode : "a524" }
+                    });
+                    const a525 = await ctx.prisma.productViewLog.count({
+                        where : { userId : ctx.token?.userId , viewTime : { gte : new Date(args.timeStart) , lte : new Date(args.timeEnd)} ,siteCode : "a525" }
+                    });
+                    const b956 = await ctx.prisma.productViewLog.count({
+                        where : { userId : ctx.token?.userId , viewTime : { gte : new Date(args.timeStart) , lte : new Date(args.timeEnd)} ,siteCode : "b956" }
+                    });
+
+                    return JSON.stringify({total,a077,b378,a112,a113,a001,a006,a027,b719,a524,a525,b956});
+                }catch(e){
+                    return throwError(e,ctx);
+                }
+            }
+        })
         t.field("updateProductAttributeByUser",{
             type: nonNull("String"),
             args: {
