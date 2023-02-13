@@ -3648,6 +3648,7 @@ input productViewLogWhereInput {
   productStoreId: IntFilter
   product_store: ProductStoreWhereInput
   siteCode: StringFilter
+  userId: IntFilter
   viewTime: DateTimeFilter
 }
 

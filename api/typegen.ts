@@ -2260,6 +2260,7 @@ export interface NexusGenInputs {
     productStoreId?: NexusGenInputs['IntFilter'] | null; // IntFilter
     product_store?: NexusGenInputs['ProductStoreWhereInput'] | null; // ProductStoreWhereInput
     siteCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    userId?: NexusGenInputs['IntFilter'] | null; // IntFilter
     viewTime?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
   }
   purchaseInputs: { // input type

@@ -12,51 +12,48 @@ export const dataProvider = async (req: Request, res: Response) => {
         try{
             let ip : any= req.headers['x-real-ip'] || req.connection.remoteAddress;
          
-            let productStoreId = await prisma.productStore.findMany({
+            let productStoreId = await prisma.productStore.findFirst({
                 where : { siteCode , productId : parseInt(productId)} ,
             }) 
 
-            if(productStoreId.length === 0) return throwError(errors.etc("Not productStore Id"),null);
+            if(!productStoreId) return throwError(errors.etc("Not productStore Id"),null);
 
             let productViewLog = await prisma.productViewLog.findMany({
-                where : { clientIp : ip , siteCode , productStoreId : productStoreId[0].id} 
+                where : { clientIp : ip , siteCode , productStoreId : productStoreId.id} 
             })
-
+            console.log("list",productViewLog);
             if(productViewLog.length ===0){
-                
-                let productStore = await prisma.productStore.updateMany({
-                    where : { siteCode : siteCode , productId : parseInt(productId)},
-                    data : { cnt : { increment : 1} }
-                })
-                
-                if(!productStore) return throwError(errors.etc("조회 업데이트 실패"),null);
                 
                 await prisma.productViewLog.create({
                     data : {
                         clientIp : ip,
-                        productStoreId : productStoreId[0].id,
+                        userId : productStoreId.userId,
+                        productStoreId : productStoreId.id,
                         siteCode 
                     }
                 })
 
             }else{
                 const nowdate = new Date();
-                let lastViewTime :any = productViewLog[0].viewTime ;
+                // let lastViewTime :any = productViewLog[0].viewTime ;
+                let lastView : any = productViewLog.reduce((prev : any,curr:any) => { return new Date(prev).getTime() <= new Date(curr).getTime() ? prev : curr ;});
+                console.log(lastView);
+                let lastViewTime : any = lastView.viewTime;
                 const diffMSec = nowdate.getTime() - lastViewTime.getTime();
                 const diffMin = diffMSec / (60 * 1000);
 
-                if(diffMin > 1440){
+                console.log("diffMin",diffMin);
+                if(diffMin > 30){
 
-                    let productStore = await prisma.productStore.updateMany({
-                        where : { siteCode : siteCode , productId : parseInt(productId)},
-                        data : { cnt : { increment : 1} }
+                    await prisma.productViewLog.create({
+                        data : {
+                            clientIp : ip,
+                            userId :  productStoreId.userId,
+                            productStoreId : productStoreId.id,
+                            siteCode 
+                        }
                     })
-                    
-                    if(!productStore) return throwError(errors.etc("조회 업데이트 실패"),null);
-
-                    await prisma.productViewLog.update({
-                        where : {id : productViewLog[0].id },data : { viewTime : new Date()}
-                    })
+    
                     
                 }
             }
