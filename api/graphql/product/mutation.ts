@@ -1871,7 +1871,7 @@ export const mutation_product = extendType({
                 }
             }
         })
-        t.field("selectProductViewLogByUsers",{
+        t.field("selectProductViewLogByUser",{
             type : nonNull("String"),
             args: {
                 timeStart : nonNull(stringArg()),
@@ -1922,7 +1922,7 @@ export const mutation_product = extendType({
                 }
             }
         })
-        t.field("selectProductViewLogDateByUsers",{
+        t.field("selectProductViewLogDateByUser",{
             type : nonNull("String"),
             args: {
                 timeStart : nonNull(stringArg()),
