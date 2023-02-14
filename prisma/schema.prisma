@@ -263,6 +263,7 @@ model Product {
   productStateEnum   productStateEnum    @relation("productToproduct_state_enum", fields: [state], references: [id])
   taobaoProduct      TaobaoProduct       @relation("taobaoProduct", fields: [taobaoProductId], references: [id])
   user               User?               @relation("productTouser", fields: [userId], references: [id])
+  productViewLog     productViewLog[]    @relation("productToproductViewLog")
   productOption      ProductOption[]
   productOptionName  ProductOptionName[] @relation("productToproduct_option_name")
   productStore       ProductStore[]      @relation("productToproduct_store")
@@ -980,13 +981,15 @@ model SillInfoB956 {
 model productViewLog {
   id             Int          @id @default(autoincrement())
   productStoreId Int
+  productId      Int
   clientIp       String       @db.VarChar(100)
   viewTime       DateTime     @default(now()) @db.DateTime(0)
   siteCode       String       @db.VarChar(10)
   userId         Int
-  productId      Int
+  product        Product      @relation("productToproductViewLog", fields: [productId], references: [id])
   product_store  ProductStore @relation("productViewLogToproduct_store", fields: [productStoreId], references: [id])
 
+  @@index([productId], name: "FK_productViewLog_product")
   @@index([productStoreId], name: "FK_productViewLog_product_store")
 }
 

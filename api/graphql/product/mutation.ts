@@ -1932,7 +1932,7 @@ export const mutation_product = extendType({
                 try{
                     const total : any= await ctx.prisma.productViewLog.findMany({
                         where : { userId : ctx.token?.userId , viewTime : { gte : new Date(args.timeStart) , lte : new Date(args.timeEnd)} },
-                        select : { viewTime : true }
+                        include : { product_store : { select : { storeUrl : true } } ,product : { select : { id : true , productCode : true ,name : true, imageThumbnailData : true }}}
                     });
 
                     return JSON.stringify(total);

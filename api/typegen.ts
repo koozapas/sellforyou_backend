@@ -1112,6 +1112,7 @@ export interface NexusGenInputs {
     productOptionName?: NexusGenInputs['ProductOptionNameOrderByRelationAggregateInput'] | null; // ProductOptionNameOrderByRelationAggregateInput
     productStateEnum?: NexusGenInputs['productStateEnumOrderByWithRelationInput'] | null; // productStateEnumOrderByWithRelationInput
     productStore?: NexusGenInputs['ProductStoreOrderByRelationAggregateInput'] | null; // ProductStoreOrderByRelationAggregateInput
+    productViewLog?: NexusGenInputs['productViewLogOrderByRelationAggregateInput'] | null; // productViewLogOrderByRelationAggregateInput
     searchTags?: NexusGenEnums['SortOrder'] | null; // SortOrder
     shippingFee?: NexusGenEnums['SortOrder'] | null; // SortOrder
     siilCode?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1334,6 +1335,7 @@ export interface NexusGenInputs {
     productOptionName?: NexusGenInputs['ProductOptionNameListRelationFilter'] | null; // ProductOptionNameListRelationFilter
     productStateEnum?: NexusGenInputs['productStateEnumWhereInput'] | null; // productStateEnumWhereInput
     productStore?: NexusGenInputs['ProductStoreListRelationFilter'] | null; // ProductStoreListRelationFilter
+    productViewLog?: NexusGenInputs['ProductViewLogListRelationFilter'] | null; // ProductViewLogListRelationFilter
     searchTags?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     shippingFee?: NexusGenInputs['IntFilter'] | null; // IntFilter
     siilCode?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
@@ -2257,6 +2259,7 @@ export interface NexusGenInputs {
     OR?: NexusGenInputs['productViewLogWhereInput'][] | null; // [productViewLogWhereInput!]
     clientIp?: NexusGenInputs['StringFilter'] | null; // StringFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    product?: NexusGenInputs['ProductWhereInput'] | null; // ProductWhereInput
     productId?: NexusGenInputs['IntFilter'] | null; // IntFilter
     productStoreId?: NexusGenInputs['IntFilter'] | null; // IntFilter
     product_store?: NexusGenInputs['ProductStoreWhereInput'] | null; // ProductStoreWhereInput

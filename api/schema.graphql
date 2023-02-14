@@ -1824,6 +1824,7 @@ input ProductOrderByWithRelationInput {
   productOptionName: ProductOptionNameOrderByRelationAggregateInput
   productStateEnum: productStateEnumOrderByWithRelationInput
   productStore: ProductStoreOrderByRelationAggregateInput
+  productViewLog: productViewLogOrderByRelationAggregateInput
   searchTags: SortOrder
   shippingFee: SortOrder
   siilCode: SortOrder
@@ -2100,6 +2101,7 @@ input ProductWhereInput {
   productOptionName: ProductOptionNameListRelationFilter
   productStateEnum: productStateEnumWhereInput
   productStore: ProductStoreListRelationFilter
+  productViewLog: ProductViewLogListRelationFilter
   searchTags: StringNullableFilter
   shippingFee: IntFilter
   siilCode: StringNullableFilter
@@ -3647,6 +3649,7 @@ input productViewLogWhereInput {
   OR: [productViewLogWhereInput!]
   clientIp: StringFilter
   id: IntFilter
+  product: ProductWhereInput
   productId: IntFilter
   productStoreId: IntFilter
   product_store: ProductStoreWhereInput
