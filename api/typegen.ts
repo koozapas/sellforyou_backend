@@ -1214,7 +1214,6 @@ export interface NexusGenInputs {
     state?: NexusGenEnums['SortOrder'] | null; // SortOrder
     storeProductId?: NexusGenEnums['SortOrder'] | null; // SortOrder
     storeUrl?: NexusGenEnums['SortOrder'] | null; // SortOrder
-    testUrl?: NexusGenEnums['SortOrder'] | null; // SortOrder
     user?: NexusGenInputs['UserOrderByWithRelationInput'] | null; // UserOrderByWithRelationInput
     userId?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
@@ -1252,7 +1251,6 @@ export interface NexusGenInputs {
     state?: NexusGenInputs['IntFilter'] | null; // IntFilter
     storeProductId?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     storeUrl?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
-    testUrl?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     user?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
     userId?: NexusGenInputs['IntFilter'] | null; // IntFilter
   }
@@ -3393,8 +3391,8 @@ export interface NexusGenFieldTypes {
     purchasePlanByUser: number; // Int!
     requestPhoneVerificationByEveryone: boolean; // Boolean!
     restoreProductOptionValue: string; // String!
-    selectProductViewLogByUsers: string; // String!
-    selectProductViewLogDateByUsers: string; // String!
+    selectProductViewLogByUser: string; // String!
+    selectProductViewLogDateByUser: string; // String!
     setMaxProductLimitByAdmin: boolean; // Boolean!
     setMultiPurchaseInfoByAdmin: boolean; // Boolean!
     setProductOptionNameBySomeOne: boolean; // Boolean!
@@ -4421,8 +4419,8 @@ export interface NexusGenFieldTypeNames {
     purchasePlanByUser: 'Int'
     requestPhoneVerificationByEveryone: 'Boolean'
     restoreProductOptionValue: 'String'
-    selectProductViewLogByUsers: 'String'
-    selectProductViewLogDateByUsers: 'String'
+    selectProductViewLogByUser: 'String'
+    selectProductViewLogDateByUser: 'String'
     setMaxProductLimitByAdmin: 'Boolean'
     setMultiPurchaseInfoByAdmin: 'Boolean'
     setProductOptionNameBySomeOne: 'Boolean'
@@ -5344,11 +5342,11 @@ export interface NexusGenArgTypes {
     restoreProductOptionValue: { // args
       productOptionNameId: number; // Int!
     }
-    selectProductViewLogByUsers: { // args
+    selectProductViewLogByUser: { // args
       timeEnd: string; // String!
       timeStart: string; // String!
     }
-    selectProductViewLogDateByUsers: { // args
+    selectProductViewLogDateByUser: { // args
       timeEnd: string; // String!
       timeStart: string; // String!
     }

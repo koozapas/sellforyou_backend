@@ -366,7 +366,6 @@ model ProductStore {
   storeUrl          String?           @map("store_url") @db.VarChar(200)
   connectedAt       DateTime          @default(now()) @map("connected_at") @db.DateTime(0)
   cnt               Int               @default(0)
-  testUrl           String?           @db.VarChar(200)
   product           Product           @relation("productToproduct_store", fields: [productId], references: [id])
   productStoreState ProductStoreState @relation("product_storeToproduct_store_state", fields: [state], references: [id])
   user              User              @relation("product_storeTouser", fields: [userId], references: [id])
@@ -997,7 +996,7 @@ enum UserState {
   ACTIVE
   DELETED
 
-  @@map("user_state")
+   @@map("user_state")
 }
 
 enum PurchaseLogType {
@@ -1005,7 +1004,7 @@ enum PurchaseLogType {
   IMAGE_TRANSLATE
   STOCK
 
-  @@map("purchase_log_type")
+   @@map("purchase_log_type")
 }
 
 enum PurchaseLogState {
@@ -1015,12 +1014,12 @@ enum PurchaseLogState {
   ENDED
   REFUNDED
 
-  @@map("purchase_log_state")
+   @@map("purchase_log_state")
 }
 
 enum AdminState {
   ACTIVE
   DELETED
 
-  @@map("admin_state")
+   @@map("admin_state")
 }

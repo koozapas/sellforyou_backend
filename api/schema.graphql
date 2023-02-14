@@ -1040,8 +1040,8 @@ type Mutation {
   purchasePlanByUser(merchantUid: String!, planInfoId: Int!): Int!
   requestPhoneVerificationByEveryone(phoneNumber: String!): Boolean!
   restoreProductOptionValue(productOptionNameId: Int!): String!
-  selectProductViewLogByUsers(timeEnd: String!, timeStart: String!): String!
-  selectProductViewLogDateByUsers(timeEnd: String!, timeStart: String!): String!
+  selectProductViewLogByUser(timeEnd: String!, timeStart: String!): String!
+  selectProductViewLogDateByUser(timeEnd: String!, timeStart: String!): String!
   setMaxProductLimitByAdmin(
     """미설정시 무제한"""
     productLimit: Int
@@ -1965,7 +1965,6 @@ input ProductStoreOrderByWithRelationInput {
   state: SortOrder
   storeProductId: SortOrder
   storeUrl: SortOrder
-  testUrl: SortOrder
   user: UserOrderByWithRelationInput
   userId: SortOrder
 }
@@ -2012,7 +2011,6 @@ input ProductStoreWhereInput {
   state: IntFilter
   storeProductId: StringNullableFilter
   storeUrl: StringNullableFilter
-  testUrl: StringNullableFilter
   user: UserWhereInput
   userId: IntFilter
 }
