@@ -997,7 +997,7 @@ enum UserState {
   ACTIVE
   DELETED
 
-   @@map("user_state")
+  @@map("user_state")
 }
 
 enum PurchaseLogType {
@@ -1005,7 +1005,7 @@ enum PurchaseLogType {
   IMAGE_TRANSLATE
   STOCK
 
-   @@map("purchase_log_type")
+  @@map("purchase_log_type")
 }
 
 enum PurchaseLogState {
@@ -1015,12 +1015,12 @@ enum PurchaseLogState {
   ENDED
   REFUNDED
 
-   @@map("purchase_log_state")
+  @@map("purchase_log_state")
 }
 
 enum AdminState {
   ACTIVE
   DELETED
 
-   @@map("admin_state")
+  @@map("admin_state")
 }
