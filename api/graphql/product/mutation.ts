@@ -1587,10 +1587,10 @@ export const mutation_product = extendType({
             },
             resolve : async(src,args,ctx,info) => {
                 try{
-                    const productStore = await ctx.prisma.productStore.updateMany({
-                        where : { siteCode : args.siteCode , productId : args.productId},
-                        data : { cnt : {increment : 1}}
-                    })
+                    // const productStore = await ctx.prisma.productStore.updateMany({
+                    //     where : { siteCode : args.siteCode , productId : args.productId},
+                    //     data : { cnt : {increment : 1}}
+                    // })
                 return "OK";
                 } catch (e) {
                     return throwError(e, ctx);
