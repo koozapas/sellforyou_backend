@@ -23,6 +23,8 @@ export const dataProvider = async (req: Request, res: Response) => {
             })
             if(productViewLog.length ===0){
                 
+                await prisma.productStore.update({where:{id:productStoreId.id},data:{cnt:{increment: 1}}})
+
                 await prisma.productViewLog.create({
                     data : {
                         clientIp : ip,
