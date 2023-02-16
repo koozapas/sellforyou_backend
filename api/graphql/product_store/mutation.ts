@@ -31,7 +31,8 @@ export const mutation_product_store = extendType({
                             id : productStore.id
                         },
                         data : {
-                            state : 4
+                            state : 4,
+                            inflow : 0,
                         }
                     })
 
