@@ -1205,6 +1205,7 @@ export interface NexusGenInputs {
     connectedAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
     etcVendorItemId?: NexusGenEnums['SortOrder'] | null; // SortOrder
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    inflow?: NexusGenEnums['SortOrder'] | null; // SortOrder
     product?: NexusGenInputs['ProductOrderByWithRelationInput'] | null; // ProductOrderByWithRelationInput
     productId?: NexusGenEnums['SortOrder'] | null; // SortOrder
     productStoreLog?: NexusGenInputs['ProductStoreLogOrderByRelationAggregateInput'] | null; // ProductStoreLogOrderByRelationAggregateInput
@@ -1242,6 +1243,7 @@ export interface NexusGenInputs {
     connectedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
     etcVendorItemId?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    inflow?: NexusGenInputs['IntNullableFilter'] | null; // IntNullableFilter
     product?: NexusGenInputs['ProductWhereInput'] | null; // ProductWhereInput
     productId?: NexusGenInputs['IntFilter'] | null; // IntFilter
     productStoreLog?: NexusGenInputs['ProductStoreLogListRelationFilter'] | null; // ProductStoreLogListRelationFilter

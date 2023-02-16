@@ -1956,6 +1956,7 @@ input ProductStoreOrderByWithRelationInput {
   connectedAt: SortOrder
   etcVendorItemId: SortOrder
   id: SortOrder
+  inflow: SortOrder
   product: ProductOrderByWithRelationInput
   productId: SortOrder
   productStoreLog: ProductStoreLogOrderByRelationAggregateInput
@@ -2002,6 +2003,7 @@ input ProductStoreWhereInput {
   connectedAt: DateTimeFilter
   etcVendorItemId: StringNullableFilter
   id: IntFilter
+  inflow: IntNullableFilter
   product: ProductWhereInput
   productId: IntFilter
   productStoreLog: ProductStoreLogListRelationFilter

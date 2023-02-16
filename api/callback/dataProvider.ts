@@ -22,8 +22,7 @@ export const dataProvider = async (req: Request, res: Response) => {
                 where : { clientIp : ip , siteCode , productStoreId : productStoreId.id} 
             })
             if(productViewLog.length ===0){
-                
-                await prisma.productStore.update({where:{id:productStoreId.id},data:{cnt:{increment: 1}}})
+                if(productStoreId.cnt === 0) await prisma.productStore.update({where:{id:productStoreId.id},data:{cnt:{increment: 1}}})//cnt는 1번이라도 유입이있는지 여부를 보기위한 컬럼(누적갯수아님)
 
                 await prisma.productViewLog.create({
                     data : {

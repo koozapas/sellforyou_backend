@@ -1587,10 +1587,6 @@ export const mutation_product = extendType({
             },
             resolve : async(src,args,ctx,info) => {
                 try{
-                    // const productStore = await ctx.prisma.productStore.updateMany({
-                    //     where : { siteCode : args.siteCode , productId : args.productId},
-                    //     data : { cnt : {increment : 1}}
-                    // })
                 return "OK";
                 } catch (e) {
                     return throwError(e, ctx);
@@ -1815,6 +1811,7 @@ export const mutation_product = extendType({
                                     storeUrl:  v.slave_reg_code !== '' ? shopDataUrlInfo[v.site_code]({ id: v.slave_reg_code, storeFullPath: product.user?.userInfo?.naverStoreUrl, vendorId: etcVendorItemId }) : undefined,
                                     siteCode: v.site_code,
                                     user: { connect: { id: product.userId! } },
+                                    inflow : 1,
                                 }
                             })
                             await ctx.prisma.product.update({
@@ -1851,6 +1848,7 @@ export const mutation_product = extendType({
                                     storeUrl: v.state !== 2 ?  v.slave_reg_code !== '' ? shopDataUrlInfo[v.site_code]({ id: v.slave_reg_code, storeFullPath: product.user?.userInfo?.naverStoreUrl, vendorId: etcVendorItemId }) : undefined : undefined,
                                     siteCode: v.site_code,
                                     user: { connect: { id: product.userId! } },
+                                    inflow : 1,
                                 }
                             })
                             await ctx.prisma.product.update({
