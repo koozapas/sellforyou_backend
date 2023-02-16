@@ -2686,6 +2686,7 @@ export interface NexusGenObjects {
     connectedAt: NexusGenScalars['DateTime']; // DateTime!
     etcVendorItemId?: string | null; // String
     id: number; // Int!
+    inflow?: number | null; // Int
     productId: number; // Int!
     siteCode: string; // String!
     state: number; // Int!
@@ -3631,6 +3632,7 @@ export interface NexusGenFieldTypes {
     connectedAt: NexusGenScalars['DateTime']; // DateTime!
     etcVendorItemId: string | null; // String
     id: number; // Int!
+    inflow: number | null; // Int
     product: NexusGenRootTypes['Product']; // Product!
     productId: number; // Int!
     productStoreLog: NexusGenRootTypes['ProductStoreLog'][]; // [ProductStoreLog!]!
@@ -4659,6 +4661,7 @@ export interface NexusGenFieldTypeNames {
     connectedAt: 'DateTime'
     etcVendorItemId: 'String'
     id: 'Int'
+    inflow: 'Int'
     product: 'Product'
     productId: 'Int'
     productStoreLog: 'ProductStoreLog'

@@ -1868,6 +1868,7 @@ type ProductStore {
   connectedAt: DateTime!
   etcVendorItemId: String
   id: Int!
+  inflow: Int
   product: Product!
   productId: Int!
   productStoreLog(cursor: ProductStoreLogWhereUniqueInput, orderBy: [ProductStoreLogOrderByWithRelationInput!], skip: Int, take: Int, where: ProductStoreLogWhereInput): [ProductStoreLog!]!

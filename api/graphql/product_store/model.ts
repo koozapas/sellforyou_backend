@@ -24,6 +24,7 @@ export const t_ProductStore = objectType({
         t.model.storeUrl();
         t.model.connectedAt();
         t.model.cnt();
+        t.model.inflow();
     }
 });
 
