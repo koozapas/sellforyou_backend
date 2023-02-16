@@ -33,6 +33,7 @@ export const mutation_product_store = extendType({
                         data : {
                             state : 4,
                             inflow : 0,
+                            cnt : 0,
                         }
                     })
 
@@ -44,6 +45,12 @@ export const mutation_product_store = extendType({
                         }
                     })
 
+                    await ctx.prisma.productViewLog.deleteMany({
+                        where : {
+                            productStoreId : productStore.id
+                        }
+                    })
+                    
                     const result = await ctx.prisma.productStore.findMany({
                         where : {
                             productId :args.productId,
