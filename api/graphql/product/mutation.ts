@@ -1920,6 +1920,34 @@ export const mutation_product = extendType({
                 }
             }
         })
+        t.field("selectProductViewLogDatefilterByUser",{
+            type : nonNull("String"),
+            args: {
+                productId : intArg(),
+                productName : stringArg(),
+                timeStart : nonNull(stringArg()),
+                timeEnd : nonNull(stringArg()),
+            },
+            resolve : async (src,args,ctx,info) => {
+                try{
+                    let total : any= await ctx.prisma.productViewLog.findMany({
+                        where : { userId : ctx.token?.userId , viewTime : { gte : new Date(args.timeStart) , lte : new Date(args.timeEnd)} },
+                        include : { product_store : { select : { storeUrl : true } } ,product : { select : { id : true , productCode : true ,name : true, imageThumbnailData : true }}}
+                    });
+
+                    if(args.productId !== undefined){
+                        total = total.filter((v :any) => v.product.id === args.productId);
+                    }
+                    if(args.productName !== undefined){
+                        total = total.filter((v :any) => v.product.name.includes(args.productName));
+                    }
+                    
+                    return JSON.stringify(total);
+                }catch(e){
+                    return throwError(e,ctx);
+                }
+            }
+        })
         t.field("selectProductViewLogDateByUser",{
             type : nonNull("String"),
             args: {
