@@ -1,63 +1,64 @@
 //user/model
 import { Prisma, PrismaClient } from "@prisma/client";
-import { objectType, nonNull ,list,enumType} from "nexus";
-import { NexusGenAllTypes } from '../../typegen';
-import { throwError,errors } from "../../utils/error";
-import { PurchaseLogPlanInfoType } from '../purchase';
-
+import { objectType, nonNull, list, enumType } from "nexus";
+import { NexusGenAllTypes } from "../../typegen";
+import { throwError, errors } from "../../utils/error";
+import { PurchaseLogPlanInfoType } from "../purchase";
 
 export const getPurchaseInfo = async (prisma: PrismaClient, userId: number): Promise<NexusGenAllTypes["UserPurchaseInfo"]> => {
   if (!userId) return { level: 0, levelExpiredAt: new Date(9990, 11, 31), history: "", additionalInfo: [] };
 
-  const purchaseInfos = await prisma.purchaseLog.findMany({ where: { userId : userId, state: "ACTIVE", expiredAt: { gte: new Date() } } });
-  const purchaseInfos2 = await prisma.purchaseLog.findMany({ where: { userId : userId, state: "ACTIVE" } });
-  const processedInfos = purchaseInfos.map(v => ({ ...v, planInfo: JSON.parse(v.planInfo) as PurchaseLogPlanInfoType })).sort((a, b) => (b.planInfo.planLevel ?? 0) - (a.planInfo.planLevel ?? 0));
+  const purchaseInfos = await prisma.purchaseLog.findMany({ where: { userId: userId, state: "ACTIVE", expiredAt: { gte: new Date() } } });
+  const purchaseInfos2 = await prisma.purchaseLog.findMany({ where: { userId: userId, state: "ACTIVE" } });
+  const processedInfos = purchaseInfos
+    .map((v) => ({ ...v, planInfo: JSON.parse(v.planInfo) as PurchaseLogPlanInfoType }))
+    .sort((a, b) => (b.planInfo.planLevel ?? 0) - (a.planInfo.planLevel ?? 0));
 
-  const planLevel = Math.max(...processedInfos.map(v => v.planInfo.planLevel ?? 0));
+  const planLevel = Math.max(...processedInfos.map((v) => v.planInfo.planLevel ?? 0));
 
-  const processedInfos2 = processedInfos.filter(v => v.planInfo.planLevel === planLevel).sort((a, b) => new Date(b.expiredAt).getTime() - new Date(a.expiredAt).getTime());
+  const processedInfos2 = processedInfos
+    .filter((v) => v.planInfo.planLevel === planLevel)
+    .sort((a, b) => new Date(b.expiredAt).getTime() - new Date(a.expiredAt).getTime());
 
   const additionalInfo: NexusGenAllTypes["UserPurchaseAdditionalInfo"][] = [];
-  const imageTranslate = processedInfos.find(v => v.planInfo.externalFeatureVariableId === 'IMAGE_TRANSLATE');
-  const stock = processedInfos.find(v => v.planInfo.externalFeatureVariableId === 'STOCK');
+  const imageTranslate = processedInfos.find((v) => v.planInfo.externalFeatureVariableId === "IMAGE_TRANSLATE");
+  const stock = processedInfos.find((v) => v.planInfo.externalFeatureVariableId === "STOCK");
   if (imageTranslate) {
-      additionalInfo.push({ type: "IMAGE_TRANSLATE", expiredAt: imageTranslate.expiredAt });
+    additionalInfo.push({ type: "IMAGE_TRANSLATE", expiredAt: imageTranslate.expiredAt });
   }
   if (stock) {
-      additionalInfo.push({ type: "STOCK", expiredAt: stock.expiredAt });
+    additionalInfo.push({ type: "STOCK", expiredAt: stock.expiredAt });
   }
   //결제 플랜 계산
   if (processedInfos2.length === 0) return { level: 0, levelExpiredAt: new Date(9990, 11, 31), history: JSON.stringify(purchaseInfos2), additionalInfo };
   return { level: planLevel, levelExpiredAt: processedInfos2[0].expiredAt, history: JSON.stringify(purchaseInfos2), additionalInfo };
-}
-
-
+};
 
 export const getPurchaseInfo2 = async (prisma: PrismaClient, userId: number): Promise<NexusGenAllTypes["UserPurchaseInfo"]> => {
-  if (!userId) return { level: 0, levelExpiredAt: new Date(9990, 11, 31),history: "" ,additionalInfo: [] };
+  if (!userId) return { level: 0, levelExpiredAt: new Date(9990, 11, 31), history: "", additionalInfo: [] };
   const purchaseInfos = await prisma.purchaseLog.findMany({ where: { userId, state: "ACTIVE", expiredAt: { gte: new Date() } } });
-  const processedInfos :any= purchaseInfos.map((v:any) => ({ ...v, planInfo: JSON.parse(v.planInfo) as PurchaseLogPlanInfoType }))
-      .sort((a : any, b: any) => 
-      { let source : any = new Date(a.expiredAt);
-        let target : any = new Date(b.expiredAt)
-        return source - target
-      });
+  const processedInfos: any = purchaseInfos
+    .map((v: any) => ({ ...v, planInfo: JSON.parse(v.planInfo) as PurchaseLogPlanInfoType }))
+    .sort((a: any, b: any) => {
+      let source: any = new Date(a.expiredAt);
+      let target: any = new Date(b.expiredAt);
+      return source - target;
+    });
 
   const additionalInfo: NexusGenAllTypes["UserPurchaseAdditionalInfo"][] = [];
-  const imageTranslate = processedInfos.find(v => v.planInfo.externalFeatureVariableId === 'IMAGE_TRANSLATE');
-  const stock = processedInfos.find(v => v.planInfo.externalFeatureVariableId === 'STOCK');
+  const imageTranslate = processedInfos.find((v) => v.planInfo.externalFeatureVariableId === "IMAGE_TRANSLATE");
+  const stock = processedInfos.find((v) => v.planInfo.externalFeatureVariableId === "STOCK");
   if (imageTranslate) {
-      additionalInfo.push({ type: "IMAGE_TRANSLATE", expiredAt: imageTranslate.expiredAt });
+    additionalInfo.push({ type: "IMAGE_TRANSLATE", expiredAt: imageTranslate.expiredAt });
   }
   if (stock) {
-      additionalInfo.push({ type: "STOCK", expiredAt: stock.expiredAt });
+    additionalInfo.push({ type: "STOCK", expiredAt: stock.expiredAt });
   }
   //결제 플랜 계산
-  const levelInfo = processedInfos.find(v => v.planInfo.planLevel);
-  if (!levelInfo) return { level: 0, levelExpiredAt: new Date(9990, 11, 31),history : JSON.stringify(processedInfos) ,additionalInfo  };
-  return { level: levelInfo.planInfo.planLevel!, levelExpiredAt: levelInfo.expiredAt, history : JSON.stringify(processedInfos),additionalInfo };
-}
-
+  const levelInfo = processedInfos.find((v) => v.planInfo.planLevel);
+  if (!levelInfo) return { level: 0, levelExpiredAt: new Date(9990, 11, 31), history: JSON.stringify(processedInfos), additionalInfo };
+  return { level: levelInfo.planInfo.planLevel!, levelExpiredAt: levelInfo.expiredAt, history: JSON.stringify(processedInfos), additionalInfo };
+};
 
 export const t_User = objectType({
   name: "User",
@@ -90,102 +91,98 @@ export const t_User = objectType({
     t.model.refCode();
     t.model.refAvailable();
     t.model.credit();
-    t.field("connectedUsers",{
-      type : nonNull(list(nonNull("User"))),
-      resolve : async(src,args,ctx,info) =>{
-        try{
+    t.field("connectedUsers", {
+      type: nonNull(list(nonNull("User"))),
+      resolve: async (src, args, ctx, info) => {
+        try {
           let data = await ctx.prisma.user.findUnique({
-            where : {
-              id : ctx.token!.userId!
-            }
-          })
-          if(!data) return throwError(errors.etc("We don't have Data"),ctx);
-          if(data.master) {
-            const subData :any = await ctx.prisma.user.findMany({
-              where : {
-                masterUserId : data.id
-              }
-            })
+            where: {
+              id: ctx.token!.userId!,
+            },
+          });
+          if (!data) return throwError(errors.etc("We don't have Data"), ctx);
+          if (data.master) {
+            const subData: any = await ctx.prisma.user.findMany({
+              where: {
+                masterUserId: data.id,
+              },
+            });
             return subData;
-          }
-          else {
+          } else {
             const subData = await ctx.prisma.user.findMany({
-              where : {
-                masterUserId : data.masterUserId
-              }
-            })
+              where: {
+                masterUserId: data.masterUserId,
+              },
+            });
             return subData;
           }
+        } catch (e) {
+          return throwError(e, ctx);
         }
-        catch(e){
-          return throwError(e,ctx);
-        }
-      }
-  })
+      },
+    });
     t.model.userLog({
       filtering: true,
       ordering: true,
       pagination: true,
     });
     t.nonNull.field("purchaseInfo", {
-        type: nonNull("UserPurchaseInfo"),
-        resolve: async (src, args, ctx, info) => {
-            try {
-                return getPurchaseInfo(ctx.prisma, src.id);
-            } catch (e) {
-                return throwError(e, ctx);
-            }
+      type: nonNull("UserPurchaseInfo"),
+      resolve: async (src, args, ctx, info) => {
+        try {
+          return getPurchaseInfo(ctx.prisma, src.id);
+        } catch (e) {
+          return throwError(e, ctx);
         }
-    })
+      },
+    });
     t.nonNull.field("purchaseInfo2", {
       type: nonNull("UserPurchaseInfo"),
       resolve: async (src, args, ctx, info) => {
-          try {
-              return getPurchaseInfo2(ctx.prisma, src.id);
-          } catch (e) {
-              return throwError(e, ctx);
-          }
-      }
-  })
-    t.nonNull.int("productCount", {
-        resolve: async (src, args, ctx, info) => {
-            try {
-                return ctx.prisma.product.count({ where: { userId: src.id } })
-            } catch (e) {
-                return throwError(e, ctx);
-            }
+        try {
+          return getPurchaseInfo2(ctx.prisma, src.id);
+        } catch (e) {
+          return throwError(e, ctx);
         }
-    })
+      },
+    });
+    t.nonNull.int("productCount", {
+      resolve: async (src, args, ctx, info) => {
+        try {
+          return ctx.prisma.product.count({ where: { userId: src.id } });
+        } catch (e) {
+          return throwError(e, ctx);
+        }
+      },
+    });
     t.model.verificationNumber();
   },
 });
 
 export const enum_UserPurchaseAdditionalInfoEnum = enumType({
   name: "UserPurchaseAdditionalInfoEnumType",
-  members: ["IMAGE_TRANSLATE", "STOCK"]
-})
-
+  members: ["IMAGE_TRANSLATE", "STOCK"],
+});
 
 export const t_UserPurchaseAdditionalInfo = objectType({
   name: "UserPurchaseAdditionalInfo",
   definition(t) {
-      t.nonNull.field("type", { type: 'UserPurchaseAdditionalInfoEnumType' });
-      t.nonNull.date("expiredAt");
-  }
+    t.nonNull.field("type", { type: "UserPurchaseAdditionalInfoEnumType" });
+    t.nonNull.date("expiredAt");
+  },
 });
 
 export const t_UserPurchaseInfo = objectType({
   name: "UserPurchaseInfo",
   definition(t) {
-      t.nonNull.int("level");
-      t.nonNull.date("levelExpiredAt");
-      t.nonNull.string("history");
-      t.nonNull.list.nonNull.field("additionalInfo", {
-          type: "UserPurchaseAdditionalInfo"
-      });
-  }
+    t.nonNull.int("level");
+    t.nonNull.date("levelExpiredAt");
+    t.nonNull.string("history");
+    t.nonNull.list.nonNull.field("additionalInfo", {
+      type: "UserPurchaseAdditionalInfo",
+    });
+  },
 });
-
 
 // export const t_UserPurchaseInfo = objectType({
 //   name: "UserPurchaseInfo",
@@ -197,7 +194,6 @@ export const t_UserPurchaseInfo = objectType({
 //       });
 //   }
 // });
-
 
 export const t_UserInfo = objectType({
   name: "UserInfo",
@@ -313,9 +309,9 @@ export const t_UserInfo = objectType({
     t.model.collectCheckPosition();
     t.model.sillFromCategory();
     t.model.thumbnailRepresentNo();
+    t.model.sellerCatId();
   },
 });
-
 
 export const t_AccountInfo = objectType({
   name: "AccountInfo",

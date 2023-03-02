@@ -1804,6 +1804,7 @@ export interface NexusGenInputs {
     phone?: NexusGenEnums['SortOrder'] | null; // SortOrder
     productCollectCount?: NexusGenEnums['SortOrder'] | null; // SortOrder
     refundShippingFee?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sellerCatId?: NexusGenEnums['SortOrder'] | null; // SortOrder
     sillFromCategory?: NexusGenEnums['SortOrder'] | null; // SortOrder
     streetApiKey?: NexusGenEnums['SortOrder'] | null; // SortOrder
     streetApiKey2?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1920,6 +1921,7 @@ export interface NexusGenInputs {
     phone?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     productCollectCount?: NexusGenInputs['IntFilter'] | null; // IntFilter
     refundShippingFee?: NexusGenInputs['IntFilter'] | null; // IntFilter
+    sellerCatId?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     sillFromCategory?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     streetApiKey?: NexusGenInputs['StringFilter'] | null; // StringFilter
     streetApiKey2?: NexusGenInputs['StringFilter'] | null; // StringFilter
@@ -2945,6 +2947,7 @@ export interface NexusGenObjects {
     phone?: string | null; // String
     productCollectCount: number; // Int!
     refundShippingFee: number; // Int!
+    sellerCatId?: string | null; // String
     sillFromCategory?: string | null; // String
     streetApiKey: string; // String!
     streetApiKey2: string; // String!
@@ -3979,6 +3982,7 @@ export interface NexusGenFieldTypes {
     phone: string | null; // String
     productCollectCount: number; // Int!
     refundShippingFee: number; // Int!
+    sellerCatId: string | null; // String
     sillFromCategory: string | null; // String
     streetApiKey: string; // String!
     streetApiKey2: string; // String!
@@ -5009,6 +5013,7 @@ export interface NexusGenFieldTypeNames {
     phone: 'String'
     productCollectCount: 'Int'
     refundShippingFee: 'Int'
+    sellerCatId: 'String'
     sillFromCategory: 'String'
     streetApiKey: 'String'
     streetApiKey2: 'String'
@@ -5601,6 +5606,7 @@ export interface NexusGenArgTypes {
       orderToDeliveryMethod?: string | null; // String
       orderToDeliveryName?: string | null; // String
       refundShippingFee?: number | null; // Int
+      sellerCatId?: string | null; // String
       sillFromCategory?: string | null; // String
       streetApiKey?: string | null; // String
       streetApiKey2?: string | null; // String

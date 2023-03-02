@@ -131,6 +131,7 @@ export const mutation_user = extendType({
         }
       },
     });
+
     t.field("EditPasswordCreateVerification", {
       type: nonNull("String"),
       args: {
@@ -760,6 +761,7 @@ export const mutation_user = extendType({
         collectCheckPosition: stringArg(),
         sillFromCategory: stringArg(),
         thumbnailRepresentNo: stringArg(),
+        sellerCatId: stringArg(),
       },
       resolve: async (src, args, ctx, info) => {
         try {
@@ -906,6 +908,7 @@ export const mutation_user = extendType({
               collectCheckPosition: args.collectCheckPosition ?? undefined,
               sillFromCategory: args.sillFromCategory ?? undefined,
               thumbnailRepresentNo: args.thumbnailRepresentNo ?? undefined,
+              sellerCatId: args.sellerCatId ?? undefined,
             },
           });
 
