@@ -1,4 +1,5 @@
 //user/mutation
+import { add } from "date-fns";
 import { hashSync, compareSync } from "bcryptjs";
 import { isBefore } from "date-fns";
 import { getPurchaseInfo2 } from ".";
@@ -402,7 +403,7 @@ export const mutation_user = extendType({
               state: "ACTIVE",
               payId: null,
               userId: user.id,
-              expiredAt: new Date("9999-12-31"),
+              expiredAt: add(new Date(), { days: 10 }),
               purchasedAt: new Date(),
             },
           });
