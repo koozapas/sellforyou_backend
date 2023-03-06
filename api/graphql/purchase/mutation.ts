@@ -140,7 +140,7 @@ export const mutation_purchase = extendType({
           if (test2) {
             await ctx.prisma.purchaseLog.updateMany({
               where: { id: test2?.id },
-              data: { expiredAt: "9999-12-31 23:59:59" },
+              data: { expiredAt: new Date("9999-12-31 23:59:59") },
             });
           }
           await ctx.prisma.purchaseLog.create({
