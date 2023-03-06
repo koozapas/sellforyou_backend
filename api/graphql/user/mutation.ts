@@ -266,7 +266,7 @@ export const mutation_user = extendType({
               password: hashSync(args.password),
               state: "ACTIVE",
               refCode: args.refCode ?? "",
-              credit: args.refCode ? 5000 : 0,
+              credit: args.refCode ? (args.refCode.includes("@") ? 5000 : 0) : 0,
               refAvailable: true,
               verificationNumber: "",
               userInfo: {
