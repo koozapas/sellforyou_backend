@@ -131,6 +131,18 @@ export const mutation_purchase = extendType({
             if (existingInfo.additionalInfo.find((v) => v.type === plan.externalFeatureVariableId))
               return throwError(errors.etc(userEmail + ": 이미 해당 상품을 이용중입니다."), ctx);
           }
+          let test = await ctx.prisma.purchaseLog.findMany({
+            where: {
+              userId: args.userId,
+            },
+          });
+          let test2 = test.find((v) => v.planInfo.includes("1단계"));
+          if (test2) {
+            await ctx.prisma.purchaseLog.updateMany({
+              where: { id: test2?.id },
+              data: { expiredAt: "9999-12-31 23:59:59" },
+            });
+          }
           await ctx.prisma.purchaseLog.create({
             data: {
               type: plan.planLevel !== null ? "PLAN" : (plan.externalFeatureVariableId as NexusGenAllTypes["PurchaseLogType"]),
