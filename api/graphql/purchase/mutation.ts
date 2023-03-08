@@ -289,6 +289,23 @@ export const mutation_purchase = extendType({
           });
           if (!add) return throwError(errors.etc("fail create"), ctx);
 
+          await Promise.all(
+            args.purchaseInputs.map(async (v: any) => {
+              let test = await ctx.prisma.purchaseLog.findMany({
+                where: {
+                  userId: v.userId,
+                },
+              });
+              let test2 = test.find((v) => v.planInfo.includes("1단계"));
+              if (test2) {
+                await ctx.prisma.purchaseLog.updateMany({
+                  where: { id: test2?.id },
+                  data: { expiredAt: new Date("9999-12-31 23:59:59") },
+                });
+              }
+            })
+          );
+
           const free = args.purchaseInputs.map(async (v: any) => {
             await ctx.prisma.userInfo.update({
               where: {
