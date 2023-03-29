@@ -3698,6 +3698,7 @@ export interface NexusGenFieldTypes {
     selectFreeUserProductLimitByAdmin: number; // Int!
     selectMyInfoByUser: NexusGenRootTypes['User']; // User!
     selectMyOrderByUser: NexusGenRootTypes['order'][]; // [order!]!
+    selectMyProductByAdmin: NexusGenRootTypes['Product'][]; // [Product!]!
     selectMyProductByUser: NexusGenRootTypes['Product'][]; // [Product!]!
     selectMyProductsCountByUser: number; // Int!
     selectNoticeByEveryone: NexusGenRootTypes['Notice']; // Notice!
@@ -4729,6 +4730,7 @@ export interface NexusGenFieldTypeNames {
     selectFreeUserProductLimitByAdmin: 'Int'
     selectMyInfoByUser: 'User'
     selectMyOrderByUser: 'order'
+    selectMyProductByAdmin: 'Product'
     selectMyProductByUser: 'Product'
     selectMyProductsCountByUser: 'Int'
     selectNoticeByEveryone: 'Notice'
@@ -6004,6 +6006,13 @@ export interface NexusGenArgTypes {
       skip?: number | null; // Int
       take?: number | null; // Int
       where?: NexusGenInputs['orderWhereInput'] | null; // orderWhereInput
+    }
+    selectMyProductByAdmin: { // args
+      cursor?: NexusGenInputs['ProductWhereUniqueInput'] | null; // ProductWhereUniqueInput
+      orderBy?: NexusGenInputs['ProductOrderByWithRelationInput'][] | null; // [ProductOrderByWithRelationInput!]
+      skip?: number | null; // Int
+      take?: number | null; // Int
+      where?: NexusGenInputs['ProductWhereInput'] | null; // ProductWhereInput
     }
     selectMyProductByUser: { // args
       cursor?: NexusGenInputs['ProductWhereUniqueInput'] | null; // ProductWhereUniqueInput

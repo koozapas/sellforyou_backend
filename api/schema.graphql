@@ -2221,6 +2221,7 @@ type Query {
   selectFreeUserProductLimitByAdmin: Int!
   selectMyInfoByUser: User!
   selectMyOrderByUser(cursor: orderWhereUniqueInput, orderBy: [orderOrderByWithRelationInput!], skip: Int, take: Int, where: orderWhereInput): [order!]!
+  selectMyProductByAdmin(cursor: ProductWhereUniqueInput, orderBy: [ProductOrderByWithRelationInput!], skip: Int, take: Int, where: ProductWhereInput): [Product!]!
   selectMyProductByUser(cursor: ProductWhereUniqueInput, orderBy: [ProductOrderByWithRelationInput!], skip: Int, take: Int, where: ProductWhereInput): [Product!]!
   selectMyProductsCountByUser(where: ProductWhereInput): Int!
   selectNoticeByEveryone(noticeId: Int!): Notice!

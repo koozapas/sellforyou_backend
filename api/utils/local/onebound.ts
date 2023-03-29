@@ -209,9 +209,9 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
           var description = (translateData?.description ?? taobaoData.desc).replace(/(?<!<p ?>)(<img [^>]*?>)(?!<p>)/g, "<p>$1</p>");
           //todoconsole.log("description = ",translateData?.description ?? taobaoData.desc);
           //<img src=https://img.alicdn.com/imgextra/i3/2170372256/O1CN01xzd4Sd1SXIGJRj64i_!!2170372256.jpg alt="" />
-          description = description.replace(`<img src`, `<img style="display: block;" src`);
           //todoconsole.log("description 변환후  = ",description);
           //<p><img src=https://img.alicdn.com/imgextra/i3/2170372256/O1CN01xzd4Sd1SXIGJRj64i_!!2170372256.jpg alt="" /></p> 가됨
+
           let code = 0;
           let price = parseFloat(taobaoData.price);
 
