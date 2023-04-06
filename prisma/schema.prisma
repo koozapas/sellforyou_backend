@@ -70,7 +70,7 @@ model UserInfo {
   cnyRate                        Float   @default(185) @map("cny_rate") @db.Float
   productCollectCount            Int     @default(0) @map("product_collect_count")
   maxProductLimit                Int?    @map("max_product_limit")
-  additionalShippingFeeJeju      Int     @default(0) @map("additional_shipping_fee_jeju")
+  additionalShippingFeeJeju      Int     @default(5000) @map("additional_shipping_fee_jeju")
   asTel                          String? @map("as_tel") @db.VarChar(20)
   asInformation                  String? @map("as_information") @db.VarChar(1000)
   refundShippingFee              Int     @default(0) @map("refund_shipping_fee")
