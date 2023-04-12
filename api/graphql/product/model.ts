@@ -334,7 +334,6 @@ export const t_Product = objectType({
     t.model.sillDataB719();
     t.model.sillCodeB956();
     t.model.sillDataB956();
-    t.model.Lock();
   },
 });
 

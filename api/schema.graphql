@@ -1043,7 +1043,6 @@ type Mutation {
   selectProductViewLogByUser(timeEnd: String!, timeStart: String!): String!
   selectProductViewLogDateByUser(timeEnd: String!, timeStart: String!): String!
   selectProductViewLogDatefilterByUser(productId: Int, productName: String, timeEnd: String!, timeStart: String!): String!
-  setLockProduct(lock: String!, productId: Int!): String!
   setMaxProductLimitByAdmin(
     """미설정시 무제한"""
     productLimit: Int
@@ -1374,7 +1373,6 @@ input PlanInfoWhereUniqueInput {
 }
 
 type Product {
-  Lock: String
   activeProductStore: [ProductStore!]!
   activeTaobaoProduct: TaobaoProduct!
   admin: Admin
@@ -1772,7 +1770,6 @@ input ProductOrderByRelationAggregateInput {
 }
 
 input ProductOrderByWithRelationInput {
-  Lock: SortOrder
   admin: AdminOrderByWithRelationInput
   adminId: SortOrder
   attribute: SortOrder
@@ -2049,7 +2046,6 @@ input ProductViewLogListRelationFilter {
 
 input ProductWhereInput {
   AND: [ProductWhereInput!]
-  Lock: StringNullableFilter
   NOT: [ProductWhereInput!]
   OR: [ProductWhereInput!]
   admin: AdminWhereInput
