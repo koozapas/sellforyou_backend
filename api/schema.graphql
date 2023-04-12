@@ -1373,6 +1373,7 @@ input PlanInfoWhereUniqueInput {
 }
 
 type Product {
+  Lock: String
   activeProductStore: [ProductStore!]!
   activeTaobaoProduct: TaobaoProduct!
   admin: Admin
@@ -1770,6 +1771,7 @@ input ProductOrderByRelationAggregateInput {
 }
 
 input ProductOrderByWithRelationInput {
+  Lock: SortOrder
   admin: AdminOrderByWithRelationInput
   adminId: SortOrder
   attribute: SortOrder
@@ -2046,6 +2048,7 @@ input ProductViewLogListRelationFilter {
 
 input ProductWhereInput {
   AND: [ProductWhereInput!]
+  Lock: StringNullableFilter
   NOT: [ProductWhereInput!]
   OR: [ProductWhereInput!]
   admin: AdminWhereInput

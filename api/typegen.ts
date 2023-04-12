@@ -1057,6 +1057,7 @@ export interface NexusGenInputs {
     count?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
   ProductOrderByWithRelationInput: { // input type
+    Lock?: NexusGenEnums['SortOrder'] | null; // SortOrder
     admin?: NexusGenInputs['AdminOrderByWithRelationInput'] | null; // AdminOrderByWithRelationInput
     adminId?: NexusGenEnums['SortOrder'] | null; // SortOrder
     attribute?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1278,6 +1279,7 @@ export interface NexusGenInputs {
   }
   ProductWhereInput: { // input type
     AND?: NexusGenInputs['ProductWhereInput'][] | null; // [ProductWhereInput!]
+    Lock?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     NOT?: NexusGenInputs['ProductWhereInput'][] | null; // [ProductWhereInput!]
     OR?: NexusGenInputs['ProductWhereInput'][] | null; // [ProductWhereInput!]
     admin?: NexusGenInputs['AdminWhereInput'] | null; // AdminWhereInput
@@ -2584,6 +2586,7 @@ export interface NexusGenObjects {
     price: number; // Int!
   }
   Product: { // root type
+    Lock?: string | null; // String
     adminId?: number | null; // Int
     attribute: string; // String!
     auctionFee?: number | null; // Float
@@ -3493,6 +3496,7 @@ export interface NexusGenFieldTypes {
     price: number; // Int!
   }
   Product: { // field return type
+    Lock: string | null; // String
     activeProductStore: NexusGenRootTypes['ProductStore'][]; // [ProductStore!]!
     activeTaobaoProduct: NexusGenRootTypes['TaobaoProduct']; // TaobaoProduct!
     admin: NexusGenRootTypes['Admin'] | null; // Admin
@@ -4525,6 +4529,7 @@ export interface NexusGenFieldTypeNames {
     price: 'Int'
   }
   Product: { // field return type name
+    Lock: 'String'
     activeProductStore: 'ProductStore'
     activeTaobaoProduct: 'TaobaoProduct'
     admin: 'Admin'

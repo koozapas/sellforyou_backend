@@ -249,6 +249,7 @@ model Product {
   sillDataA525       String              @db.Text
   sillCodeB956       String              @db.VarChar(200)
   sillDataB956       String              @db.Text
+  Lock               String?             @default("0") @db.VarChar(45)
   admin              Admin?              @relation("adminToproduct", fields: [adminId], references: [id])
   categoryInfoA001   CategoryInfoA001?   @relation("category_info_a001Toproduct", fields: [categoryA001], references: [code])
   categoryInfoA006   CategoryInfoA006?   @relation("category_info_a006Toproduct", fields: [categoryA006], references: [code])
