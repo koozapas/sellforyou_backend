@@ -2334,6 +2334,25 @@ export const mutation_product = extendType({
         }
       },
     });
+    t.field("setLockProduct", {
+      type: nonNull("String"),
+      args: {
+        productId: nonNull(intArg()),
+        lock: nonNull(stringArg()),
+      },
+      resolve: async (src, args, ctx, info) => {
+        try {
+          await ctx.prisma.product.update({
+            where: { id: args.productId },
+            data: { Lock: args.lock },
+          });
+
+          return "OK";
+        } catch (e) {
+          return throwError(e, ctx);
+        }
+      },
+    });
     t.field("updateProductAttributeByUser", {
       type: nonNull("String"),
       args: {

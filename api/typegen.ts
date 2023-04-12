@@ -3403,6 +3403,7 @@ export interface NexusGenFieldTypes {
     selectProductViewLogByUser: string; // String!
     selectProductViewLogDateByUser: string; // String!
     selectProductViewLogDatefilterByUser: string; // String!
+    setLockProduct: string; // String!
     setMaxProductLimitByAdmin: boolean; // Boolean!
     setMultiPurchaseInfoByAdmin: boolean; // Boolean!
     setProductOptionNameBySomeOne: boolean; // Boolean!
@@ -4436,6 +4437,7 @@ export interface NexusGenFieldTypeNames {
     selectProductViewLogByUser: 'String'
     selectProductViewLogDateByUser: 'String'
     selectProductViewLogDatefilterByUser: 'String'
+    setLockProduct: 'String'
     setMaxProductLimitByAdmin: 'Boolean'
     setMultiPurchaseInfoByAdmin: 'Boolean'
     setProductOptionNameBySomeOne: 'Boolean'
@@ -5374,6 +5376,10 @@ export interface NexusGenArgTypes {
       productName?: string | null; // String
       timeEnd: string; // String!
       timeStart: string; // String!
+    }
+    setLockProduct: { // args
+      lock: string; // String!
+      productId: number; // Int!
     }
     setMaxProductLimitByAdmin: { // args
       productLimit?: number | null; // Int

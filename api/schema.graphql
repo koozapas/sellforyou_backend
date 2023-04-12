@@ -1043,6 +1043,7 @@ type Mutation {
   selectProductViewLogByUser(timeEnd: String!, timeStart: String!): String!
   selectProductViewLogDateByUser(timeEnd: String!, timeStart: String!): String!
   selectProductViewLogDatefilterByUser(productId: Int, productName: String, timeEnd: String!, timeStart: String!): String!
+  setLockProduct(lock: String!, productId: Int!): String!
   setMaxProductLimitByAdmin(
     """미설정시 무제한"""
     productLimit: Int
