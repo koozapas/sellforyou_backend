@@ -249,6 +249,7 @@ model Product {
   sillDataA525       String              @db.Text
   sillCodeB956       String              @db.VarChar(200)
   sillDataB956       String              @db.Text
+  myLock             Int?                @default(1)
   admin              Admin?              @relation("adminToproduct", fields: [adminId], references: [id])
   categoryInfoA001   CategoryInfoA001?   @relation("category_info_a001Toproduct", fields: [categoryA001], references: [code])
   categoryInfoA006   CategoryInfoA006?   @relation("category_info_a006Toproduct", fields: [categoryA006], references: [code])
@@ -284,6 +285,7 @@ model Product {
   @@index([categoryB956], name: "FK_product_category_info_b956")
   @@index([state], name: "FK_product_state_id")
   @@index([taobaoProductId], name: "FK_product_taobao_product_id_taobao_product_id")
+  @@index([myLock], name: "idx_myLock")
   @@map("product")
 }
 

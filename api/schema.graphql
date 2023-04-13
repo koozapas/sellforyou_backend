@@ -1043,6 +1043,7 @@ type Mutation {
   selectProductViewLogByUser(timeEnd: String!, timeStart: String!): String!
   selectProductViewLogDateByUser(timeEnd: String!, timeStart: String!): String!
   selectProductViewLogDatefilterByUser(productId: Int, productName: String, timeEnd: String!, timeStart: String!): String!
+  setLockProduct(mylock: Int!, productId: Int!): String!
   setMaxProductLimitByAdmin(
     """미설정시 무제한"""
     productLimit: Int
@@ -1411,6 +1412,7 @@ type Product {
   marginUnitType: String
   modelName: String!
   modifiedAt: DateTime!
+  myLock: Int
   name: String!
   naverFee: Float
   optionInfoHtml: String!
@@ -1817,6 +1819,7 @@ input ProductOrderByWithRelationInput {
   marginUnitType: SortOrder
   modelName: SortOrder
   modifiedAt: SortOrder
+  myLock: SortOrder
   name: SortOrder
   naverFee: SortOrder
   price: SortOrder
@@ -2095,6 +2098,7 @@ input ProductWhereInput {
   marginUnitType: StringNullableFilter
   modelName: StringFilter
   modifiedAt: DateTimeFilter
+  myLock: IntNullableFilter
   name: StringFilter
   naverFee: FloatNullableFilter
   price: IntFilter

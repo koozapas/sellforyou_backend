@@ -1104,6 +1104,7 @@ export interface NexusGenInputs {
     marginUnitType?: NexusGenEnums['SortOrder'] | null; // SortOrder
     modelName?: NexusGenEnums['SortOrder'] | null; // SortOrder
     modifiedAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    myLock?: NexusGenEnums['SortOrder'] | null; // SortOrder
     name?: NexusGenEnums['SortOrder'] | null; // SortOrder
     naverFee?: NexusGenEnums['SortOrder'] | null; // SortOrder
     price?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1327,6 +1328,7 @@ export interface NexusGenInputs {
     marginUnitType?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     modelName?: NexusGenInputs['StringFilter'] | null; // StringFilter
     modifiedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    myLock?: NexusGenInputs['IntNullableFilter'] | null; // IntNullableFilter
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
     naverFee?: NexusGenInputs['FloatNullableFilter'] | null; // FloatNullableFilter
     price?: NexusGenInputs['IntFilter'] | null; // IntFilter
@@ -2607,6 +2609,7 @@ export interface NexusGenObjects {
     marginUnitType?: string | null; // String
     modelName: string; // String!
     modifiedAt: NexusGenScalars['DateTime']; // DateTime!
+    myLock?: number | null; // Int
     name: string; // String!
     naverFee?: number | null; // Float
     price: number; // Int!
@@ -3400,6 +3403,7 @@ export interface NexusGenFieldTypes {
     selectProductViewLogByUser: string; // String!
     selectProductViewLogDateByUser: string; // String!
     selectProductViewLogDatefilterByUser: string; // String!
+    setLockProduct: string; // String!
     setMaxProductLimitByAdmin: boolean; // Boolean!
     setMultiPurchaseInfoByAdmin: boolean; // Boolean!
     setProductOptionNameBySomeOne: boolean; // Boolean!
@@ -3531,6 +3535,7 @@ export interface NexusGenFieldTypes {
     marginUnitType: string | null; // String
     modelName: string; // String!
     modifiedAt: NexusGenScalars['DateTime']; // DateTime!
+    myLock: number | null; // Int
     name: string; // String!
     naverFee: number | null; // Float
     optionInfoHtml: string; // String!
@@ -4432,6 +4437,7 @@ export interface NexusGenFieldTypeNames {
     selectProductViewLogByUser: 'String'
     selectProductViewLogDateByUser: 'String'
     selectProductViewLogDatefilterByUser: 'String'
+    setLockProduct: 'String'
     setMaxProductLimitByAdmin: 'Boolean'
     setMultiPurchaseInfoByAdmin: 'Boolean'
     setProductOptionNameBySomeOne: 'Boolean'
@@ -4563,6 +4569,7 @@ export interface NexusGenFieldTypeNames {
     marginUnitType: 'String'
     modelName: 'String'
     modifiedAt: 'DateTime'
+    myLock: 'Int'
     name: 'String'
     naverFee: 'Float'
     optionInfoHtml: 'String'
@@ -5369,6 +5376,10 @@ export interface NexusGenArgTypes {
       productName?: string | null; // String
       timeEnd: string; // String!
       timeStart: string; // String!
+    }
+    setLockProduct: { // args
+      mylock: number; // Int!
+      productId: number; // Int!
     }
     setMaxProductLimitByAdmin: { // args
       productLimit?: number | null; // Int
