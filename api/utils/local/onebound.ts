@@ -239,8 +239,10 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
 
           if (isNaN(price)) price = 0;
 
+          let regExpTest = /[^가-힣a-zA-Z0-9 ]+/g;
+
           let searchTags = "";
-          let title_list = translateData?.title.split(" ") ?? [];
+          let title_list = translateData?.title.replace(regExpTest, "").split(" ") ?? [];
           searchTags = title_list
             .filter((item, index) => title_list.indexOf(item) === index)
             .filter((v) => v.trim().length > 0)
