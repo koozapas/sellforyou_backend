@@ -2382,6 +2382,7 @@ export const mutation_product = extendType({
                 keywardList.push(v);
               })
             );
+            keywardList.push(args.myKeyward);
             await ctx.prisma.user.update({
               where: { id: user.id },
               data: { keywardMemo: [...new Set(keywardList)].join(",") },
