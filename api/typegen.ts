@@ -1104,6 +1104,7 @@ export interface NexusGenInputs {
     marginUnitType?: NexusGenEnums['SortOrder'] | null; // SortOrder
     modelName?: NexusGenEnums['SortOrder'] | null; // SortOrder
     modifiedAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    myKeyward?: NexusGenEnums['SortOrder'] | null; // SortOrder
     myLock?: NexusGenEnums['SortOrder'] | null; // SortOrder
     name?: NexusGenEnums['SortOrder'] | null; // SortOrder
     naverFee?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -1328,6 +1329,7 @@ export interface NexusGenInputs {
     marginUnitType?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     modelName?: NexusGenInputs['StringFilter'] | null; // StringFilter
     modifiedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    myKeyward?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     myLock?: NexusGenInputs['IntNullableFilter'] | null; // IntNullableFilter
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
     naverFee?: NexusGenInputs['FloatNullableFilter'] | null; // FloatNullableFilter
@@ -2002,6 +2004,7 @@ export interface NexusGenInputs {
     email?: NexusGenEnums['SortOrder'] | null; // SortOrder
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
     kakaoId?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    keywardMemo?: NexusGenEnums['SortOrder'] | null; // SortOrder
     master?: NexusGenEnums['SortOrder'] | null; // SortOrder
     masterUserId?: NexusGenEnums['SortOrder'] | null; // SortOrder
     naverId?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -2069,6 +2072,7 @@ export interface NexusGenInputs {
     email?: NexusGenInputs['StringFilter'] | null; // StringFilter
     id?: NexusGenInputs['IntFilter'] | null; // IntFilter
     kakaoId?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
+    keywardMemo?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     master?: NexusGenInputs['IntFilter'] | null; // IntFilter
     masterUserId?: NexusGenInputs['IntNullableFilter'] | null; // IntNullableFilter
     naverId?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
@@ -2609,6 +2613,7 @@ export interface NexusGenObjects {
     marginUnitType?: string | null; // String
     modelName: string; // String!
     modifiedAt: NexusGenScalars['DateTime']; // DateTime!
+    myKeyward?: string | null; // String
     myLock?: number | null; // Int
     name: string; // String!
     naverFee?: number | null; // Float
@@ -2866,6 +2871,7 @@ export interface NexusGenObjects {
     email: string; // String!
     id: number; // Int!
     kakaoId?: string | null; // String
+    keywardMemo?: string | null; // String
     master: number; // Int!
     masterUserId?: number | null; // Int
     naverId?: string | null; // String
@@ -3428,6 +3434,7 @@ export interface NexusGenFieldTypes {
     updateFreeUserDayLimitByAdmin: number; // Int!
     updateFreeUserProductLimitByAdmin: number; // Int!
     updateImageThumbnailData: string; // String!
+    updateKeywardList: string; // String!
     updateManyDescription: string; // String!
     updateManyProductAttributeByUser: string; // String!
     updateManyProductCategoryByAdmin: number; // Int!
@@ -3535,6 +3542,7 @@ export interface NexusGenFieldTypes {
     marginUnitType: string | null; // String
     modelName: string; // String!
     modifiedAt: NexusGenScalars['DateTime']; // DateTime!
+    myKeyward: string | null; // String
     myLock: number | null; // Int
     name: string; // String!
     naverFee: number | null; // Float
@@ -3897,6 +3905,7 @@ export interface NexusGenFieldTypes {
     email: string; // String!
     id: number; // Int!
     kakaoId: string | null; // String
+    keywardMemo: string | null; // String
     master: number; // Int!
     masterUserId: number | null; // Int
     naverId: string | null; // String
@@ -4462,6 +4471,7 @@ export interface NexusGenFieldTypeNames {
     updateFreeUserDayLimitByAdmin: 'Int'
     updateFreeUserProductLimitByAdmin: 'Int'
     updateImageThumbnailData: 'String'
+    updateKeywardList: 'String'
     updateManyDescription: 'String'
     updateManyProductAttributeByUser: 'String'
     updateManyProductCategoryByAdmin: 'Int'
@@ -4569,6 +4579,7 @@ export interface NexusGenFieldTypeNames {
     marginUnitType: 'String'
     modelName: 'String'
     modifiedAt: 'DateTime'
+    myKeyward: 'String'
     myLock: 'Int'
     name: 'String'
     naverFee: 'Float'
@@ -4931,6 +4942,7 @@ export interface NexusGenFieldTypeNames {
     email: 'String'
     id: 'Int'
     kakaoId: 'String'
+    keywardMemo: 'String'
     master: 'Int'
     masterUserId: 'Int'
     naverId: 'String'
@@ -5472,6 +5484,10 @@ export interface NexusGenArgTypes {
     updateImageThumbnailData: { // args
       productId: number; // Int!
       thumbnails?: NexusGenInputs['ProductThumbnailUpdateInput'][] | null; // [ProductThumbnailUpdateInput!]
+    }
+    updateKeywardList: { // args
+      myKeyward: string; // String!
+      productId: number; // Int!
     }
     updateManyDescription: { // args
       data: NexusGenInputs['DescriptionDataInput'][]; // [DescriptionDataInput!]!

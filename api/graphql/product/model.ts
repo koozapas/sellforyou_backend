@@ -335,6 +335,7 @@ export const t_Product = objectType({
     t.model.sillCodeB956();
     t.model.sillDataB956();
     t.model.myLock();
+    t.model.myKeyward();
   },
 });
 

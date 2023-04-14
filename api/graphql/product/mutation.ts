@@ -2353,6 +2353,47 @@ export const mutation_product = extendType({
         }
       },
     });
+    t.field("updateKeywardList", {
+      type: nonNull("String"),
+      args: {
+        productId: nonNull(intArg()),
+        myKeyward: nonNull(stringArg()),
+      },
+      resolve: async (src, args, ctx, info) => {
+        try {
+          let product: any = await ctx.prisma.product.update({
+            where: { id: args.productId },
+            data: { myKeyward: args.myKeyward },
+          });
+          if (!product) return throwError(errors.etc("상품 키워드 등록에 실패하셨습니다."), ctx);
+          let user: any = await ctx.prisma.user.findUnique({
+            where: { id: ctx.token?.userId },
+          });
+          if (!user) return throwError(errors.etc("유저 토큰이 올바르지 않습니다."), ctx);
+          if (user.keywardMemo === null) {
+            await ctx.prisma.user.update({
+              where: { id: user.id },
+              data: { keywardMemo: args.myKeyward },
+            });
+          } else {
+            let keywardList: any = [];
+            await Promise.all(
+              user.keywardMemo.split(",").map(async (v: any) => {
+                keywardList.push(v);
+              })
+            );
+            await ctx.prisma.user.update({
+              where: { id: user.id },
+              data: { keywardMemo: [...new Set(keywardList)].join(",") },
+            });
+          }
+
+          return "OK";
+        } catch (e) {
+          return throwError(e, ctx);
+        }
+      },
+    });
     t.field("updateProductAttributeByUser", {
       type: nonNull("String"),
       args: {

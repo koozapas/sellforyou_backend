@@ -1083,6 +1083,7 @@ type Mutation {
   updateFreeUserDayLimitByAdmin(day: Int!): Int!
   updateFreeUserProductLimitByAdmin(day: Int!): Int!
   updateImageThumbnailData(productId: Int!, thumbnails: [ProductThumbnailUpdateInput!]): String!
+  updateKeywardList(myKeyward: String!, productId: Int!): String!
   updateManyDescription(data: [DescriptionDataInput!]!): String!
   updateManyProductAttributeByUser(brandName: String, manufacturer: String, modelName: String, productId: [Int!]!): String!
   updateManyProductCategoryByAdmin(categoryA001: String, categoryA006: String, categoryA027: String, categoryA077: String, categoryA112: String, categoryB378: String, productIds: [Int!]!): Int!
@@ -1412,6 +1413,7 @@ type Product {
   marginUnitType: String
   modelName: String!
   modifiedAt: DateTime!
+  myKeyward: String
   myLock: Int
   name: String!
   naverFee: Float
@@ -1819,6 +1821,7 @@ input ProductOrderByWithRelationInput {
   marginUnitType: SortOrder
   modelName: SortOrder
   modifiedAt: SortOrder
+  myKeyward: SortOrder
   myLock: SortOrder
   name: SortOrder
   naverFee: SortOrder
@@ -2098,6 +2101,7 @@ input ProductWhereInput {
   marginUnitType: StringNullableFilter
   modelName: StringFilter
   modifiedAt: DateTimeFilter
+  myKeyward: StringNullableFilter
   myLock: IntNullableFilter
   name: StringFilter
   naverFee: FloatNullableFilter
@@ -2845,6 +2849,7 @@ type User {
   email: String!
   id: Int!
   kakaoId: String
+  keywardMemo: String
   master: Int!
   masterUserId: Int
   naverId: String
@@ -3272,6 +3277,7 @@ input UserOrderByWithRelationInput {
   email: SortOrder
   id: SortOrder
   kakaoId: SortOrder
+  keywardMemo: SortOrder
   master: SortOrder
   masterUserId: SortOrder
   naverId: SortOrder
@@ -3387,6 +3393,7 @@ input UserWhereInput {
   email: StringFilter
   id: IntFilter
   kakaoId: StringNullableFilter
+  keywardMemo: StringNullableFilter
   master: IntFilter
   masterUserId: IntNullableFilter
   naverId: StringNullableFilter
