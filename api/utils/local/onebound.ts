@@ -402,33 +402,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
               immSearchTagsData = matchTagNm.slice(0, 10).join();
             }
           }
-          let myKeyward: any = "";
-          if (translateData?.myKeyward && translateData?.myKeyward !== "") {
-            myKeyward = translateData?.myKeyward;
-            if (userId !== null) {
-              let userTest: any = await prisma.user.findUnique({
-                where: { id: userId },
-              });
-              if (userTest.keywardMemo === null) {
-                await prisma.user.update({
-                  where: { id: userTest.id },
-                  data: { keywardMemo: myKeyward },
-                });
-              } else {
-                let keywardList: any = [];
-                await Promise.all(
-                  userTest.keywardMemo.split(",").map(async (v: any) => {
-                    keywardList.push(v);
-                  })
-                );
-                keywardList.push(myKeyward);
-                await prisma.user.update({
-                  where: { id: userTest.id },
-                  data: { keywardMemo: [...new Set(keywardList)].join(",") },
-                });
-              }
-            }
-          }
+
           const regex = /[`~!@#$%^&*()_|+\-=?;:'".<>\{\}\[\]\\\/]/gim;
           product = await prisma.product.create({
             data: {
@@ -444,7 +418,6 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
               userId: userId,
               adminId: adminId,
               taobaoProductId: v.id,
-              myKeyward: myKeyward !== "" ? myKeyward : undefined,
               // categoryCode: categoryCode,
 
               categoryA077: categories["A077"],
