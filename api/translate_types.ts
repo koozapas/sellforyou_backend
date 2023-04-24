@@ -13,7 +13,6 @@ export interface ITranslateData {
   video: string | null;
   description: string;
   isTranslated: boolean;
-  myKeyward: string | null;
 }
 
 export interface ITranslateOptionName {
