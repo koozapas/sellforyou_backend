@@ -1013,6 +1013,7 @@ type Mutation {
   changePasswordByUser(currentPassword: String!, newPassword: String!): Boolean!
   connectSocialIdByUser(socialId: String!, userType: UserSocialType!): User!
   coupangCategorySillCodeInput(data: [sillCodeInput!]!): String!
+  coupangProductStoreDelete(productId: Int!): String!
   createNewOrder(data: [newOrderInput!]!): Int!
   createNoticeByAdmin(attachment: Upload, content: String!, title: String!): Boolean!
   createUserQuestionByUser(attachment: [Upload!], content: String!, title: String!): Boolean!
@@ -1085,6 +1086,7 @@ type Mutation {
   updateImageThumbnailData(productId: Int!, thumbnails: [ProductThumbnailUpdateInput!]): String!
   updateKeywardList(myKeyward: String!, productId: Int!): String!
   updateManyDescription(data: [DescriptionDataInput!]!): String!
+  updateManyKeywardList(myKeyward: String!, productIds: [Int!]!): String!
   updateManyProductAttributeByUser(brandName: String, manufacturer: String, modelName: String, productId: [Int!]!): String!
   updateManyProductCategoryByAdmin(categoryA001: String, categoryA006: String, categoryA027: String, categoryA077: String, categoryA112: String, categoryB378: String, productIds: [Int!]!): Int!
   updateManyProductCategoryByUser(categoryA001: String, categoryA006: String, categoryA027: String, categoryA077: String, categoryA112: String, categoryA113: String, categoryA524: String, categoryA525: String, categoryB378: String, categoryB719: String, categoryB956: String, productIds: [Int!]!): Int!

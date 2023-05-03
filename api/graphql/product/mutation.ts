@@ -2334,6 +2334,33 @@ export const mutation_product = extendType({
         }
       },
     });
+    t.field("coupangProductStoreDelete", {
+      type: nonNull("String"),
+      args: {
+        productId: nonNull(intArg()),
+      },
+      resolve: async (src, args, ctx, info) => {
+        try {
+          const productStore = await ctx.prisma.productStore.findFirst({
+            where: { productId: args.productId, siteCode: "B378" },
+          });
+          if (!productStore) return throwError(errors.etc("존재하지 않는 상품입니다."), ctx);
+          await ctx.prisma.productStoreLog.deleteMany({
+            where: { productStoreId: productStore.id },
+          });
+
+          await ctx.prisma.productViewLog.deleteMany({
+            where: { productId: args.productId, siteCode: "B378" },
+          });
+          await ctx.prisma.productStore.deleteMany({
+            where: { productId: args.productId, siteCode: "B378" },
+          });
+          return "OK";
+        } catch (e) {
+          return throwError(e, ctx);
+        }
+      },
+    });
     t.field("setLockProduct", {
       type: nonNull("String"),
       args: {

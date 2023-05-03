@@ -3379,6 +3379,7 @@ export interface NexusGenFieldTypes {
     changePasswordByUser: boolean; // Boolean!
     connectSocialIdByUser: NexusGenRootTypes['User']; // User!
     coupangCategorySillCodeInput: string; // String!
+    coupangProductStoreDelete: string; // String!
     createNewOrder: number; // Int!
     createNoticeByAdmin: boolean; // Boolean!
     createUserQuestionByUser: boolean; // Boolean!
@@ -3436,6 +3437,7 @@ export interface NexusGenFieldTypes {
     updateImageThumbnailData: string; // String!
     updateKeywardList: string; // String!
     updateManyDescription: string; // String!
+    updateManyKeywardList: string; // String!
     updateManyProductAttributeByUser: string; // String!
     updateManyProductCategoryByAdmin: number; // Int!
     updateManyProductCategoryByUser: number; // Int!
@@ -4416,6 +4418,7 @@ export interface NexusGenFieldTypeNames {
     changePasswordByUser: 'Boolean'
     connectSocialIdByUser: 'User'
     coupangCategorySillCodeInput: 'String'
+    coupangProductStoreDelete: 'String'
     createNewOrder: 'Int'
     createNoticeByAdmin: 'Boolean'
     createUserQuestionByUser: 'Boolean'
@@ -4473,6 +4476,7 @@ export interface NexusGenFieldTypeNames {
     updateImageThumbnailData: 'String'
     updateKeywardList: 'String'
     updateManyDescription: 'String'
+    updateManyKeywardList: 'String'
     updateManyProductAttributeByUser: 'String'
     updateManyProductCategoryByAdmin: 'Int'
     updateManyProductCategoryByUser: 'Int'
@@ -5287,6 +5291,9 @@ export interface NexusGenArgTypes {
     coupangCategorySillCodeInput: { // args
       data: NexusGenInputs['sillCodeInput'][]; // [sillCodeInput!]!
     }
+    coupangProductStoreDelete: { // args
+      productId: number; // Int!
+    }
     createNewOrder: { // args
       data: NexusGenInputs['newOrderInput'][]; // [newOrderInput!]!
     }
@@ -5491,6 +5498,10 @@ export interface NexusGenArgTypes {
     }
     updateManyDescription: { // args
       data: NexusGenInputs['DescriptionDataInput'][]; // [DescriptionDataInput!]!
+    }
+    updateManyKeywardList: { // args
+      myKeyward: string; // String!
+      productIds: number[]; // [Int!]!
     }
     updateManyProductAttributeByUser: { // args
       brandName?: string | null; // String

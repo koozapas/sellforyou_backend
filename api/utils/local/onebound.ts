@@ -229,6 +229,8 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
               }
             }
             cnyRate = 1;
+            console.log("code", code);
+            console.log("test", taobaoData.props[code]);
             defaultShippingFee = taobaoData.props[code].value;
           } else {
             cnyRate = userInfo.cnyRate;
