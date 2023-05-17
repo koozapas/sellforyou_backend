@@ -455,9 +455,9 @@ export const mutation_taobao_product = extendType({
                     uniqueId = checkUserId[i];
                   }
 
-                  if (ctx.token?.userId) {
-                    publishUserLogData(ctx, { type: "getTaobaoItem", title: `상품이 이미 최신 상태로 등록되어 있습니다. (${checkUserId[i].productCode})` });
-                  }
+                  // if (ctx.token?.userId) {
+                  //   publishUserLogData(ctx, { type: "getTaobaoItem", title: `상품이 이미 최신 상태로 등록되어 있습니다. (${checkUserId[i].productCode})` });
+                  // }
 
                   return `상품이 이미 최신 상태로 등록되어 있습니다. (${checkUserId[i].productCode})`;
                 }
@@ -576,9 +576,9 @@ export const mutation_taobao_product = extendType({
                 const freeUserProductLimit = parseInt(result.value);
 
                 if (userInfo.productCollectCount >= freeUserProductLimit) {
-                  if (ctx.token?.userId) {
-                    publishUserLogData(ctx, { type: "getTaobaoItem", title: `이용 가능한 상품 수집 횟수를 초과하였습니다.` });
-                  }
+                  // if (ctx.token?.userId) {
+                  //   publishUserLogData(ctx, { type: "getTaobaoItem", title: `이용 가능한 상품 수집 횟수를 초과하였습니다.` });
+                  // }
 
                   return throwError(errors.etc("이용 가능한 상품 수집 횟수를 초과하였습니다."), ctx);
                 }
@@ -588,9 +588,9 @@ export const mutation_taobao_product = extendType({
               if (userInfo.maxProductLimit) {
                 //null이 아니면 무제한이면 null을 넣어줌
                 if (productCount >= userInfo.maxProductLimit) {
-                  if (ctx.token?.userId) {
-                    publishUserLogData(ctx, { type: "getTaobaoItem", title: `이용 가능한 상품 관리 개수를 초과하였습니다.` });
-                  }
+                  // if (ctx.token?.userId) {
+                  //   publishUserLogData(ctx, { type: "getTaobaoItem", title: `이용 가능한 상품 관리 개수를 초과하였습니다.` });
+                  // }
 
                   return throwError(errors.etc("이용 가능한 상품 관리 개수를 초과하였습니다."), ctx);
                 }
@@ -643,9 +643,9 @@ export const mutation_taobao_product = extendType({
             );
             const resultProducts = products.filter((v): v is Product => v !== null);
 
-            if (userId) {
-              publishUserLogData(ctx, { type: "getTaobaoItem", title: `상품 수집이 완료되었습니다. (${resultProducts.map((v) => v.productCode).join(",")})` });
-            }
+            // if (userId) {
+            //   publishUserLogData(ctx, { type: "getTaobaoItem", title: `상품 수집이 완료되었습니다. (${resultProducts.map((v) => v.productCode).join(",")})` });
+            // }
 
             return `상품 수집이 완료되었습니다. (${resultProducts.map((v) => v.productCode).join(",")})`;
           }

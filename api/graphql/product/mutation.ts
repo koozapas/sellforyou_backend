@@ -1760,9 +1760,9 @@ export const mutation_product = extendType({
               imageThumbnailData,
             },
           });
-          if (ctx.token?.userId) {
-            publishUserLogData(ctx, { type: "updateProductImage", title: `상품의 이미지 정보가 수정되었습니다. (${result.productCode})` });
-          }
+          // if (ctx.token?.userId) {
+          //   publishUserLogData(ctx, { type: "updateProductImage", title: `상품의 이미지 정보가 수정되었습니다. (${result.productCode})` });
+          // }
           return result;
         } catch (e) {
           return throwError(e, ctx);
@@ -1894,9 +1894,9 @@ export const mutation_product = extendType({
               imageThumbnailData,
             },
           });
-          if (ctx.token?.userId) {
-            publishUserLogData(ctx, { type: "updateProductImage", title: `상품의 이미지 정보가 수정되었습니다. (${result.productCode})` });
-          }
+          // if (ctx.token?.userId) {
+          //   publishUserLogData(ctx, { type: "updateProductImage", title: `상품의 이미지 정보가 수정되었습니다. (${result.productCode})` });
+          // }
           return JSON.stringify(a1);
         } catch (e) {
           return throwError(e, ctx);
@@ -2085,9 +2085,9 @@ export const mutation_product = extendType({
             },
           });
 
-          if (ctx.token?.userId) {
-            publishUserLogData(ctx, { type: "updateProductImage", title: `상품의 이미지 정보가 수정되었습니다. (${result.productCode})` });
-          }
+          // if (ctx.token?.userId) {
+          //   publishUserLogData(ctx, { type: "updateProductImage", title: `상품의 이미지 정보가 수정되었습니다. (${result.productCode})` });
+          // }
 
           return JSON.stringify(a1);
         } catch (e) {
