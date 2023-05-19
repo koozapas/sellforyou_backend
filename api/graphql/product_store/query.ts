@@ -308,7 +308,14 @@ const registerProductResolver =
                         }
                       }
 
-                      if (vSiteCode === "A112" || vSiteCode === "A113" || vSiteCode === "A001" || vSiteCode === "A006") {
+                      if (
+                        vSiteCode === "A112" ||
+                        vSiteCode === "A113" ||
+                        vSiteCode === "A001" ||
+                        vSiteCode === "A006" ||
+                        vSiteCode === "A522" ||
+                        vSiteCode === "A523"
+                      ) {
                         //console.log("start test33");
                         if (v.product.productOption.length !== 0) {
                           if (userInfo?.defaultPrice === "M") {
@@ -354,12 +361,12 @@ const registerProductResolver =
                             Math.floor(
                               (opt_price / (100 - (v.product.streetFee !== null ? v.product.streetFee : userInfo?.streetFee))) * (100 / calculateWonType)
                             ) * calculateWonType;
-                        } else if (vSiteCode === "A001") {
+                        } else if (vSiteCode === "A001" || vSiteCode === "A522") {
                           opt_price =
                             Math.floor(
                               (opt_price / (100 - (v.product.auctionFee !== null ? v.product.auctionFee : userInfo?.auctionFee))) * (100 / calculateWonType)
                             ) * calculateWonType;
-                        } else if (vSiteCode === "A006") {
+                        } else if (vSiteCode === "A006" || vSiteCode === "A523") {
                           opt_price =
                             Math.floor(
                               (opt_price / (100 - (v.product.gmarketFee !== null ? v.product.gmarketFee : userInfo?.gmarketFee))) * (100 / calculateWonType)
@@ -556,7 +563,7 @@ const registerProductResolver =
                         cate_code = v.product.categoryA027;
                       }
 
-                      if (vSiteCode === "A001") {
+                      if (vSiteCode === "A001" || vSiteCode === "A522") {
                         if (!v.product.categoryA001) {
                           return throwError(errors.etc("옥션 카테고리가 설정되지 않았습니다."), ctx);
                         }
@@ -564,7 +571,7 @@ const registerProductResolver =
                         cate_code = v.product.categoryA001;
                       }
 
-                      if (vSiteCode === "A006") {
+                      if (vSiteCode === "A006" || vSiteCode === "A523") {
                         if (!v.product.categoryA006) {
                           return throwError(errors.etc("G마켓 카테고리가 설정되지 않았습니다."), ctx);
                         }
@@ -634,7 +641,14 @@ const registerProductResolver =
                         }
                       }
 
-                      if (vSiteCode === "A112" || vSiteCode === "A113" || vSiteCode === "A001" || vSiteCode === "A006") {
+                      if (
+                        vSiteCode === "A112" ||
+                        vSiteCode === "A113" ||
+                        vSiteCode === "A001" ||
+                        vSiteCode === "A006" ||
+                        vSiteCode === "A522" ||
+                        vSiteCode === "A523"
+                      ) {
                         //console.log("start test33");
                         if (v.product.productOption.length !== 0) {
                           if (userInfo?.defaultPrice === "M") {
@@ -694,7 +708,7 @@ const registerProductResolver =
                           Math.ceil(
                             (discount / (100 - (v.product.interparkFee !== null ? v.product.interparkFee : userInfo?.interparkFee))) * (100 / calculateWonType)
                           ) * calculateWonType;
-                      } else if (vSiteCode === "A001") {
+                      } else if (vSiteCode === "A001" || vSiteCode === "A522") {
                         price =
                           Math.ceil(
                             (price / (100 - (v.product.auctionFee !== null ? v.product.auctionFee : userInfo?.auctionFee))) * (100 / calculateWonType)
@@ -703,7 +717,7 @@ const registerProductResolver =
                           Math.ceil(
                             (discount / (100 - (v.product.auctionFee !== null ? v.product.auctionFee : userInfo?.auctionFee))) * (100 / calculateWonType)
                           ) * calculateWonType;
-                      } else if (vSiteCode === "A006") {
+                      } else if (vSiteCode === "A006" || vSiteCode === "A523") {
                         price =
                           Math.ceil(
                             (price / (100 - (v.product.gmarketFee !== null ? v.product.gmarketFee : userInfo?.gmarketFee))) * (100 / calculateWonType)
