@@ -437,6 +437,7 @@ const registerProductResolver =
                               misc5: truncateOptionName(vSiteCode, v2.productOption5?.productOptionName.name ?? ""), //옵션타입 3의 명칭
                               weight: "0", //추가무게
                               optimg: image ? getValidUploadImageUrl(image, v.product.taobaoProduct.shopName) : null, //옵션 이미지}
+                              barcode_user: "",
                             };
                           }
 
@@ -475,6 +476,7 @@ const registerProductResolver =
                               misc5: truncateOptionName(vSiteCode, v2.productOption5?.productOptionName.name ?? ""), //옵션타입 5의 명칭
                               weight: "0", //추가무게
                               optimg: image ? getValidUploadImageUrl(image, v.product.taobaoProduct.shopName) : null, //옵션 이미지}
+                              barcode_user: "",
                             };
                           }
                         }
