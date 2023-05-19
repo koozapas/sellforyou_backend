@@ -281,7 +281,7 @@ const registerProductResolver =
                 //각 작업별 데이터 (DataDataSet)
                 DataDataSet: {
                   api: productStore.map((v) => ({
-                    amp_key: "",
+                    // amp_key: "",
                     amp_program_code: "",
                     amp_program_type: "",
                     amp_program_homedir: "",
