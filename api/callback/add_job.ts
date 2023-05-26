@@ -33,6 +33,14 @@ function isFailedResponse(response: IPAJobCallbackRegistProdResultJson[] | IPAJo
 //     // 4: "ON_PROGRESS"
 // }
 
+export const setInfoHandler = async (req: Request, res: Response) => {
+  try {
+    console.log("request", req);
+    console.log("response", res);
+  } catch (e) {
+    console.log(e);
+  }
+};
 export const addJobCallbackHandler = async (req: Request, res: Response) => {
   try {
     const response: IPAJobCallbackResponse<IPAJobCallbackRegistProdResultJson> = req.body;
