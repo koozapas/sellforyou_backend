@@ -3009,6 +3009,51 @@ export const mutation_product = extendType({
         }
       },
     });
+
+    t.field("checkESMPlus", {
+      type: nonNull("String"),
+      args: {
+        siteCode: nonNull("String"),
+        productId: nonNull("Int"),
+      },
+      resolve: async (src, args, ctx, info) => {
+        try {
+          let result: any;
+          switch (args.siteCode) {
+            case "A001": {
+              result = await ctx.prisma.productStore.findMany({
+                where: { productId: args.productId, siteCode: "A522", state: 2 },
+              });
+              break;
+            }
+            case "A006": {
+              result = await ctx.prisma.productStore.findMany({
+                where: { productId: args.productId, siteCode: "A523", state: 2 },
+              });
+              break;
+            }
+            case "A522": {
+              result = await ctx.prisma.productStore.findMany({
+                where: { productId: args.productId, siteCode: "A001", state: 2 },
+              });
+              break;
+            }
+            case "A523": {
+              result = await ctx.prisma.productStore.findMany({
+                where: { productId: args.productId, siteCode: "A006", state: 2 },
+              });
+              break;
+            }
+            default:
+              break;
+          }
+          console.log("test", result);
+          return JSON.stringify(result);
+        } catch (e) {
+          return throwError(e, ctx);
+        }
+      },
+    });
     t.field("getProductListAllKeys", {
       type: nonNull("Boolean"),
       resolve: async (src, args, ctx, info) => {

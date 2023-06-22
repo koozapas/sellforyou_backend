@@ -3377,6 +3377,7 @@ export interface NexusGenFieldTypes {
     cardPayTest: string; // String!
     changeMyPasswordByAdmin: boolean; // Boolean!
     changePasswordByUser: boolean; // Boolean!
+    checkESMPlus: string; // String!
     connectSocialIdByUser: NexusGenRootTypes['User']; // User!
     coupangCategorySillCodeInput: string; // String!
     coupangProductStoreDelete: string; // String!
@@ -4416,6 +4417,7 @@ export interface NexusGenFieldTypeNames {
     cardPayTest: 'String'
     changeMyPasswordByAdmin: 'Boolean'
     changePasswordByUser: 'Boolean'
+    checkESMPlus: 'String'
     connectSocialIdByUser: 'User'
     coupangCategorySillCodeInput: 'String'
     coupangProductStoreDelete: 'String'
@@ -5283,6 +5285,10 @@ export interface NexusGenArgTypes {
     changePasswordByUser: { // args
       currentPassword: string; // String!
       newPassword: string; // String!
+    }
+    checkESMPlus: { // args
+      productId: number; // Int!
+      siteCode: string; // String!
     }
     connectSocialIdByUser: { // args
       socialId: string; // String!
