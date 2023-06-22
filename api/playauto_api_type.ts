@@ -167,9 +167,9 @@ interface IShopDataUrlInfo {
 
 export const shopDataUrlInfo: { [key: string]: (data: IShopDataUrlInfo) => string } = {
   A001: (data) => `http://itempage3.auction.co.kr/DetailView.aspx?ItemNo=${data.id}&frm3=V2`,
-  A522: (data) => `옥션2.0`,
+  A522: (data) => `http://itempage3.auction.co.kr/DetailView.aspx?ItemNo=${data.id}&frm3=V2`,
   A006: (data) => `http://item.gmarket.co.kr/Item?goodscode=${data.id}`,
-  A523: (data) => `G마켓2.0`,
+  A523: (data) => `http://item.gmarket.co.kr/Item?goodscode=${data.id}`,
   A077: (data) =>
     data.storeFullPath
       ? `${data.storeFullPath.replace(/\/$/, "")}/products/${data.id}`

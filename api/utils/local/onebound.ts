@@ -229,8 +229,6 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
               }
             }
             cnyRate = 1;
-            console.log("code", code);
-            console.log("test", taobaoData.props[code]);
             defaultShippingFee = taobaoData.props[code].value;
           } else {
             cnyRate = userInfo.cnyRate;
@@ -238,7 +236,6 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
           }
 
           price = boundCalculatePrice(price, cnyRate, defaultShippingFee, calculateWonType);
-
           if (isNaN(price)) price = 0;
 
           let regExpTest = /[^가-힣a-zA-Z0-9 ]+/g;
@@ -899,6 +896,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
                   },
                 });
                 //console.log("option =",option);
+                console.log("options", option);
                 return option;
               })
             );

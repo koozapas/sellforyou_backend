@@ -171,7 +171,20 @@ export const t_Product = objectType({
             productId: src.id,
             state: 2,
           };
-
+          let auction2 = await ctx.prisma.productStore.findFirst({
+            where: {
+              ...where,
+              siteCode: "A522",
+            },
+            orderBy: [{ id: "desc" }], 
+          })
+          let gmarket2 = await ctx.prisma.productStore.findFirst({
+            where: {
+              ...where,
+              siteCode: "A523",
+            },
+            orderBy: [{ id: "desc" }], 
+          })
           let smartStore = await ctx.prisma.productStore.findFirst({
             where: {
               ...where,
@@ -260,7 +273,7 @@ export const t_Product = objectType({
             orderBy: [{ id: "desc" }],
           });
 
-          const data = [smartStore, coupang, street, action, gmarket, interpark, street_normal, wemakeprice, lotteon, lotteon_normal, tmon].filter(
+          const data = [smartStore, coupang, street, action, gmarket, auction2,gmarket2,interpark, street_normal, wemakeprice, lotteon, lotteon_normal, tmon].filter(
             (v): v is ProductStore => v !== null
           );
           if (src.state === 9) {

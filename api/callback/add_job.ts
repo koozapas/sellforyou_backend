@@ -35,8 +35,9 @@ function isFailedResponse(response: IPAJobCallbackRegistProdResultJson[] | IPAJo
 
 export const setInfoHandler = async (req: Request, res: Response) => {
   try {
-    console.log("request", req);
-    console.log("response", res);
+    console.log("request", req.body);
+
+    res.status(200).send("작업이 완료되었습니다. \n현재 창을 닫아주세요");
   } catch (e) {
     console.log(e);
   }
