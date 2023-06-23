@@ -2274,8 +2274,13 @@ export const mutation_product = extendType({
           const b956 = await ctx.prisma.productViewLog.count({
             where: { userId: ctx.token?.userId, viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) }, siteCode: "b956" },
           });
-
-          return JSON.stringify({ total, a077, b378, a112, a113, a001, a006, a027, b719, a524, a525, b956 });
+          const a522 = await ctx.prisma.productViewLog.count({
+            where: { userId: ctx.token?.userId, viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) }, siteCode: "a522" },
+          });
+          const a523 = await ctx.prisma.productViewLog.count({
+            where: { userId: ctx.token?.userId, viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) }, siteCode: "a523" },
+          });
+          return JSON.stringify({ total, a077, b378, a112, a113, a001, a006, a027, b719, a524, a525, b956, a522, a523 });
         } catch (e) {
           return throwError(e, ctx);
         }
@@ -3047,7 +3052,7 @@ export const mutation_product = extendType({
             default:
               break;
           }
-          console.log("test", result);
+          // console.log("test", result);
           return JSON.stringify(result);
         } catch (e) {
           return throwError(e, ctx);
