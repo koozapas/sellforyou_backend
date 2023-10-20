@@ -1,51 +1,30 @@
 //onebound.ts
-import {
-  Prisma,
-  PrismaClient,
-  Product,
-  TaobaoProduct,
-  UserInfo,
-} from "@prisma/client";
-import { isBefore, sub } from "date-fns";
-import fetch from "node-fetch";
+import { PrismaClient, TaobaoProduct } from "@prisma/client";
 import {
   IOBApiType,
   IOBItem,
-  IOBItemGetParam,
-  IOBItemGetResponse,
   IOBPublicParameter,
   IQueryParam,
 } from "../../onebound_api_types";
 import { ITranslateData } from "../../translate_types";
 import { Context } from "../../types";
-// import { EXTERNAL_ADDRESS, TRANSLATE_ITEM_SERVER } from "../constants";
-import { errors, throwError } from "../error";
 import {
-  getFromS3,
-  uploadToS3ByBuffer,
   uploadToS3WithEditor,
   uploadToS3AvoidDuplicateByBuffer,
 } from "../file_manage";
-import { wait } from "../helpers";
-import { publishUserLogData } from "./pubsub";
 import { calculatePrice } from "./calculate-product-price";
 import { join } from "path";
 import fs from "fs/promises";
 import { replaceWordTable } from "../../utils/local/word-replace";
 import { REG_EXP } from "../../../common/regex";
-function delay(t: any, val: any) {
-  return new Promise((resolve) => {
-    setTimeout(resolve.bind(null, val), t);
-  });
-}
 
-function raceAll(promises: any, timeoutTime: any, timeoutVal: any) {
-  return Promise.all(
-    promises.map((p: any) => {
-      return Promise.race([p, delay(timeoutTime, timeoutVal)]);
-    })
+const delay = (t: any, val: any) =>
+  new Promise((resolve) => setTimeout(resolve.bind(null, val), t));
+
+const raceAll = (promises: any, timeoutTime: any, timeoutVal: any) =>
+  Promise.all(
+    promises.map((p: any) => Promise.race([p, delay(timeoutTime, timeoutVal)]))
   );
-}
 
 var axios = require("axios");
 
@@ -142,9 +121,7 @@ export const getTranslateData = (
     if (result) {
       let tmp = result[2];
       // 20509:20518:31678:颜色:S 같은 경우를 위해서 데이터를 조정
-      if (tmp.includes(":")) {
-        tmp = result[2].split(":")[1];
-      }
+      if (tmp.includes(":")) tmp = result[2].split(":")[1];
       return { taobaoPid: result[1], name: tmp, order: i + 1 }; // 숫자 1 , 문자 2 ,
     } else throw new Error("파싱 중 문제 발생 " + JSON.stringify(taobaoData));
   });
@@ -187,11 +164,11 @@ export const getTranslateData = (
   };
 };
 
-export async function getItemAndSave(
+export const getItemAndSave = async (
   ctx: Context,
   taobaoIids: string[],
   option: IGetItemAndSaveOption
-) {}
+) => {};
 
 export const getNameFromCookie = (cookie: string) => {
   const decodedCookie = Buffer.from(cookie, "base64").toString("utf8");
@@ -219,6 +196,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
   categoryCode?: string | null,
   categoryType?: string | null,
   adminId?: number,
+  //@ts-ignore
   calculateWonType: number,
   wordTable: any
 ) => {
@@ -300,7 +278,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
 
           let cnyRate = 0;
           let defaultShippingFee = 0;
-          //todoconsole.log("taobaoData.shop_id = ",taobaoData.shop_id);
+
           if (taobaoData.shop_id === "express") {
             for (var i in taobaoData.props) {
               if (taobaoData.props[i].default) {
@@ -322,10 +300,10 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
             defaultShippingFee,
             calculateWonType
           );
+
           if (isNaN(price)) price = 0;
 
           let regExpTest = /[^가-힣a-zA-Z0-9 ]+/g;
-
           let searchTags = "";
           let title_list =
             translateData?.title.replace(regExpTest, "").split(" ") ?? [];
@@ -333,7 +311,6 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
             .filter((item, index) => title_list.indexOf(item) === index)
             .filter((v) => v.trim().length > 0)
             .join();
-
           let categories: any = {};
 
           if (categoryCode) {
@@ -488,7 +465,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
 
           let immSearchTagsData = "";
           if (userInfo.naverAutoSearchTag === "Y") {
-            async function example() {
+            const example = async () => {
               try {
                 const data = await fs.readFile(
                   join(__dirname, "dictionary.json"),
@@ -498,10 +475,10 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
               } catch (err) {
                 console.log(err);
               }
-            }
+            };
             let dictData = await example();
             let matchDictionaryData: any = {};
-            let ttt: any = Object.entries(dictData);
+            // let ttt: any = Object.entries(dictData);
 
             Object.entries(dictData).filter(([index, data]) => {
               const tagInfo: any = data;
@@ -521,43 +498,49 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
               );
               matchTagOb.map((data: any) => matchTagNm.push(data.tagNm));
 
-              function shuffle(array: any) {
+              const shuffle = (array: any) => {
                 var m = array.length,
                   t,
                   i;
-                // While there remain elements to shuffle…
                 while (m) {
-                  // Pick a remaining element…
                   i = Math.floor(Math.random() * m--);
-                  // And swap it with the current element.
                   t = array[m];
                   array[m] = array[i];
                   array[i] = t;
                 }
                 return array;
-              }
+              };
               matchTagNm = shuffle(matchTagNm);
               immSearchTagsData = matchTagNm.slice(0, 10).join();
             }
           }
-          let myKeyward: any = "";
-          if (translateData?.myKeyward && translateData?.myKeyward !== "") {
-            myKeyward = translateData?.myKeyward;
+          let myKeyward: string | undefined | null = "";
+          /** 상품단위 엑셀수집에서 가져온 개인분류 */
+          const excelKeyward = taobaoData.myKeyward.replace(/\s*$/, "");
+          const translateKeyward =
+            translateData?.myKeyward ??
+            translateData?.myKeyward?.replace(/\s*$/, "");
+
+          if (
+            (translateKeyward && translateKeyward !== "") ||
+            excelKeyward !== ""
+          ) {
+            myKeyward = translateKeyward || excelKeyward;
             if (userId !== null) {
               let userTest: any = await prisma.user.findUnique({
                 where: { id: userId },
               });
-              if (userTest.keywardMemo === null) {
+              if (userTest.keywardMemo === null)
                 await prisma.user.update({
                   where: { id: userTest.id },
                   data: { keywardMemo: myKeyward },
                 });
-              } else {
+              else {
                 let keywardList: any = [];
                 await Promise.all(
-                  userTest.keywardMemo.split(",").map(async (v: any) => {
-                    keywardList.push(v);
-                  })
+                  userTest.keywardMemo
+                    .split(",")
+                    .map(async (v: any) => keywardList.push(v))
                 );
                 keywardList.push(myKeyward);
                 await prisma.user.update({
@@ -592,7 +575,6 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
               adminId: adminId,
               taobaoProductId: v.id,
               myKeyward: myKeyward !== "" ? myKeyward : undefined,
-              // categoryCode: categoryCode,
 
               categoryA077: categories["A077"],
 
@@ -677,11 +659,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
               sillDataB956: "",
             },
           });
-          //todoconsole.log("product",product);
-          // VVIC Thumbnails/Descriptions Upload todo 1
-          //todoconsole.log("taobaoData.shop_id",taobaoData.shop_id);
           if (taobaoData.shop_id === "vvic") {
-            //todo console.log("taobaoData.item_imgs",taobaoData.item_imgs.length);
             if (taobaoData.item_imgs.length > 0) {
               var new_imgs = await raceAll(
                 taobaoData.item_imgs.map(async (v, i) => {
@@ -713,9 +691,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
                         mimetype.length
                       );
 
-                      if (image_ext === "jpeg") {
-                        image_ext = "jpg";
-                      }
+                      if (image_ext === "jpeg") image_ext = "jpg";
 
                       var image_url: any = `https://img.sellforyou.co.kr/sellforyou/${await uploadToS3AvoidDuplicateByBuffer(
                         buffer,
@@ -747,17 +723,11 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
                   a: any,
                   b: any
                 ) {
-                  if (a.url < b.url) {
-                    return -1;
-                  }
-
-                  if (a.url > b.url) {
-                    return 1;
-                  }
+                  if (a.url < b.url) return -1;
+                  if (a.url > b.url) return 1;
 
                   return 0;
                 });
-
                 taobaoData.item_imgs = sorted_imgs;
               }
             }
@@ -794,9 +764,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
                         mimetype.length
                       );
 
-                      if (image_ext === "jpeg") {
-                        image_ext = "jpg";
-                      }
+                      if (image_ext === "jpeg") image_ext = "jpg";
 
                       const output = `https://img.sellforyou.co.kr/sellforyou/${await uploadToS3AvoidDuplicateByBuffer(
                         buffer,
@@ -823,14 +791,10 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
                 null
               );
 
-              // if(desc_imgs.length > 0 && desc_imgs[0] === null && test_desc_imgs.length > 0){
-              //     desc_imgs = test_desc_imgs;
-              // }
-              if (desc_imgs.length > 0) {
+              if (desc_imgs.length > 0)
                 description = (
                   translateData?.description ?? taobaoData.desc
                 ).replace(/(?<!<p ?>)(<img [^>]*?>)(?!<p>)/g, "<p>$1</p>");
-              }
             }
 
             product = await prisma.product.update({
@@ -850,7 +814,6 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
             ["product", product.id],
             "description"
           );
-          //todoconsole.log("dsad");
           product = await prisma.product.update({
             where: {
               id: product.id,
@@ -862,9 +825,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
               description,
             },
           });
-          //todoconsole.log("product dsad",product);//여기까지 문제없음
 
-          //todoconsole.log("res",res);
           if (res) {
             //옵션 있는 상품의 경우
             const productOptionNames = await Promise.all(
@@ -873,11 +834,9 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
                   translateData?.optionName.find(
                     (v2) => v2.taobaoPid === v.taobaoPid
                   )?.name ?? v.name; //이름 번역한거만 바꾸네.. 다른건 외국어쓰네 ;;
-                // todoconsole.log("name",name);
                 const urlInfo = taobaoData.prop_imgs.prop_img.find((v2) => {
                   return v2.properties.split(":")[0] === v.taobaoPid;
                 });
-                //todoconsole.log("옵션있는상품",v);
                 const productOptionName = await prisma.productOptionName.create(
                   {
                     data: {
@@ -892,7 +851,6 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
                     },
                   }
                 );
-                //todoconsole.log("productOptionName",productOptionName);//문제없고
                 return productOptionName;
               })
             );
@@ -911,19 +869,15 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
                   // console.log("c =",c);
 
                   const index = p.findIndex((v) => v.l === c); //-1이면 없고 , 0이면 0번째있고 , 1이면 ....해당번째  보니까 v.l의 c는 갯수이고 각 옵션의 갯수를 세는거네
-                  // console.log("index =",index);
                   if (index !== -1) {
                     //해당 pid번호가 있으면
                     p[index].c = p[index].c + 1; // 해당
-                    // console.log(`${cnt} 번째 ${p[index].c}`);
                   } else {
                     //해당 pid번호가 없을때. index2 = -1
                     const index2 = p.findIndex((v) => v.l === ""); //하나는 분명 있음(옵션은 최대 3개)  ? 이게아니고 이건 옵션이 없는경우인데 ; 없을때도 카운트1개올리네 ?흠 .이건왜하노
-                    //todoconsole.log("index2=",index2);
                     p[index2].l = c;
                     p[index2].c = 1;
                   }
-                  //todoconsole.log("p=",p);
                   return p;
                 },
                 [
@@ -934,7 +888,6 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
                   { l: "", c: 0 },
                 ] as { l: string; c: number }[]
               );
-            //todoconsole.log("propsLengthInfo=",propsLengthInfo); //[ { l: '20509', c: 5 }, { l: '1627207', c: 4 }, { l: '', c: 0 } ]
             // 1 번째
             // p = [ { l: '', c: 0 }, { l: '', c: 0 }, { l: '', c: 0 } ]
             // c = 20509
@@ -992,7 +945,6 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
             propsLengthInfo[2].c = propsLengthInfo[1].c + propsLengthInfo[0].c;
             propsLengthInfo[1].c = propsLengthInfo[0].c;
             propsLengthInfo[0].c = 0;
-            //todoconsole.log("이건무슨짓이고?",propsLengthInfo);
             // 일케 바꼇네 ?
             // [
             //     { l: '20509', c: 0 },
@@ -1004,10 +956,6 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
               Object.entries(taobaoData.props_list).map(
                 async ([key, value], i) => {
                   // 직렬처리 필요?
-                  // console.log("원래 key 는");
-                  // console.log(key.match(/([-\d]+):([-\d]+)/)!);
-                  // console.log("새로운 key 는");
-                  // console.log(key.match(/([-\d]+):?([-\d]+)?:([-\d]+)/));
                   const a = key.match(/([-\d]+):?([-\d]+)?:([-\d]+)/)!;
                   // const a = key.match(/([-\d]+):([-\d]+)/)!; // 기존(00000:00000 매치) 정규식
                   const b = value.match(/^(.+):(.+)$/)!;
@@ -1035,7 +983,6 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
                       (v2) => v2.taobaoPid === a[1] && v2.taobaoVid === a[3]
                     )?.name ?? b[2]; //매칭시켜버림 옵션명과 옵션내용
                   //console.log("a 의 name",name);//각 옵션이름이네 ex) 붉은색, 푸른색,, 등
-                  //todoconsole.log("name = ? ",name);
                   let image: any = urlInfo
                     ? /^https?:\/\//.test(urlInfo.url)
                       ? urlInfo.url
@@ -1123,7 +1070,6 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
                 }
               )
             );
-            //console.log("productOptionValues = ", productOptionValues);//여기까진 잘들어왔는디?
             await Promise.all(
               taobaoData.skus.sku.map(async (sku) => {
                 //const match = sku.properties.match(/^([-\d]+):([-\d]+);?([-\d]+)?:?([-\d]+)?;?([-\d]+)?:?([-\d]+)?/)!; 옵션3개
@@ -1155,8 +1101,6 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
                   .map((v) => ("00" + v).slice(-2))
                   .join("_");
 
-                //console.log("optionString = ",optionString);
-                //console.log("test = id ",productOptionValues.find(v => v.optionNameOrder === 4 && v.taobaoVid === match[8])?.id );
                 const option = await prisma.productOption.create({
                   data: {
                     productId: product!.id,
