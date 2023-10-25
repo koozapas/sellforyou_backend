@@ -160,7 +160,9 @@ export const getProductListAllKeys = async (Key: string): Promise<any> => {
 export const uploadToS3AvoidDuplicate = async (pfile: FileUpload, pathArray: (string | number)[], fileNameExcludeExtension?: string) => {
   const file = await pfile;
 
-  let filename = fileNameExcludeExtension ? fileNameExcludeExtension + file.filename.replace(regexPattern.fileNameAndExtension, ".$2") : file.filename;
+  let filename = fileNameExcludeExtension
+    ? fileNameExcludeExtension + file.filename.replace(regexPattern.fileNameAndExtension, ".$2")
+    : file.filename;
   let tmpnumber = 0;
 
   while (true) {
@@ -180,7 +182,12 @@ export const uploadToS3AvoidDuplicate = async (pfile: FileUpload, pathArray: (st
   return (await uploadToS3(file, pathArray, filename)).url;
 };
 
-export const uploadToS3ByBuffer = async (file: Buffer, filename: string, mimetype: string, path: (string | number)[] = []): Promise<S3UploadResult> => {
+export const uploadToS3ByBuffer = async (
+  file: Buffer,
+  filename: string,
+  mimetype: string,
+  path: (string | number)[] = []
+): Promise<S3UploadResult> => {
   path.push(filename);
 
   const response = await S3Client.upload({
@@ -224,48 +231,49 @@ export const uploadToS3AvoidDuplicateByBuffer = async (
 
 //기본적인 수집 이나 다른 기능에 의한 스타일 제거하여 이미지 업로드하는 기능
 export const uploadToS3WithEditor = async (content: string, pathArray: (string | number)[], fileNameExcludeExtension: string | null) => {
-  //img태그에 잡다한 속성들 제거
-  content = /<img[^>]src="([^">]+)"([^>]+)?>/g.test(content)
-    ? content.replace(/<img[^>]src="([^">]+)"([^>]+)?>/g, `<img src="$1" />`)
+  /** img태그에 잡다한 속성들 제거 */
+  // content = /<img[^>]src="([^">]+)"([^>]+)?>/g.test(content) -> 기존정규식
+  content = /<img(?: [^>]+)? src="([^">]+)"(?: [^>]+)?>/g.test(content)
+    ? content.replace(/<img(?: [^>]+)? src="([^">]+)"(?: [^>]+)?>/g, `<img src="$1" />`)
     : content.replace(/<img[^>]+src="([^">]+)"([^>]+)?>/g, `<img src="$1" />`);
+  // 제거전 : <img src="https://img.alicdn.com/imgextra/i1/2206899469007/O1CN01o0tJGL2GPGBjIXQrb_!!2206899469007.jpg" align="absmiddle"/>
+  // 제거후 : <img src="https://img.alicdn.com/imgextra/i3/2206899469007/O1CN01oCShTU2GPGBiZ9UXG_!!2206899469007.jpg" />
 
-  const result = content.match(/<img src="?data:(image\/.*?);base64,(.*?)"? ?\/?>/g);
-
-  // console.log('matched', result?.length);
+  const result = content.match(/<img(?: align=".*")? src="?data:(image\/.*?);base64,(.*?)"? ?\/?>/g);
 
   let descriptionContents = content;
 
   if (result) {
     const urlArray = await Promise.all(
       result.map(async (v, i) => {
-        const a = v.replace(/<img src="?data:(image\/.*?);base64,(.*?)"? ?\/?>/g, "$1*$*~$2").split("*$*~");
+        const a = v.replace(/<img(?: align=".*")? src="?data:(image\/.*?);base64,(.*?)"? ?\/?>/g, "$1*$*~$2").split("*$*~");
         let [mimetype, buffer] = [a[0], Buffer.from(a[1], "base64")];
-
         let ext = mimetype.slice(mimetype.indexOf("/") + 1, 10);
 
-        if (ext === "jpeg") {
-          ext = "jpg";
-        }
+        if (ext === "jpeg") ext = "jpg";
 
         return await uploadToS3AvoidDuplicateByBuffer(buffer, `image${i}.${ext}`, mimetype, [...pathArray]);
       })
     );
 
-    // console.log(urlArray);
-
-    descriptionContents = result?.reduce((p, c, i) => p.replace(c, `<img src="${EXTERNAL_S3_ADDRESS}/${urlArray[i]}">`), descriptionContents);
-    //p컴포넌트의 스타일들을 제거하는 작업
+    /** p컴포넌트의 스타일들을 제거하는 작업 */
+    descriptionContents = result?.reduce(
+      (p, c, i) => p.replace(c, `<img src="${EXTERNAL_S3_ADDRESS}/${urlArray[i]}">`),
+      descriptionContents
+    );
   }
 
+  /** <p>태그로 감싸주는 작업? */
   descriptionContents = descriptionContents.replace(/(?<!<p ?>)(<img [^>]*?>)(?!<p>)/g, "<p>$1</p>");
+  // 작업전 : <img src="https://img.alicdn.com/imgextra/i4/2206899469007/O1CN01QcNmhm2GPGBh013ty_!!2206899469007.jpg"/>
+  // 작업후 : <p><img src="https://img.alicdn.com/imgextra/i4/2206899469007/O1CN01QcNmhm2GPGBh013ty_!!2206899469007.jpg"/></p>
 
   if (fileNameExcludeExtension) {
-    const description = (await uploadToS3ByBuffer(Buffer.from(descriptionContents, "utf8"), `${fileNameExcludeExtension}.html`, "text/html", [...pathArray]))
-      .url;
-
+    const description = (
+      await uploadToS3ByBuffer(Buffer.from(descriptionContents, "utf8"), `${fileNameExcludeExtension}.html`, "text/html", [...pathArray])
+    ).url;
     return description;
   }
-
   return descriptionContents;
 };
 
@@ -276,8 +284,6 @@ export const uploadToS3WithEditor2 = async (content: string, pathArray: (string 
 
   const result = content.match(/<img src="?data:(image\/.*?);base64,(.*?)"? ?\/?>/g);
 
-  // console.log('matched', result?.length);
-
   let descriptionContents = content;
 
   if (result) {
@@ -286,27 +292,26 @@ export const uploadToS3WithEditor2 = async (content: string, pathArray: (string 
         const a = v.replace(/<img src="?data:(image\/.*?);base64,(.*?)"? ?\/?>/g, "$1*$*~$2").split("*$*~");
 
         let [mimetype, buffer] = [a[0], Buffer.from(a[1], "base64")];
-
         let ext = mimetype.slice(mimetype.indexOf("/") + 1, 10);
 
-        if (ext === "jpeg") {
-          ext = "jpg";
-        }
+        if (ext === "jpeg") ext = "jpg";
 
         return await uploadToS3AvoidDuplicateByBuffer(buffer, `image${i}.${ext}`, mimetype, [...pathArray]);
       })
     );
 
-    // console.log(urlArray);
-
-    descriptionContents = result?.reduce((p, c, i) => p.replace(c, `<img src="${EXTERNAL_S3_ADDRESS}/${urlArray[i]}">`), descriptionContents);
-    //p컴포넌트의 스타일들을 제거하는 작업
+    /** p컴포넌트의 스타일들을 제거하는 작업 */
+    descriptionContents = result?.reduce(
+      (p, c, i) => p.replace(c, `<img src="${EXTERNAL_S3_ADDRESS}/${urlArray[i]}">`),
+      descriptionContents
+    );
   }
   // descriptionContents = descriptionContents.replace(/(?<!<p ?>)(<img [^>]*?>)(?!<p>)/g, "<p>$1</p>");
 
   if (fileNameExcludeExtension) {
-    const description = (await uploadToS3ByBuffer(Buffer.from(descriptionContents, "utf8"), `${fileNameExcludeExtension}.html`, "text/html", [...pathArray]))
-      .url;
+    const description = (
+      await uploadToS3ByBuffer(Buffer.from(descriptionContents, "utf8"), `${fileNameExcludeExtension}.html`, "text/html", [...pathArray])
+    ).url;
 
     return description;
   }

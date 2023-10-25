@@ -1,6 +1,6 @@
 import { GraphQLResolveInfo } from "graphql";
 import { arg, extendType, floatArg, intArg, list, nonNull, stringArg } from "nexus";
-import { ArgsValue, booleanArg, isObject } from "nexus/dist/core";
+import { ArgsValue, booleanArg } from "nexus/dist/core";
 import { Context } from "../../types";
 import { errors, throwError } from "../../utils/error";
 import {
@@ -8,20 +8,25 @@ import {
   uploadToS3AvoidDuplicateByBuffer,
   uploadToS3WithEditor2,
   uploadToS3WithEditor,
-  deleteFromS3,
+  // deleteFromS3,
   deleteS3Folder,
   getProductListAllKeys,
 } from "../../utils/file_manage";
 import { calculatePrice } from "../../utils/local/calculate-product-price";
-import { publishUserLogData } from "../../utils/local/pubsub";
+// import { publishUserLogData } from "../../utils/local/pubsub";
 import { SiilEncodedSavedData, siilInfo } from "../siil";
-import { t_ProductOption, t_SillInfoA001 } from "./model";
-import { prisma } from "@prisma/client";
-import { ar } from "date-fns/locale";
+// import { t_ProductOption, t_SillInfoA001 } from "./model";
+// import { prisma } from "@prisma/client";
+// import { ar } from "date-fns/locale";
 import { ProductStoreStateEnum } from "../../graphql";
 import { shopDataUrlInfo } from "../../playauto_api_type";
-// it is will delete after update to front todo
-const initProductImageByUser = async (src: {}, args: ArgsValue<"Mutation", "initProductImageByUser">, ctx: Context, info: GraphQLResolveInfo) => {
+
+const initProductImageByUser = async (
+  src: {},
+  args: ArgsValue<"Mutation", "initProductImageByUser">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     const product = await ctx.prisma.product.findUnique({
       where: { id: args.productId },
@@ -114,7 +119,12 @@ const initProductThumbnailImageByUser = async (
   }
 };
 
-const initProductOptionImageByUser = async (src: {}, args: ArgsValue<"Mutation", "initProductOptionImageByUser">, ctx: Context, info: GraphQLResolveInfo) => {
+const initProductOptionImageByUser = async (
+  src: {},
+  args: ArgsValue<"Mutation", "initProductOptionImageByUser">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     const product = await ctx.prisma.product.findUnique({
       where: { id: args.productId },
@@ -163,25 +173,22 @@ const initProductOptionImageByUser = async (src: {}, args: ArgsValue<"Mutation",
   }
 };
 
-const initProductDescriptionByUser = async (src: {}, args: ArgsValue<"Mutation", "initProductDescriptionByUser">, ctx: Context, info: GraphQLResolveInfo) => {
+const initProductDescriptionByUser = async (
+  src: {},
+  args: ArgsValue<"Mutation", "initProductDescriptionByUser">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     const product = await ctx.prisma.product.findUnique({
       where: { id: args.productId },
       include: { taobaoProduct: true, productOption: true, productOptionName: { include: { productOptionValue: true } } },
     });
 
-    if (!product) {
-      return throwError(errors.noSuchData, ctx);
-    }
+    if (!product) return throwError(errors.noSuchData, ctx);
 
     let taobaoData = JSON.parse(product.taobaoProduct.originalData);
     let description = await uploadToS3WithEditor(taobaoData.desc, ["product", product.id], "description");
-
-    // let desc_html = ``;
-
-    // for (var i in taobaoData.desc_img) {
-    //     desc_html += `<img src=${taobaoData.desc_img[i]} alt="" />`;
-    // }
 
     await ctx.prisma.product.update({
       where: { id: product.id },
@@ -216,7 +223,12 @@ const updateProductOptionShippingFee = async (
     return throwError(e, ctx);
   }
 };
-const updateProductOptionResolver = async (src: {}, args: ArgsValue<"mutation", "updateProductOption">, ctx: Context, info: GraphQLResolveInfo) => {
+const updateProductOptionResolver = async (
+  src: {},
+  args: ArgsValue<"mutation", "updateProductOption">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     console.log("args.productOption.length", args.productOption.length);
     if (args.productOption.length !== 0) {
@@ -263,7 +275,12 @@ const updateProductOptionResolver = async (src: {}, args: ArgsValue<"mutation", 
     return throwError(e, ctx);
   }
 };
-const updateProductCategory2 = async (src: {}, args: ArgsValue<"Mutation", "updateProductCategory2">, ctx: Context, info: GraphQLResolveInfo) => {
+const updateProductCategory2 = async (
+  src: {},
+  args: ArgsValue<"Mutation", "updateProductCategory2">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   let results: any = [];
   let result: any;
   await ctx.prisma.product.update({
@@ -588,7 +605,12 @@ const updateProductCategory2 = async (src: {}, args: ArgsValue<"Mutation", "upda
   if (!result) return throwError(errors.etc("해당 product의 업데이트가 실패하였습니다."), ctx);
   return JSON.stringify(results);
 };
-const updateProductCategory = async (src: {}, args: ArgsValue<"Mutation", "updateProductCategory">, ctx: Context, info: GraphQLResolveInfo) => {
+const updateProductCategory = async (
+  src: {},
+  args: ArgsValue<"Mutation", "updateProductCategory">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   //이거뭐고
   // const productStore = await ctx.prisma.productStore.findMany(
   //     {
@@ -622,7 +644,12 @@ const updateProductCategory = async (src: {}, args: ArgsValue<"Mutation", "updat
   return "OK";
 };
 
-const updateProductResolver = async (src: {}, args: ArgsValue<"Mutation", "updateProductByUser">, ctx: Context, info: GraphQLResolveInfo) => {
+const updateProductResolver = async (
+  src: {},
+  args: ArgsValue<"Mutation", "updateProductByUser">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     const product = await ctx.prisma.product.findUnique({
       where: { id: args.productId },
@@ -783,7 +810,9 @@ const updateDescription = async (src: {}, args: ArgsValue<"Mutation", "updateDes
   try {
     const product = await ctx.prisma.product.findUnique({ where: { id: args.productId } });
     if (!product) return throwError(errors.etc("해당 상품이 존재하지 않습니다."), ctx);
-    const description = args.description ? await uploadToS3WithEditor2(args.description, ["product", product.id], "description") : undefined;
+    const description = args.description
+      ? await uploadToS3WithEditor2(args.description, ["product", product.id], "description")
+      : undefined;
     if (!description) return throwError(errors.etc("description 업데이트 과정에 문제가 생겼습니다."), ctx);
     const success = await ctx.prisma.product.update({
       where: { id: product.id },
@@ -796,7 +825,12 @@ const updateDescription = async (src: {}, args: ArgsValue<"Mutation", "updateDes
   }
 };
 
-const updateManyDescription = async (src: {}, args: ArgsValue<"Mutation", "updateManyDescription">, ctx: Context, info: GraphQLResolveInfo) => {
+const updateManyDescription = async (
+  src: {},
+  args: ArgsValue<"Mutation", "updateManyDescription">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     await Promise.all(
       args.data.map(async (v: any) => {
@@ -815,7 +849,12 @@ const updateManyDescription = async (src: {}, args: ArgsValue<"Mutation", "updat
     return throwError(e, ctx);
   }
 };
-const updateImageThumbnailData = async (src: {}, args: ArgsValue<"Mutation", "updateImageThumbnailData">, ctx: Context, info: GraphQLResolveInfo) => {
+const updateImageThumbnailData = async (
+  src: {},
+  args: ArgsValue<"Mutation", "updateImageThumbnailData">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     const product = await ctx.prisma.product.findUnique({ where: { id: args.productId } });
     if (!product) return throwError(errors.etc("해당 상품이 존재하지 않습니다."), ctx);
@@ -849,7 +888,12 @@ const updateImageThumbnailData = async (src: {}, args: ArgsValue<"Mutation", "up
   }
 };
 
-const updateProductNameResolver = async (src: {}, args: ArgsValue<"Mutation", "updateProductNameByUser">, ctx: Context, info: GraphQLResolveInfo) => {
+const updateProductNameResolver = async (
+  src: {},
+  args: ArgsValue<"Mutation", "updateProductNameByUser">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     const product = await ctx.prisma.product.findUnique({
       where: { id: args.productId },
@@ -893,7 +937,12 @@ const updateMultipleProductNameByUser = async (
   }
 };
 
-const updateProductTagResolver = async (src: {}, args: ArgsValue<"Mutation", "updateProductTagByUser">, ctx: Context, info: GraphQLResolveInfo) => {
+const updateProductTagResolver = async (
+  src: {},
+  args: ArgsValue<"Mutation", "updateProductTagByUser">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     await ctx.prisma.product.update({
       where: { id: args.productId },
@@ -909,7 +958,12 @@ const updateProductTagResolver = async (src: {}, args: ArgsValue<"Mutation", "up
   }
 };
 
-const updateManyProductTagResolver = async (src: {}, args: ArgsValue<"Mutation", "updateManyProductTagByUser">, ctx: Context, info: GraphQLResolveInfo) => {
+const updateManyProductTagResolver = async (
+  src: {},
+  args: ArgsValue<"Mutation", "updateManyProductTagByUser">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     //console.log("1", args.searchTags);
     //console.log("2",args.immSearchTags);
@@ -926,7 +980,12 @@ const updateManyProductTagResolver = async (src: {}, args: ArgsValue<"Mutation",
   }
 };
 
-const updateManyProductNameResolver = async (src: {}, args: ArgsValue<"Mutation", "updateManyProductNameByUser">, ctx: Context, info: GraphQLResolveInfo) => {
+const updateManyProductNameResolver = async (
+  src: {},
+  args: ArgsValue<"Mutation", "updateManyProductNameByUser">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     const products = await ctx.prisma.product.findMany({
       where: { ...(ctx.token?.userId ? { userId: ctx.token.userId } : {}), id: { in: args.productIds } },
@@ -1144,7 +1203,12 @@ const deleteUserResolver = async (src: {}, args: ArgsValue<"Mutation", "deleteUs
   }
 };
 
-const deleteUserProductResolver = async (src: {}, args: ArgsValue<"Mutation", "deleteUserProductByAdmin">, ctx: Context, info: GraphQLResolveInfo) => {
+const deleteUserProductResolver = async (
+  src: {},
+  args: ArgsValue<"Mutation", "deleteUserProductByAdmin">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     //userId 는 배열로 받을수있게끔 설정,
     //todo list product가 존재할경우 -> 등록상품의경우는 등록된상품 해지하지않고 걍 수집과 동일하게 일괄삭제, product가 존재하지 않을경우엔 유저 삭제 순서 .
@@ -1189,7 +1253,12 @@ const deleteUserProductResolver = async (src: {}, args: ArgsValue<"Mutation", "d
   }
 };
 
-const deleteProductResolver = async (src: {}, args: ArgsValue<"Mutation", "deleteProductByUser">, ctx: Context, info: GraphQLResolveInfo) => {
+const deleteProductResolver = async (
+  src: {},
+  args: ArgsValue<"Mutation", "deleteProductByUser">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     const product = await ctx.prisma.product.findMany({
       where: { id: { in: args.productId } },
@@ -1253,7 +1322,12 @@ const updateProductSinglePriceResolver = async (
     return throwError(e, ctx);
   }
 };
-const updateProductPriceResolver = async (src: {}, args: ArgsValue<"Mutation", "updateProductPriceByUser">, ctx: Context, info: GraphQLResolveInfo) => {
+const updateProductPriceResolver = async (
+  src: {},
+  args: ArgsValue<"Mutation", "updateProductPriceByUser">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     const data = await ctx.prisma.userInfo.findUnique({
       where: {
@@ -1316,7 +1390,10 @@ const updateProductPriceResolver = async (src: {}, args: ArgsValue<"Mutation", "
         await ctx.prisma.product.update({
           where: { id: v.id },
           data: {
-            price: productMinprice === 0 ? boundCalculatePrice(v.taobaoProduct.price, cnyRate, localShippingFee, calculateWonType) : productMinprice,
+            price:
+              productMinprice === 0
+                ? boundCalculatePrice(v.taobaoProduct.price, cnyRate, localShippingFee, calculateWonType)
+                : productMinprice,
             cnyRate: cnyRate,
             marginRate: args.marginRate,
             marginUnitType: args.marginUnitType,
@@ -1335,7 +1412,12 @@ const updateProductPriceResolver = async (src: {}, args: ArgsValue<"Mutation", "
   }
 };
 
-const updateManyProductOption = async (src: {}, args: ArgsValue<"Mutation", "updateManyProductOption">, ctx: Context, info: GraphQLResolveInfo) => {
+const updateManyProductOption = async (
+  src: {},
+  args: ArgsValue<"Mutation", "updateManyProductOption">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     await Promise.all(
       args.data.map(async (v: any) => {
@@ -1357,7 +1439,12 @@ const updateManyProductOption = async (src: {}, args: ArgsValue<"Mutation", "upd
     return throwError(e, ctx);
   }
 };
-const restoreProductOptionValue = async (src: {}, args: ArgsValue<"Mutation", "restoreProductOptionValue">, ctx: Context, info: GraphQLResolveInfo) => {
+const restoreProductOptionValue = async (
+  src: {},
+  args: ArgsValue<"Mutation", "restoreProductOptionValue">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     const findOrigin = await ctx.prisma.productOptionValue.findMany({
       where: {
@@ -1381,7 +1468,12 @@ const restoreProductOptionValue = async (src: {}, args: ArgsValue<"Mutation", "r
   }
 };
 
-const coupangCategorySillCodeInput = async (src: {}, args: ArgsValue<"Mutation", "coupangCategorySillCodeInput">, ctx: Context, info: GraphQLResolveInfo) => {
+const coupangCategorySillCodeInput = async (
+  src: {},
+  args: ArgsValue<"Mutation", "coupangCategorySillCodeInput">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     await Promise.all(
       args.data.map(async (v: any) => {
@@ -1396,7 +1488,12 @@ const coupangCategorySillCodeInput = async (src: {}, args: ArgsValue<"Mutation",
     return throwError(e, ctx);
   }
 };
-const updateManyProductOptionValue = async (src: {}, args: ArgsValue<"Mutation", "updateManyProductOptionValue">, ctx: Context, info: GraphQLResolveInfo) => {
+const updateManyProductOptionValue = async (
+  src: {},
+  args: ArgsValue<"Mutation", "updateManyProductOptionValue">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     await Promise.all(
       args.data.map(async (v: any) => {
@@ -1412,7 +1509,12 @@ const updateManyProductOptionValue = async (src: {}, args: ArgsValue<"Mutation",
   }
 };
 
-const updateProductSillDatasByUser = async (src: {}, args: ArgsValue<"Mutation", "updateProductSillDatasByUser">, ctx: Context, info: GraphQLResolveInfo) => {
+const updateProductSillDatasByUser = async (
+  src: {},
+  args: ArgsValue<"Mutation", "updateProductSillDatasByUser">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     const products = await ctx.prisma.product.updateMany({
       where: { userId: ctx.token!.userId, id: { in: args.productIds } },
@@ -1436,7 +1538,12 @@ const updateProductSillDatasByUser = async (src: {}, args: ArgsValue<"Mutation",
   }
 };
 
-const updateProductSillCodesByUser = async (src: {}, args: ArgsValue<"Mutation", "updateProductSillCodesByUser">, ctx: Context, info: GraphQLResolveInfo) => {
+const updateProductSillCodesByUser = async (
+  src: {},
+  args: ArgsValue<"Mutation", "updateProductSillCodesByUser">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     const products = await ctx.prisma.product.updateMany({
       where: { userId: ctx.token!.userId, id: { in: args.productIds } },
@@ -1460,9 +1567,17 @@ const updateProductSillCodesByUser = async (src: {}, args: ArgsValue<"Mutation",
   }
 };
 
-const endProductSellStateResolver = async (src: {}, args: ArgsValue<"Mutation", "endProductSellStateByUser">, ctx: Context, info: GraphQLResolveInfo) => {
+const endProductSellStateResolver = async (
+  src: {},
+  args: ArgsValue<"Mutation", "endProductSellStateByUser">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
-    const products = await ctx.prisma.product.updateMany({ where: { userId: ctx.token!.userId, id: { in: args.productIds } }, data: { state: 10 } });
+    const products = await ctx.prisma.product.updateMany({
+      where: { userId: ctx.token!.userId, id: { in: args.productIds } },
+      data: { state: 10 },
+    });
     return products.count;
   } catch (e) {
     return throwError(e, ctx);
@@ -1494,7 +1609,12 @@ const updateProductFee = async (src: {}, args: ArgsValue<"Mutation", "updateProd
     return throwError(e, ctx);
   }
 };
-const updateManyProductFee = async (src: {}, args: ArgsValue<"Mutation", "updateManyProductFee">, ctx: Context, info: GraphQLResolveInfo) => {
+const updateManyProductFee = async (
+  src: {},
+  args: ArgsValue<"Mutation", "updateManyProductFee">,
+  ctx: Context,
+  info: GraphQLResolveInfo
+) => {
   try {
     const product = await ctx.prisma.product.updateMany({
       where: { id: { in: args.productId } },
@@ -1545,7 +1665,10 @@ export async function copyProductsToUser(targetProductIds: number[], ctx: Contex
           stockUpdatedAt: new Date(),
         },
       });
-      newProduct = await ctx.prisma.product.update({ where: { id: newProduct.id }, data: { productCode: "SFYA_" + newProduct.id.toString(36) } });
+      newProduct = await ctx.prisma.product.update({
+        where: { id: newProduct.id },
+        data: { productCode: "SFYA_" + newProduct.id.toString(36) },
+      });
 
       const newProductOptionName = await Promise.all(
         productOptionName.map(async (v) => {
@@ -1582,11 +1705,13 @@ export async function copyProductsToUser(targetProductIds: number[], ctx: Contex
               .find((v) => v.order === 1)!
               .productOptionValue.find((v) => v.taobaoVid === productOption.productOption1.taobaoVid)!.id,
             option_value2_id:
-              newProductOptionName.find((v) => v.order === 2)?.productOptionValue.find((v) => v.taobaoVid === productOption.productOption2?.taobaoVid)?.id ??
-              null,
+              newProductOptionName
+                .find((v) => v.order === 2)
+                ?.productOptionValue.find((v) => v.taobaoVid === productOption.productOption2?.taobaoVid)?.id ?? null,
             option_value3_id:
-              newProductOptionName.find((v) => v.order === 3)?.productOptionValue.find((v) => v.taobaoVid === productOption.productOption3?.taobaoVid)?.id ??
-              null,
+              newProductOptionName
+                .find((v) => v.order === 3)
+                ?.productOptionValue.find((v) => v.taobaoVid === productOption.productOption3?.taobaoVid)?.id ?? null,
           };
         }),
       });
@@ -1699,7 +1824,8 @@ export const mutation_product = extendType({
           //     return throwError(errors.etc("이미 번역된 상품입니다."), ctx);
           // }
 
-          if (ctx.token?.userId && product.userId !== ctx.token.userId) return throwError(errors.etc("해당 상품을 수정할 수 없습니다."), ctx);
+          if (ctx.token?.userId && product.userId !== ctx.token.userId)
+            return throwError(errors.etc("해당 상품을 수정할 수 없습니다."), ctx);
           const productOptionValues = product.productOptionName.flatMap((v) => v.productOptionValue);
           if (args.optionValues.some((v) => productOptionValues.findIndex((v2) => v2.id === v.id) === -1))
             return throwError(errors.etc("해당 상품의 옵션이 아닌 옵션값이 있습니다."), ctx);
@@ -1751,7 +1877,9 @@ export const mutation_product = extendType({
             imageThumbnailData = JSON.stringify(imageArray);
           }
 
-          const description = args.description ? await uploadToS3WithEditor(args.description, ["product", product.id], "description") : undefined;
+          const description = args.description
+            ? await uploadToS3WithEditor(args.description, ["product", product.id], "description")
+            : undefined;
           const result = await ctx.prisma.product.update({
             where: { id: product.id },
             data: {
@@ -1798,7 +1926,8 @@ export const mutation_product = extendType({
           //     return throwError(errors.etc("이미 번역된 상품입니다."), ctx);
           // }
 
-          if (ctx.token?.userId && product.userId !== ctx.token.userId) return throwError(errors.etc("해당 상품을 수정할 수 없습니다."), ctx);
+          if (ctx.token?.userId && product.userId !== ctx.token.userId)
+            return throwError(errors.etc("해당 상품을 수정할 수 없습니다."), ctx);
           const productOptionValues = product.productOptionName.flatMap((v) => v.productOptionValue);
           if (args.optionValues.some((v) => productOptionValues.findIndex((v2) => v2.id === v.id) === -1))
             return throwError(errors.etc("해당 상품의 옵션이 아닌 옵션값이 있습니다."), ctx);
@@ -1884,7 +2013,9 @@ export const mutation_product = extendType({
             }
             imageThumbnailData = JSON.stringify(imageArray);
           }
-          const description = args.description ? await uploadToS3WithEditor(args.description, ["product", product.id], "description") : undefined;
+          const description = args.description
+            ? await uploadToS3WithEditor(args.description, ["product", product.id], "description")
+            : undefined;
           a1.description = description !== undefined ? "https://img.sellforyou.co.kr/sellforyou/" + description : "";
           const result = await ctx.prisma.product.update({
             where: { id: product.id },
@@ -1932,33 +2063,24 @@ export const mutation_product = extendType({
             include: { productStore: true, productOption: true, productOptionName: { include: { productOptionValue: true } } },
           });
 
-          if (!product) {
-            return throwError(errors.noSuchData, ctx);
-          }
-
-          if (ctx.token?.userId && product.userId !== ctx.token.userId) {
+          if (!product) return throwError(errors.noSuchData, ctx);
+          if (ctx.token?.userId && product.userId !== ctx.token.userId)
             return throwError(errors.etc("해당 상품을 수정할 수 없습니다."), ctx);
-          }
 
           const productOptionValues = product.productOptionName.flatMap((v) => v.productOptionValue);
 
-          if (args.optionValues.some((v: any) => productOptionValues.findIndex((v2) => v2.id === v.id) === -1)) {
+          if (args.optionValues.some((v: any) => productOptionValues.findIndex((v2) => v2.id === v.id) === -1))
             return throwError(errors.etc("해당 상품의 옵션이 아닌 옵션값이 있습니다."), ctx);
-          }
-
           interface Resultobject {
             productId: number;
-
             thumbnails: {
               index: number;
               newImage: any;
             }[];
-
             optionValues: {
               id: number;
               newImage: any;
             }[];
-
             description: string;
           }
 
@@ -1976,34 +2098,24 @@ export const mutation_product = extendType({
 
           let thumbnails = await Promise.all(
             imageThumbnailData.map(async (v: any, i: number) => {
-              if (!args.thumbnails || args.thumbnails.length < 1) {
-                return v;
-              }
+              if (!args.thumbnails || args.thumbnails.length < 1) return v;
 
               const matched = args.thumbnails.find((w: any) => w.index === i);
-
-              if (!matched || !matched.uploadImageBase64) {
-                return v;
-              }
+              if (!matched || !matched.uploadImageBase64) return v;
 
               const res = matched.uploadImageBase64.match(/data:(image\/.*?);base64,(.*)/);
-
-              if (!res) {
-                return v;
-              }
+              if (!res) return v;
 
               let [mimetype, buffer] = [res[1], Buffer.from(res[2], "base64")];
-
               let ext = mimetype.slice(mimetype.indexOf("/") + 1, 10);
+              if (ext === "jpeg") ext = "jpg";
 
-              if (ext === "jpeg") {
-                ext = "jpg";
-              }
-
-              const image = await uploadToS3AvoidDuplicateByBuffer(buffer, `thumbnail${(i + 1).toString().padStart(2, "0")}.${ext}`, mimetype, [
-                "product",
-                product.id,
-              ]);
+              const image = await uploadToS3AvoidDuplicateByBuffer(
+                buffer,
+                `thumbnail${(i + 1).toString().padStart(2, "0")}.${ext}`,
+                mimetype,
+                ["product", product.id]
+              );
 
               a1.thumbnails.push({
                 index: i,
@@ -2019,41 +2131,34 @@ export const mutation_product = extendType({
             a1.optionValues = await Promise.all(
               productOptionValues.map(async (v: any, i: number) => {
                 const matched = args.optionValues.find((w: any) => w.id === v.id);
-
-                if (!matched || !matched.newImageBase64) {
+                if (!matched || !matched.newImageBase64)
                   return {
                     id: v.id,
                     newImage: null,
                   };
-                }
 
                 const res = matched.newImageBase64.match(/data:(image\/.*?);base64,(.*)/);
-
-                if (!res) {
+                if (!res)
                   return {
                     id: v.id,
                     newImage: null,
                   };
-                }
 
                 let [mimetype, buffer] = [res[1], Buffer.from(res[2], "base64")];
-
                 let ext = mimetype.slice(mimetype.indexOf("/") + 1, 10);
+                if (ext === "jpeg") ext = "jpg";
 
-                if (ext === "jpeg") {
-                  ext = "jpg";
-                }
-
-                const image = await uploadToS3AvoidDuplicateByBuffer(buffer, `option_${matched.id}_${(i + 1).toString().padStart(2, "0")}.${ext}`, mimetype, [
-                  "product",
-                  product.id,
-                ]);
+                const image = await uploadToS3AvoidDuplicateByBuffer(
+                  buffer,
+                  `option_${matched.id}_${(i + 1).toString().padStart(2, "0")}.${ext}`,
+                  mimetype,
+                  ["product", product.id]
+                );
 
                 await ctx.prisma.productOptionValue.update({
                   where: {
                     id: matched.id,
                   },
-
                   data: {
                     image,
                   },
@@ -2068,26 +2173,27 @@ export const mutation_product = extendType({
           }
 
           // description
-          const description = args.description ? await uploadToS3WithEditor(args.description, ["product", product.id], "description") : undefined;
+          // console.log("위치4");
+          // console.log(args.description); // 여기부터 다름
+          const description = args.description
+            ? await uploadToS3WithEditor(args.description, ["product", product.id], "description")
+            : undefined;
 
           a1.description = description ? "https://img.sellforyou.co.kr/sellforyou/" + description : "";
+
+          console.log({ description }); // 여기도 같음
 
           // update
           const result = await ctx.prisma.product.update({
             where: {
               id: product.id,
             },
-
             data: {
               isImageTranslated: true,
               imageThumbnailData: JSON.stringify(thumbnails),
               description,
             },
           });
-
-          // if (ctx.token?.userId) {
-          //   publishUserLogData(ctx, { type: "updateProductImage", title: `상품의 이미지 정보가 수정되었습니다. (${result.productCode})` });
-          // }
 
           return JSON.stringify(a1);
         } catch (e) {
@@ -2129,7 +2235,9 @@ export const mutation_product = extendType({
                   return throwError(errors.etc("addJob 콜백 : state가 1,2가 아님"), ctx);
                 }
                 const productStoreState =
-                  v.state === 1 ? { connect: { id: ProductStoreStateEnum.ON_SELL } } : { connect: { id: ProductStoreStateEnum.REGISTER_FAILED } };
+                  v.state === 1
+                    ? { connect: { id: ProductStoreStateEnum.ON_SELL } }
+                    : { connect: { id: ProductStoreStateEnum.REGISTER_FAILED } };
                 const etcVendorItemId = v.site_code === "B378" ? v.slave_reg_code_sub : undefined;
                 const updatedResult = await ctx.prisma.productStore.create({
                   data: {
@@ -2242,43 +2350,95 @@ export const mutation_product = extendType({
             where: { userId: ctx.token?.userId, viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) } },
           });
           const a077 = await ctx.prisma.productViewLog.count({
-            where: { userId: ctx.token?.userId, viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) }, siteCode: "a077" },
+            where: {
+              userId: ctx.token?.userId,
+              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
+              siteCode: "a077",
+            },
           });
           const b378 = await ctx.prisma.productViewLog.count({
-            where: { userId: ctx.token?.userId, viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) }, siteCode: "b378" },
+            where: {
+              userId: ctx.token?.userId,
+              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
+              siteCode: "b378",
+            },
           });
           const a112 = await ctx.prisma.productViewLog.count({
-            where: { userId: ctx.token?.userId, viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) }, siteCode: "a112" },
+            where: {
+              userId: ctx.token?.userId,
+              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
+              siteCode: "a112",
+            },
           });
           const a113 = await ctx.prisma.productViewLog.count({
-            where: { userId: ctx.token?.userId, viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) }, siteCode: "a113" },
+            where: {
+              userId: ctx.token?.userId,
+              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
+              siteCode: "a113",
+            },
           });
           const a001 = await ctx.prisma.productViewLog.count({
-            where: { userId: ctx.token?.userId, viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) }, siteCode: "a001" },
+            where: {
+              userId: ctx.token?.userId,
+              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
+              siteCode: "a001",
+            },
           });
           const a006 = await ctx.prisma.productViewLog.count({
-            where: { userId: ctx.token?.userId, viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) }, siteCode: "a006" },
+            where: {
+              userId: ctx.token?.userId,
+              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
+              siteCode: "a006",
+            },
           });
           const a027 = await ctx.prisma.productViewLog.count({
-            where: { userId: ctx.token?.userId, viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) }, siteCode: "a027" },
+            where: {
+              userId: ctx.token?.userId,
+              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
+              siteCode: "a027",
+            },
           });
           const b719 = await ctx.prisma.productViewLog.count({
-            where: { userId: ctx.token?.userId, viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) }, siteCode: "b719" },
+            where: {
+              userId: ctx.token?.userId,
+              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
+              siteCode: "b719",
+            },
           });
           const a524 = await ctx.prisma.productViewLog.count({
-            where: { userId: ctx.token?.userId, viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) }, siteCode: "a524" },
+            where: {
+              userId: ctx.token?.userId,
+              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
+              siteCode: "a524",
+            },
           });
           const a525 = await ctx.prisma.productViewLog.count({
-            where: { userId: ctx.token?.userId, viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) }, siteCode: "a525" },
+            where: {
+              userId: ctx.token?.userId,
+              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
+              siteCode: "a525",
+            },
           });
           const b956 = await ctx.prisma.productViewLog.count({
-            where: { userId: ctx.token?.userId, viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) }, siteCode: "b956" },
+            where: {
+              userId: ctx.token?.userId,
+              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
+              siteCode: "b956",
+            },
           });
           const a522 = await ctx.prisma.productViewLog.count({
-            where: { userId: ctx.token?.userId, viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) }, siteCode: "a522" },
+            where: {
+              userId: ctx.token?.userId,
+              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
+              siteCode: "a522",
+            },
           });
           const a523 = await ctx.prisma.productViewLog.count({
-            where: { userId: ctx.token?.userId, viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) }, siteCode: "a523" },
+            where: {
+              userId: ctx.token?.userId,
+              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
+              siteCode: "a523",
+            },
           });
           return JSON.stringify({ total, a077, b378, a112, a113, a001, a006, a027, b719, a524, a525, b956, a522, a523 });
         } catch (e) {
@@ -2862,7 +3022,9 @@ export const mutation_product = extendType({
             },
             select: { taobaoProductId: true },
           });
-          const filteredTargetProducts = targetProducts.filter((v) => existingProducts.findIndex((v2) => v2.taobaoProductId === v.taobaoProductId) === -1);
+          const filteredTargetProducts = targetProducts.filter(
+            (v) => existingProducts.findIndex((v2) => v2.taobaoProductId === v.taobaoProductId) === -1
+          );
 
           if (targetProducts.length > 0 && filteredTargetProducts.length === 0)
             return throwError(errors.etc("모든 상품이 해당 유저에 수집된 상품이거나, 관리자 상품이 아닙니다."), ctx);
@@ -2920,7 +3082,8 @@ export const mutation_product = extendType({
               select: { id: true, product: { select: { userId: true, id: true } } },
             });
             if (!productOptionName) return throwError(errors.etc("해당 옵션이름이 없습니다."), ctx);
-            if (ctx.token?.userId && productOptionName?.product.userId !== ctx.token.userId) return throwError(errors.etc("권한이 없습니다."), ctx);
+            if (ctx.token?.userId && productOptionName?.product.userId !== ctx.token.userId)
+              return throwError(errors.etc("권한이 없습니다."), ctx);
             await ctx.prisma.productOptionValue.updateMany({
               where: { productOptionNameId: productOptionName.id },
               data: { isActive: args.isActive },
@@ -2949,7 +3112,8 @@ export const mutation_product = extendType({
           });
 
           if (!productOptionName) return throwError(errors.etc("해당 옵션 카테고리가 없습니다."), ctx);
-          if (ctx.token?.userId && productOptionName?.product.userId !== ctx.token.userId) return throwError(errors.etc("권한이 없습니다."), ctx);
+          if (ctx.token?.userId && productOptionName?.product.userId !== ctx.token.userId)
+            return throwError(errors.etc("권한이 없습니다."), ctx);
 
           const OptionName = await ctx.prisma.productOptionName.update({
             where: { id: productOptionName.id },
