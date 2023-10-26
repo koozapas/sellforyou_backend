@@ -2629,17 +2629,6 @@ export const mutation_product = extendType({
         }
       },
     });
-    t.field("resetKeywardList", {
-      type: nonNull("Boolean"),
-      args: { userId: nonNull(intArg()) },
-      resolve: async (src, args, ctx, info) => {
-        try {
-          return true;
-        } catch (e) {
-          return throwError(e, ctx);
-        }
-      },
-    });
     t.field("updateProductAttributeByUser", {
       type: nonNull("String"),
       args: {

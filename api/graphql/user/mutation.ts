@@ -980,5 +980,23 @@ export const mutation_user = extendType({
         }
       },
     });
+    t.field("resetKeywardList", {
+      type: nonNull("Boolean"),
+      args: { userId: nonNull(intArg()) },
+      resolve: async (src, args, ctx, info) => {
+        if (!args.userId) return false;
+        try {
+          const user = await ctx.prisma.user.update({
+            where: { id: args.userId },
+            data: { keywardMemo: null },
+          });
+          if (user) {
+            return true;
+          } else return false;
+        } catch (e) {
+          return throwError(e, ctx);
+        }
+      },
+    });
   },
 });
