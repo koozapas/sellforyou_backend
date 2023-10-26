@@ -1041,6 +1041,7 @@ type Mutation {
   modifyWordByUser(findWord: String!, replaceWord: String, wordId: Int!): Boolean!
   purchasePlanByUser(merchantUid: String!, planInfoId: Int!): Int!
   requestPhoneVerificationByEveryone(phoneNumber: String!): Boolean!
+  resetKeywardList(userId: Int!): Boolean!
   restoreProductOptionValue(productOptionNameId: Int!): String!
   selectProductViewLogByUser(timeEnd: String!, timeStart: String!): String!
   selectProductViewLogDateByUser(timeEnd: String!, timeStart: String!): String!
