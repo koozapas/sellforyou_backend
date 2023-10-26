@@ -4,7 +4,6 @@ import { arg, inputObjectType, intArg, list, nonNull, objectType } from "nexus";
 import { SiilEncodedSavedData } from "../siil";
 import { errors, throwError } from "../../utils/error";
 import { getOptionHeaderHtmlByProductId } from "../../utils/local/playauto";
-import { t_order } from "../order/model";
 
 export const t_Product = objectType({
   name: "Product",
@@ -176,15 +175,15 @@ export const t_Product = objectType({
               ...where,
               siteCode: "A522",
             },
-            orderBy: [{ id: "desc" }], 
-          })
+            orderBy: [{ id: "desc" }],
+          });
           let gmarket2 = await ctx.prisma.productStore.findFirst({
             where: {
               ...where,
               siteCode: "A523",
             },
-            orderBy: [{ id: "desc" }], 
-          })
+            orderBy: [{ id: "desc" }],
+          });
           let smartStore = await ctx.prisma.productStore.findFirst({
             where: {
               ...where,
@@ -273,9 +272,21 @@ export const t_Product = objectType({
             orderBy: [{ id: "desc" }],
           });
 
-          const data = [smartStore, coupang, street, action, gmarket, auction2,gmarket2,interpark, street_normal, wemakeprice, lotteon, lotteon_normal, tmon].filter(
-            (v): v is ProductStore => v !== null
-          );
+          const data = [
+            smartStore,
+            coupang,
+            street,
+            action,
+            gmarket,
+            auction2,
+            gmarket2,
+            interpark,
+            street_normal,
+            wemakeprice,
+            lotteon,
+            lotteon_normal,
+            tmon,
+          ].filter((v): v is ProductStore => v !== null);
           if (src.state === 9) {
             //UPLOAD_FAILED
             const errorData = await ctx.prisma.productStore.findFirst({
@@ -1159,7 +1170,17 @@ export const t_ProductOption = objectType({
       resolve: async (src, args, ctx, info) => {
         try {
           const optionValues = await ctx.prisma.productOptionValue.findMany({
-            where: { id: { in: [src.optionValue1Id, src.optionValue2Id ?? -1, src.optionValue3Id ?? -1, src.optionValue4Id ?? -1, src.optionValue5Id ?? -1] } },
+            where: {
+              id: {
+                in: [
+                  src.optionValue1Id,
+                  src.optionValue2Id ?? -1,
+                  src.optionValue3Id ?? -1,
+                  src.optionValue4Id ?? -1,
+                  src.optionValue5Id ?? -1,
+                ],
+              },
+            },
             include: { productOptionName: true },
           });
           optionValues.sort((a, b) => a.optionNameOrder - b.optionNameOrder);

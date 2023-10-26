@@ -1,15 +1,10 @@
-//user/mutation
 import { add } from "date-fns";
 import { hashSync, compareSync } from "bcryptjs";
-import { isBefore } from "date-fns";
-import { getPurchaseInfo2 } from ".";
-import { APP_REFRESH_SECRET, APP_SECRET, regexPattern } from "../../utils/constants";
+import { regexPattern } from "../../utils/constants";
 import { throwError, errors } from "../../utils/error";
 import { uploadToS3 } from "../../utils/file_manage";
 import { generateToken, generateUserToken, validateStringLength, encrypt } from "../../utils/helpers";
-import { verify } from "jsonwebtoken";
-import { arg, booleanArg, extendType, floatArg, intArg, nonNull, stringArg } from "nexus";
-import { Token } from "../../types";
+import { arg, extendType, floatArg, intArg, nonNull, stringArg } from "nexus";
 import fetch from "node-fetch";
 import { getRandomVerificationNumber } from "../../utils/local/phone_verification";
 import * as CryptoJS from "crypto-js";
@@ -208,7 +203,8 @@ export const mutation_user = extendType({
         try {
           if (!regexPattern.phone.test(args.phone)) return throwError(errors.etc("휴대폰 번호 형식이 잘못되었습니다."), ctx);
           if (!regexPattern.email.test(args.email)) return throwError(errors.etc("이메일 형식이 잘못되었습니다."), ctx);
-          if (await ctx.prisma.user.findUnique({ where: { email: args.email } })) return throwError(errors.etc("해당 이메일이 이미 존재합니다."), ctx);
+          if (await ctx.prisma.user.findUnique({ where: { email: args.email } }))
+            return throwError(errors.etc("해당 이메일이 이미 존재합니다."), ctx);
           const tel = args.phone.replace(regexPattern.phone, "0$1$2$3");
           if (args.verificationId !== 0) {
             const verification = await ctx.prisma.phoneVerification.findUnique({ where: { id: args.verificationId } });
@@ -506,7 +502,8 @@ export const mutation_user = extendType({
       },
       resolve: async (src, args, ctx, info) => {
         try {
-          if (args.userType === "EMAIL" && !regexPattern.email.test(args.email)) return throwError(errors.etc("이메일 형식이 잘못되었습니다."), ctx);
+          if (args.userType === "EMAIL" && !regexPattern.email.test(args.email))
+            return throwError(errors.etc("이메일 형식이 잘못되었습니다."), ctx);
           const where =
             args.userType === "EMAIL"
               ? { email: args.email }

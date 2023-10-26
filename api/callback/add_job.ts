@@ -1,8 +1,5 @@
 //add_job.ts
 import { Request, Response } from "express";
-import { join } from "path";
-import * as fs from "fs";
-import { uploadToS3AvoidDuplicateByBuffer, uploadToS3ByBuffer } from "../utils/file_manage";
 import {
   IPAJobCallbackDoneResponse,
   IPAJobCallbackResponse,
@@ -10,10 +7,8 @@ import {
   IPAJobCallbackFailedResultJson,
   shopDataUrlInfo,
 } from "../playauto_api_type";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { ProductStoreStateEnum } from "../graphql";
-import { publishUserLogData } from "../utils/local/pubsub";
-import { pubsub } from "../utils/helpers";
 import { errors, throwError } from "../utils/error";
 
 function isDoneResponse(
@@ -22,7 +17,9 @@ function isDoneResponse(
   return (<IPAJobCallbackDoneResponse<IPAJobCallbackRegistProdResultJson>>response).results !== undefined;
 }
 
-function isFailedResponse(response: IPAJobCallbackRegistProdResultJson[] | IPAJobCallbackFailedResultJson): response is IPAJobCallbackFailedResultJson {
+function isFailedResponse(
+  response: IPAJobCallbackRegistProdResultJson[] | IPAJobCallbackFailedResultJson
+): response is IPAJobCallbackFailedResultJson {
   return (<IPAJobCallbackFailedResultJson>response).Result !== undefined;
 }
 // const numberToState: { [key: number]: productStoreLogEnum } = {
@@ -89,7 +86,9 @@ export const addJobCallbackHandler = async (req: Request, res: Response) => {
                   return;
                 }
                 const productStoreState =
-                  v.state === 1 ? { connect: { id: ProductStoreStateEnum.ON_SELL } } : { connect: { id: ProductStoreStateEnum.REGISTER_FAILED } };
+                  v.state === 1
+                    ? { connect: { id: ProductStoreStateEnum.ON_SELL } }
+                    : { connect: { id: ProductStoreStateEnum.REGISTER_FAILED } };
                 const etcVendorItemId = v.site_code === "B378" ? v.slave_reg_code_sub : undefined;
                 const updatedResult = await prisma.productStore.create({
                   data: {
@@ -131,7 +130,10 @@ export const addJobCallbackHandler = async (req: Request, res: Response) => {
                 });
                 return { userId: product.userId, productId: product.id, reason: v.msg, state: v.state };
               } else {
-                console.log("addJob 정보 없음(인덱스 찾기 실패) : ", JSON.stringify({ result, product: require("util").inspect(product, undefined, 8) }));
+                console.log(
+                  "addJob 정보 없음(인덱스 찾기 실패) : ",
+                  JSON.stringify({ result, product: require("util").inspect(product, undefined, 8) })
+                );
               }
               return;
             } else {
@@ -161,7 +163,11 @@ export const addJobCallbackHandler = async (req: Request, res: Response) => {
                   etcVendorItemId: etcVendorItemId,
                   storeUrl:
                     v.slave_reg_code !== ""
-                      ? shopDataUrlInfo[v.site_code]({ id: v.slave_reg_code, storeFullPath: product.user?.userInfo?.naverStoreUrl, vendorId: etcVendorItemId })
+                      ? shopDataUrlInfo[v.site_code]({
+                          id: v.slave_reg_code,
+                          storeFullPath: product.user?.userInfo?.naverStoreUrl,
+                          vendorId: etcVendorItemId,
+                        })
                       : undefined,
                   siteCode: v.site_code,
                   user: { connect: { id: product.userId! } },

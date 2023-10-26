@@ -1,5 +1,5 @@
 //user/model
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { objectType, nonNull, list, enumType } from "nexus";
 import { NexusGenAllTypes } from "../../typegen";
 import { throwError, errors } from "../../utils/error";
@@ -30,7 +30,8 @@ export const getPurchaseInfo = async (prisma: PrismaClient, userId: number): Pro
     additionalInfo.push({ type: "STOCK", expiredAt: stock.expiredAt });
   }
   //결제 플랜 계산
-  if (processedInfos2.length === 0) return { level: 0, levelExpiredAt: new Date(9990, 11, 31), history: JSON.stringify(purchaseInfos2), additionalInfo };
+  if (processedInfos2.length === 0)
+    return { level: 0, levelExpiredAt: new Date(9990, 11, 31), history: JSON.stringify(purchaseInfos2), additionalInfo };
   return { level: planLevel, levelExpiredAt: processedInfos2[0].expiredAt, history: JSON.stringify(purchaseInfos2), additionalInfo };
 };
 
@@ -57,7 +58,12 @@ export const getPurchaseInfo2 = async (prisma: PrismaClient, userId: number): Pr
   //결제 플랜 계산
   const levelInfo = processedInfos.find((v) => v.planInfo.planLevel);
   if (!levelInfo) return { level: 0, levelExpiredAt: new Date(9990, 11, 31), history: JSON.stringify(processedInfos), additionalInfo };
-  return { level: levelInfo.planInfo.planLevel!, levelExpiredAt: levelInfo.expiredAt, history: JSON.stringify(processedInfos), additionalInfo };
+  return {
+    level: levelInfo.planInfo.planLevel!,
+    levelExpiredAt: levelInfo.expiredAt,
+    history: JSON.stringify(processedInfos),
+    additionalInfo,
+  };
 };
 
 export const t_User = objectType({
