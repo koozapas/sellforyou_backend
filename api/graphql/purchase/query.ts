@@ -1,7 +1,6 @@
 import deepmerge from "deepmerge";
 import { extendType, nonNull, stringArg } from "nexus";
 import { errors, throwError } from "../../utils/error";
-import { generateToken, generateUserToken } from "../../utils/helpers";
 import { getPurchaseInfo2 } from "../user";
 
 export const query_purchase = extendType({

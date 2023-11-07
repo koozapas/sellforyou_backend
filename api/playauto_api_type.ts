@@ -1,5 +1,4 @@
 import * as fs from "fs";
-import { XOR } from "./types";
 
 export const shopDataEtcInfo = [
   ["A001", "", "", "", "", "", ""],

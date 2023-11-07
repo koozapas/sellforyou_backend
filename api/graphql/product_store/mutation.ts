@@ -1,14 +1,7 @@
 //product_store/mutation
 import { extendType, intArg, nonNull, stringArg } from "nexus";
 import { errors, throwError } from "../../utils/error";
-import {
-  uploadToS3AvoidDuplicate,
-  uploadToS3AvoidDuplicateByBuffer,
-  uploadToS3WithEditor,
-  deleteFromS3,
-  deleteS3Folder,
-  getProductListAllKeys,
-} from "../../utils/file_manage";
+import { deleteS3Folder } from "../../utils/file_manage";
 
 export const mutation_product_store = extendType({
   type: "Mutation",
@@ -73,7 +66,8 @@ export const mutation_product_store = extendType({
             });
             if (!product) return throwError(errors.noSuchData, ctx);
 
-            if (ctx.token?.userId && product[0].userId !== ctx.token.userId) return throwError(errors.etc("해당 상품을 삭제할 수 없습니다."), ctx);
+            if (ctx.token?.userId && product[0].userId !== ctx.token.userId)
+              return throwError(errors.etc("해당 상품을 삭제할 수 없습니다."), ctx);
 
             await ctx.prisma.productOption.deleteMany({ where: { productId: { in: args.productId } } });
 
