@@ -1,13 +1,10 @@
 import { Request as Req, Response as Res } from "express";
-import { join } from "path";
-import * as fs from "fs";
-import { generateUserToken, iamport, prisma, pubsub } from "../utils/helpers";
+import { generateUserToken, iamport, prisma } from "../utils/helpers";
 import { SortingEnum, StatusEnum } from "iamport-rest-client-nodejs/dist/enum";
 import { Request } from "iamport-rest-client-nodejs";
 import Payment from "iamport-rest-client-nodejs/dist/response/Payment";
 import { add } from "date-fns";
 import { PurchaseLogPlanInfoType } from "../graphql";
-import { publishUserLogData } from "../utils/local/pubsub";
 
 export const iamportCallbackHandler = async (req: Req, res: Res) => {
   try {
@@ -21,7 +18,11 @@ export const iamportCallbackHandler = async (req: Req, res: Res) => {
     const log = await prisma.purchaseLog.findUnique({ where: { payId: data.merchant_uid } });
     //TODO: 타오바오 배송대행 주문 결제건에 대한 조회 추가
     if (log) {
-      const payRequest = Request.Payments.getByMerchantUid({ merchant_uid: data.merchant_uid, sorting: SortingEnum.STARTED_DESC, status: StatusEnum.ALL });
+      const payRequest = Request.Payments.getByMerchantUid({
+        merchant_uid: data.merchant_uid,
+        sorting: SortingEnum.STARTED_DESC,
+        status: StatusEnum.ALL,
+      });
       const result = await payRequest
         .request(iamport)
         .then((result) => result.data.response as Payment)
@@ -70,10 +71,22 @@ export const iamportCallbackHandler = async (req: Req, res: Res) => {
               },
             });
           } else {
-            console.log(`처리되지 않은 상태 : ${JSON.stringify({ data: JSON.stringify(data), result: JSON.stringify(result), order: JSON.stringify(log) })}`);
+            console.log(
+              `처리되지 않은 상태 : ${JSON.stringify({
+                data: JSON.stringify(data),
+                result: JSON.stringify(result),
+                order: JSON.stringify(log),
+              })}`
+            );
           }
         } else {
-          console.log(`위조된 결제 시도입니다. ${JSON.stringify({ data: JSON.stringify(data), result: JSON.stringify(result), order: JSON.stringify(log) })}`);
+          console.log(
+            `위조된 결제 시도입니다. ${JSON.stringify({
+              data: JSON.stringify(data),
+              result: JSON.stringify(result),
+              order: JSON.stringify(log),
+            })}`
+          );
         }
       }
       //TODO: 타오바오 배송대행 주문 결제건에 대한 조건 및 처리 추가

@@ -12,15 +12,12 @@ import { isDev } from "./utils/constants";
 import { createContext } from "./utils/helpers";
 import { applyMiddleware } from "graphql-middleware";
 import * as HTTP from "http";
-import * as fs from "fs";
 import { graphqlUploadExpress } from "graphql-upload";
 import { iamportCallbackHandler } from "./callback/payment";
 import { addJobCallbackHandler, jsonToXmlUploader, dataProvider, setInfoHandler } from "./callback";
 import multer from "multer";
 import { runScheduler } from "./schedule";
 // import { translateCallbackHandler } from './callback/translate'
-
-import { PrismaClient } from "@prisma/client";
 
 export const schema = makeSchema({
   types: [modelTypes],

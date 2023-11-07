@@ -3407,6 +3407,7 @@ export interface NexusGenFieldTypes {
     modifyWordByUser: boolean; // Boolean!
     purchasePlanByUser: number; // Int!
     requestPhoneVerificationByEveryone: boolean; // Boolean!
+    resetKeywardList: boolean; // Boolean!
     restoreProductOptionValue: string; // String!
     selectProductViewLogByUser: string; // String!
     selectProductViewLogDateByUser: string; // String!
@@ -4447,6 +4448,7 @@ export interface NexusGenFieldTypeNames {
     modifyWordByUser: 'Boolean'
     purchasePlanByUser: 'Int'
     requestPhoneVerificationByEveryone: 'Boolean'
+    resetKeywardList: 'Boolean'
     restoreProductOptionValue: 'String'
     selectProductViewLogByUser: 'String'
     selectProductViewLogDateByUser: 'String'
@@ -5384,6 +5386,9 @@ export interface NexusGenArgTypes {
     }
     requestPhoneVerificationByEveryone: { // args
       phoneNumber: string; // String!
+    }
+    resetKeywardList: { // args
+      userId: number; // Int!
     }
     restoreProductOptionValue: { // args
       productOptionNameId: number; // Int!

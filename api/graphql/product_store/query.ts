@@ -1,19 +1,14 @@
 //productStore/query.ts
-import { prisma, ProductStore } from "@prisma/client";
 import { GraphQLResolveInfo } from "graphql";
-import { shake256 } from "js-sha3";
 import { extendType, intArg, list, nonNull, stringArg } from "nexus";
 import { Context } from "nexus-plugin-prisma/typegen";
 import { ArgsValue } from "nexus/dist/typegenTypeHelpers";
-import { ProductStoreStateEnum, predefinedSiilData } from "..";
+import { predefinedSiilData } from "..";
 import { shopDataNameInfo, IPADShopInfo, IPADataDataSet10 } from "../../playauto_api_type";
 // import { EXTERNAL_ADDRESS } from "../utils/constants";
 import { errors, throwError } from "../../utils/error";
 import { EXTERNAL_S3_ADDRESS, getFromS3 } from "../../utils/file_manage";
-import { encodeObjectToKeyEqualsValueNewline, getOptionHeaderHtmlByProductId, sendPlayAutoJob } from "../../utils/local/playauto";
-import { IWordTable, replaceWordTable } from "../../utils/local/word-replace";
-import * as CryptoJS from "crypto-js";
-
+import { getOptionHeaderHtmlByProductId } from "../../utils/local/playauto";
 interface IPADataImagePartial {
   img1: string;
   img2: string;
@@ -148,7 +143,8 @@ export function getValidUploadImageUrl(image: string, shopName: any) {
 }
 
 const registerProductResolver =
-  (data: IQueryAdminArg | null) => async (src: {}, args: ArgsValue<"Query", "getRegisterProductsDataByUser">, ctx: Context, info: GraphQLResolveInfo) => {
+  (data: IQueryAdminArg | null) =>
+  async (src: {}, args: ArgsValue<"Query", "getRegisterProductsDataByUser">, ctx: Context, info: GraphQLResolveInfo) => {
     const siteCode = args.siteCode;
     console.log("등록", siteCode);
     const adminId = data?.adminId ?? null;
@@ -184,7 +180,9 @@ const registerProductResolver =
       if (siteCode.includes("A077") && !/^https?:\/\/smartstore.naver.com\//.test(userInfo.naverStoreUrl)) {
         console.log(userInfo, userInfo.naverStoreUrl, /^https?:\/\/smartstore.naver.com\//.test(userInfo.naverStoreUrl));
         return throwError(
-          errors.etc("스마트스토어 설정 값이 없거나 주소 형태(https://smartstore.naver.com/아이디)가 아닙니다. 해당 설정값 수정 후 재시도해주세요."),
+          errors.etc(
+            "스마트스토어 설정 값이 없거나 주소 형태(https://smartstore.naver.com/아이디)가 아닙니다. 해당 설정값 수정 후 재시도해주세요."
+          ),
           ctx
         );
       }
@@ -242,7 +240,9 @@ const registerProductResolver =
           ctx
         );
       }
-      const productStore = productStoreCheck.filter(<T>(v: T): v is Exclude<T, string> => typeof v !== "string").map((v) => ({ product: v })); //이게 그냥 모든정보네
+      const productStore = productStoreCheck
+        .filter(<T>(v: T): v is Exclude<T, string> => typeof v !== "string")
+        .map((v) => ({ product: v })); //이게 그냥 모든정보네
 
       try {
         // job_json type 설정
@@ -304,7 +304,9 @@ const registerProductResolver =
 
                         if (v.product.productOption.some((v2: any) => v2.price < minRange || v2.price > maxRange)) {
                           //판매가 범위 밖이면
-                          price = Math.min(...v.product.productOption.map((v2: any) => Math.round(v2.price / calculateWonType) * calculateWonType)); //실제상품가격 = 최저옵션가
+                          price = Math.min(
+                            ...v.product.productOption.map((v2: any) => Math.round(v2.price / calculateWonType) * calculateWonType)
+                          ); //실제상품가격 = 최저옵션가
                         }
                       }
 
@@ -320,11 +322,17 @@ const registerProductResolver =
                         if (v.product.productOption.length !== 0) {
                           if (userInfo?.defaultPrice === "M") {
                             //기준가 중간가
-                            let minPrice = Math.min(...v.product.productOption.map((v2: any) => Math.round(v2.price / calculateWonType) * calculateWonType));
-                            let maxPrice = Math.max(...v.product.productOption.map((v2: any) => Math.round(v2.price / calculateWonType) * calculateWonType));
+                            let minPrice = Math.min(
+                              ...v.product.productOption.map((v2: any) => Math.round(v2.price / calculateWonType) * calculateWonType)
+                            );
+                            let maxPrice = Math.max(
+                              ...v.product.productOption.map((v2: any) => Math.round(v2.price / calculateWonType) * calculateWonType)
+                            );
                             let middlePrice = (maxPrice + minPrice) / 2;
                             let priceList = [];
-                            priceList.push(...v.product.productOption.map((v2: any) => Math.round(v2.price / calculateWonType) * calculateWonType));
+                            priceList.push(
+                              ...v.product.productOption.map((v2: any) => Math.round(v2.price / calculateWonType) * calculateWonType)
+                            );
                             let middleLowPrice = [];
                             for (var i = 0; i < priceList.length; i++) {
                               if (priceList[i] <= middlePrice) {
@@ -335,7 +343,9 @@ const registerProductResolver =
                             //console.log("test444",price);
                           } else {
                             // 기준가 최저가
-                            price = Math.min(...v.product.productOption.map((v2: any) => Math.round(v2.price / calculateWonType) * calculateWonType)); //실제상품가격 = 최저옵션가
+                            price = Math.min(
+                              ...v.product.productOption.map((v2: any) => Math.round(v2.price / calculateWonType) * calculateWonType)
+                            ); //실제상품가격 = 최저옵션가
                           }
                         }
                       }
@@ -349,27 +359,32 @@ const registerProductResolver =
                         if (vSiteCode === "A077") {
                           opt_price =
                             Math.floor(
-                              (opt_price / (100 - (v.product.naverFee !== null ? v.product.naverFee : userInfo?.naverFee))) * (100 / calculateWonType)
+                              (opt_price / (100 - (v.product.naverFee !== null ? v.product.naverFee : userInfo?.naverFee))) *
+                                (100 / calculateWonType)
                             ) * calculateWonType;
                         } else if (vSiteCode === "B378") {
                           opt_price =
                             Math.floor(
-                              (opt_price / (100 - (v.product.coupangFee !== null ? v.product.coupangFee : userInfo?.coupangFee))) * (100 / calculateWonType)
+                              (opt_price / (100 - (v.product.coupangFee !== null ? v.product.coupangFee : userInfo?.coupangFee))) *
+                                (100 / calculateWonType)
                             ) * calculateWonType;
                         } else if (vSiteCode === "A112") {
                           opt_price =
                             Math.floor(
-                              (opt_price / (100 - (v.product.streetFee !== null ? v.product.streetFee : userInfo?.streetFee))) * (100 / calculateWonType)
+                              (opt_price / (100 - (v.product.streetFee !== null ? v.product.streetFee : userInfo?.streetFee))) *
+                                (100 / calculateWonType)
                             ) * calculateWonType;
                         } else if (vSiteCode === "A001" || vSiteCode === "A522") {
                           opt_price =
                             Math.floor(
-                              (opt_price / (100 - (v.product.auctionFee !== null ? v.product.auctionFee : userInfo?.auctionFee))) * (100 / calculateWonType)
+                              (opt_price / (100 - (v.product.auctionFee !== null ? v.product.auctionFee : userInfo?.auctionFee))) *
+                                (100 / calculateWonType)
                             ) * calculateWonType;
                         } else if (vSiteCode === "A006" || vSiteCode === "A523") {
                           opt_price =
                             Math.floor(
-                              (opt_price / (100 - (v.product.gmarketFee !== null ? v.product.gmarketFee : userInfo?.gmarketFee))) * (100 / calculateWonType)
+                              (opt_price / (100 - (v.product.gmarketFee !== null ? v.product.gmarketFee : userInfo?.gmarketFee))) *
+                                (100 / calculateWonType)
                             ) * calculateWonType;
                         } else if (vSiteCode === "A027") {
                           opt_price =
@@ -380,36 +395,43 @@ const registerProductResolver =
                         } else if (vSiteCode === "A113") {
                           opt_price =
                             Math.floor(
-                              (opt_price / (100 - (v.product.streetNormalFee !== null ? v.product.streetNormalFee : userInfo?.streetNormalFee))) *
+                              (opt_price /
+                                (100 - (v.product.streetNormalFee !== null ? v.product.streetNormalFee : userInfo?.streetNormalFee))) *
                                 (100 / calculateWonType)
                             ) * calculateWonType;
                         } else if (vSiteCode === "B719") {
                           opt_price =
                             Math.floor(
-                              (opt_price / (100 - (v.product.wemakepriceFee !== null ? v.product.wemakepriceFee : userInfo?.wemakepriceFee))) *
+                              (opt_price /
+                                (100 - (v.product.wemakepriceFee !== null ? v.product.wemakepriceFee : userInfo?.wemakepriceFee))) *
                                 (100 / calculateWonType)
                             ) * calculateWonType;
                         } else if (vSiteCode === "A524") {
                           opt_price =
                             Math.floor(
-                              (opt_price / (100 - (v.product.lotteonFee !== null ? v.product.lotteonFee : userInfo?.lotteonFee))) * (100 / calculateWonType)
+                              (opt_price / (100 - (v.product.lotteonFee !== null ? v.product.lotteonFee : userInfo?.lotteonFee))) *
+                                (100 / calculateWonType)
                             ) * calculateWonType;
                         } else if (vSiteCode === "A525") {
                           opt_price =
                             Math.floor(
-                              (opt_price / (100 - (v.product.lotteonNormalFee !== null ? v.product.lotteonNormalFee : userInfo?.lotteonNormalFee))) *
+                              (opt_price /
+                                (100 - (v.product.lotteonNormalFee !== null ? v.product.lotteonNormalFee : userInfo?.lotteonNormalFee))) *
                                 (100 / calculateWonType)
                             ) * calculateWonType;
                         } else if (vSiteCode === "B956") {
                           opt_price =
-                            Math.floor((opt_price / (100 - (v.product.tmonFee !== null ? v.product.tmonFee : userInfo?.tmonFee))) * (100 / calculateWonType)) *
-                            calculateWonType;
+                            Math.floor(
+                              (opt_price / (100 - (v.product.tmonFee !== null ? v.product.tmonFee : userInfo?.tmonFee))) *
+                                (100 / calculateWonType)
+                            ) * calculateWonType;
                         }
 
                         let opt_price_original = opt_price;
 
                         if (userInfo.discountAmount && userInfo.discountAmount > 0 && userInfo.discountUnitType !== "WON") {
-                          opt_price_original = Math.round(opt_price / (1 - userInfo.discountAmount / 100) / calculateWonType) * calculateWonType;
+                          opt_price_original =
+                            Math.round(opt_price / (1 - userInfo.discountAmount / 100) / calculateWonType) * calculateWonType;
                         }
 
                         switch (userInfo.optionIndexType) {
@@ -447,7 +469,10 @@ const registerProductResolver =
                               type: "SELECT", //옵션 종류
                               code: v.product.productCode, //마스터 상품코드(작업대상 상품별 고유 코드)
                               manage_code: `SFY_${v.product.id.toString(36)}_${v2.id.toString(36)}`, //관리코드
-                              opt1: truncateOptionName(vSiteCode, ("00" + v2.productOption1.number).slice(-2) + ". " + v2.productOption1.name), //옵션타입1의 옵션명
+                              opt1: truncateOptionName(
+                                vSiteCode,
+                                ("00" + v2.productOption1.number).slice(-2) + ". " + v2.productOption1.name
+                              ), //옵션타입1의 옵션명
                               opt2: truncateOptionName(
                                 vSiteCode,
                                 v2.productOption2?.name ? ("00" + v2.productOption2.number).slice(-2) + ". " + v2.productOption2.name : ""
@@ -636,8 +661,12 @@ const registerProductResolver =
                         const minRange = productPrice < 2000 ? 0 : productPrice * 0.5;
                         if (v.product.productOption.some((v2) => v2.price < minRange || v2.price > maxRange)) {
                           //판매가 범위 밖이면
-                          const max = Math.max(...v.product.productOption.map((v2) => Math.round(v2.price / calculateWonType) * calculateWonType)); //problem
-                          const min = Math.min(...v.product.productOption.map((v2) => Math.round(v2.price / calculateWonType) * calculateWonType)); //problem
+                          const max = Math.max(
+                            ...v.product.productOption.map((v2) => Math.round(v2.price / calculateWonType) * calculateWonType)
+                          ); //problem
+                          const min = Math.min(
+                            ...v.product.productOption.map((v2) => Math.round(v2.price / calculateWonType) * calculateWonType)
+                          ); //problem
                           discount = Math.round(((max - min) * 2) / calculateWonType) * calculateWonType - min;
                           price = Math.round(((max - min) * 2) / calculateWonType) * calculateWonType;
                         }
@@ -655,12 +684,18 @@ const registerProductResolver =
                         if (v.product.productOption.length !== 0) {
                           if (userInfo?.defaultPrice === "M") {
                             //기준가 중간가
-                            let minPrice = Math.min(...v.product.productOption.map((v2: any) => Math.round(v2.price / calculateWonType) * calculateWonType));
+                            let minPrice = Math.min(
+                              ...v.product.productOption.map((v2: any) => Math.round(v2.price / calculateWonType) * calculateWonType)
+                            );
                             //console.log("MinPrice",minPrice);
-                            let maxPrice = Math.max(...v.product.productOption.map((v2: any) => Math.round(v2.price / calculateWonType) * calculateWonType));
+                            let maxPrice = Math.max(
+                              ...v.product.productOption.map((v2: any) => Math.round(v2.price / calculateWonType) * calculateWonType)
+                            );
                             let middlePrice = (maxPrice + minPrice) / 2;
                             let priceList = [];
-                            priceList.push(...v.product.productOption.map((v2: any) => Math.round(v2.price / calculateWonType) * calculateWonType));
+                            priceList.push(
+                              ...v.product.productOption.map((v2: any) => Math.round(v2.price / calculateWonType) * calculateWonType)
+                            );
                             let middleLowPrice = [];
                             for (var i = 0; i < priceList.length; i++) {
                               if (priceList[i] <= middlePrice) {
@@ -671,7 +706,9 @@ const registerProductResolver =
                             //console.log("test444",price);
                           } else {
                             // 기준가 최저가
-                            price = Math.min(...v.product.productOption.map((v2: any) => Math.round(v2.price / calculateWonType) * calculateWonType)); //실제상품가격 = 최저옵션가
+                            price = Math.min(
+                              ...v.product.productOption.map((v2: any) => Math.round(v2.price / calculateWonType) * calculateWonType)
+                            ); //실제상품가격 = 최저옵션가
                             //console.log("price",price);
                           }
                         }
@@ -679,54 +716,69 @@ const registerProductResolver =
 
                       if (vSiteCode === "A077") {
                         price =
-                          Math.ceil((price / (100 - (v.product.naverFee !== null ? v.product.naverFee : userInfo?.naverFee))) * (100 / calculateWonType)) *
-                          calculateWonType;
+                          Math.ceil(
+                            (price / (100 - (v.product.naverFee !== null ? v.product.naverFee : userInfo?.naverFee))) *
+                              (100 / calculateWonType)
+                          ) * calculateWonType;
                         discount =
-                          Math.floor((discount / (100 - (v.product.naverFee !== null ? v.product.naverFee : userInfo?.naverFee))) * (100 / calculateWonType)) *
-                          calculateWonType;
+                          Math.floor(
+                            (discount / (100 - (v.product.naverFee !== null ? v.product.naverFee : userInfo?.naverFee))) *
+                              (100 / calculateWonType)
+                          ) * calculateWonType;
                       } else if (vSiteCode === "B378") {
                         price =
                           Math.ceil(
-                            (price / (100 - (v.product.coupangFee !== null ? v.product.coupangFee : userInfo?.coupangFee))) * (100 / calculateWonType)
+                            (price / (100 - (v.product.coupangFee !== null ? v.product.coupangFee : userInfo?.coupangFee))) *
+                              (100 / calculateWonType)
                           ) * calculateWonType;
                         discount =
                           Math.ceil(
-                            (discount / (100 - (v.product.coupangFee !== null ? v.product.coupangFee : userInfo?.coupangFee))) * (100 / calculateWonType)
+                            (discount / (100 - (v.product.coupangFee !== null ? v.product.coupangFee : userInfo?.coupangFee))) *
+                              (100 / calculateWonType)
                           ) * calculateWonType;
                       } else if (vSiteCode === "A112") {
                         price =
-                          Math.ceil((price / (100 - (v.product.streetFee !== null ? v.product.streetFee : userInfo?.streetFee))) * (100 / calculateWonType)) *
-                          calculateWonType;
+                          Math.ceil(
+                            (price / (100 - (v.product.streetFee !== null ? v.product.streetFee : userInfo?.streetFee))) *
+                              (100 / calculateWonType)
+                          ) * calculateWonType;
                         discount =
                           Math.ceil(
-                            (discount / (100 - (v.product.streetFee !== null ? v.product.streetFee : userInfo?.streetFee))) * (100 / calculateWonType)
+                            (discount / (100 - (v.product.streetFee !== null ? v.product.streetFee : userInfo?.streetFee))) *
+                              (100 / calculateWonType)
                           ) * calculateWonType;
                       } else if (vSiteCode === "A027") {
                         price =
                           Math.ceil(
-                            (price / (100 - (v.product.interparkFee !== null ? v.product.interparkFee : userInfo?.interparkFee))) * (100 / calculateWonType)
+                            (price / (100 - (v.product.interparkFee !== null ? v.product.interparkFee : userInfo?.interparkFee))) *
+                              (100 / calculateWonType)
                           ) * calculateWonType;
                         discount =
                           Math.ceil(
-                            (discount / (100 - (v.product.interparkFee !== null ? v.product.interparkFee : userInfo?.interparkFee))) * (100 / calculateWonType)
+                            (discount / (100 - (v.product.interparkFee !== null ? v.product.interparkFee : userInfo?.interparkFee))) *
+                              (100 / calculateWonType)
                           ) * calculateWonType;
                       } else if (vSiteCode === "A001" || vSiteCode === "A522") {
                         price =
                           Math.ceil(
-                            (price / (100 - (v.product.auctionFee !== null ? v.product.auctionFee : userInfo?.auctionFee))) * (100 / calculateWonType)
+                            (price / (100 - (v.product.auctionFee !== null ? v.product.auctionFee : userInfo?.auctionFee))) *
+                              (100 / calculateWonType)
                           ) * calculateWonType;
                         discount =
                           Math.ceil(
-                            (discount / (100 - (v.product.auctionFee !== null ? v.product.auctionFee : userInfo?.auctionFee))) * (100 / calculateWonType)
+                            (discount / (100 - (v.product.auctionFee !== null ? v.product.auctionFee : userInfo?.auctionFee))) *
+                              (100 / calculateWonType)
                           ) * calculateWonType;
                       } else if (vSiteCode === "A006" || vSiteCode === "A523") {
                         price =
                           Math.ceil(
-                            (price / (100 - (v.product.gmarketFee !== null ? v.product.gmarketFee : userInfo?.gmarketFee))) * (100 / calculateWonType)
+                            (price / (100 - (v.product.gmarketFee !== null ? v.product.gmarketFee : userInfo?.gmarketFee))) *
+                              (100 / calculateWonType)
                           ) * calculateWonType;
                         discount =
                           Math.ceil(
-                            (discount / (100 - (v.product.gmarketFee !== null ? v.product.gmarketFee : userInfo?.gmarketFee))) * (100 / calculateWonType)
+                            (discount / (100 - (v.product.gmarketFee !== null ? v.product.gmarketFee : userInfo?.gmarketFee))) *
+                              (100 / calculateWonType)
                           ) * calculateWonType;
                       } else if (vSiteCode === "A113") {
                         price =
@@ -736,7 +788,8 @@ const registerProductResolver =
                           ) * calculateWonType;
                         discount =
                           Math.ceil(
-                            (discount / (100 - (v.product.streetNormalFee !== null ? v.product.streetNormalFee : userInfo?.streetNormalFee))) *
+                            (discount /
+                              (100 - (v.product.streetNormalFee !== null ? v.product.streetNormalFee : userInfo?.streetNormalFee))) *
                               (100 / calculateWonType)
                           ) * calculateWonType;
                       } else if (vSiteCode === "B719") {
@@ -753,30 +806,38 @@ const registerProductResolver =
                       } else if (vSiteCode === "A524") {
                         price =
                           Math.ceil(
-                            (price / (100 - (v.product.lotteonFee !== null ? v.product.lotteonFee : userInfo?.lotteonFee))) * (100 / calculateWonType)
+                            (price / (100 - (v.product.lotteonFee !== null ? v.product.lotteonFee : userInfo?.lotteonFee))) *
+                              (100 / calculateWonType)
                           ) * calculateWonType;
                         discount =
                           Math.ceil(
-                            (discount / (100 - (v.product.lotteonFee !== null ? v.product.lotteonFee : userInfo?.lotteonFee))) * (100 / calculateWonType)
+                            (discount / (100 - (v.product.lotteonFee !== null ? v.product.lotteonFee : userInfo?.lotteonFee))) *
+                              (100 / calculateWonType)
                           ) * calculateWonType;
                       } else if (vSiteCode === "A525") {
                         price =
                           Math.ceil(
-                            (price / (100 - (v.product.lotteonNormalFee !== null ? v.product.lotteonNormalFee : userInfo?.lotteonNormalFee))) *
+                            (price /
+                              (100 - (v.product.lotteonNormalFee !== null ? v.product.lotteonNormalFee : userInfo?.lotteonNormalFee))) *
                               (100 / calculateWonType)
                           ) * calculateWonType;
                         discount =
                           Math.ceil(
-                            (discount / (100 - (v.product.lotteonNormalFee !== null ? v.product.lotteonNormalFee : userInfo?.lotteonNormalFee))) *
+                            (discount /
+                              (100 - (v.product.lotteonNormalFee !== null ? v.product.lotteonNormalFee : userInfo?.lotteonNormalFee))) *
                               (100 / calculateWonType)
                           ) * calculateWonType;
                       } else if (vSiteCode === "B956") {
                         price =
-                          Math.ceil((price / (100 - (v.product.tmonFee !== null ? v.product.tmonFee : userInfo?.tmonFee))) * (100 / calculateWonType)) *
-                          calculateWonType;
+                          Math.ceil(
+                            (price / (100 - (v.product.tmonFee !== null ? v.product.tmonFee : userInfo?.tmonFee))) *
+                              (100 / calculateWonType)
+                          ) * calculateWonType;
                         discount =
-                          Math.ceil((discount / (100 - (v.product.tmonFee !== null ? v.product.tmonFee : userInfo?.tmonFee))) * (100 / calculateWonType)) *
-                          calculateWonType;
+                          Math.ceil(
+                            (discount / (100 - (v.product.tmonFee !== null ? v.product.tmonFee : userInfo?.tmonFee))) *
+                              (100 / calculateWonType)
+                          ) * calculateWonType;
                       }
 
                       var originalPrice = price;
@@ -1085,7 +1146,11 @@ const registerProductResolver =
 
                         content2: `<div style="text-align: center;">${
                           userInfo.fixImageTop
-                            ? '<img src="' + getValidUploadImageUrl(userInfo.fixImageTop, v.product.taobaoProduct.shopName) + "?" + Date.now() + '" alt="" />'
+                            ? '<img src="' +
+                              getValidUploadImageUrl(userInfo.fixImageTop, v.product.taobaoProduct.shopName) +
+                              "?" +
+                              Date.now() +
+                              '" alt="" />'
                             : ""
                         }${
                           userInfo.fixImageSubTop

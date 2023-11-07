@@ -1,7 +1,6 @@
 import { ApolloError } from "apollo-server-express";
 import { isBefore } from "date-fns";
-import { shield, rule, or, deny } from "graphql-shield";
-import fetch from "node-fetch";
+import { shield, rule, or } from "graphql-shield";
 import { NexusGenAllTypes } from "../typegen";
 import { Context } from "../types";
 import { isDev } from "./constants";
