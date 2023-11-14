@@ -204,18 +204,22 @@ export const uploadToS3ByBuffer = async (
   };
 };
 
+/** AWS S3에 이미지업로드 및 중복된 파일명 피하기 */
 export const uploadToS3AvoidDuplicateByBuffer = async (
-  pfile: Buffer,
-  filename: string,
-  mimetype: string,
-  pathArray: (string | number)[],
-  fileNameExcludeExtension?: string
+  pfile: Buffer, // 1. Buffer 형태의 이미지 파일
+  filename: string, // 2. 업로드할 이미지 파일의 원래 파일명
+  mimetype: string, // 3. 이미지 파일의 MIME 타입 (예: "image/jpeg")
+  pathArray: (string | number)[], // 4. 이미지를 업로드할 S3 경로를 나타내는 문자열 또는 숫자의 배열
+  fileNameExcludeExtension?: string // 5. 파일명에서 확장자를 제외한 부분
 ) => {
+  // 7. 파일명에 확장자를 추가하거나 변경
   filename = fileNameExcludeExtension ? fileNameExcludeExtension + filename.replace(regexPattern.fileNameAndExtension, ".$2") : filename;
 
-  let tmpnumber = 0;
+  let tmpnumber = 0; // 8. 중복된 파일명에 붙일 숫자 초기화
 
+  // 9. 중복된 파일명이 발견되지 않을 때까지 반복
   while (true) {
+    // 10. S3에 해당 경로에 이미 파일이 있는지 확인
     const result = await checkFileExistAtS3(
       pathArray.concat(filename.replace(regexPattern.fileNameAndExtension, `$1${tmpnumber ? tmpnumber.toString() : ""}.$2`)).join("/")
     );
@@ -225,7 +229,9 @@ export const uploadToS3AvoidDuplicateByBuffer = async (
     tmpnumber += 1;
   }
 
+  // 13. 중복을 피한 최종 파일명 생성
   filename = filename.replace(regexPattern.fileNameAndExtension, `$1${tmpnumber ? tmpnumber.toString() : ""}.$2`);
+
   return (await uploadToS3ByBuffer(pfile, filename, mimetype, pathArray)).url;
 };
 

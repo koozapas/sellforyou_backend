@@ -9,6 +9,7 @@ import { join } from "path";
 import fs from "fs/promises";
 import { replaceWordTable } from "../../utils/local/word-replace";
 import { REG_EXP } from "../../../common/regex";
+import sharp from "sharp";
 
 const delay = (t: any, val: any) => new Promise((resolve) => setTimeout(resolve.bind(null, val), t));
 
@@ -587,14 +588,32 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
                     let image_resp: any = await axios.get(v.url, {
                       responseType: "arraybuffer",
                     });
-                    let image_raw = Buffer.from(image_resp.data).toString("base64");
-                    let image_base64 = "data:" + image_resp.headers["content-type"] + ";base64," + image_raw;
+                    const isWebp = image_resp.headers["content-type"] === "image/webp";
+                    let image_raw = Buffer.from(image_resp.data);
+                    let image_sharp = sharp(image_raw);
+
+                    await image_sharp.metadata().then(async (metadata) => {
+                      const { width, height } = metadata;
+
+                      // 너비,높이 중 하나가 600미만일 경우 비율을 유지하며 이미지를 600이상으로 키움
+                      if (width && height && (width < 600 || height < 600)) {
+                        width <= height
+                          ? (image_sharp = image_sharp.resize({ width: 600, fit: "inside" }))
+                          : (image_sharp = image_sharp.resize({ height: 600, fit: "inside" }));
+
+                        image_raw = await image_sharp.toBuffer();
+                      }
+                    });
+
+                    if (isWebp) image_raw = await image_sharp.toFormat("jpg", { palette: true }).toBuffer();
+
+                    let image_base64 =
+                      "data:" + (isWebp ? "image/jpg" : image_resp.headers["content-type"]) + ";base64," + image_raw.toString("base64");
 
                     const res = image_base64.match(/data:(image\/.*?);base64,(.*)/);
 
                     if (product && res) {
                       const [mimetype, buffer] = [res[1], Buffer.from(res[2], "base64")];
-
                       var image_ext = mimetype.slice(mimetype.indexOf("/") + 1, mimetype.length);
 
                       if (image_ext === "jpeg") image_ext = "jpg";
@@ -624,8 +643,8 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
 
               if (new_imgs.length > 0) {
                 var sorted_imgs = new_imgs.sort(function compare(a: any, b: any) {
-                  if (a.url < b.url) return -1;
-                  if (a.url > b.url) return 1;
+                  if (a?.url < b?.url) return -1;
+                  if (a?.url > b?.url) return 1;
 
                   return 0;
                 });
@@ -634,44 +653,48 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
             }
             /** 상세 이미지 */
             var test_desc_imgs: any = [];
-            if (translateData && taobaoData.desc_img.length > 0 && taobaoData.shop_id === "vvic") {
+            if (translateData && taobaoData.desc_img.length > 0 && (taobaoData.shop_id === "vvic" || taobaoData.shop_id === "express")) {
               var desc_imgs = await raceAll(
-                taobaoData.desc_img.map(async (v, i) => {
-                  try {
-                    let image_resp: any = await axios.get(v, {
-                      responseType: "arraybuffer",
-                    });
+                await Promise.all(
+                  taobaoData.desc_img.map(async (v, i) => {
+                    try {
+                      let image_resp: any = await axios.get(v, {
+                        responseType: "arraybuffer",
+                      });
+                      const isWebp = image_resp.headers["content-type"] === "image/webp";
+                      let image_raw = Buffer.from(image_resp.data);
 
-                    let image_raw = Buffer.from(image_resp.data).toString("base64");
-                    let image_base64 = "data:" + image_resp.headers["content-type"] + ";base64," + image_raw;
+                      if (isWebp) image_raw = await sharp(image_raw).toFormat("jpg", { palette: true }).toBuffer();
 
-                    const res = image_base64.match(/data:(image\/.*?);base64,(.*)/);
+                      let image_base64 =
+                        "data:" + (isWebp ? "image/jpg" : image_resp.headers["content-type"]) + ";base64," + image_raw.toString("base64");
 
-                    if (product && res) {
-                      const [mimetype, buffer] = [res[1], Buffer.from(res[2], "base64")];
+                      const res = image_base64.match(/data:(image\/.*?);base64,(.*)/);
 
-                      var image_ext = mimetype.slice(mimetype.indexOf("/") + 1, mimetype.length);
+                      if (product && res) {
+                        const [mimetype, buffer] = [res[1], Buffer.from(res[2], "base64")];
+                        var image_ext = mimetype.slice(mimetype.indexOf("/") + 1, mimetype.length);
 
-                      if (image_ext === "jpeg") image_ext = "jpg";
+                        if (image_ext === "jpeg") image_ext = "jpg";
 
-                      const output = `https://img.sellforyou.co.kr/sellforyou/${await uploadToS3AvoidDuplicateByBuffer(
-                        buffer,
-                        `description${(i + 1).toString().padStart(2, "0")}.${image_ext}`,
-                        mimetype,
-                        ["product", product.id]
-                      )}`;
-                      test_desc_imgs.push(output);
+                        const output = `https://img.sellforyou.co.kr/sellforyou/${await uploadToS3AvoidDuplicateByBuffer(
+                          buffer,
+                          `description${(i + 1).toString().padStart(2, "0")}.${image_ext}`,
+                          mimetype,
+                          ["product", product.id]
+                        )}`;
 
-                      if (translateData) {
-                        translateData.description = translateData.description.replace(v, output);
+                        test_desc_imgs.push(output);
+
+                        if (translateData) translateData.description = translateData.description.replace(v, output);
+
+                        return output;
                       }
-
-                      return output;
+                    } catch (e) {
+                      return null;
                     }
-                  } catch (e) {
-                    return null;
-                  }
-                }),
+                  })
+                ),
                 5000,
                 null
               );
@@ -679,13 +702,12 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
               if (desc_imgs.length > 0)
                 description = (translateData?.description ?? taobaoData.desc).replace(/(?<!<p ?>)(<img [^>]*?>)(?!<p>)/g, "<p>$1</p>");
             }
-
             product = await prisma.product.update({
               where: {
                 id: product.id,
               },
               data: {
-                description: taobaoData.shop_id === "vvic" ? description : undefined,
+                description: description,
                 imageThumbnailData: JSON.stringify(taobaoData.item_imgs.map((v) => v.url)),
               },
             });
@@ -843,15 +865,19 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
                 //todoconsole.log("temp = ",temp);//여기까지문제없다
 
                 /** vvic 상품 옵션이미지 셀포유자체에 저장 */
-                if (taobaoData.shop_id === "vvic" && image) {
+                if ((taobaoData.shop_id === "vvic" || taobaoData.shop_id === "express") && image) {
                   image = await Promise.race([
                     new Promise(async (resolve, reject) => {
                       try {
                         let image_resp = await axios.get(image, {
                           responseType: "arraybuffer",
                         });
-                        let image_raw = Buffer.from(image_resp.data).toString("base64");
-                        let image_base64 = "data:" + image_resp.headers["content-type"] + ";base64," + image_raw;
+                        const isWebp = image_resp.headers["content-type"] === "image/webp";
+                        let image_raw = Buffer.from(image_resp.data);
+                        if (isWebp) image_raw = await sharp(image_raw).toFormat("jpg", { palette: true }).toBuffer();
+
+                        let image_base64 =
+                          "data:" + (isWebp ? "image/jpg" : image_resp.headers["content-type"]) + ";base64," + image_raw.toString("base64");
 
                         const res = image_base64.match(/data:(image\/.*?);base64,(.*)/);
 
@@ -860,9 +886,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
 
                           var image_ext = mimetype.slice(mimetype.indexOf("/") + 1, mimetype.length);
 
-                          if (image_ext === "jpeg") {
-                            image_ext = "jpg";
-                          }
+                          if (image_ext === "jpeg") image_ext = "jpg";
 
                           resolve(
                             `https://img.sellforyou.co.kr/sellforyou/${await uploadToS3AvoidDuplicateByBuffer(
