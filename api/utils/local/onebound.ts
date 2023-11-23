@@ -457,12 +457,9 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
             }
           }
           let myKeyward: string | undefined | null = "";
-
           //이부분 임시로 처리해놓음 - 정빈
-          taobaoData.myKeyward = "";
-
           /** 상품단위 엑셀수집에서 가져온 개인분류 */
-          const excelKeyward = taobaoData.myKeyward.replace(/\s*$/, "");
+          const excelKeyward = taobaoData?.myKeyward ? taobaoData.myKeyward.replace(/\s*$/, "") : "";
           const translateKeyward = translateData?.myKeyward ?? translateData?.myKeyward?.replace(/\s*$/, "");
 
           if ((translateKeyward && translateKeyward !== "") || excelKeyward !== "") {
