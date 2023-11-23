@@ -41,12 +41,7 @@ export interface IOBPublicParameter {
   lang?: "cn" | "en" | "ru";
 }
 
-export type IOBApiType =
-  | "item_search"
-  | "item_get"
-  | "buyer_cart_list"
-  | "buyer_order_list"
-  | "buyer_order_detail";
+export type IOBApiType = "item_search" | "item_get" | "buyer_cart_list" | "buyer_order_list" | "buyer_order_detail";
 export type IQueryParam = IOBPublicParameter & {
   [key: string]: string | number | boolean | undefined;
 };
@@ -234,7 +229,7 @@ export interface IOBItem {
   relate_items: any[];
   url: string;
   shopName: string;
-  myKeyward: string;
+  myKeyward: string | undefined;
 }
 
 export interface IOBItemImg {
