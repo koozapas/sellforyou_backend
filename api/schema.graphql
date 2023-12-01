@@ -2239,6 +2239,7 @@ type Query {
   selectNoticeByEveryone(noticeId: Int!): Notice!
   selectNoticeCountByAdmin(where: NoticeWhereInput): Int
   selectNoticesByEveryone(cursor: NoticeWhereUniqueInput, orderBy: [NoticeOrderByWithRelationInput!], skip: Int, take: Int, where: NoticeWhereInput): [Notice!]!
+  selectPapagoApiKeyByEveryone: String!
   selectPlanInfosForEveryone(cursor: PlanInfoWhereUniqueInput, orderBy: [PlanInfoOrderByWithRelationInput!], skip: Int, take: Int, where: PlanInfoWhereInput): [PlanInfo!]!
   selectProductsByAdmin(cursor: ProductWhereUniqueInput, orderBy: [ProductOrderByWithRelationInput!], skip: Int, take: Int, where: ProductWhereInput): [Product!]!
   selectProductsBySomeone(cursor: ProductWhereUniqueInput, orderBy: [ProductOrderByWithRelationInput!], skip: Int, take: Int, where: ProductWhereInput): [Product!]!

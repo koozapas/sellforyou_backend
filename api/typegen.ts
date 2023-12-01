@@ -3721,6 +3721,7 @@ export interface NexusGenFieldTypes {
     selectNoticeByEveryone: NexusGenRootTypes['Notice']; // Notice!
     selectNoticeCountByAdmin: number | null; // Int
     selectNoticesByEveryone: NexusGenRootTypes['Notice'][]; // [Notice!]!
+    selectPapagoApiKeyByEveryone: string; // String!
     selectPlanInfosForEveryone: NexusGenRootTypes['PlanInfo'][]; // [PlanInfo!]!
     selectProductsByAdmin: NexusGenRootTypes['Product'][]; // [Product!]!
     selectProductsBySomeone: NexusGenRootTypes['Product'][]; // [Product!]!
@@ -4762,6 +4763,7 @@ export interface NexusGenFieldTypeNames {
     selectNoticeByEveryone: 'Notice'
     selectNoticeCountByAdmin: 'Int'
     selectNoticesByEveryone: 'Notice'
+    selectPapagoApiKeyByEveryone: 'String'
     selectPlanInfosForEveryone: 'PlanInfo'
     selectProductsByAdmin: 'Product'
     selectProductsBySomeone: 'Product'
