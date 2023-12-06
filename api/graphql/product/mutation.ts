@@ -2345,102 +2345,48 @@ export const mutation_product = extendType({
         timeEnd: nonNull(stringArg()),
       },
       resolve: async (src, args, ctx, info) => {
+        const { prisma, token } = ctx;
+        const { productViewLog } = prisma;
+
+        let shop: Record<string, number> = {
+          A077: 0,
+          B378: 0,
+          A112: 0,
+          A113: 0,
+          A001: 0,
+          A006: 0,
+          A027: 0,
+          B719: 0,
+          A524: 0,
+          A525: 0,
+          B956: 0,
+          A522: 0,
+          A523: 0,
+        };
+
         try {
-          const total: any = await ctx.prisma.productViewLog.count({
-            where: { userId: ctx.token?.userId, viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) } },
+          const data = await productViewLog.findMany({
+            where: { userId: token?.userId, viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) } },
           });
-          const a077 = await ctx.prisma.productViewLog.count({
-            where: {
-              userId: ctx.token?.userId,
-              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
-              siteCode: "a077",
-            },
+
+          data.forEach((v) => (shop[v.siteCode] += 1));
+
+          return JSON.stringify({
+            total: data.length,
+            a077: shop["A077"],
+            b378: shop["B378"],
+            a112: shop["A112"],
+            a113: shop["A113"],
+            a001: shop["A001"],
+            a006: shop["A006"],
+            a027: shop["A027"],
+            b719: shop["B719"],
+            a524: shop["A524"],
+            a525: shop["A525"],
+            b956: shop["B956"],
+            a522: shop["A522"],
+            a523: shop["A523"],
           });
-          const b378 = await ctx.prisma.productViewLog.count({
-            where: {
-              userId: ctx.token?.userId,
-              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
-              siteCode: "b378",
-            },
-          });
-          const a112 = await ctx.prisma.productViewLog.count({
-            where: {
-              userId: ctx.token?.userId,
-              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
-              siteCode: "a112",
-            },
-          });
-          const a113 = await ctx.prisma.productViewLog.count({
-            where: {
-              userId: ctx.token?.userId,
-              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
-              siteCode: "a113",
-            },
-          });
-          const a001 = await ctx.prisma.productViewLog.count({
-            where: {
-              userId: ctx.token?.userId,
-              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
-              siteCode: "a001",
-            },
-          });
-          const a006 = await ctx.prisma.productViewLog.count({
-            where: {
-              userId: ctx.token?.userId,
-              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
-              siteCode: "a006",
-            },
-          });
-          const a027 = await ctx.prisma.productViewLog.count({
-            where: {
-              userId: ctx.token?.userId,
-              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
-              siteCode: "a027",
-            },
-          });
-          const b719 = await ctx.prisma.productViewLog.count({
-            where: {
-              userId: ctx.token?.userId,
-              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
-              siteCode: "b719",
-            },
-          });
-          const a524 = await ctx.prisma.productViewLog.count({
-            where: {
-              userId: ctx.token?.userId,
-              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
-              siteCode: "a524",
-            },
-          });
-          const a525 = await ctx.prisma.productViewLog.count({
-            where: {
-              userId: ctx.token?.userId,
-              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
-              siteCode: "a525",
-            },
-          });
-          const b956 = await ctx.prisma.productViewLog.count({
-            where: {
-              userId: ctx.token?.userId,
-              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
-              siteCode: "b956",
-            },
-          });
-          const a522 = await ctx.prisma.productViewLog.count({
-            where: {
-              userId: ctx.token?.userId,
-              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
-              siteCode: "a522",
-            },
-          });
-          const a523 = await ctx.prisma.productViewLog.count({
-            where: {
-              userId: ctx.token?.userId,
-              viewTime: { gte: new Date(args.timeStart), lte: new Date(args.timeEnd) },
-              siteCode: "a523",
-            },
-          });
-          return JSON.stringify({ total, a077, b378, a112, a113, a001, a006, a027, b719, a524, a525, b956, a522, a523 });
         } catch (e) {
           return throwError(e, ctx);
         }
@@ -2513,7 +2459,6 @@ export const mutation_product = extendType({
           await ctx.prisma.productStoreLog.deleteMany({
             where: { productStoreId: productStore.id },
           });
-
           await ctx.prisma.productViewLog.deleteMany({
             where: { productId: args.productId, siteCode: "B378" },
           });
