@@ -230,7 +230,6 @@ const updateProductOptionResolver = async (
   info: GraphQLResolveInfo
 ) => {
   try {
-    console.log("args.productOption.length", args.productOption.length);
     if (args.productOption.length !== 0) {
       await ctx.prisma.productOption.deleteMany({ where: { productId: args.productOption[0].productId } });
 
@@ -1192,7 +1191,6 @@ const deleteUserResolver = async (src: {}, args: ArgsValue<"Mutation", "deleteUs
 
     await Promise.all(
       args.userId.map(async (v: any) => {
-        console.log(v);
         await deleteS3Folder(`user/${v}/info/`);
       })
     );
@@ -2172,16 +2170,11 @@ export const mutation_product = extendType({
             );
           }
 
-          // description
-          // console.log("위치4");
-          // console.log(args.description); // 여기부터 다름
           const description = args.description
             ? await uploadToS3WithEditor(args.description, ["product", product.id], "description")
             : undefined;
 
           a1.description = description ? "https://img.sellforyou.co.kr/sellforyou/" + description : "";
-
-          console.log({ description }); // 여기도 같음
 
           // update
           const result = await ctx.prisma.product.update({
