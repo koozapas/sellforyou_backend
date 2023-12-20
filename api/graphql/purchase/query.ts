@@ -31,7 +31,6 @@ export const query_purchase = extendType({
         try {
           switch (args.email.trim()) {
             case "1%": {
-              //developing ...
               return true;
             }
             case "돈벌삶": {
@@ -41,22 +40,21 @@ export const query_purchase = extendType({
               return true;
             }
             case "dream": {
-              //developing ...
               return true;
             }
-
             case "타오랜드": {
-              //developing ...
               return true;
             }
-
             case "taoland": {
-              //developing ...
               return true;
             }
-
             case "빅머니": {
-              //developing ...
+              return true;
+            }
+            case "dada2024": {
+              return true;
+            }
+            case "다다2024": {
               return true;
             }
             default: {

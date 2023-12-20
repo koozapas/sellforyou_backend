@@ -9,7 +9,8 @@ export const query_user = extendType({
       type: nonNull("User"),
       resolve: async (src, args, ctx, info) => {
         try {
-          return (await ctx.prisma.user.findUnique({ where: { id: ctx.token!.userId! } }))!;
+          const data = await ctx.prisma.user.findUnique({ where: { id: ctx.token!.userId! } });
+          return data!;
         } catch (e) {
           return throwError(e, ctx);
         }

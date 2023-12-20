@@ -171,6 +171,10 @@ export const mutation_purchase = extendType({
                 break;
               case "빅머니":
                 break;
+              case "dada2024":
+                break;
+              case "다다2024":
+                break;
               default: {
                 await ctx.prisma.user.update({
                   where: { email: user.refCode },
