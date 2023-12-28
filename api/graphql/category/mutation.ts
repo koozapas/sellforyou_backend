@@ -14,6 +14,7 @@ export const mutation_category = extendType({
         const totalCount = args.data.length;
         let createCount = 0;
         let updateCount = 0;
+        let passCount = 0;
         let cursor = 0;
 
         console.log(`shopCode = ${args.shopCode}`);
@@ -26,11 +27,12 @@ export const mutation_category = extendType({
 
                 const dbData = await ctx.prisma.categoryInfoA113.findUnique({ where: { code: category.code } });
 
-                if (dbData && dbData.name !== category.name) {
-                  await ctx.prisma.categoryInfoA113.update({ where: { id: dbData.id }, data: { ...category } });
-
-                  updateCount += 1;
-                } else ctx.prisma.categoryInfoA113.create({ data: category }).then(() => (createCount += 1));
+                if (dbData && dbData.name !== category.name)
+                  await ctx.prisma.categoryInfoA113
+                    .update({ where: { id: dbData.id }, data: { ...category } })
+                    .then(() => (updateCount += 1));
+                else if (!dbData) ctx.prisma.categoryInfoA113.create({ data: category }).then(() => (createCount += 1));
+                else passCount += 1;
 
                 cursor += 1;
               }
@@ -42,11 +44,12 @@ export const mutation_category = extendType({
 
                 const dbData = await ctx.prisma.categoryInfoA112.findUnique({ where: { code: category.code } });
 
-                if (dbData && dbData.name !== category.name) {
-                  await ctx.prisma.categoryInfoA112.update({ where: { id: dbData.id }, data: { ...category } });
-
-                  updateCount += 1;
-                } else ctx.prisma.categoryInfoA112.create({ data: category }).then(() => (createCount += 1));
+                if (dbData && dbData.name !== category.name)
+                  await ctx.prisma.categoryInfoA112
+                    .update({ where: { id: dbData.id }, data: { ...category } })
+                    .then(() => (updateCount += 1));
+                else if (!dbData) ctx.prisma.categoryInfoA112.create({ data: category }).then(() => (createCount += 1));
+                else passCount += 1;
 
                 cursor += 1;
               }
@@ -58,6 +61,7 @@ export const mutation_category = extendType({
           console.log({ totalCount });
           console.log({ createCount });
           console.log({ updateCount });
+          console.log({ passCount });
           console.timeEnd(`${info.fieldName} 소요시간`);
 
           return true;
@@ -143,6 +147,7 @@ export const mutation_category = extendType({
           }
 
           console.timeEnd(`processing time`);
+          console.log(`${deletedCount}개의 카테고리가 삭제되었습니다.`);
 
           return deletedCount;
         } catch (error) {
