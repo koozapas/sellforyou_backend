@@ -3305,5 +3305,54 @@ export const mutation_product = extendType({
         }
       },
     });
+    t.field("changeProductCategoryCode", {
+      type: nonNull("Int"),
+      args: { shopCode: nonNull("String"), data: nonNull(list(nonNull(arg({ type: "ChangeProductCategoryCodeInput" })))) },
+      resolve: async (src: {}, args, ctx, info) => {
+        let cursor = 0;
+        let totalCount = 0;
+        const codePairs = args.data.map((v) => v);
+
+        console.log(`shopCode = ${args.shopCode}`);
+
+        try {
+          switch (args.shopCode) {
+            case "A113":
+              for (let codePair of codePairs) {
+                console.log(`${cursor} 번째 카테고리 작업중...`);
+                const updatedProduct = await ctx.prisma.product.updateMany({
+                  where: { categoryA113: { equals: codePair.oldCode } },
+                  data: { categoryA113: codePair.newCode },
+                });
+                console.log(`${updatedProduct.count}개의 상품이 ${codePair.oldCode}에서 ${codePair.newCode} 로 변경되었습니다.\n`);
+                cursor += 1;
+                totalCount += updatedProduct.count;
+              }
+              break;
+
+            case "A112":
+              for (let codePair of codePairs) {
+                console.log(`${cursor} 번째 카테고리 작업중...`);
+                const updatedProduct = await ctx.prisma.product.updateMany({
+                  where: { categoryA112: { equals: codePair.oldCode } },
+                  data: { categoryA112: codePair.newCode },
+                });
+                console.log(`${updatedProduct.count}개의 상품이 ${codePair.oldCode}에서 ${codePair.newCode} 로 변경되었습니다.\n`);
+                cursor += 1;
+                totalCount += updatedProduct.count;
+              }
+              break;
+
+            default:
+              return throwError("존재하지 않는 오픈마켓 코드입니다.", ctx);
+          }
+
+          return totalCount;
+        } catch (error) {
+          console.log(error);
+          return 0;
+        }
+      },
+    });
   },
 });

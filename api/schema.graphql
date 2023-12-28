@@ -55,6 +55,23 @@ input BoolNullableFilter {
   not: NestedBoolNullableFilter
 }
 
+input CategoryChangeInput {
+  new: String!
+  old: String!
+}
+
+input CategoryCreateInput {
+  code: String!
+  depth1: String!
+  depth2: String!
+  depth3: String!
+  depth4: String!
+  depth5: String!
+  depth6: String!
+  name: String!
+  sillCode: String!
+}
+
 type CategoryInfoA001 {
   activeSillDataA001: [SillInfoA001!]!
   code: String!
@@ -890,6 +907,11 @@ type CategorySelectType {
   name: String!
 }
 
+input ChangeProductCategoryCodeInput {
+  newCode: String!
+  oldCode: String!
+}
+
 """
 A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
@@ -1011,13 +1033,16 @@ type Mutation {
   cardPayTest(email: String!): String!
   changeMyPasswordByAdmin(currentPassword: String!, newPassword: String!): Boolean!
   changePasswordByUser(currentPassword: String!, newPassword: String!): Boolean!
+  changeProductCategoryCode(data: [ChangeProductCategoryCodeInput!]!, shopCode: String!): Int!
   checkESMPlus(productId: Int!, siteCode: String!): String!
   connectSocialIdByUser(socialId: String!, userType: UserSocialType!): User!
   coupangCategorySillCodeInput(data: [sillCodeInput!]!): String!
   coupangProductStoreDelete(productId: Int!): String!
+  createCategoryInfoByAdmin(data: [CategoryCreateInput!]!, shopCode: String!): Boolean!
   createNewOrder(data: [newOrderInput!]!): Int!
   createNoticeByAdmin(attachment: Upload, content: String!, title: String!): Boolean!
   createUserQuestionByUser(attachment: [Upload!], content: String!, title: String!): Boolean!
+  deleteCategoryInfoByAdmin(data: [String!]!, shopCode: String!): Int
   deleteNoticeByAdmin(noticeIds: [Int!]!): Int!
   deleteProductByAdmin(productId: [Int!]!): Boolean!
   deleteProductByUser(productId: [Int!]!): Boolean!
@@ -1081,6 +1106,7 @@ type Mutation {
   translateProductTextByUser(id: Int!, type: TranslateTargetEnumType!): String!
   translateProductsTextByUser(ids: [Int!]!, type: TranslateTargetEnumType!): String!
   unlinkProductStore(productId: Int!, siteCode: String!): Boolean!
+  updateCategoryInfoA077MatchingByAdmin(data: UpdateCategoryInfoA077MatchingByAdminInput!): Boolean!
   updateCnyRateByAdmin(cnyRate: Float!): Float!
   updateDescription(description: String!, productId: Int!): String!
   updateFreeUserDayLimitByAdmin(day: Int!): Int!
@@ -2841,6 +2867,11 @@ enum TranslateTargetEnumType {
 
   """상품 옵션별 이름 번역,id:ProductOptionValue"""
   PRODUCT_OPTION_VALUE
+}
+
+input UpdateCategoryInfoA077MatchingByAdminInput {
+  categoryChanges: [CategoryChangeInput!]!
+  shopCode: String!
 }
 
 """The `Upload` scalar type represents a file upload."""

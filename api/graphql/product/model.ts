@@ -1457,3 +1457,12 @@ export const t_InputDescriptionData = inputObjectType({
     t.nonNull.string("description");
   },
 });
+
+/** 오픈마켓 카테고리 새롭게 업데이트시 수집되어있는 상품 새로운 코드로 바꿔주는 뮤테이션 */
+export const t_productCategoryChangeInput = inputObjectType({
+  name: "ChangeProductCategoryCodeInput",
+  definition(t) {
+    t.nonNull.string("oldCode");
+    t.nonNull.string("newCode");
+  },
+});

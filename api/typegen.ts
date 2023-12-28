@@ -69,6 +69,21 @@ export interface NexusGenInputs {
     equals?: boolean | null; // Boolean
     not?: NexusGenInputs['NestedBoolNullableFilter'] | null; // NestedBoolNullableFilter
   }
+  CategoryChangeInput: { // input type
+    new: string; // String!
+    old: string; // String!
+  }
+  CategoryCreateInput: { // input type
+    code: string; // String!
+    depth1: string; // String!
+    depth2: string; // String!
+    depth3: string; // String!
+    depth4: string; // String!
+    depth5: string; // String!
+    depth6: string; // String!
+    name: string; // String!
+    sillCode: string; // String!
+  }
   CategoryInfoA001ListRelationFilter: { // input type
     every?: NexusGenInputs['CategoryInfoA001WhereInput'] | null; // CategoryInfoA001WhereInput
     none?: NexusGenInputs['CategoryInfoA001WhereInput'] | null; // CategoryInfoA001WhereInput
@@ -570,6 +585,10 @@ export interface NexusGenInputs {
     product?: NexusGenInputs['ProductListRelationFilter'] | null; // ProductListRelationFilter
     sillCode?: NexusGenInputs['StringFilter'] | null; // StringFilter
     sillInfoB956?: NexusGenInputs['SillInfoB956WhereInput'] | null; // SillInfoB956WhereInput
+  }
+  ChangeProductCategoryCodeInput: { // input type
+    newCode: string; // String!
+    oldCode: string; // String!
   }
   DateTimeFilter: { // input type
     equals?: NexusGenScalars['DateTime'] | null; // DateTime
@@ -1732,6 +1751,10 @@ export interface NexusGenInputs {
   }
   TaobaoProductWhereUniqueInput: { // input type
     id?: number | null; // Int
+  }
+  UpdateCategoryInfoA077MatchingByAdminInput: { // input type
+    categoryChanges: NexusGenInputs['CategoryChangeInput'][]; // [CategoryChangeInput!]!
+    shopCode: string; // String!
   }
   UserInfoOrderByWithRelationInput: { // input type
     additionalShippingFeeJeju?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -3377,13 +3400,16 @@ export interface NexusGenFieldTypes {
     cardPayTest: string; // String!
     changeMyPasswordByAdmin: boolean; // Boolean!
     changePasswordByUser: boolean; // Boolean!
+    changeProductCategoryCode: number; // Int!
     checkESMPlus: string; // String!
     connectSocialIdByUser: NexusGenRootTypes['User']; // User!
     coupangCategorySillCodeInput: string; // String!
     coupangProductStoreDelete: string; // String!
+    createCategoryInfoByAdmin: boolean; // Boolean!
     createNewOrder: number; // Int!
     createNoticeByAdmin: boolean; // Boolean!
     createUserQuestionByUser: boolean; // Boolean!
+    deleteCategoryInfoByAdmin: number | null; // Int
     deleteNoticeByAdmin: number; // Int!
     deleteProductByAdmin: boolean; // Boolean!
     deleteProductByUser: boolean; // Boolean!
@@ -3432,6 +3458,7 @@ export interface NexusGenFieldTypes {
     translateProductTextByUser: string; // String!
     translateProductsTextByUser: string; // String!
     unlinkProductStore: boolean; // Boolean!
+    updateCategoryInfoA077MatchingByAdmin: boolean; // Boolean!
     updateCnyRateByAdmin: number; // Float!
     updateDescription: string; // String!
     updateFreeUserDayLimitByAdmin: number; // Int!
@@ -4419,13 +4446,16 @@ export interface NexusGenFieldTypeNames {
     cardPayTest: 'String'
     changeMyPasswordByAdmin: 'Boolean'
     changePasswordByUser: 'Boolean'
+    changeProductCategoryCode: 'Int'
     checkESMPlus: 'String'
     connectSocialIdByUser: 'User'
     coupangCategorySillCodeInput: 'String'
     coupangProductStoreDelete: 'String'
+    createCategoryInfoByAdmin: 'Boolean'
     createNewOrder: 'Int'
     createNoticeByAdmin: 'Boolean'
     createUserQuestionByUser: 'Boolean'
+    deleteCategoryInfoByAdmin: 'Int'
     deleteNoticeByAdmin: 'Int'
     deleteProductByAdmin: 'Boolean'
     deleteProductByUser: 'Boolean'
@@ -4474,6 +4504,7 @@ export interface NexusGenFieldTypeNames {
     translateProductTextByUser: 'String'
     translateProductsTextByUser: 'String'
     unlinkProductStore: 'Boolean'
+    updateCategoryInfoA077MatchingByAdmin: 'Boolean'
     updateCnyRateByAdmin: 'Float'
     updateDescription: 'String'
     updateFreeUserDayLimitByAdmin: 'Int'
@@ -5290,6 +5321,10 @@ export interface NexusGenArgTypes {
       currentPassword: string; // String!
       newPassword: string; // String!
     }
+    changeProductCategoryCode: { // args
+      data: NexusGenInputs['ChangeProductCategoryCodeInput'][]; // [ChangeProductCategoryCodeInput!]!
+      shopCode: string; // String!
+    }
     checkESMPlus: { // args
       productId: number; // Int!
       siteCode: string; // String!
@@ -5304,6 +5339,10 @@ export interface NexusGenArgTypes {
     coupangProductStoreDelete: { // args
       productId: number; // Int!
     }
+    createCategoryInfoByAdmin: { // args
+      data: NexusGenInputs['CategoryCreateInput'][]; // [CategoryCreateInput!]!
+      shopCode: string; // String!
+    }
     createNewOrder: { // args
       data: NexusGenInputs['newOrderInput'][]; // [newOrderInput!]!
     }
@@ -5316,6 +5355,10 @@ export interface NexusGenArgTypes {
       attachment?: NexusGenScalars['Upload'][] | null; // [Upload!]
       content: string; // String!
       title: string; // String!
+    }
+    deleteCategoryInfoByAdmin: { // args
+      data: string[]; // [String!]!
+      shopCode: string; // String!
     }
     deleteNoticeByAdmin: { // args
       noticeIds: number[]; // [Int!]!
@@ -5487,6 +5530,9 @@ export interface NexusGenArgTypes {
     unlinkProductStore: { // args
       productId: number; // Int!
       siteCode: string; // String!
+    }
+    updateCategoryInfoA077MatchingByAdmin: { // args
+      data: NexusGenInputs['UpdateCategoryInfoA077MatchingByAdminInput']; // UpdateCategoryInfoA077MatchingByAdminInput!
     }
     updateCnyRateByAdmin: { // args
       cnyRate: number; // Float!

@@ -1,5 +1,5 @@
 //category/model.ts
-import { objectType } from "nexus";
+import { arg, inputObjectType, objectType } from "nexus";
 
 export const t_CategoryPartialType = objectType({
   name: "CategorySelectType",
@@ -132,5 +132,37 @@ export const t_CategoryInfoB956Type = objectType({
   definition(t) {
     t.nonNull.string("code");
     t.nonNull.string("name");
+  },
+});
+
+export const t_CategoryCreateInput = inputObjectType({
+  name: "CategoryCreateInput",
+  definition(t) {
+    t.nonNull.string("code");
+    t.nonNull.string("depth1");
+    t.nonNull.string("depth2");
+    t.nonNull.string("depth3");
+    t.nonNull.string("depth4");
+    t.nonNull.string("depth5");
+    t.nonNull.string("depth6");
+    t.nonNull.string("name");
+    t.nonNull.string("sillCode");
+  },
+});
+
+/** 네이버 카테고리에 매칭된 타 오픈마켓 카테고리매칭 코드 변경 뮤테이션 인풋 */
+export const t_UpdateCategoryInfoA077MatchingByAdminInput = inputObjectType({
+  name: "UpdateCategoryInfoA077MatchingByAdminInput",
+  definition(t) {
+    t.nonNull.string("shopCode");
+    t.nonNull.list.nonNull.field("categoryChanges", {
+      type: inputObjectType({
+        name: "CategoryChangeInput",
+        definition(innerT) {
+          innerT.nonNull.string("old");
+          innerT.nonNull.string("new");
+        },
+      }),
+    });
   },
 });
