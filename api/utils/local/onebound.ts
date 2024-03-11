@@ -241,6 +241,9 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
             }
             cnyRate = 1;
             defaultShippingFee = taobaoData.props[code].value;
+          } else if (taobaoData.shop_id === "temu") {
+            cnyRate = 1;
+            defaultShippingFee = userInfo.defaultShippingFee;
           } else {
             cnyRate = userInfo.cnyRate;
             defaultShippingFee = userInfo.defaultShippingFee;
@@ -413,7 +416,9 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
           if (userInfo.naverAutoSearchTag === "Y") {
             const example = async () => {
               try {
-                const data = await fs.readFile(join(__dirname, "dictionary.json"), { encoding: "utf8" });
+                const data = await fs.readFile(join(__dirname, "dictionary.json"), {
+                  encoding: "utf8",
+                });
                 return JSON.parse(data);
               } catch (err) {
                 console.log(err);
@@ -595,7 +600,10 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
                       if (width && height && (width < 600 || height < 600)) {
                         width <= height
                           ? (image_sharp = image_sharp.resize({ width: 600, fit: "inside" }))
-                          : (image_sharp = image_sharp.resize({ height: 600, fit: "inside" }));
+                          : (image_sharp = image_sharp.resize({
+                              height: 600,
+                              fit: "inside",
+                            }));
 
                         image_raw = await image_sharp.toBuffer();
                       }
@@ -936,6 +944,13 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
                   .map((v) => ("00" + v).slice(-2))
                   .join("_");
 
+                let price: number;
+                if (taobaoData.shop_id === "express")
+                  price = boundCalculatePrice(parseFloat(sku.price), 1, taobaoData.props[code].value, calculateWonType);
+                else if (taobaoData.shop_id === "temu")
+                  price = boundCalculatePrice(parseFloat(sku.price), 1, defaultShippingFee, calculateWonType);
+                else price = boundCalculatePrice(parseFloat(sku.price), cnyRate, defaultShippingFee, calculateWonType);
+
                 const option = await prisma.productOption.create({
                   data: {
                     productId: product!.id,
@@ -947,10 +962,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
                     defaultShippingFee: defaultShippingFee,
                     taobaoSkuId: sku.sku_id,
                     priceCny: parseFloat(sku.price),
-                    price:
-                      taobaoData.shop_id === "express"
-                        ? boundCalculatePrice(parseFloat(sku.price), 1, taobaoData.props[code].value, calculateWonType)
-                        : boundCalculatePrice(parseFloat(sku.price), cnyRate, defaultShippingFee, calculateWonType),
+                    price: price,
                     stock: parseInt(sku.quantity ?? "0"),
                     optionString: optionString,
                   },

@@ -24,10 +24,7 @@ export const mutation_taobao_product = extendType({
             const translatedData = data.sellforyou.data[0]; //번역한 데이터
             const taobaoData = data.onebound.item; // 원본데이터
             if (translatedData.taobaoNumIid !== taobaoData.num_iid)
-              return throwError(
-                errors.etc("원문/번역데이터 고유값이 다릅니다."),
-                ctx
-              );
+              return throwError(errors.etc("원문/번역데이터 고유값이 다릅니다."), ctx);
 
             // 가져온 상품 id 쿼리하기
             const refreshDay = await ctx.prisma.setting.findUnique({
@@ -50,6 +47,7 @@ export const mutation_taobao_product = extendType({
             if (isNaN(price)) price = 0;
 
             var uniqueId = null;
+
             // 현재 본인이 가진 상품 중 중복상품이 있는지 검사
             const checkUserId = await ctx.prisma.product.findMany({
               where: {
@@ -72,20 +70,18 @@ export const mutation_taobao_product = extendType({
                   },
                 },
               },
-            }); //쿼리문에서 select column 명 말하는것과 같은거같음 추가적으로 fk에 해당하는 모델들의 컬럼도 저렇게들고와지네 조건도 마찬가지로
+            });
+
             if (checkUserId.length > 0) {
               for (var i in checkUserId) {
-                var temp = JSON.parse(
-                  checkUserId[i].taobaoProduct.originalData
-                );
+                var temp = JSON.parse(checkUserId[i].taobaoProduct.originalData);
                 var temp2 = checkUserId[i].taobaoProduct.shopName;
                 if (item.shop_id === temp2) {
                   if (
                     item.title !== temp.title ||
                     item.price !== temp.price ||
                     JSON.stringify(item.skus) !== JSON.stringify(temp.skus) ||
-                    JSON.stringify(item.props_list) !==
-                      JSON.stringify(temp.props_list)
+                    JSON.stringify(item.props_list) !== JSON.stringify(temp.props_list)
                   )
                     uniqueId = checkUserId[i];
 
@@ -99,42 +95,35 @@ export const mutation_taobao_product = extendType({
                   id: undefined, //index는 undefined로 입력을 하구나. .
                   taobaoNumIid: num_iid,
                   brand: item.brand ?? "",
-                  imageThumbnail:
-                    "http:" + item.pic_url.replace(/^https?:/, ""),
+                  imageThumbnail: "http:" + item.pic_url.replace(/^https?:/, ""),
                   originalData,
                   price,
                   taobaoBrandId: item.brandId?.toString() ?? null,
                   taobaoCategoryId: item.rootCatId,
                   name: item.title,
-                  videoUrl:
-                    item.video === "" || item.video === null
-                      ? null
-                      : item.video, // 이부분 배열때문에 이슈가있엇음
+                  videoUrl: item.video === "" || item.video === null ? null : item.video, // 이부분 배열때문에 이슈가있엇음
                   shopName: item.shopName ?? item.shopName,
-                  url: item.url ?? item.url,
+                  url: item.url,
                 },
               });
 
-              if (!updatedProduct)
-                return throwError(errors.etc("updatedProduct"), ctx);
+              if (!updatedProduct) return throwError(errors.etc("updatedProduct"), ctx);
 
               taobaoProducts.push({
                 ...updatedProduct,
                 itemData: item,
                 translateDataObject: translatedData,
               });
-            } catch (e) {}
+            } catch (e) {
+              console.log(`상품생성 오류발생`, e);
+            }
 
             const option = {
               isRestricted: false,
               isAdmin: !!ctx.token!.adminId,
             }; //isResricted:false 와 isAdmin : boolean 초기값생성
 
-            if (
-              !ctx.token?.adminId &&
-              (!ctx.token?.level || ctx.token.level.level < 2)
-            )
-              option.isRestricted = true;
+            if (!ctx.token?.adminId && (!ctx.token?.level || ctx.token.level.level < 2)) option.isRestricted = true;
 
             // 마진율 붙여서 본인 상품 만들기
             const cnyRateSetting = await ctx.prisma.setting.findUnique({
@@ -217,29 +206,17 @@ export const mutation_taobao_product = extendType({
                 const freeUserProductLimit = parseInt(result.value);
 
                 if (userInfo.productCollectCount >= freeUserProductLimit)
-                  return throwError(
-                    errors.etc("이용 가능한 상품 수집 횟수를 초과하였습니다."),
-                    ctx
-                  );
+                  return throwError(errors.etc("이용 가능한 상품 수집 횟수를 초과하였습니다."), ctx);
 
-                taobaoProducts = taobaoProducts.slice(
-                  0,
-                  freeUserProductLimit - productCount
-                );
+                taobaoProducts = taobaoProducts.slice(0, freeUserProductLimit - productCount);
               }
 
               if (userInfo.maxProductLimit) {
                 //null이 아니면 무제한이면 null을 넣어줌
                 if (productCount >= userInfo.maxProductLimit)
-                  return throwError(
-                    errors.etc("이용 가능한 상품 관리 개수를 초과하였습니다."),
-                    ctx
-                  );
+                  return throwError(errors.etc("이용 가능한 상품 관리 개수를 초과하였습니다."), ctx);
 
-                taobaoProducts = taobaoProducts.slice(
-                  0,
-                  userInfo.maxProductLimit - productCount
-                ); //? 무슨작업을 한건지 몰겠음 , 달라진게없음 전 후같음 qst
+                taobaoProducts = taobaoProducts.slice(0, userInfo.maxProductLimit - productCount); //? 무슨작업을 한건지 몰겠음 , 달라진게없음 전 후같음 qst
               }
 
               // 만약 수집완료시 product 수집했던 갯수 증가  ( increment : 1 ) 갯수를 증가하는걸 prisma에서 지원한다고함
@@ -291,19 +268,13 @@ export const mutation_taobao_product = extendType({
               calculateWonType,
               wordTable
             );
-            const resultProducts = products.filter(
-              (v): v is Product => v !== null
-            );
+            const resultProducts = products.filter((v): v is Product => v !== null);
 
-            return `상품 수집이 완료되었습니다. (${resultProducts
-              .map((v) => v.productCode)
-              .join(",")})`;
+            if (resultProducts.length >= 1) return `상품 수집이 완료되었습니다. (${resultProducts.map((v) => v.productCode).join(",")})`;
+            else return `상품 수집에 문제가 있습니다.`;
           }
 
-          return throwError(
-            errors.etc("데이터 형식이 올바르지 않습니다."),
-            ctx
-          );
+          return throwError(errors.etc("데이터 형식이 올바르지 않습니다."), ctx);
         } catch (e) {
           return throwError(e, ctx);
         }
