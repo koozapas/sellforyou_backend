@@ -1,74 +1,71 @@
-//add_job.ts  
-import { Request, Response } from "express"
-import { join } from 'path'
-import { PrismaClient } from "@prisma/client";
-import { errors, throwError } from "../utils/error";
+//add_job.ts
+import { Request, Response } from 'express';
+import { join } from 'path';
+import { PrismaClient } from '@prisma/client';
+import { errors, throwError } from '../utils/error';
 
 export const dataProvider = async (req: Request, res: Response) => {
-    try {
-        let productId :any = req.query.productId;
-        let siteCode : any= req.query.siteCode;
-        const prisma = new PrismaClient();
-        try{
-            let ip : any= req.headers['x-real-ip'] || req.connection.remoteAddress;
-         
-            let productStoreId = await prisma.productStore.findFirst({
-                where : { siteCode , productId : parseInt(productId)} ,
-            }) 
+	try {
+		const productId = req.query.productId as string;
+		const siteCode = req.query.siteCode as string;
+		const prisma = new PrismaClient();
 
-            if(!productStoreId) return throwError(errors.etc("Not productStore Id"),null);
+		try {
+			const ip = (req.headers['x-real-ip'] as string) || (req.connection.remoteAddress as string);
+			const productStoreId = await prisma.productStore.findFirst({
+				where: { siteCode, productId: parseInt(productId) },
+			});
 
-            let productViewLog = await prisma.productViewLog.findMany({
-                where : { clientIp : ip , siteCode , productStoreId : productStoreId.id} 
-            })
-            if(productViewLog.length ===0){
-                if(productStoreId.cnt === 0) await prisma.productStore.update({where:{id:productStoreId.id},data:{cnt:{increment: 1}}})//cnt는 1번이라도 유입이있는지 여부를 보기위한 컬럼(누적갯수아님)
+			if (!productStoreId) return throwError(errors.etc('Not productStore Id'), null);
 
-                await prisma.productViewLog.create({
-                    data : {
-                        clientIp : ip,
-                        userId : productStoreId.userId,
-                        productStoreId : productStoreId.id,
-                        productId : productStoreId.productId,
-                        siteCode 
-                    }
-                })
+			const productViewLog = await prisma.productViewLog.findMany({
+				where: { clientIp: ip, siteCode, productStoreId: productStoreId.id },
+			});
+			if (productViewLog.length === 0) {
+				if (productStoreId.cnt === 0)
+					await prisma.productStore.update({ where: { id: productStoreId.id }, data: { cnt: { increment: 1 } } }); //cnt는 1번이라도 유입이있는지 여부를 보기위한 컬럼(누적갯수아님)
 
-            }else{
-                const nowdate = new Date();
-                // let lastViewTime :any = productViewLog[0].viewTime ;
-                let lastView : any = productViewLog.reduce((prev : any,curr:any) => { return new Date(prev).getTime() <= new Date(curr).getTime() ? prev : curr ;});
-                let lastViewTime : any = lastView.viewTime;
-                const diffMSec = nowdate.getTime() - lastViewTime.getTime();
-                const diffMin = diffMSec / (60 * 1000);
+				await prisma.productViewLog.create({
+					data: {
+						clientIp: ip,
+						userId: productStoreId.userId,
+						productStoreId: productStoreId.id,
+						productId: productStoreId.productId,
+						siteCode,
+					},
+				});
+			} else {
+				const nowdate = new Date();
+				const lastView = productViewLog.reduce((prev: any, curr: any) => {
+					return new Date(prev).getTime() <= new Date(curr).getTime() ? prev : curr;
+				});
+				const lastViewTime = lastView.viewTime;
+				const diffMSec = nowdate.getTime() - lastViewTime.getTime();
+				const diffMin = diffMSec / (60 * 1000);
 
-                if(diffMin > 30){
-                    await prisma.productViewLog.create({
-                        data : {
-                            clientIp : ip,
-                            userId :  productStoreId.userId,
-                            productStoreId : productStoreId.id,
-                            productId : productStoreId.productId,
-                            siteCode 
-                        }
-                    })
-                }
-            }
+				if (diffMin > 30) {
+					await prisma.productViewLog.create({
+						data: {
+							clientIp: ip,
+							userId: productStoreId.userId,
+							productStoreId: productStoreId.id,
+							productId: productStoreId.productId,
+							siteCode,
+						},
+					});
+				}
+			}
 
-            res.sendFile(join(__dirname,"tiny_white.png"))
-        }
-        catch (e) {
-                console.log(e);
-                res.sendStatus(500)
-
-        }
-            finally {
-                prisma.$disconnect();
-        }
-    }
-    catch (e) {
-        console.log(e);
-        console.log(req.body);
-        res.sendStatus(500)
-    }
-}
+			res.sendFile(join(__dirname, 'tiny_white.png'));
+		} catch (e) {
+			console.log(e);
+			res.sendStatus(500);
+		} finally {
+			prisma.$disconnect();
+		}
+	} catch (e) {
+		console.log(e);
+		console.log(req.body);
+		res.sendStatus(500);
+	}
+};
