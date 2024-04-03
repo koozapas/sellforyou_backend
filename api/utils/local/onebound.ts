@@ -969,69 +969,58 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
 							}),
 						);
 						await Promise.all(
-							taobaoData.skus.sku
-								.sort((a: any, b: any) => a.price - b.price)
-								.map(async (sku) => {
-									//const match = sku.properties.match(/^([-\d]+):([-\d]+);?([-\d]+)?:?([-\d]+)?;?([-\d]+)?:?([-\d]+)?/)!; 옵션3개
-									//const match = sku.properties.match(/^([-\d]+):([-\d]+);?([-\d]+)?:?([-\d]+)?;?([-\d]+)?:?([-\d]+)?;?([-\d]+)?:?([-\d]+)?/)!; //옵션4개로변경
-									const match = sku.properties.match(REG_EXP.taobaoOption_2)!; //옵션5개로변경
-									// 옵션 키값이 3개인 상품
-									// const isThirdProduct =
-									//   match[0]?.split(";")?.[0].split(":").length === 3;
-									//product_option table의 option_string 컬럼 varchar(10) -> varchar(20)으로수정
-									// 2개인경우
-									const optionString = [
-										productOptionValues.find((v) => v.optionNameOrder === 1 && v.taobaoVid === match[3])!.number,
-										productOptionValues.find((v) => v.optionNameOrder === 2 && v.taobaoVid === match[5])?.number,
-										productOptionValues.find((v) => v.optionNameOrder === 3 && v.taobaoVid === match[7])?.number,
-										productOptionValues.find((v) => v.optionNameOrder === 4 && v.taobaoVid === match[9])?.number,
-										productOptionValues.find((v) => v.optionNameOrder === 5 && v.taobaoVid === match[11])?.number,
-									]
-										.filter((v): v is number => typeof v === 'number')
-										.map((v) => ('00' + v).slice(-2))
-										.join('_');
+							taobaoData.skus.sku.map(async (sku) => {
+								//const match = sku.properties.match(/^([-\d]+):([-\d]+);?([-\d]+)?:?([-\d]+)?;?([-\d]+)?:?([-\d]+)?/)!; 옵션3개
+								//const match = sku.properties.match(/^([-\d]+):([-\d]+);?([-\d]+)?:?([-\d]+)?;?([-\d]+)?:?([-\d]+)?;?([-\d]+)?:?([-\d]+)?/)!; //옵션4개로변경
+								const match = sku.properties.match(REG_EXP.taobaoOption_2)!; //옵션5개로변경
+								// 옵션 키값이 3개인 상품
+								// const isThirdProduct =
+								//   match[0]?.split(";")?.[0].split(":").length === 3;
+								//product_option table의 option_string 컬럼 varchar(10) -> varchar(20)으로수정
+								// 2개인경우
+								const optionString = [
+									productOptionValues.find((v) => v.optionNameOrder === 1 && v.taobaoVid === match[3])!.number,
+									productOptionValues.find((v) => v.optionNameOrder === 2 && v.taobaoVid === match[5])?.number,
+									productOptionValues.find((v) => v.optionNameOrder === 3 && v.taobaoVid === match[7])?.number,
+									productOptionValues.find((v) => v.optionNameOrder === 4 && v.taobaoVid === match[9])?.number,
+									productOptionValues.find((v) => v.optionNameOrder === 5 && v.taobaoVid === match[11])?.number,
+								]
+									.filter((v): v is number => typeof v === 'number')
+									.map((v) => ('00' + v).slice(-2))
+									.join('_');
 
-									let price: number;
-									if (taobaoData.shop_id === 'express')
-										price = boundCalculatePrice(
-											parseFloat(sku.price),
-											1,
-											taobaoData.props[code].value,
-											calculateWonType,
-										);
-									else if (taobaoData.shop_id === 'temu')
-										price = boundCalculatePrice(parseFloat(sku.price), 1, defaultShippingFee, calculateWonType);
-									else
-										price = boundCalculatePrice(parseFloat(sku.price), cnyRate, defaultShippingFee, calculateWonType);
+								let price: number;
+								if (taobaoData.shop_id === 'express')
+									price = boundCalculatePrice(parseFloat(sku.price), 1, taobaoData.props[code].value, calculateWonType);
+								else if (taobaoData.shop_id === 'temu')
+									price = boundCalculatePrice(parseFloat(sku.price), 1, defaultShippingFee, calculateWonType);
+								else price = boundCalculatePrice(parseFloat(sku.price), cnyRate, defaultShippingFee, calculateWonType);
 
-									const option = await prisma.productOption.create({
-										data: {
-											productId: product!.id,
-											optionValue1Id: productOptionValues.find(
-												(v) => v.optionNameOrder === 1 && v.taobaoVid === match[3],
-											)!.id,
-											optionValue2Id: productOptionValues.find(
-												(v) => v.optionNameOrder === 2 && v.taobaoVid === match[5],
-											)?.id,
-											optionValue3Id: productOptionValues.find(
-												(v) => v.optionNameOrder === 3 && v.taobaoVid === match[7],
-											)?.id,
-											optionValue4Id: productOptionValues.find(
-												(v) => v.optionNameOrder === 4 && v.taobaoVid === match[9],
-											)?.id,
-											optionValue5Id: productOptionValues.find(
-												(v) => v.optionNameOrder === 4 && v.taobaoVid === match[11],
-											)?.id,
-											defaultShippingFee: defaultShippingFee,
-											taobaoSkuId: sku.sku_id,
-											priceCny: parseFloat(sku.price),
-											price: price,
-											stock: parseInt(sku.quantity ?? '0'),
-											optionString: optionString,
-										},
-									});
-									return option;
-								}),
+								const option = await prisma.productOption.create({
+									data: {
+										productId: product!.id,
+										optionValue1Id: productOptionValues.find(
+											(v) => v.optionNameOrder === 1 && v.taobaoVid === match[3],
+										)!.id,
+										optionValue2Id: productOptionValues.find((v) => v.optionNameOrder === 2 && v.taobaoVid === match[5])
+											?.id,
+										optionValue3Id: productOptionValues.find((v) => v.optionNameOrder === 3 && v.taobaoVid === match[7])
+											?.id,
+										optionValue4Id: productOptionValues.find((v) => v.optionNameOrder === 4 && v.taobaoVid === match[9])
+											?.id,
+										optionValue5Id: productOptionValues.find(
+											(v) => v.optionNameOrder === 4 && v.taobaoVid === match[11],
+										)?.id,
+										defaultShippingFee: defaultShippingFee,
+										taobaoSkuId: sku.sku_id,
+										priceCny: parseFloat(sku.price),
+										price: price,
+										stock: parseInt(sku.quantity ?? '0'),
+										optionString: optionString,
+									},
+								});
+								return option;
+							}),
 						);
 					}
 				}
