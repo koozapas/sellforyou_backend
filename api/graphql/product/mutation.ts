@@ -935,7 +935,7 @@ const updateImageThumbnailData = async (
 
 				if (v.uploadImage) {
 					image = await uploadToS3AvoidDuplicate(v.uploadImage, ['product', product.id]);
-					uploadImageresult.push('https://img.sellforyou.co.kr/sellforyou/' + image);
+					uploadImageresult.push(process.env.EXTERNAL_S3_ADDRESS + image);
 				}
 				//썸네일 https 수정
 				// imageArray.push(image.replace(/^https?:/, "http:"));
@@ -2083,7 +2083,7 @@ export const mutation_product = extendType({
 								a1.optionValues.push({
 									defaultImage: defaultImage,
 									id: value.id,
-									newImage: 'https://img.sellforyou.co.kr/sellforyou/' + image,
+									newImage: process.env.EXTERNAL_S3_ADDRESS + '/' + image,
 								});
 							} else {
 								image = undefined;
@@ -2116,7 +2116,7 @@ export const mutation_product = extendType({
 									]);
 									a1.thumbnails.push({
 										defaultImage: defaultImage,
-										newImage: 'https://img.sellforyou.co.kr/sellforyou/' + image,
+										newImage: process.env.EXTERNAL_S3_ADDRESS + '/' + image,
 									});
 								}
 							}
@@ -2128,7 +2128,7 @@ export const mutation_product = extendType({
 					const description = args.description
 						? await uploadToS3WithEditor(args.description, ['product', product.id], 'description')
 						: undefined;
-					a1.description = description !== undefined ? 'https://img.sellforyou.co.kr/sellforyou/' + description : '';
+					a1.description = description !== undefined ? process.env.EXTERNAL_S3_ADDRESS + '/' + description : '';
 					const result = await ctx.prisma.product.update({
 						where: { id: product.id },
 						data: {
@@ -2235,7 +2235,7 @@ export const mutation_product = extendType({
 
 							a1.thumbnails.push({
 								index: i,
-								newImage: 'https://img.sellforyou.co.kr/sellforyou/' + image,
+								newImage: process.env.EXTERNAL_S3_ADDRESS + '/' + image,
 							});
 
 							return image;
@@ -2282,7 +2282,7 @@ export const mutation_product = extendType({
 
 								return {
 									id: v.id,
-									newImage: 'https://img.sellforyou.co.kr/sellforyou/' + image,
+									newImage: process.env.EXTERNAL_S3_ADDRESS + '/' + image,
 								};
 							}),
 						);
@@ -2292,7 +2292,7 @@ export const mutation_product = extendType({
 						? await uploadToS3WithEditor(args.description, ['product', product.id], 'description')
 						: undefined;
 
-					a1.description = description ? 'https://img.sellforyou.co.kr/sellforyou/' + description : '';
+					a1.description = description ? process.env.EXTERNAL_S3_ADDRESS + '/' + description : '';
 
 					// update
 					const result = await ctx.prisma.product.update({
@@ -2363,7 +2363,7 @@ export const mutation_product = extendType({
 															uploadState: v.state,
 															errorMessage: v.msg,
 														},
-													}
+												  }
 												: undefined,
 										cnt: 0,
 										product: { connect: { id: product.id } },
@@ -2374,7 +2374,7 @@ export const mutation_product = extendType({
 														id: v.slave_reg_code,
 														storeFullPath: product.user?.userInfo?.naverStoreUrl,
 														vendorId: etcVendorItemId,
-													})
+												  })
 												: undefined,
 										siteCode: v.site_code,
 										user: { connect: { id: product.userId! } },
@@ -2415,12 +2415,12 @@ export const mutation_product = extendType({
 															uploadState: v.state,
 															errorMessage: v.msg,
 														},
-													}
+												  }
 												: {
 														deleteMany: {
 															productStoreId: productStore.id,
 														},
-													},
+												  },
 										product: { connect: { id: product.id } },
 										etcVendorItemId: etcVendorItemId === '' || etcVendorItemId === null ? undefined : etcVendorItemId,
 										storeUrl:
@@ -2430,7 +2430,7 @@ export const mutation_product = extendType({
 															id: v.slave_reg_code,
 															storeFullPath: product.user?.userInfo?.naverStoreUrl,
 															vendorId: etcVendorItemId,
-														})
+													  })
 													: undefined
 												: undefined,
 										siteCode: v.site_code,
@@ -3142,7 +3142,7 @@ export const mutation_product = extendType({
 								'product',
 								productOptionValue.productOptionName.product.id,
 							]);
-							returnImage = 'https://img.sellforyou.co.kr/sellforyou/' + image;
+							returnImage = process.env.EXTERNAL_S3_ADDRESS + '/' + image;
 						}
 
 						if (ctx.token?.userId && productOptionValue?.productOptionName.product.userId !== ctx.token.userId)
