@@ -970,7 +970,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
 						);
 						await Promise.all(
 							taobaoData.skus.sku
-								.sort((a: any, b: any) => a.price - b.price)
+								.sort((a: any, b: any) => a.price - b.price) //test
 								.map(async (sku) => {
 									//const match = sku.properties.match(/^([-\d]+):([-\d]+);?([-\d]+)?:?([-\d]+)?;?([-\d]+)?:?([-\d]+)?/)!; 옵션3개
 									//const match = sku.properties.match(/^([-\d]+):([-\d]+);?([-\d]+)?:?([-\d]+)?;?([-\d]+)?:?([-\d]+)?;?([-\d]+)?:?([-\d]+)?/)!; //옵션4개로변경
