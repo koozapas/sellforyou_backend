@@ -301,7 +301,7 @@ export const uploadToS3WithEditor = async (
 				Buffer.from(descriptionContents, 'utf8'),
 				`${fileNameExcludeExtension}.html`,
 				'text/html',
-				[...pathArray],
+				['img2', ...pathArray],
 			)
 		).url;
 		return description;
@@ -350,7 +350,7 @@ export const uploadToS3WithEditor2 = async (
 				Buffer.from(descriptionContents, 'utf8'),
 				`${fileNameExcludeExtension}.html`,
 				'text/html',
-				[...pathArray],
+				['img2', ...pathArray],
 			)
 		).url;
 
