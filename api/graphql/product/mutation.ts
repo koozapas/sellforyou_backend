@@ -935,7 +935,7 @@ const updateImageThumbnailData = async (
 
 				if (v.uploadImage) {
 					image = await uploadToS3AvoidDuplicate(v.uploadImage, ['product', product.id]);
-					uploadImageresult.push(process.env.EXTERNAL_S3_ADDRESS + image);
+					uploadImageresult.push(process.env.EXTERNAL_S3_ADDRESS + '/' + image);
 				}
 				//썸네일 https 수정
 				// imageArray.push(image.replace(/^https?:/, "http:"));
