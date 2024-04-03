@@ -170,13 +170,12 @@ export const uploadToS3AvoidDuplicate = async (
 		: file.filename;
 	let tmpnumber = 0;
 
+	pathArray.concat('img2');
+
 	while (true) {
 		const result = await checkFileExistAtS3(
 			pathArray
-				.concat(
-					'img2',
-					filename.replace(regexPattern.fileNameAndExtension, `$1${tmpnumber ? tmpnumber.toString() : ''}.$2`),
-				)
+				.concat(filename.replace(regexPattern.fileNameAndExtension, `$1${tmpnumber ? tmpnumber.toString() : ''}.$2`))
 				.join('/'),
 		);
 
@@ -229,15 +228,14 @@ export const uploadToS3AvoidDuplicateByBuffer = async (
 
 	let tmpnumber = 0; // 8. 중복된 파일명에 붙일 숫자 초기화
 
+	pathArray.concat('img2');
+
 	// 9. 중복된 파일명이 발견되지 않을 때까지 반복
 	while (true) {
 		// 10. S3에 해당 경로에 이미 파일이 있는지 확인
 		const result = await checkFileExistAtS3(
 			pathArray
-				.concat(
-					'img2',
-					filename.replace(regexPattern.fileNameAndExtension, `$1${tmpnumber ? tmpnumber.toString() : ''}.$2`),
-				)
+				.concat(filename.replace(regexPattern.fileNameAndExtension, `$1${tmpnumber ? tmpnumber.toString() : ''}.$2`))
 				.join('/'),
 		);
 
