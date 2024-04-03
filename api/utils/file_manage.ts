@@ -170,7 +170,7 @@ export const uploadToS3AvoidDuplicate = async (
 		: file.filename;
 	let tmpnumber = 0;
 
-	pathArray = pathArray.concat('img2');
+	pathArray.unshift('img2');
 
 	while (true) {
 		const result = await checkFileExistAtS3(
@@ -228,7 +228,7 @@ export const uploadToS3AvoidDuplicateByBuffer = async (
 
 	let tmpnumber = 0; // 8. 중복된 파일명에 붙일 숫자 초기화
 
-	pathArray = pathArray.concat('img2');
+	pathArray.unshift('img2');
 
 	// 9. 중복된 파일명이 발견되지 않을 때까지 반복
 	while (true) {
