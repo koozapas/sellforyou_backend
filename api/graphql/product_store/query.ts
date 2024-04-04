@@ -1063,7 +1063,7 @@ const registerProductResolver =
 																		  '" alt="" />'
 																		: ''
 															  }<p>&nbsp;</p><p>&nbsp;</p>${
-																	/^product\/\d+\/description.html$/.test(v.product.description)
+																	/product\/\d+\/description.html$/.test(v.product.description)
 																		? (await getFromS3(v.product.description)).Body!.toString('utf8')
 																		: v.product.description
 															  }${await getOptionHeaderHtmlByProductId(
@@ -1116,7 +1116,7 @@ const registerProductResolver =
 																		  '" alt="" />'
 																		: ''
 															  }<p>&nbsp;</p><p>&nbsp;</p><p><div style="color: #000000; font-size: 24px; font-weight: bold; font-family: none;">상품 설명입니다.</div></p><p>&nbsp;</p><p>&nbsp;</p>${
-																	/^product\/\d+\/description.html$/.test(v.product.description)
+																	/product\/\d+\/description.html$/.test(v.product.description)
 																		? (await getFromS3(v.product.description)).Body!.toString('utf8')
 																		: v.product.description
 															  }${await getOptionHeaderHtmlByProductId(
@@ -1174,7 +1174,7 @@ const registerProductResolver =
 																v.product.taobaoProduct.shopName,
 																userInfo.useDetailInformation,
 														  )}<p>&nbsp;</p><p>&nbsp;</p>${
-																/^product\/\d+\/description.html$/.test(v.product.description)
+																/product\/\d+\/description.html$/.test(v.product.description)
 																	? (await getFromS3(v.product.description)).Body!.toString('utf8')
 																	: v.product.description
 														  }${
@@ -1221,7 +1221,7 @@ const registerProductResolver =
 																v.product.taobaoProduct.shopName,
 																userInfo.useDetailInformation,
 														  )}<p>&nbsp;</p><p>&nbsp;</p><p><div style="color: #000000; font-size: 24px; font-weight: bold; font-family: none;">상품 설명입니다.</div></p><p>&nbsp;</p><p>&nbsp;</p>${
-																/^product\/\d+\/description.html$/.test(v.product.description)
+																/product\/\d+\/description.html$/.test(v.product.description)
 																	? (await getFromS3(v.product.description)).Body!.toString('utf8')
 																	: v.product.description
 														  }${
@@ -1249,7 +1249,7 @@ const registerProductResolver =
 													userInfo.optionAlignTop === 'N'
 														? userInfo.useDetailInformation === 'N'
 															? `<div style="text-align: center;"><p>&nbsp;</p><p>&nbsp;</p>${
-																	/^product\/\d+\/description.html$/.test(v.product.description)
+																	/product\/\d+\/description.html$/.test(v.product.description)
 																		? (await getFromS3(v.product.description)).Body!.toString('utf8')
 																		: v.product.description
 															  }${await getOptionHeaderHtmlByProductId(
@@ -1261,7 +1261,7 @@ const registerProductResolver =
 																	userInfo.useDetailInformation,
 															  )}</div>`
 															: `<div style="text-align: center;"><p>&nbsp;</p><p>&nbsp;</p><p><div style="color: #000000; font-size: 24px; font-weight: bold; font-family: none;">상품 설명입니다.</div></p><p>&nbsp;</p><p>&nbsp;</p>${
-																	/^product\/\d+\/description.html$/.test(v.product.description)
+																	/product\/\d+\/description.html$/.test(v.product.description)
 																		? (await getFromS3(v.product.description)).Body!.toString('utf8')
 																		: v.product.description
 															  }${await getOptionHeaderHtmlByProductId(
@@ -1281,7 +1281,7 @@ const registerProductResolver =
 																v.product.taobaoProduct.shopName,
 																userInfo.useDetailInformation,
 														  )}<p>&nbsp;</p><p>&nbsp;</p>${
-																/^product\/\d+\/description.html$/.test(v.product.description)
+																/product\/\d+\/description.html$/.test(v.product.description)
 																	? (await getFromS3(v.product.description)).Body!.toString('utf8')
 																	: v.product.description
 														  }</div>`
@@ -1293,7 +1293,7 @@ const registerProductResolver =
 																v.product.taobaoProduct.shopName,
 																userInfo.useDetailInformation,
 														  )}<p>&nbsp;</p><p>&nbsp;</p><p><div style="color: #000000; font-size: 24px; font-weight: bold; font-family: none;">상품 설명입니다.</div></p><p>&nbsp;</p><p>&nbsp;</p>${
-																/^product\/\d+\/description.html$/.test(v.product.description)
+																/product\/\d+\/description.html$/.test(v.product.description)
 																	? (await getFromS3(v.product.description)).Body!.toString('utf8')
 																	: v.product.description
 														  }</div>`,
@@ -1332,7 +1332,7 @@ const registerProductResolver =
 														  '" alt="" />'
 														: ''
 												}</div>`,
-												///content3:^product\/\d+\/description.html$/.test(v.product.description) ? (await getFromS3(v.product.description)).Body!.toString("utf8") : v.product.description, //광고/홍보
+												///content3:product\/\d+\/description.html$/.test(v.product.description) ? (await getFromS3(v.product.description)).Body!.toString("utf8") : v.product.description, //광고/홍보
 												eng_content: '', //영어 상세설명
 												china_content: '', //중국어 상세설명
 												japan_content: '', //일본어 상세설명
