@@ -648,7 +648,9 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
 
 											if (image_ext === 'jpeg') image_ext = 'jpg';
 
-											var image_url: any = `${process.env.EXTERNAL_S3_ADDRESS}/${await uploadToS3AvoidDuplicateByBuffer(
+											var image_url: any = `${
+												process.env.EXTERNAL_S3_ADDRESS2
+											}/${await uploadToS3AvoidDuplicateByBuffer(
 												buffer,
 												`thumbnail${(i + 1).toString().padStart(2, '0')}.${image_ext}`,
 												mimetype,
@@ -714,7 +716,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
 
 												if (image_ext === 'jpeg') image_ext = 'jpg';
 
-												const output = `${process.env.EXTERNAL_S3_ADDRESS}/${await uploadToS3AvoidDuplicateByBuffer(
+												const output = `${process.env.EXTERNAL_S3_ADDRESS2}/${await uploadToS3AvoidDuplicateByBuffer(
 													buffer,
 													`description${(i + 1).toString().padStart(2, '0')}.${image_ext}`,
 													mimetype,
@@ -938,7 +940,7 @@ export const saveTaobaoItemToUser = async <T extends IFeeInfo>(
 													if (image_ext === 'jpeg') image_ext = 'jpg';
 
 													resolve(
-														`${process.env.EXTERNAL_S3_ADDRESS}/${await uploadToS3AvoidDuplicateByBuffer(
+														`${process.env.EXTERNAL_S3_ADDRESS2}/${await uploadToS3AvoidDuplicateByBuffer(
 															buffer,
 															`option${(i + 1).toString().padStart(2, '0')}.${image_ext}`,
 															mimetype,

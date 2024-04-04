@@ -1,11 +1,14 @@
 import { S3 } from 'aws-sdk';
 import { FileUpload } from 'graphql-upload';
-import { AWS_BUCKET, isDev, regexPattern } from './constants';
+import { AWS_BUCKET, AWS_BUCKET2, isDev, regexPattern } from './constants';
 
 import * as HTTP from 'http';
 
 export const S3ADDRESS = process.env.S3ADDRESS;
+export const S3ADDRESS2 = process.env.S3ADDRESS2;
+
 export const EXTERNAL_S3_ADDRESS = process.env.EXTERNAL_S3_ADDRESS;
+export const EXTERNAL_S3_ADDRESS2 = process.env.EXTERNAL_S3_ADDRESS2;
 
 const agent = new HTTP.Agent({
 	// Infinity is read as 50 sockets
@@ -21,6 +24,22 @@ export const S3Client = new S3({
 		? {
 				// minio용 설정
 				endpoint: S3ADDRESS,
+				s3ForcePathStyle: true,
+				signatureVersion: 'v4',
+		  }
+		: {}),
+	httpOptions: { agent },
+});
+
+export const S3Client2 = new S3({
+	accessKeyId: process.env.AWS_ACCESS_KEY,
+	secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+	params: { Bucket: AWS_BUCKET2 },
+	region: 'ap-northeast-2',
+	...(isDev()
+		? {
+				// minio용 설정
+				endpoint: S3ADDRESS2,
 				s3ForcePathStyle: true,
 				signatureVersion: 'v4',
 		  }
@@ -72,7 +91,9 @@ export const checkFileExistAtS3 = async (Key: string): Promise<boolean> => {
 };
 
 export const getFromS3 = async (Key: string) => {
-	return await S3Client.getObject({ Key, Bucket: AWS_BUCKET }).promise();
+	return Key.includes('img2')
+		? await S3Client2.getObject({ Key, Bucket: AWS_BUCKET2 }).promise()
+		: await S3Client.getObject({ Key, Bucket: AWS_BUCKET }).promise();
 };
 
 export const deleteFromS3 = async (Key: string): Promise<boolean> => {
@@ -285,7 +306,7 @@ export const uploadToS3WithEditor = async (
 
 		/** p컴포넌트의 스타일들을 제거하는 작업 */
 		descriptionContents = result?.reduce(
-			(p, c, i) => p.replace(c, `<img src="${EXTERNAL_S3_ADDRESS}/${urlArray[i]}">`),
+			(p, c, i) => p.replace(c, `<img src="${EXTERNAL_S3_ADDRESS2}/${urlArray[i]}">`),
 			descriptionContents,
 		);
 	}
@@ -338,7 +359,7 @@ export const uploadToS3WithEditor2 = async (
 
 		/** p컴포넌트의 스타일들을 제거하는 작업 */
 		descriptionContents = result?.reduce(
-			(p, c, i) => p.replace(c, `<img src="${EXTERNAL_S3_ADDRESS}/${urlArray[i]}">`),
+			(p, c, i) => p.replace(c, `<img src="${EXTERNAL_S3_ADDRESS2}/${urlArray[i]}">`),
 			descriptionContents,
 		);
 	}

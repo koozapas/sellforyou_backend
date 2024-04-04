@@ -935,7 +935,7 @@ const updateImageThumbnailData = async (
 
 				if (v.uploadImage) {
 					image = await uploadToS3AvoidDuplicate(v.uploadImage, ['product', product.id]);
-					uploadImageresult.push(process.env.EXTERNAL_S3_ADDRESS + '/' + image);
+					uploadImageresult.push(process.env.EXTERNAL_S3_ADDRESS2 + '/' + image);
 				}
 				//썸네일 https 수정
 				// imageArray.push(image.replace(/^https?:/, "http:"));
@@ -2083,7 +2083,7 @@ export const mutation_product = extendType({
 								a1.optionValues.push({
 									defaultImage: defaultImage,
 									id: value.id,
-									newImage: process.env.EXTERNAL_S3_ADDRESS + '/' + image,
+									newImage: process.env.EXTERNAL_S3_ADDRESS2 + '/' + image,
 								});
 							} else {
 								image = undefined;
@@ -2116,7 +2116,7 @@ export const mutation_product = extendType({
 									]);
 									a1.thumbnails.push({
 										defaultImage: defaultImage,
-										newImage: process.env.EXTERNAL_S3_ADDRESS + '/' + image,
+										newImage: process.env.EXTERNAL_S3_ADDRESS2 + '/' + image,
 									});
 								}
 							}
@@ -2128,7 +2128,7 @@ export const mutation_product = extendType({
 					const description = args.description
 						? await uploadToS3WithEditor(args.description, ['product', product.id], 'description')
 						: undefined;
-					a1.description = description !== undefined ? process.env.EXTERNAL_S3_ADDRESS + '/' + description : '';
+					a1.description = description !== undefined ? process.env.EXTERNAL_S3_ADDRESS2 + '/' + description : '';
 					const result = await ctx.prisma.product.update({
 						where: { id: product.id },
 						data: {
@@ -2235,7 +2235,7 @@ export const mutation_product = extendType({
 
 							a1.thumbnails.push({
 								index: i,
-								newImage: process.env.EXTERNAL_S3_ADDRESS + '/' + image,
+								newImage: process.env.EXTERNAL_S3_ADDRESS2 + '/' + image,
 							});
 
 							return image;
@@ -2282,7 +2282,7 @@ export const mutation_product = extendType({
 
 								return {
 									id: v.id,
-									newImage: process.env.EXTERNAL_S3_ADDRESS + '/' + image,
+									newImage: process.env.EXTERNAL_S3_ADDRESS2 + '/' + image,
 								};
 							}),
 						);
@@ -2292,7 +2292,7 @@ export const mutation_product = extendType({
 						? await uploadToS3WithEditor(args.description, ['product', product.id], 'description')
 						: undefined;
 
-					a1.description = description ? process.env.EXTERNAL_S3_ADDRESS + '/' + description : '';
+					a1.description = description ? process.env.EXTERNAL_S3_ADDRESS2 + '/' + description : '';
 
 					// update
 					const result = await ctx.prisma.product.update({
@@ -3142,7 +3142,7 @@ export const mutation_product = extendType({
 								'product',
 								productOptionValue.productOptionName.product.id,
 							]);
-							returnImage = process.env.EXTERNAL_S3_ADDRESS + '/' + image;
+							returnImage = process.env.EXTERNAL_S3_ADDRESS2 + '/' + image;
 						}
 
 						if (ctx.token?.userId && productOptionValue?.productOptionName.product.userId !== ctx.token.userId)

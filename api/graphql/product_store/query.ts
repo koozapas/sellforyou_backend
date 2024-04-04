@@ -7,7 +7,7 @@ import { predefinedSiilData } from '..';
 import { shopDataNameInfo, IPADShopInfo, IPADataDataSet10 } from '../../playauto_api_type';
 // import { EXTERNAL_ADDRESS } from "../utils/constants";
 import { errors, throwError } from '../../utils/error';
-import { EXTERNAL_S3_ADDRESS, getFromS3 } from '../../utils/file_manage';
+import { EXTERNAL_S3_ADDRESS, EXTERNAL_S3_ADDRESS2, getFromS3 } from '../../utils/file_manage';
 import { getOptionHeaderHtmlByProductId } from '../../utils/local/playauto';
 interface IPADataImagePartial {
 	img1: string;
@@ -131,7 +131,7 @@ const truncateOptionName = (siteCode: string, text: string) => truncateOptionNam
 
 export function getValidUploadImageUrl(image: string, shopName: any) {
 	if (!/^https?:\/\//.test(image) && image !== '') {
-		image = `${EXTERNAL_S3_ADDRESS}/${encodeURI(image)}`;
+		image = `${EXTERNAL_S3_ADDRESS2}/${encodeURI(image)}`;
 	}
 
 	if (!shopName.includes('amazon')) {
@@ -1046,216 +1046,204 @@ const registerProductResolver =
 															? `<div style="text-align: center;">${
 																	userInfo.fixImageTop
 																		? '<img src="' +
-																			getValidUploadImageUrl(userInfo.fixImageTop, v.product.taobaoProduct.shopName) +
-																			'?' +
-																			Date.now() +
-																			'" alt="" />'
+																		  getValidUploadImageUrl(userInfo.fixImageTop, v.product.taobaoProduct.shopName) +
+																		  '?' +
+																		  Date.now() +
+																		  '" alt="" />'
 																		: ''
-																}${
+															  }${
 																	userInfo.fixImageSubTop
 																		? '<img src="' +
-																			getValidUploadImageUrl(
+																		  getValidUploadImageUrl(
 																				userInfo.fixImageSubTop,
 																				v.product.taobaoProduct.shopName,
-																			) +
-																			'?' +
-																			Date.now() +
-																			'" alt="" />'
+																		  ) +
+																		  '?' +
+																		  Date.now() +
+																		  '" alt="" />'
 																		: ''
-																}<p>&nbsp;</p><p>&nbsp;</p>${
+															  }<p>&nbsp;</p><p>&nbsp;</p>${
 																	/^product\/\d+\/description.html$/.test(v.product.description)
 																		? (await getFromS3(v.product.description)).Body!.toString('utf8')
 																		: v.product.description
-																}${await getOptionHeaderHtmlByProductId(
+															  }${await getOptionHeaderHtmlByProductId(
 																	ctx.prisma,
 																	v.product.id,
 																	userInfo?.optionTwoWays,
 																	userInfo?.optionIndexType,
 																	v.product.taobaoProduct.shopName,
 																	userInfo.useDetailInformation,
-																)}${
+															  )}${
 																	userInfo.fixImageBottom
 																		? '<img src="' +
-																			getValidUploadImageUrl(
+																		  getValidUploadImageUrl(
 																				userInfo.fixImageBottom,
 																				v.product.taobaoProduct.shopName,
-																			) +
-																			'?' +
-																			Date.now() +
-																			'" alt="" />'
+																		  ) +
+																		  '?' +
+																		  Date.now() +
+																		  '" alt="" />'
 																		: ''
-																}${
+															  }${
 																	userInfo.fixImageSubBottom
 																		? '<img src="' +
-																			getValidUploadImageUrl(
+																		  getValidUploadImageUrl(
 																				userInfo.fixImageSubBottom,
 																				v.product.taobaoProduct.shopName,
-																			) +
-																			'?' +
-																			Date.now() +
-																			'" alt="" />'
+																		  ) +
+																		  '?' +
+																		  Date.now() +
+																		  '" alt="" />'
 																		: ''
-																}</div>`
+															  }</div>`
 															: `<div style="text-align: center;">${
 																	userInfo.fixImageTop
 																		? '<img src="' +
-																			getValidUploadImageUrl(userInfo.fixImageTop, v.product.taobaoProduct.shopName) +
-																			'?' +
-																			Date.now() +
-																			'" alt="" />'
+																		  getValidUploadImageUrl(userInfo.fixImageTop, v.product.taobaoProduct.shopName) +
+																		  '?' +
+																		  Date.now() +
+																		  '" alt="" />'
 																		: ''
-																}${
+															  }${
 																	userInfo.fixImageSubTop
 																		? '<img src="' +
-																			getValidUploadImageUrl(
+																		  getValidUploadImageUrl(
 																				userInfo.fixImageSubTop,
 																				v.product.taobaoProduct.shopName,
-																			) +
-																			'?' +
-																			Date.now() +
-																			'" alt="" />'
+																		  ) +
+																		  '?' +
+																		  Date.now() +
+																		  '" alt="" />'
 																		: ''
-																}<p>&nbsp;</p><p>&nbsp;</p><p><div style="color: #000000; font-size: 24px; font-weight: bold; font-family: none;">상품 설명입니다.</div></p><p>&nbsp;</p><p>&nbsp;</p>${
+															  }<p>&nbsp;</p><p>&nbsp;</p><p><div style="color: #000000; font-size: 24px; font-weight: bold; font-family: none;">상품 설명입니다.</div></p><p>&nbsp;</p><p>&nbsp;</p>${
 																	/^product\/\d+\/description.html$/.test(v.product.description)
 																		? (await getFromS3(v.product.description)).Body!.toString('utf8')
 																		: v.product.description
-																}${await getOptionHeaderHtmlByProductId(
+															  }${await getOptionHeaderHtmlByProductId(
 																	ctx.prisma,
 																	v.product.id,
 																	userInfo?.optionTwoWays,
 																	userInfo?.optionIndexType,
 																	v.product.taobaoProduct.shopName,
 																	userInfo.useDetailInformation,
-																)}${
+															  )}${
 																	userInfo.fixImageBottom
 																		? '<img src="' +
-																			getValidUploadImageUrl(
+																		  getValidUploadImageUrl(
 																				userInfo.fixImageBottom,
 																				v.product.taobaoProduct.shopName,
-																			) +
-																			'?' +
-																			Date.now() +
-																			'" alt="" />'
+																		  ) +
+																		  '?' +
+																		  Date.now() +
+																		  '" alt="" />'
 																		: ''
-																}${
+															  }${
 																	userInfo.fixImageSubBottom
 																		? '<img src="' +
-																			getValidUploadImageUrl(
+																		  getValidUploadImageUrl(
 																				userInfo.fixImageSubBottom,
 																				v.product.taobaoProduct.shopName,
-																			) +
-																			'?' +
-																			Date.now() +
-																			'" alt="" />'
+																		  ) +
+																		  '?' +
+																		  Date.now() +
+																		  '" alt="" />'
 																		: ''
-																}</div>`
+															  }</div>`
 														: userInfo.useDetailInformation === 'N'
-															? `<div style="text-align: center;">${
-																	userInfo.fixImageTop
-																		? '<img src="' +
-																			getValidUploadImageUrl(userInfo.fixImageTop, v.product.taobaoProduct.shopName) +
-																			'?' +
-																			Date.now() +
-																			'" alt="" />'
-																		: ''
-																}${
-																	userInfo.fixImageSubTop
-																		? '<img src="' +
-																			getValidUploadImageUrl(
-																				userInfo.fixImageSubTop,
-																				v.product.taobaoProduct.shopName,
-																			) +
-																			'?' +
-																			Date.now() +
-																			'" alt="" />'
-																		: ''
-																}${await getOptionHeaderHtmlByProductId(
-																	ctx.prisma,
-																	v.product.id,
-																	userInfo?.optionTwoWays,
-																	userInfo?.optionIndexType,
-																	v.product.taobaoProduct.shopName,
-																	userInfo.useDetailInformation,
-																)}<p>&nbsp;</p><p>&nbsp;</p>${
-																	/^product\/\d+\/description.html$/.test(v.product.description)
-																		? (await getFromS3(v.product.description)).Body!.toString('utf8')
-																		: v.product.description
-																}${
-																	userInfo.fixImageBottom
-																		? '<img src="' +
-																			getValidUploadImageUrl(
-																				userInfo.fixImageBottom,
-																				v.product.taobaoProduct.shopName,
-																			) +
-																			'?' +
-																			Date.now() +
-																			'" alt="" />'
-																		: ''
-																}${
-																	userInfo.fixImageSubBottom
-																		? '<img src="' +
-																			getValidUploadImageUrl(
-																				userInfo.fixImageSubBottom,
-																				v.product.taobaoProduct.shopName,
-																			) +
-																			'?' +
-																			Date.now() +
-																			'" alt="" />'
-																		: ''
-																}</div>`
-															: `<div style="text-align: center;">${
-																	userInfo.fixImageTop
-																		? '<img src="' +
-																			getValidUploadImageUrl(userInfo.fixImageTop, v.product.taobaoProduct.shopName) +
-																			'?' +
-																			Date.now() +
-																			'" alt="" />'
-																		: ''
-																}${
-																	userInfo.fixImageSubTop
-																		? '<img src="' +
-																			getValidUploadImageUrl(
-																				userInfo.fixImageSubTop,
-																				v.product.taobaoProduct.shopName,
-																			) +
-																			'?' +
-																			Date.now() +
-																			'" alt="" />'
-																		: ''
-																}${await getOptionHeaderHtmlByProductId(
-																	ctx.prisma,
-																	v.product.id,
-																	userInfo?.optionTwoWays,
-																	userInfo?.optionIndexType,
-																	v.product.taobaoProduct.shopName,
-																	userInfo.useDetailInformation,
-																)}<p>&nbsp;</p><p>&nbsp;</p><p><div style="color: #000000; font-size: 24px; font-weight: bold; font-family: none;">상품 설명입니다.</div></p><p>&nbsp;</p><p>&nbsp;</p>${
-																	/^product\/\d+\/description.html$/.test(v.product.description)
-																		? (await getFromS3(v.product.description)).Body!.toString('utf8')
-																		: v.product.description
-																}${
-																	userInfo.fixImageBottom
-																		? '<img src="' +
-																			getValidUploadImageUrl(
-																				userInfo.fixImageBottom,
-																				v.product.taobaoProduct.shopName,
-																			) +
-																			'?' +
-																			Date.now() +
-																			'" alt="" />'
-																		: ''
-																}${
-																	userInfo.fixImageSubBottom
-																		? '<img src="' +
-																			getValidUploadImageUrl(
-																				userInfo.fixImageSubBottom,
-																				v.product.taobaoProduct.shopName,
-																			) +
-																			'?' +
-																			Date.now() +
-																			'" alt="" />'
-																		: ''
-																}</div>`,
+														? `<div style="text-align: center;">${
+																userInfo.fixImageTop
+																	? '<img src="' +
+																	  getValidUploadImageUrl(userInfo.fixImageTop, v.product.taobaoProduct.shopName) +
+																	  '?' +
+																	  Date.now() +
+																	  '" alt="" />'
+																	: ''
+														  }${
+																userInfo.fixImageSubTop
+																	? '<img src="' +
+																	  getValidUploadImageUrl(userInfo.fixImageSubTop, v.product.taobaoProduct.shopName) +
+																	  '?' +
+																	  Date.now() +
+																	  '" alt="" />'
+																	: ''
+														  }${await getOptionHeaderHtmlByProductId(
+																ctx.prisma,
+																v.product.id,
+																userInfo?.optionTwoWays,
+																userInfo?.optionIndexType,
+																v.product.taobaoProduct.shopName,
+																userInfo.useDetailInformation,
+														  )}<p>&nbsp;</p><p>&nbsp;</p>${
+																/^product\/\d+\/description.html$/.test(v.product.description)
+																	? (await getFromS3(v.product.description)).Body!.toString('utf8')
+																	: v.product.description
+														  }${
+																userInfo.fixImageBottom
+																	? '<img src="' +
+																	  getValidUploadImageUrl(userInfo.fixImageBottom, v.product.taobaoProduct.shopName) +
+																	  '?' +
+																	  Date.now() +
+																	  '" alt="" />'
+																	: ''
+														  }${
+																userInfo.fixImageSubBottom
+																	? '<img src="' +
+																	  getValidUploadImageUrl(
+																			userInfo.fixImageSubBottom,
+																			v.product.taobaoProduct.shopName,
+																	  ) +
+																	  '?' +
+																	  Date.now() +
+																	  '" alt="" />'
+																	: ''
+														  }</div>`
+														: `<div style="text-align: center;">${
+																userInfo.fixImageTop
+																	? '<img src="' +
+																	  getValidUploadImageUrl(userInfo.fixImageTop, v.product.taobaoProduct.shopName) +
+																	  '?' +
+																	  Date.now() +
+																	  '" alt="" />'
+																	: ''
+														  }${
+																userInfo.fixImageSubTop
+																	? '<img src="' +
+																	  getValidUploadImageUrl(userInfo.fixImageSubTop, v.product.taobaoProduct.shopName) +
+																	  '?' +
+																	  Date.now() +
+																	  '" alt="" />'
+																	: ''
+														  }${await getOptionHeaderHtmlByProductId(
+																ctx.prisma,
+																v.product.id,
+																userInfo?.optionTwoWays,
+																userInfo?.optionIndexType,
+																v.product.taobaoProduct.shopName,
+																userInfo.useDetailInformation,
+														  )}<p>&nbsp;</p><p>&nbsp;</p><p><div style="color: #000000; font-size: 24px; font-weight: bold; font-family: none;">상품 설명입니다.</div></p><p>&nbsp;</p><p>&nbsp;</p>${
+																/^product\/\d+\/description.html$/.test(v.product.description)
+																	? (await getFromS3(v.product.description)).Body!.toString('utf8')
+																	: v.product.description
+														  }${
+																userInfo.fixImageBottom
+																	? '<img src="' +
+																	  getValidUploadImageUrl(userInfo.fixImageBottom, v.product.taobaoProduct.shopName) +
+																	  '?' +
+																	  Date.now() +
+																	  '" alt="" />'
+																	: ''
+														  }${
+																userInfo.fixImageSubBottom
+																	? '<img src="' +
+																	  getValidUploadImageUrl(
+																			userInfo.fixImageSubBottom,
+																			v.product.taobaoProduct.shopName,
+																	  ) +
+																	  '?' +
+																	  Date.now() +
+																	  '" alt="" />'
+																	: ''
+														  }</div>`,
 
 												content1:
 													userInfo.optionAlignTop === 'N'
@@ -1264,84 +1252,84 @@ const registerProductResolver =
 																	/^product\/\d+\/description.html$/.test(v.product.description)
 																		? (await getFromS3(v.product.description)).Body!.toString('utf8')
 																		: v.product.description
-																}${await getOptionHeaderHtmlByProductId(
+															  }${await getOptionHeaderHtmlByProductId(
 																	ctx.prisma,
 																	v.product.id,
 																	userInfo?.optionTwoWays,
 																	userInfo?.optionIndexType,
 																	v.product.taobaoProduct.shopName,
 																	userInfo.useDetailInformation,
-																)}</div>`
+															  )}</div>`
 															: `<div style="text-align: center;"><p>&nbsp;</p><p>&nbsp;</p><p><div style="color: #000000; font-size: 24px; font-weight: bold; font-family: none;">상품 설명입니다.</div></p><p>&nbsp;</p><p>&nbsp;</p>${
 																	/^product\/\d+\/description.html$/.test(v.product.description)
 																		? (await getFromS3(v.product.description)).Body!.toString('utf8')
 																		: v.product.description
-																}${await getOptionHeaderHtmlByProductId(
+															  }${await getOptionHeaderHtmlByProductId(
 																	ctx.prisma,
 																	v.product.id,
 																	userInfo?.optionTwoWays,
 																	userInfo?.optionIndexType,
 																	v.product.taobaoProduct.shopName,
 																	userInfo.useDetailInformation,
-																)}</div>`
+															  )}</div>`
 														: userInfo.useDetailInformation === 'N'
-															? `<div style="text-align: center;">${await getOptionHeaderHtmlByProductId(
-																	ctx.prisma,
-																	v.product.id,
-																	userInfo?.optionTwoWays,
-																	userInfo?.optionIndexType,
-																	v.product.taobaoProduct.shopName,
-																	userInfo.useDetailInformation,
-																)}<p>&nbsp;</p><p>&nbsp;</p>${
-																	/^product\/\d+\/description.html$/.test(v.product.description)
-																		? (await getFromS3(v.product.description)).Body!.toString('utf8')
-																		: v.product.description
-																}</div>`
-															: `<div style="text-align: center;">${await getOptionHeaderHtmlByProductId(
-																	ctx.prisma,
-																	v.product.id,
-																	userInfo?.optionTwoWays,
-																	userInfo?.optionIndexType,
-																	v.product.taobaoProduct.shopName,
-																	userInfo.useDetailInformation,
-																)}<p>&nbsp;</p><p>&nbsp;</p><p><div style="color: #000000; font-size: 24px; font-weight: bold; font-family: none;">상품 설명입니다.</div></p><p>&nbsp;</p><p>&nbsp;</p>${
-																	/^product\/\d+\/description.html$/.test(v.product.description)
-																		? (await getFromS3(v.product.description)).Body!.toString('utf8')
-																		: v.product.description
-																}</div>`,
+														? `<div style="text-align: center;">${await getOptionHeaderHtmlByProductId(
+																ctx.prisma,
+																v.product.id,
+																userInfo?.optionTwoWays,
+																userInfo?.optionIndexType,
+																v.product.taobaoProduct.shopName,
+																userInfo.useDetailInformation,
+														  )}<p>&nbsp;</p><p>&nbsp;</p>${
+																/^product\/\d+\/description.html$/.test(v.product.description)
+																	? (await getFromS3(v.product.description)).Body!.toString('utf8')
+																	: v.product.description
+														  }</div>`
+														: `<div style="text-align: center;">${await getOptionHeaderHtmlByProductId(
+																ctx.prisma,
+																v.product.id,
+																userInfo?.optionTwoWays,
+																userInfo?.optionIndexType,
+																v.product.taobaoProduct.shopName,
+																userInfo.useDetailInformation,
+														  )}<p>&nbsp;</p><p>&nbsp;</p><p><div style="color: #000000; font-size: 24px; font-weight: bold; font-family: none;">상품 설명입니다.</div></p><p>&nbsp;</p><p>&nbsp;</p>${
+																/^product\/\d+\/description.html$/.test(v.product.description)
+																	? (await getFromS3(v.product.description)).Body!.toString('utf8')
+																	: v.product.description
+														  }</div>`,
 
 												content2: `<div style="text-align: center;">${
 													userInfo.fixImageTop
 														? '<img src="' +
-															getValidUploadImageUrl(userInfo.fixImageTop, v.product.taobaoProduct.shopName) +
-															'?' +
-															Date.now() +
-															'" alt="" />'
+														  getValidUploadImageUrl(userInfo.fixImageTop, v.product.taobaoProduct.shopName) +
+														  '?' +
+														  Date.now() +
+														  '" alt="" />'
 														: ''
 												}${
 													userInfo.fixImageSubTop
 														? '<img src="' +
-															getValidUploadImageUrl(userInfo.fixImageSubTop, v.product.taobaoProduct.shopName) +
-															'?' +
-															Date.now() +
-															'" alt="" />'
+														  getValidUploadImageUrl(userInfo.fixImageSubTop, v.product.taobaoProduct.shopName) +
+														  '?' +
+														  Date.now() +
+														  '" alt="" />'
 														: ''
 												}</div>`, //추가상세설명
 												content3: `<div style="text-align: center;">${
 													userInfo.fixImageBottom
 														? '<img src="' +
-															getValidUploadImageUrl(userInfo.fixImageBottom, v.product.taobaoProduct.shopName) +
-															'?' +
-															Date.now() +
-															'" alt="" />'
+														  getValidUploadImageUrl(userInfo.fixImageBottom, v.product.taobaoProduct.shopName) +
+														  '?' +
+														  Date.now() +
+														  '" alt="" />'
 														: ''
 												}${
 													userInfo.fixImageSubBottom
 														? '<img src="' +
-															getValidUploadImageUrl(userInfo.fixImageSubBottom, v.product.taobaoProduct.shopName) +
-															'?' +
-															Date.now() +
-															'" alt="" />'
+														  getValidUploadImageUrl(userInfo.fixImageSubBottom, v.product.taobaoProduct.shopName) +
+														  '?' +
+														  Date.now() +
+														  '" alt="" />'
 														: ''
 												}</div>`,
 												///content3:^product\/\d+\/description.html$/.test(v.product.description) ? (await getFromS3(v.product.description)).Body!.toString("utf8") : v.product.description, //광고/홍보
