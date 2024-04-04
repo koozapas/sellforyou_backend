@@ -69,7 +69,7 @@ export const uploadToS3 = async (
 
 	const stream = createReadStream();
 
-	const response = await S3Client.upload({
+	const response = await S3Client2.upload({
 		Key: path.join('/'),
 		ACL: 'public-read',
 		Body: stream,
@@ -84,7 +84,7 @@ export const uploadToS3 = async (
 };
 
 export const checkFileExistAtS3 = async (Key: string): Promise<boolean> => {
-	return await S3Client.headObject({ Key, Bucket: AWS_BUCKET })
+	return await S3Client2.headObject({ Key, Bucket: AWS_BUCKET })
 		.promise()
 		.then(() => true)
 		.catch(() => false);
@@ -97,10 +97,15 @@ export const getFromS3 = async (Key: string) => {
 };
 
 export const deleteFromS3 = async (Key: string): Promise<boolean> => {
-	return await S3Client.deleteObject({ Key, Bucket: AWS_BUCKET })
-		.promise()
-		.then((result) => (result.$response.error ? false : true))
-		.catch(() => false);
+	return Key.includes('img2')
+		? await S3Client2.deleteObject({ Key, Bucket: AWS_BUCKET })
+				.promise()
+				.then((result) => (result.$response.error ? false : true))
+				.catch(() => false)
+		: await S3Client.deleteObject({ Key, Bucket: AWS_BUCKET })
+				.promise()
+				.then((result) => (result.$response.error ? false : true))
+				.catch(() => false);
 };
 
 export const deleteS3Folder = async (Key: string): Promise<boolean> => {
@@ -115,19 +120,33 @@ export const deleteS3Folder = async (Key: string): Promise<boolean> => {
 		function listAllKeys() {
 			let allKeys: any = [];
 
-			return new Promise((res, rej) => {
-				S3Client.listObjectsV2(params, async function (err: any, data: any) {
-					if (err) {
-						rej(err);
-					} else {
-						var contents = data.Contents;
-						for (let content in contents) {
-							allKeys.push(contents[content].Key);
-						}
-						res(allKeys);
-					}
-				});
-			});
+			return Key.includes('img2')
+				? new Promise((res, rej) => {
+						S3Client2.listObjectsV2(params, async function (err: any, data: any) {
+							if (err) {
+								rej(err);
+							} else {
+								var contents = data.Contents;
+								for (let content in contents) {
+									allKeys.push(contents[content].Key);
+								}
+								res(allKeys);
+							}
+						});
+				  })
+				: new Promise((res, rej) => {
+						S3Client.listObjectsV2(params, async function (err: any, data: any) {
+							if (err) {
+								rej(err);
+							} else {
+								var contents = data.Contents;
+								for (let content in contents) {
+									allKeys.push(contents[content].Key);
+								}
+								res(allKeys);
+							}
+						});
+				  });
 		}
 
 		const result: any = await listAllKeys();
@@ -146,7 +165,7 @@ export const deleteS3Folder = async (Key: string): Promise<boolean> => {
 export const getProductListAllKeys = async (Key: string): Promise<any> => {
 	try {
 		var params = {
-			Bucket: AWS_BUCKET,
+			Bucket: Key.includes('img2') ? AWS_BUCKET2 : AWS_BUCKET,
 			MaxKeys: 1000,
 			Delimiter: '/',
 			Prefix: Key,
@@ -154,21 +173,37 @@ export const getProductListAllKeys = async (Key: string): Promise<any> => {
 
 		function listAllKeys() {
 			let allKeys: any = [];
-			return new Promise((res, rej) => {
-				//callback함수 listObjectsV2 같은경우에는 new Promise로 비동기처리해줘야함.
-				S3Client.listObjectsV2(params, async function (err: any, data: any) {
-					if (err) {
-						rej(err);
-					} else {
-						var contents = data.Contents;
-						//for in 구문은 자동으로 비동기처리가 됨 .
-						for (let content in contents) {
-							allKeys.push(contents[content].Key);
-						}
-						res(allKeys);
-					}
-				});
-			});
+			return Key.includes('img2')
+				? new Promise((res, rej) => {
+						//callback함수 listObjectsV2 같은경우에는 new Promise로 비동기처리해줘야함.
+						S3Client2.listObjectsV2(params, async function (err: any, data: any) {
+							if (err) {
+								rej(err);
+							} else {
+								var contents = data.Contents;
+								//for in 구문은 자동으로 비동기처리가 됨 .
+								for (let content in contents) {
+									allKeys.push(contents[content].Key);
+								}
+								res(allKeys);
+							}
+						});
+				  })
+				: new Promise((res, rej) => {
+						//callback함수 listObjectsV2 같은경우에는 new Promise로 비동기처리해줘야함.
+						S3Client.listObjectsV2(params, async function (err: any, data: any) {
+							if (err) {
+								rej(err);
+							} else {
+								var contents = data.Contents;
+								//for in 구문은 자동으로 비동기처리가 됨 .
+								for (let content in contents) {
+									allKeys.push(contents[content].Key);
+								}
+								res(allKeys);
+							}
+						});
+				  });
 		}
 
 		const result: any = await listAllKeys();
@@ -220,7 +255,7 @@ export const uploadToS3ByBuffer = async (
 ): Promise<S3UploadResult> => {
 	path.push(filename);
 
-	const response = await S3Client.upload({
+	const response = await S3Client2.upload({
 		Key: path.join('/'),
 		ACL: 'public-read',
 		Body: file,
