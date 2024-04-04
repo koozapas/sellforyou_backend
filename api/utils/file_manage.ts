@@ -74,7 +74,7 @@ export const uploadToS3 = async (
 		ACL: 'public-read',
 		Body: stream,
 		ContentType: mimetype,
-		Bucket: AWS_BUCKET,
+		Bucket: AWS_BUCKET2,
 	}).promise();
 
 	return {
@@ -84,7 +84,7 @@ export const uploadToS3 = async (
 };
 
 export const checkFileExistAtS3 = async (Key: string): Promise<boolean> => {
-	return await S3Client2.headObject({ Key, Bucket: AWS_BUCKET })
+	return await S3Client2.headObject({ Key, Bucket: AWS_BUCKET2 })
 		.promise()
 		.then(() => true)
 		.catch(() => false);
@@ -98,7 +98,7 @@ export const getFromS3 = async (Key: string) => {
 
 export const deleteFromS3 = async (Key: string): Promise<boolean> => {
 	return Key.includes('img2')
-		? await S3Client2.deleteObject({ Key, Bucket: AWS_BUCKET })
+		? await S3Client2.deleteObject({ Key, Bucket: AWS_BUCKET2 })
 				.promise()
 				.then((result) => (result.$response.error ? false : true))
 				.catch(() => false)
@@ -111,7 +111,7 @@ export const deleteFromS3 = async (Key: string): Promise<boolean> => {
 export const deleteS3Folder = async (Key: string): Promise<boolean> => {
 	try {
 		var params = {
-			Bucket: AWS_BUCKET,
+			Bucket: Key.includes('img2') ? AWS_BUCKET2 : AWS_BUCKET,
 			MaxKeys: 1000,
 			Delimiter: '/',
 			Prefix: Key,
@@ -260,7 +260,7 @@ export const uploadToS3ByBuffer = async (
 		ACL: 'public-read',
 		Body: file,
 		ContentType: mimetype,
-		Bucket: AWS_BUCKET,
+		Bucket: AWS_BUCKET2,
 	}).promise();
 
 	return {
