@@ -131,7 +131,7 @@ const truncateOptionName = (siteCode: string, text: string) => truncateOptionNam
 
 export function getValidUploadImageUrl(image: string, shopName: any) {
 	if (!/^https?:\/\//.test(image) && image !== '') {
-		image = `${EXTERNAL_S3_ADDRESS2}/${encodeURI(image)}`;
+		image = `${image.includes('img2') ? EXTERNAL_S3_ADDRESS2 : EXTERNAL_S3_ADDRESS}/${encodeURI(image)}`;
 	}
 
 	if (!shopName.includes('amazon')) {
