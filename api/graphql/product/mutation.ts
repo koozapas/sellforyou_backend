@@ -1735,7 +1735,13 @@ export async function copyProductsToUser(targetProductIds: number[], ctx: Contex
 		where: { id: { in: targetProductIds } },
 		include: {
 			productOption: {
-				include: { productOption1: true, productOption2: true, productOption3: true },
+				include: {
+					productOption1: true,
+					productOption2: true,
+					productOption3: true,
+					productOption4: true,
+					productOption5: true,
+				},
 			},
 			productOptionName: { include: { productOptionValue: true } },
 			taobaoProduct: true,
@@ -1798,22 +1804,33 @@ export async function copyProductsToUser(targetProductIds: number[], ctx: Contex
 
 			await ctx.prisma.productOption.createMany({
 				data: product.productOption.map((productOption) => {
-					const { productOption1, productOption2, productOption3, ...etc } = productOption;
+					const { productOption1, productOption2, productOption3, productOption4, productOption5, ...etc } =
+						productOption;
 					return {
 						...etc,
 						id: undefined,
-						product_id: newProduct.id,
-						option_value1_id: newProductOptionName
+						productId: newProduct.id,
+						optionValue1Id: newProductOptionName
 							.find((v) => v.order === 1)!
-							.productOptionValue.find((v) => v.taobaoVid === productOption.productOption1.taobaoVid)!.id,
-						option_value2_id:
+							.productOptionValue.find((v) => v.taobaoVid === productOption1?.taobaoVid)!.id,
+						optionValue2Id:
 							newProductOptionName
 								.find((v) => v.order === 2)
-								?.productOptionValue.find((v) => v.taobaoVid === productOption.productOption2?.taobaoVid)?.id ?? null,
-						option_value3_id:
+								?.productOptionValue.find((v) => v.taobaoVid === productOption2?.taobaoVid)?.id ?? null,
+						optionValue3Id:
 							newProductOptionName
 								.find((v) => v.order === 3)
-								?.productOptionValue.find((v) => v.taobaoVid === productOption.productOption3?.taobaoVid)?.id ?? null,
+								?.productOptionValue.find((v) => v.taobaoVid === productOption3?.taobaoVid)?.id ?? null,
+
+						optionValue4Id:
+							newProductOptionName
+								.find((v) => v.order === 4)
+								?.productOptionValue.find((v) => v.taobaoVid === productOption4?.taobaoVid)?.id ?? null,
+
+						optionValue5Id:
+							newProductOptionName
+								.find((v) => v.order === 5)
+								?.productOptionValue.find((v) => v.taobaoVid === productOption5?.taobaoVid)?.id ?? null,
 					};
 				}),
 			});
