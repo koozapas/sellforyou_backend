@@ -1775,7 +1775,7 @@ export async function copyProductsToUser(targetProductIds: number[], ctx: Contex
 			});
 			newProduct = await ctx.prisma.product.update({
 				where: { id: newProduct.id },
-				data: { productCode: 'SFYA_' + newProduct.id.toString(36) },
+				data: { productCode: 'SFY_' + newProduct.id.toString(36) },
 			});
 
 			const newProductOptionName = await Promise.all(
