@@ -3084,7 +3084,7 @@ export const mutation_product = extendType({
 			resolve: async (src, args, ctx, info) => {
 				try {
 					const targetProducts = await ctx.prisma.product.findMany({
-						where: { id: { in: args.productIds }, userId: { equals: null } },
+						where: { id: { in: args.productIds } },
 						select: { id: true, taobaoProductId: true },
 					});
 					const userId = ctx.token?.userId;
