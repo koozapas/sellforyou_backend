@@ -1738,15 +1738,25 @@ export async function copyProductsToUser(targetProductIds: number[], ctx: Contex
 				include: { productOption1: true, productOption2: true, productOption3: true },
 			},
 			productOptionName: { include: { productOptionValue: true } },
-			taobaoProduct: { select: { taobaoNumIid: true } },
+			taobaoProduct: true,
 		},
 	});
 	return await Promise.all(
 		targetProducts.map(async (product) => {
 			const { taobaoProduct, productOption, productOptionName, ...data } = product;
+
+			let newTaobaoProduct = await ctx.prisma.taobaoProduct.create({
+				data: {
+					...taobaoProduct,
+
+					id: undefined, //index는 undefined로 입력을 하구나. .
+				},
+			});
+
 			let newProduct = await ctx.prisma.product.create({
 				data: {
 					...data,
+					taobaoProductId: newTaobaoProduct.id,
 					state: 6,
 					userId: userId,
 					adminId: ctx.token!.adminId!,
