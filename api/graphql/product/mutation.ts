@@ -3088,29 +3088,16 @@ export const mutation_product = extendType({
 						select: { id: true, taobaoProductId: true },
 					});
 					const userId = ctx.token?.userId;
-					const existingProducts = await ctx.prisma.product.findMany({
-						where: {
-							userId: { equals: userId },
-							taobaoProductId: { in: targetProducts.map((v) => v.taobaoProductId) },
-						},
-						select: { taobaoProductId: true },
-					});
-					const filteredTargetProducts = targetProducts.filter(
-						(v) => existingProducts.findIndex((v2) => v2.taobaoProductId === v.taobaoProductId) === -1,
-					);
-
-					if (targetProducts.length > 0 && filteredTargetProducts.length === 0)
-						return throwError(errors.etc('모든 상품이 해당 유저에 수집된 상품이거나, 관리자 상품이 아닙니다.'), ctx);
 
 					for (let i = 0; i < args.amount; i++) {
 						await copyProductsToUser(
-							filteredTargetProducts.map((v) => v.id),
+							targetProducts.map((v) => v.id),
 							ctx,
 							userId,
 						);
 					}
 
-					return `${filteredTargetProducts.length}개의 상품이 ${args.amount}개씩 복사되었습니다.`;
+					return `${targetProducts.length}개의 상품이 ${args.amount}개씩 복사되었습니다.`;
 				} catch (e) {
 					return throwError(e, ctx);
 				}
