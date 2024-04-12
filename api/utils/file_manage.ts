@@ -91,11 +91,6 @@ export const checkFileExistAtS3 = async (Key: string): Promise<boolean> => {
 };
 
 export const getFromS3 = async (Key: string) => {
-	console.log('key', Key);
-	const test = await S3Client2.getObject({ Key, Bucket: AWS_BUCKET2 }).promise();
-
-	console.log('result', test);
-
 	return Key.includes('img2')
 		? await S3Client2.getObject({ Key, Bucket: AWS_BUCKET2 }).promise()
 		: await S3Client.getObject({ Key, Bucket: AWS_BUCKET }).promise();
