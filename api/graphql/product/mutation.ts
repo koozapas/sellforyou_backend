@@ -1356,11 +1356,11 @@ const deleteProductResolver = async (
 			});
 		});
 
-		await Promise.all(
-			args.productId.map(async (v: any) => {
-				await deleteS3Folder(`product/${v}/`);
-			}),
-		);
+		// await Promise.all(
+		// 	args.productId.map(async (v: any) => {
+		// 		await deleteS3Folder(`product/${v}/`);
+		// 	}),
+		// );
 
 		await ctx.prisma.productStoreLog.deleteMany({ where: { productStoreId: { in: productStoreId } } });
 		await ctx.prisma.productOptionValue.deleteMany({ where: { productOptionNameId: { in: productOptionNameId } } });
