@@ -528,10 +528,10 @@ export const mutation_user = extendType({
 						args.userType === 'EMAIL'
 							? { email: args.email }
 							: args.userType === 'NAVER'
-								? { naverId: args.email }
-								: args.userType === 'KAKAO'
-									? { kakaoId: args.email }
-									: {};
+							? { naverId: args.email }
+							: args.userType === 'KAKAO'
+							? { kakaoId: args.email }
+							: {};
 					const user = await ctx.prisma.user.findUnique({ where });
 					if (!user) return throwError(errors.invalidUser, ctx);
 					if (user.state !== 'ACTIVE') return throwError(errors.invalidUser, ctx);
@@ -804,19 +804,20 @@ export const mutation_user = extendType({
 					let fixImageSubBottom: string | null | undefined = args.fixImageSubBottom ? '' : args.fixImageSubBottom;
 
 					if (args.fixImageTop) {
-						fixImageTop = (await uploadToS3(args.fixImageTop, ['user', ctx.token!.userId!, 'info'])).url; //db에 user/유저아디(352)/info/top.jpg
+						fixImageTop = (await uploadToS3(args.fixImageTop, ['img2', 'user', ctx.token!.userId!, 'info'])).url; //db에 user/유저아디(352)/info/top.jpg
 					}
 
 					if (args.fixImageSubTop) {
-						fixImageSubTop = (await uploadToS3(args.fixImageSubTop, ['user', ctx.token!.userId!, 'info'])).url;
+						fixImageSubTop = (await uploadToS3(args.fixImageSubTop, ['img2', 'user', ctx.token!.userId!, 'info'])).url;
 					}
 
 					if (args.fixImageBottom) {
-						fixImageBottom = (await uploadToS3(args.fixImageBottom, ['user', ctx.token!.userId!, 'info'])).url;
+						fixImageBottom = (await uploadToS3(args.fixImageBottom, ['img2', 'user', ctx.token!.userId!, 'info'])).url;
 					}
 
 					if (args.fixImageSubBottom) {
-						fixImageSubBottom = (await uploadToS3(args.fixImageSubBottom, ['user', ctx.token!.userId!, 'info'])).url;
+						fixImageSubBottom = (await uploadToS3(args.fixImageSubBottom, ['img2', 'user', ctx.token!.userId!, 'info']))
+							.url;
 					}
 
 					const asTel = args.asTel ? args.asTel.trim() : undefined;
